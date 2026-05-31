@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useCallback } from 'react';
 
 const steps = [
  { num: '01', label: 'Discovery', desc: 'We learn your business, goals, and technical landscape before writing a single line of code.', emoji: '🔍' },
@@ -8,7 +8,32 @@ const steps = [
  { num: '04', label: 'Development', desc: 'We build in agile sprints with continuous delivery — real code, real data, real progress.', emoji: '⚡' },
  { num: '05', label: 'Testing', desc: 'We validate quality, security, and performance against real-world edge cases and traffic patterns.', emoji: '✅' },
  { num: '06', label: 'Deployment', desc: 'We ship to production with zero-downtime cutover, monitoring, and rollback procedures in place.', emoji: '🚀' },
+ { num: '07', label: 'Support', desc: 'We monitor, maintain, and iterate post-launch — your team shadows everything. You own it.', emoji: '🛡️' },
 ];
+
+function computeOpacity(progress: number, index: number) {
+ const mid = index / steps.length;
+ const half = 0.5 / steps.length;
+ const d = Math.abs(progress - mid);
+ return d > half ? 0.3 : 1 - 0.7 * (d / half);
+}
+
+function computeScale(progress: number, index: number) {
+ const mid = index / steps.length;
+ const half = 0.5 / steps.length;
+ const d = Math.abs(progress - mid);
+ return d > half ? 0.92 : 1 - 0.08 * (d / half);
+}
+
+function getActiveIndex(progress: number) {
+ let best = 0;
+ let bestVal = 0;
+ for (let i = 0; i < steps.length; i++) {
+  const val = computeOpacity(progress, i);
+  if (val > bestVal) { bestVal = val; best = i; }
+ }
+ return best;
+}
 
 export default function ProcessSection() {
  const sectionRef = useRef<HTMLDivElement>(null);
@@ -18,36 +43,20 @@ export default function ProcessSection() {
   offset: ['start start', 'end end'],
  });
 
- const activeIndex = useTransform(scrollYProgress, [0, 1], [0, steps.length - 1]);
-
- const [currentStep, setCurrentStep] = useState(steps[0]);
- useMotionValueEvent(activeIndex, 'change', (latest) => {
-  setCurrentStep(steps[Math.max(0, Math.min(Math.round(latest), steps.length - 1))]);
- });
-
  const cardsContainerRef = useRef<HTMLDivElement>(null);
  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-
- const computeOpacity = useCallback((progress: number, index: number) => {
-  const mid = index / steps.length;
-  const half = 0.5 / steps.length;
-  const d = Math.abs(progress - mid);
-  return d > half ? 0.3 : 1 - 0.7 * (d / half);
- }, []);
-
- const computeScale = useCallback((progress: number, index: number) => {
-  const mid = index / steps.length;
-  const half = 0.5 / steps.length;
-  const d = Math.abs(progress - mid);
-  return d > half ? 0.92 : 1 - 0.08 * (d / half);
- }, []);
-
- const leftScale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
+ const leftEmojiRef = useRef<HTMLDivElement>(null);
+ const leftNumRef = useRef<HTMLDivElement>(null);
+ const leftLabelRef = useRef<HTMLHeadingElement>(null);
+ const leftDescRef = useRef<HTMLParagraphElement>(null);
+ const dotRefs = useRef<(HTMLDivElement | null)[]>([]);
 
  useMotionValueEvent(scrollYProgress, 'change', (v) => {
+  // Right side: cards container translate
   if (cardsContainerRef.current) {
    cardsContainerRef.current.style.transform = `translateY(${-v * (steps.length - 1) * 460}px)`;
   }
+  // Right side: per-card opacity/scale
   steps.forEach((_, i) => {
    const el = cardRefs.current[i];
    if (el) {
@@ -55,10 +64,25 @@ export default function ProcessSection() {
     el.style.transform = `scale(${computeScale(v, i)})`;
    }
   });
+
+  // Left side: sync with right side
+  const idx = getActiveIndex(v);
+  const step = steps[idx];
+  if (leftEmojiRef.current) leftEmojiRef.current.textContent = step.emoji;
+  if (leftNumRef.current) leftNumRef.current.textContent = step.num;
+  if (leftLabelRef.current) leftLabelRef.current.textContent = step.label;
+  if (leftDescRef.current) leftDescRef.current.textContent = step.desc;
+  dotRefs.current.forEach((dot, i) => {
+   if (dot) {
+    dot.className = i === idx
+     ? 'rounded-full transition-all duration-300 w-8 h-2 bg-[#8b5cf6]'
+     : 'rounded-full transition-all duration-300 w-2 h-2 bg-white/[0.12]';
+   }
+  });
  });
 
  return (
-  <section ref={sectionRef} className="relative h-[600vh] bg-[#02040a] border-t border-white/[0.04]">
+  <section ref={sectionRef} className="relative h-[350vh] bg-[#02040a] border-t border-white/[0.04]">
    {/* Orb backgrounds */}
    <div className="absolute inset-0 z-0">
     <div className="absolute left-[5%] top-[10%] w-[600px] h-[600px] rounded-full bg-[#8b5cf6]/5 blur-[180px]" />
@@ -97,63 +121,38 @@ export default function ProcessSection() {
 
      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center flex-1 min-h-0">
       {/* Left: Active step visual */}
-      <motion.div
-       className="relative flex flex-col items-center justify-center h-full py-12"
-       style={{ scale: leftScale }}
-      >
+      <div className="relative flex flex-col items-center justify-center h-full py-12">
        {/* Large emoji */}
-       <motion.div
-        key={currentStep.emoji}
-        initial={{ opacity: 0, y: 20, scale: 0.8 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-        className="text-[120px] md:text-[160px] leading-none mb-6"
-       >
-        {currentStep.emoji}
-       </motion.div>
+       <div ref={leftEmojiRef} className="text-[120px] md:text-[160px] leading-none mb-6 transition-all duration-200">
+        {steps[0].emoji}
+       </div>
 
        {/* Step number */}
-       <motion.div
-        key={currentStep.num}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: 0.1 }}
-        className="text-[64px] md:text-[80px] font-black text-white/10 leading-none tracking-tighter mb-4"
-       >
-        {currentStep.num}
-       </motion.div>
+       <div ref={leftNumRef} className="text-[64px] md:text-[80px] font-black text-white/10 leading-none tracking-tighter mb-4 transition-all duration-200">
+        {steps[0].num}
+       </div>
 
        {/* Step label */}
-       <motion.div
-        key={currentStep.label}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: 0.15 }}
-        className="text-center"
-       >
-        <h3 className="text-[28px] md:text-[36px] font-black text-white tracking-tight leading-tight">
-         {currentStep.label}
+       <div className="text-center">
+        <h3 ref={leftLabelRef} className="text-[28px] md:text-[36px] font-black text-white tracking-tight leading-tight transition-all duration-200">
+         {steps[0].label}
         </h3>
-        <p className="text-white/40 text-[15px] leading-relaxed mt-3 max-w-sm mx-auto">
-         {currentStep.desc}
+        <p ref={leftDescRef} className="text-white/40 text-[15px] leading-relaxed mt-3 max-w-sm mx-auto transition-all duration-200">
+         {steps[0].desc}
         </p>
-       </motion.div>
+       </div>
 
        {/* Step indicator dots */}
        <div className="flex items-center gap-2 mt-8">
-        {steps.map((s, i) => {
-         const isActive = s.num === currentStep.num;
-         return (
-          <div
-           key={s.num}
-           className={`rounded-full transition-all duration-500 ${
-            isActive ? 'w-8 h-2 bg-[#8b5cf6]' : 'w-2 h-2 bg-white/[0.12]'
-           }`}
-          />
-         );
-        })}
+        {steps.map((s, i) => (
+         <div
+          key={s.num}
+          ref={(el) => { dotRefs.current[i] = el; }}
+          className="rounded-full transition-all duration-300 w-2 h-2 bg-white/[0.12]"
+         />
+        ))}
        </div>
-      </motion.div>
+      </div>
 
       {/* Right: Cards container */}
       <div className="relative overflow-hidden h-[420px]">
