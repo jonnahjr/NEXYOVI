@@ -47,9 +47,9 @@ const Impact = () => {
  icon: BarChart3
  },
  {
- metric: "99.99%",
- label: "Uptime Achieved",
- desc: "Across all Nexyovi-managed systems, ensuring zero mission-critical downtime.",
+metric: "Enterprise-grade",
+  label: "Uptime Achieved",
+  desc: "Across all Nexyovi-managed systems, ensuring critical system availability.",
  icon: ArrowUpRight
  },
  {

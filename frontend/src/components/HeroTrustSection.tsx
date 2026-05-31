@@ -12,7 +12,7 @@ const checklist = [
  {
    text: "Built for scale, not demos",
    icon: Cloud,
-   desc: "Architected for real-world production: 99.9% uptime, auto-scaling, and edge-case resilience from day one.",
+   desc: "Architected for real-world production: enterprise-grade uptime, auto-scaling, and edge-case resilience from day one.",
  },
  {
    text: "Measurable and defensible ROI",

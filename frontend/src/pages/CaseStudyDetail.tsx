@@ -18,12 +18,12 @@ const caseStudies = {
  challenge: 'The institution was operating on fragmented legacy systems across 14 countries, leading to significant vulnerabilities, high latency in cross-border transactions, and compliance gaps. The threat vector was constantly expanding with an average of 5,000 intrusion attempts daily.',
  solution: 'Nexyovi deployed a bespoke zero-trust architecture, implementing multi-layer encryption protocols, biometric access controls for internal systems, and an AI-driven real-time threat detection engine deployed across 14 geographic nodes.',
  telemetry: [
- { label: 'Uptime', value: '99.99%', icon: Activity },
+  { label: 'Uptime', value: 'Enterprise-grade', icon: Activity },
  { label: 'Latency', value: '12ms', icon: Clock },
  { label: 'Nodes', value: '14 Active', icon: Zap }
  ],
  results: [
- '99.99% Security Uptime achieved across all geographic nodes.',
+ 'Enterprise-grade Security Uptime achieved across all geographic nodes.',
  'Zero successful breaches in the 18 months post-deployment.',
  'Reduced cross-border transaction latency by 40%.',
  'Full compliance with PCI-DSS and GDPR equivalent standards.'

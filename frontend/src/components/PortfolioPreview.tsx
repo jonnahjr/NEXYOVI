@@ -18,7 +18,7 @@ const projects = [
  category: 'Cybersecurity',
  desc: 'Advanced zero-trust network infrastructure for secure cross-continental data transmission.',
  image: c2,
- metrics: ['99.99% Threat Mitigation', 'AI-Driven Auditing']
+ metrics: ['Enterprise-grade Threat Mitigation', 'AI-Driven Auditing']
  }
 ];
 

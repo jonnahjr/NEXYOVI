@@ -25,7 +25,7 @@ const industries = [
  metrics: [
  { value: '<1ms', label: 'Latency' },
  { value: 'PCI-DSS', label: 'Compliance' },
- { value: '99.99%', label: 'Uptime' }],
+ { value: 'Enterprise-grade', label: 'Uptime' }],
  tags: ['Smart Contracts', 'Payment APIs', 'Risk Analytics'],
  },
  {

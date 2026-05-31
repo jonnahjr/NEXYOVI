@@ -33,7 +33,7 @@ export default function SoftwareService() {
  </motion.h1>
 
  <motion.p variants={revealUp} className="text-white/50 text-lg md:text-xl max-w-2xl font-medium leading-relaxed mb-12">
- We engineer mission-critical software systems designed for absolute scalability, extreme performance, and military-grade security.
+ We engineer mission-critical software systems designed for absolute scalability, extreme performance, and enterprise-grade security.
  </motion.p>
 
  <motion.div variants={revealUp}>

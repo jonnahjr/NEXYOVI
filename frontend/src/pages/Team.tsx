@@ -31,7 +31,7 @@ const TeamPage = () => {
  The Minds Behind <br/> <span className="text-white/40">The Tech Powerhouse.</span>
  </motion.h1>
  <p className="text-[#797d86] text-xl max-w-2xl mx-auto leading-relaxed mb-12">
- "A global powerhouse is only as strong as its engineers. We've gathered 30+ of the finest tech minds from Addis Ababa to Miami."
+ "A global powerhouse is only as strong as its engineers. We've gathered some of the finest tech minds from Addis Ababa to Miami."
  </p>
  <div className="flex justify-center gap-4">
  <Link to="/careers" className="px-10 py-5 bg-white text-black font-bold rounded-full hover:scale-105 transition-all">Join the Mission</Link>
@@ -44,16 +44,16 @@ const TeamPage = () => {
  <section className="py-24 border-y border-slate-200">
  <div className="container-narrow grid grid-cols-1 md:grid-cols-3 gap-20 text-center">
  <div>
- <div className="text-5xl font-bold mb-2 text-slate-900">30+</div>
+ <div className="text-5xl font-bold mb-2 text-slate-900">20+</div>
  <div className="text-slate-500 uppercase tracking-widest text-xs font-bold">Deep Tech Experts</div>
  </div>
  <div>
- <div className="text-5xl font-bold mb-2 text-slate-900">12+</div>
+ <div className="text-5xl font-bold mb-2 text-slate-900">10+</div>
  <div className="text-slate-500 uppercase tracking-widest text-xs font-bold">Years Avg. Experience</div>
  </div>
  <div>
- <div className="text-5xl font-bold mb-2 text-slate-900">15</div>
- <div className="text-slate-500 uppercase tracking-widest text-xs font-bold">Coding Languages Dominated</div>
+ <div className="text-5xl font-bold mb-2 text-slate-900">8+</div>
+ <div className="text-slate-500 uppercase tracking-widest text-xs font-bold">Languages & Frameworks</div>
  </div>
  </div>
  </section>

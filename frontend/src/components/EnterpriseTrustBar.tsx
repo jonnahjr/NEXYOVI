@@ -32,8 +32,8 @@ export default function EnterpriseTrustBar() {
  <div className="flex items-center gap-3">
  <Activity size={16} className="text-[#10b981]" />
  <div>
- <div className="text-white font-black font-mono text-lg leading-none">99.9%</div>
- <div className="text-[#6B7280] text-[10px] font-bold uppercase tracking-widest mt-1">Uptime SLA</div>
+ <div className="text-white font-black font-mono text-lg leading-none">24/7</div>
+ <div className="text-[#6B7280] text-[10px] font-bold uppercase tracking-widest mt-1">Monitoring</div>
  </div>
  </div>
  <div className="hidden sm:block w-px h-8 bg-white/10" />

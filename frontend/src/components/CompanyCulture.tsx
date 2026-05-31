@@ -2,13 +2,13 @@ import { motion } from 'framer-motion';
 import { BrainCircuit, Globe, Users, Zap } from 'lucide-react';
 
 const pillars = [
- {
- icon: Users,
- title: 'Team Collaboration',
- desc: 'Cross-functional squads across Addis Ababa and Miami work in synchronized sprints — bridging time zones without missing a beat. Every engineer owns their outcome.',
- stat: '50+',
- statLabel: 'Engineers',
- },
+  {
+  icon: Users,
+  title: 'Team Collaboration',
+  desc: 'Cross-functional squads across Addis Ababa and Miami work in synchronized sprints — bridging time zones without missing a beat. Every engineer owns their outcome.',
+  stat: '2',
+  statLabel: 'Continents',
+  },
  {
  icon: Zap,
  title: 'Agile Execution',
@@ -23,13 +23,13 @@ const pillars = [
  stat: '20%',
  statLabel: 'R&D Time',
  },
- {
- icon: Globe,
- title: 'Global Operations',
- desc: 'Our bi-continental model means your project never sleeps. With teams spanning East Africa and the US East Coast, we deliver around the clock.',
- stat: '4+',
- statLabel: 'Countries',
- }];
+  {
+  icon: Globe,
+  title: 'Global Operations',
+  desc: 'Our bi-continental model means your project never sleeps. With teams spanning East Africa and the US East Coast, we deliver around the clock.',
+  stat: '2',
+  statLabel: 'Offices',
+  }];
 
 const CompanyCulture = () => {
  return (

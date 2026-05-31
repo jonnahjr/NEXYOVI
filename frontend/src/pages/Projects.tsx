@@ -142,7 +142,7 @@ const PROJECTS: Project[] = [
     gradient: 'from-[#F5A800]/20 via-[#F5A800]/5 to-transparent',
     year: '2024',
     status: 'Live',
-    impact: 'Protected $4.2B in assets',
+    impact: 'Enterprise threat prevention',
     description:
       'An autonomous defense engine trained on 900M threat signatures. It identifies zero-day exploits before signature databases update, cutting mean-time-to-detect from hours to milliseconds.',
     metrics: [
@@ -163,7 +163,7 @@ const PROJECTS: Project[] = [
     gradient: 'from-[#8b5cf6]/20 via-[#8b5cf6]/5 to-transparent',
     year: '2024',
     status: 'Live',
-    impact: '$22B settled in Q1',
+    impact: 'High-volume transaction processing',
     description:
       'A cryptographically hardened settlement network built for the post-quantum era. Uses lattice-based cryptography to future-proof transactions against upcoming quantum computing threats.',
     metrics: [
@@ -557,19 +557,17 @@ export default function Projects() {
 
   // ── Stats ──
   const stats = [
-    { icon: Layers, label: 'Projects Delivered', value: 200, suffix: '+' },
-    { icon: Users, label: 'Enterprise Clients', value: 80, suffix: '+' },
-    { icon: Globe, label: 'Countries Deployed', value: 34, suffix: '' },
+    { icon: Layers, label: 'Enterprise Projects', value: 50, suffix: '+' },
+    { icon: Users, label: 'Clients Served', value: 20, suffix: '+' },
+    { icon: Globe, label: 'Countries Deployed', value: 4, suffix: '' },
     { icon: Clock, label: 'Avg Time to Ship', value: 12, suffix: ' wks' },
-    { icon: Star, label: 'Avg Client Rating', value: 4.97, suffix: ' / 5' },
-    { icon: Zap, label: 'APIs in Production', value: 1400, suffix: '+' },
   ];
 
   // ── Floating stat pills (hero) ──
   const floatingPills = [
-    { val: 200, suffix: '+', label: 'Projects', color: '#F5A800' },
-    { val: 99.9, suffix: '%', label: 'Uptime SLA', color: '#10b981' },
-    { val: 4.2, suffix: 'B', label: 'Value Protected', prefix: '$', color: '#06b6d4' },
+    { val: 24, suffix: '/7', label: 'Monitoring', color: '#10b981' },
+    { val: 4, suffix: '', label: 'Delivery Locations', color: '#F5A800' },
+    { val: 6, suffix: '+', label: 'Service Verticals', color: '#8b5cf6' },
   ];
 
   return (

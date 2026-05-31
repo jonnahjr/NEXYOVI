@@ -38,7 +38,7 @@ export default function InfrastructureService() {
  </motion.h1>
 
  <motion.p variants={revealUp} className="text-[#9CA3AF] text-lg md:text-xl max-w-2xl font-medium leading-relaxed mb-12">
- Cloud architecture, high-performance servers, enterprise networking, and 24/7 monitoring systems built for 99.99% availability.
+ Cloud architecture, high-performance servers, enterprise networking, and 24/7 monitoring systems built for enterprise-grade availability.
  </motion.p>
 
  <motion.div variants={revealUp}>

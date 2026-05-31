@@ -67,7 +67,7 @@ const FounderStory = () => {
  {
  icon: <Target size={20} />,
  label: 'The Mission',
- text: 'To deliver secure, scalable, intelligent systems that create measurable ROI—built with African excellence for the world.'
+  text: 'To build modern software and AI that helps businesses everywhere ship better products, automate smarter, and operate faster.'
  }].map((item, i) => (
  <motion.div
  key={i}

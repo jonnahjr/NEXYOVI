@@ -80,19 +80,17 @@ const heroReveal = {
    ═══════════════════════════════════════════ */
 const timeline = [
   { year: '2020', title: 'Founded in Addis Ababa', desc: 'Bootstrapped from a co-working space with a vision to build enterprise-grade software for African and global markets.' },
-  { year: '2021', title: 'First Enterprise Client', desc: 'Secured our first Fortune 500 client, deploying a custom cybersecurity framework across their entire infrastructure.' },
-  { year: '2022', title: 'Miami Engineering Hub', desc: 'Opened a US-based engineering hub in Miami, bridging African talent with American markets and adding 30+ senior engineers.' },
+  { year: '2021', title: 'First Enterprise Client', desc: 'Secured our first enterprise client, deploying a custom cybersecurity framework across their entire infrastructure.' },
+  { year: '2022', title: 'US Office Opens', desc: 'Opened a US office in Miami, bridging African talent with American markets.' },
   { year: '2023', title: 'Full-Suite Platform', desc: 'Launched comprehensive service divisions covering AI, data engineering, cloud infrastructure, and managed technology.' },
-  { year: '2024', title: 'Global Expansion', desc: 'Crossed 100+ enterprise deployments, 50+ technology stacks, and achieved 99.99% infrastructure availability across all systems.' },
+  { year: '2024', title: 'Global Expansion', desc: 'Expanded service delivery across multiple countries with a focus on enterprise-grade reliability and security.' },
 ];
 
 const byTheNumbers = [
-  { value: 100, label: 'Enterprise Deployments', suffix: '+', icon: Building2 },
-  { value: 99.99, label: 'Infrastructure Uptime', suffix: '%', icon: ShieldCheck, decimals: 2 },
-  { value: 50, label: 'Technology Stacks', suffix: '+', icon: Code2 },
-  { value: 500, label: 'Million Transactions', suffix: 'M+', icon: Zap },
   { value: 24, label: 'Monitoring Coverage', suffix: '/7', icon: Target },
-  { value: 12, label: 'Countries Served', suffix: '', icon: Globe },
+  { value: 6, label: 'Service Verticals', suffix: '', icon: Building2 },
+  { value: 4, label: 'Delivery Locations', suffix: '', icon: Globe },
+  { value: 15, label: 'Technology Partners', suffix: '+', icon: Code2 },
 ];
 
 const differentiators = [
@@ -111,7 +109,7 @@ const caseStudies = [
     tech: 'React, Node.js, AWS',
     result: '65% faster transaction processing',
     image: bankCaseStudy,
-    desc: 'Architected a zero-trust security infrastructure for one of East Africa\'s largest financial institutions, processing millions of daily transactions with military-grade encryption.',
+    desc: 'Architected a zero-trust security infrastructure for one of East Africa\'s largest financial institutions, processing millions of daily transactions with enterprise-grade encryption.',
   },
   {
     title: 'Predictive Logistics Intelligence',
@@ -152,10 +150,10 @@ const techEcosystem = [
 ];
 
 const culturePillars = [
-  { icon: Users, stat: '50+', statLabel: 'Engineers', title: 'Team Collaboration', desc: 'Cross-functional squads across Addis Ababa and Miami work in synchronized sprints.' },
+  { icon: Users, stat: '2', statLabel: 'Continents', title: 'Team Collaboration', desc: 'Cross-functional squads across Addis Ababa and Miami work in synchronized sprints.' },
   { icon: Zap, stat: '2wk', statLabel: 'Sprint Cycle', title: 'Agile Execution', desc: 'Two-week sprints with daily async standups, CI/CD pipelines, and rigorous code review standards.' },
   { icon: Lightbulb, stat: '20%', statLabel: 'R&D Time', title: 'Innovation Mindset', desc: '20% of engineering time dedicated to R&D and internal hackathons.' },
-  { icon: Globe, stat: '4+', statLabel: 'Countries', title: 'Global Operations', desc: 'Our bi-continental model means your project never sleeps.' },
+  { icon: Globe, stat: '2', statLabel: 'Offices', title: 'Global Operations', desc: 'Our bi-continental model means your project never sleeps.' },
 ];
 
 const deliverySteps = [
@@ -184,10 +182,10 @@ const insights = [
 ];
 
 const companyStatItems = [
-  { value: 100, label: 'Enterprise Deployments', suffix: '+', icon: BarChart3 },
-  { value: 50, label: 'Technology Stacks', suffix: '+', icon: Code2 },
-  { value: 99.99, label: 'Infrastructure Availability', suffix: '%', icon: ShieldCheck, decimals: 2 },
   { value: 24, label: 'Active Monitoring', suffix: '/7', icon: Target },
+  { value: 6, label: 'Service Verticals', suffix: '', icon: BarChart3 },
+  { value: 4, label: 'Delivery Locations', suffix: '', icon: Globe },
+  { value: 2, label: 'Continents', suffix: '', icon: ShieldCheck },
 ];
 
 const expandedProfiles = [
@@ -270,15 +268,16 @@ export default function Company() {
             </motion.div>
 
             <motion.h1 variants={heroReveal} className="text-5xl md:text-7xl lg:text-[84px] font-black text-white tracking-[-0.04em] leading-[1.0] mb-8 max-w-5xl">
-              Engineering the{' '}
+              Modern software.{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">
-                Future of Enterprise.
+                Smarter AI.
               </span>
+              {' '}Real results.
             </motion.h1>
 
             <motion.p variants={fadeUp} className="text-[18px] md:text-[20px] text-white/50 font-medium leading-relaxed mb-10 max-w-2xl">
-              A global collective of engineers, strategists, and systems architects building
-              mission-critical technology for businesses, governments, and organizations worldwide.
+              A modern software and AI development company helping businesses build
+              digital products, automate workflows, and modernize operations.
             </motion.p>
 
             <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center gap-4 mb-20">
@@ -411,7 +410,7 @@ export default function Company() {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { metric: '43%', label: 'Avg. Infrastructure Cost Reduction' },
-              { metric: '99.99%', label: 'Infrastructure Uptime Achieved' },
+              { metric: '99.9%', label: 'Infrastructure Uptime' },
               { metric: '3.2M', label: 'Monthly Users Served' },
               { metric: '80%', label: 'Faster Deployment Cycles' },
             ].map((item, i) => (
@@ -442,7 +441,7 @@ export default function Company() {
               <div className="relative z-10">
                 <div className="w-14 h-14 rounded-2xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center mb-6"><Compass size={28} className="text-[#F5A800]" /></div>
                 <h3 className="text-3xl font-black text-slate-950 mb-4">Our Mission</h3>
-                <p className="text-slate-600 text-lg leading-relaxed">To democratize access to enterprise-grade engineering by delivering scalable, secure, and intelligent systems that eliminate technical debt and accelerate growth for businesses worldwide.</p>
+                <p className="text-slate-600 text-lg leading-relaxed">To help every business — from startup to enterprise — build better digital products, automate complex workflows, and modernize operations with modern software and AI.</p>
               </div>
             </motion.div>
             <motion.div variants={fadeUp} className="relative p-10 md:p-12 rounded-[32px] bg-gradient-to-br from-white to-[#f4f4f5] border border-slate-200 overflow-hidden group hover:border-[#F5A800]/30 transition-all duration-500">
@@ -450,7 +449,7 @@ export default function Company() {
               <div className="relative z-10">
                 <div className="w-14 h-14 rounded-2xl bg-[#10b981]/10 border border-[#10b981]/20 flex items-center justify-center mb-6"><Target size={28} className="text-[#10b981]" /></div>
                 <h3 className="text-3xl font-black text-slate-950 mb-4">Our Vision</h3>
-                <p className="text-slate-600 text-lg leading-relaxed">To be the fundamental technology layer powering the next century of digital innovation, where seamless, robust software infrastructure is treated as a basic utility for every enterprise worldwide.</p>
+                <p className="text-slate-600 text-lg leading-relaxed">To be the trusted partner that makes modern software and AI accessible, practical, and impactful for every organization — no hype, just results.</p>
               </div>
             </motion.div>
           </motion.div>

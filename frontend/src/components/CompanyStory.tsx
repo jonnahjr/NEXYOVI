@@ -20,7 +20,7 @@ const CompanyStory = () => {
  Our <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Story</span>
  </h2>
  <p className="text-white/70 max-w-2xl mx-auto text-lg">
- From a bold vision in Addis Ababa to a global network of innovators, we’ve built a platform that powers the future of enterprise technology.
+ From a bold vision in Addis Ababa to a global software and AI company — we help businesses build digital products, automate workflows, and modernize operations.
  </p>
  </motion.div>
  {/* Timeline */}
@@ -32,7 +32,7 @@ const CompanyStory = () => {
  {[
  { year: '2018', title: 'Founded', desc: 'Bootstrapped the first prototype in a co‑working space, focusing on AI‑driven automation.' },
  { year: '2020', title: 'Series A', desc: 'Secured $10M to expand globally and launch the first SaaS product.' },
- { year: '2022', title: 'Global Hubs', desc: 'Opened remote engineering hub in Miami, adding 50+ senior engineers.' },
+  { year: '2022', title: 'Global Hubs', desc: 'Opened a US office in Miami, bridging African talent with American markets.' },
  { year: '2024', title: 'Enterprise Suite', desc: 'Released a full‑stack platform for finance, health, and government sectors.' }].map((item, i) => (
  <motion.div
  key={i}

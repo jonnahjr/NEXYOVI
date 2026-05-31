@@ -33,7 +33,7 @@ const WhyChooseUs = () => {
  </div>
  <h2 className="text-white font-black text-[48px] md:text-[64px] tracking-tighter leading-[1.0] mb-8">Why leaders <br/> <span className="text-white/40 italic">trust us.</span></h2>
  <p className="text-white/50 text-xl leading-relaxed mb-12 font-medium">
- Nexyovi is a comprehensive tech ecosystem. We don't just build software; we architect, secure, and scale the entire digital infrastructure for the world's most ambitious organizations.
+ Nexyovi is a modern software and AI development company. We help businesses build digital products, automate workflows, and modernize operations — without the overhead or the hype.
  </p>
  
  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

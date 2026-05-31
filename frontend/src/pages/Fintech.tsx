@@ -69,7 +69,7 @@ const Fintech = () => {
  <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10">
  {[
  { value: '$2.4T', label: 'Global fintech market by 2030' },
- { value: '99.99%', label: 'Payment gateway uptime SLA' },
+  { value: '99.9%', label: 'Payment gateway uptime' },
  { value: '< 20ms', label: 'Transaction processing time' },
  { value: 'ISO 27001', label: 'Core security standard' }
  ].map((m, i) => (

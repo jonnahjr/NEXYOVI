@@ -1,17 +1,23 @@
 import AIIntelligenceSection from '../components/AIIntelligenceSection';
 import BottlenecksSection from '../components/BottlenecksSection';
+import ClientLogos from '../components/ClientLogos';
 import CompanyMetrics from '../components/CompanyMetrics';
 import CoreDisciplines from '../components/CoreDisciplines';
 import CyberDefenseSection from '../components/CyberDefenseSection';
 import EnterpriseTrustBar from '../components/EnterpriseTrustBar';
 import FeaturedCaseStudy from '../components/FeaturedCaseStudy';
+import FeaturedProjects from '../components/FeaturedProjects';
 import FounderStory from '../components/FounderStory';
 import Hero from '../components/Hero';
 import HeroTrustSection from '../components/HeroTrustSection';
+import ProcessSection from '../components/ProcessSection';
 import IndustriesSection from '../components/IndustriesSection';
 import NetworkInfraSection from '../components/NetworkInfraSection';
 import ServicesSection from '../components/ServicesSection';
+import TechPartners from '../components/TechPartners';
 import Testimonials from '../components/Testimonials';
+import WhyNexyoviSection from '../components/WhyNexyoviSection';
+import WhySwitchSection from '../components/WhySwitchSection';
 
 const Home = () => {
  return (
@@ -20,44 +26,61 @@ const Home = () => {
  {/* 1. Cinematic Hero */}
  <Hero />
 
- {/* 2. Enterprise Trust Layer */}
+ {/* 2. Client Logos */}
+ <ClientLogos />
+
+ {/* 3. Enterprise Trust Layer */}
  <EnterpriseTrustBar />
 
- {/* 3. Core Disciplines / Philosophy */}
+ {/* 4. Why Businesses Choose Nexyovi */}
+ <WhyNexyoviSection />
+
+ {/* 5. Why Companies Switch */}
+ <WhySwitchSection />
+
+ {/* 5. Core Disciplines / Philosophy */}
  <CoreDisciplines />
 
- {/* 4. Core Services Grid (Bento) */}
+ {/* 6. Core Services Grid (Bento) */}
  <ServicesSection />
 
- {/* 5. Cybersecurity Systems */}
+ {/* 7. Cybersecurity Systems */}
  <CyberDefenseSection />
 
- {/* 6. Networking Infrastructure */}
+ {/* 8. Networking Infrastructure */}
  <NetworkInfraSection />
 
- {/* 7. AI Intelligence Systems */}
+ {/* 9. AI Intelligence Systems */}
  <AIIntelligenceSection />
 
- {/* 8. Bottlenecks — Problem vs. Solution */}
+ {/* 10. Our Process */}
+ <ProcessSection />
+
+ {/* 11. Technology Partners */}
+ <TechPartners />
+
+ {/* 12. Bottlenecks — Problem vs. Solution */}
  <BottlenecksSection />
 
- {/* 9. Industries */}
+ {/* 12. Featured Projects */}
+ <FeaturedProjects />
+
+ {/* 13. Industries */}
  <IndustriesSection />
 
- {/* 9. Enterprise Case Studies */}
+ {/* 14. Enterprise Case Studies */}
  <FeaturedCaseStudy />
 
- {/* 10. Company Metrics */}
+ {/* 14. Company Metrics */}
  <CompanyMetrics />
 
- {/* 11. Founder Vision */}
- {/* Note: I will use FounderStory for Founder Vision as they serve the same narrative purpose */}
+ {/* 15. Founder Vision */}
  <FounderStory />
 
- {/* 12. Client Testimonials */}
+ {/* 16. Client Testimonials */}
  <Testimonials />
 
- {/* 13. Final Enterprise CTA */}
+ {/* 17. Final Enterprise CTA */}
  <HeroTrustSection />
 
  </div>

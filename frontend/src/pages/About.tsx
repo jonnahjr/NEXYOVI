@@ -28,18 +28,18 @@ export default function About() {
             </motion.div>
 
             <motion.h1 variants={revealUp} className="text-5xl md:text-6xl lg:text-7xl font-black tracking-[-0.04em] leading-[0.95] text-slate-950">
-              We build the AI your team <span className="text-gradient-aurora">actually trusts.</span>
+              Modern software. Smarter AI. <span className="text-gradient-aurora">Real results.</span>
             </motion.h1>
 
             <motion.p variants={revealUp} className="text-slate-500 text-lg md:text-xl leading-relaxed max-w-3xl mx-auto">
-              No black boxes. No hallucinated answers. Just verified intelligence pulled from the tools you already use.
+              We help businesses build digital products, automate workflows, and modernize operations.
             </motion.p>
 
             <motion.div variants={revealUp} className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 text-left">
               {[
-                { label: 'Daily points processed', value: '100M+' },
                 { label: 'Founded', value: '2024' },
-                { label: 'Team members', value: `${team.length}+` }].map((stat) => (
+                { label: 'Team members', value: `${team.length}` },
+                { label: 'Delivery Locations', value: '2' }].map((stat) => (
                 <div key={stat.label} className="rounded-3xl border border-slate-200 bg-white p-6">
                   <div className="text-4xl font-black tracking-tight text-slate-950 mb-2">{stat.value}</div>
                   <div className="text-sm uppercase tracking-[0.22em] text-slate-400">{stat.label}</div>
@@ -55,13 +55,13 @@ export default function About() {
           <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="space-y-8">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-6 text-[11px] uppercase tracking-[0.2em] text-slate-600">Hello</div>
             <h2 className="text-4xl md:text-5xl font-black tracking-tight text-slate-950">
-              A team of engineers, designers, and operators obsessed with AI adoption.
+              We build digital products that move your business forward.
             </h2>
             <p className="text-slate-500 text-lg leading-relaxed">
-              Most AI tools ask you to trust them blindly. Nexyovi was built on the opposite principle: every answer traces back to a source, every action requires context, and nothing fires without your team in the loop.
+              Nexyovi is a modern software and AI development company. We partner with businesses to build digital products, automate complex workflows, and modernize operations — without the overhead or the hype.
             </p>
             <p className="text-slate-500 text-lg leading-relaxed">
-              We started after watching enterprise teams drown in tools that created more noise than clarity. The pattern was always the same: scattered knowledge, disconnected systems, and people spending half their day just finding information instead of acting.
+              We started after watching teams drown in tools that created more noise than clarity. Our approach is straightforward: understand the problem, design a practical solution, and ship working software — fast.
             </p>
             <div className="rounded-3xl border border-slate-200 bg-white p-8">
               <div className="text-sm uppercase tracking-[0.22em] text-[#F5A800] font-black mb-3">Founder</div>

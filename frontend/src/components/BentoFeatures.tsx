@@ -110,7 +110,7 @@ const BentoFeatures = () => {
  >
  <div className="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
  <div className="relative z-10 flex-1">
- <div className="text-emerald-500 font-black text-[96px] md:text-[120px] mb-2 leading-none tracking-tighter group-hover:scale-105 transition-transform duration-700">99.9%</div>
+ <div className="text-emerald-500 font-black text-[72px] md:text-[96px] mb-2 leading-none tracking-tighter group-hover:scale-105 transition-transform duration-700">Enterprise</div>
  <div className="text-white/40 uppercase tracking-[0.4em] text-sm font-bold pl-2">System Uptime Performance</div>
  </div>
  <div className="relative z-10 flex-1 border-l border-white/10 pl-16 py-4">

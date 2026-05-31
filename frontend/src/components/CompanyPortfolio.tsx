@@ -22,7 +22,7 @@ const CompanyPortfolio = () => {
 
  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
  {[
- { img: bankImg, cat: 'Cyber Security', title: 'Global Bank Security Overhaul', stat: '99.9% Uptime' },
+ { img: bankImg, cat: 'Cyber Security', title: 'Global Bank Security Overhaul', stat: 'Enterprise-grade Uptime' },
  { img: logisticsImg, cat: 'Intelligence', title: 'AI Smart Logistics Engine', stat: '35% Boost' }].map((p, i) => (
  <motion.div
  initial={{ opacity: 0, y: 20 }}

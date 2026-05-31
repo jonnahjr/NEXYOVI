@@ -11,7 +11,7 @@ const Footer = () => {
  const { settings, siteContent } = useSite();
  const [activePolicy, setActivePolicy] = useState<'Terms' | 'Privacy' | 'Legal' | null>(null);
  const footerContent = siteContent?.footer || {};
- const tagline = footerContent.tagline || 'Nexyovi engineers software, infrastructure, and intelligent systems for organizations operating at scale.';
+ const tagline = footerContent.tagline || 'Nexyovi is a modern software and AI development company helping businesses build digital products, automate workflows, and modernize operations.';
  const copyrightExtra = footerContent.copyright_extra || 'Global. All Rights Reserved.';
  const companyName = settings.siteName || 'Nexyovi';
 

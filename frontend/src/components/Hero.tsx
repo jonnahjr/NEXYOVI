@@ -41,9 +41,9 @@ const Hero = () => {
      variants={{ hidden: { opacity: 0, scale: 0.9, filter: 'blur(10px)' }, visible: { opacity: 1, scale: 1, filter: 'blur(0px)', transition: { duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] } } }}
      className="text-[42px] md:text-[58px] lg:text-[68px] font-black text-white tracking-[-0.04em] leading-[1.0] mb-8"
     >
-     We build the AI <br />
-     your team <br />
-     <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">actually trusts.</span>
+     Build Better <br />
+     Software. <br />
+     <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">Faster.</span>
     </motion.h1>
 
     {/* Subheadline */}
@@ -51,7 +51,7 @@ const Hero = () => {
      variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.75, delay: 0.2, ease: EASE_EXPO } } }}
      className="text-[17px] md:text-[19px] text-white/60 font-medium leading-[1.7] mb-12 max-w-[540px]"
     >
-     No black boxes. No hallucinated answers. Just verified intelligence pulled from the tools you already use.
+     We design and develop custom software, AI solutions, web platforms, mobile applications, and modern IT infrastructure for growing businesses.
     </motion.p>
 
     {/* CTA Buttons */}
@@ -60,11 +60,11 @@ const Hero = () => {
      className="flex flex-wrap items-center gap-4"
     >
      <Link to="/contact" id="hero-cta-start-project" className="group relative inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-black font-bold text-[15px] transition-all hover:scale-105">
-      Get started
+      Start a Project
       <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
      </Link>
-     <Link to="/company" id="hero-cta-capabilities" className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold text-[15px] transition-all hover:bg-white/10 hover:border-white/20">
-      See our story
+     <Link to="/portfolio" id="hero-cta-view-work" className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold text-[15px] transition-all hover:bg-white/10 hover:border-white/20">
+      View Our Work
      </Link>
     </motion.div>
    </motion.div>

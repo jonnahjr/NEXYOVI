@@ -36,8 +36,8 @@ export default function SecurityService() {
  </motion.div>
 
  <motion.h1 variants={revealUp} className="text-5xl md:text-7xl lg:text-[80px] font-black leading-[0.95] tracking-tight mb-8">
- Military-Grade <br />
- <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f87171] to-[#ef4444]">Cyber Defense.</span>
+Enterprise-grade <br />
+  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f87171] to-[#ef4444]">Cyber Defense.</span>
  </motion.h1>
 
  <motion.p variants={revealUp} className="text-[#9CA3AF] text-lg md:text-xl max-w-2xl font-medium leading-relaxed mb-12">
@@ -60,7 +60,7 @@ export default function SecurityService() {
  
  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
  {[
- { t: 'Penetration Testing', d: 'Controlled, military-grade simulated attacks to identify and patch vulnerabilities before adversaries exploit them.', i: Crosshair },
+ { t: 'Penetration Testing', d: 'Controlled, expert-led simulated attacks to identify and patch vulnerabilities before adversaries exploit them.', i: Crosshair },
  { t: 'Zero-Trust Architecture', d: 'Continuous verification systems requiring strict authentication for every user and device, regardless of location.', i: Lock },
  { t: 'SOC Operations', d: '24/7/365 active threat monitoring, hunting, and incident response managed by elite security engineers.', i: ShieldAlert },
  { t: 'Vulnerability Assessment', d: 'Comprehensive scanning and architectural review of enterprise networks, cloud instances, and applications.', i: Search },
@@ -104,7 +104,7 @@ export default function SecurityService() {
  </div>
  <div>
  <div className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-1">Threat Block Rate</div>
- <div className="text-3xl font-mono font-black text-slate-950">99.99%</div>
+  <div className="text-3xl font-mono font-black text-slate-950">Enterprise-grade</div>
  </div>
  </div>
  </div>

@@ -56,7 +56,7 @@ const HeroEditor = () => {
  value={form.subtitle}
  onChange={e => setForm({ ...form, subtitle: e.target.value })}
  className={textareaClass}
- placeholder="We engineer military-grade cloud ecosystems..."
+  placeholder="We engineer enterprise-grade cloud ecosystems..."
  />
  </div>
  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -81,10 +81,10 @@ const StatsEditor = () => {
  const { siteContent, updateSiteContent } = useSite();
  const [saved, setSaved] = useState(false);
  const defaultStats = [
- { value: '150+', label: 'Enterprise Deployments' },
- { value: '99.99%', label: 'SLA Guaranteed Uptime' },
+ { value: 'Enterprise', label: 'Deployments' },
+ { value: '24/7', label: 'Active Monitoring' },
  { value: 'AI Native', label: 'Intelligence' },
- { value: '#1', label: 'Tech Agency in East Africa' }
+ { value: 'Zero Trust', label: 'Security' }
  ];
  const [stats, setStats] = useState<any[]>(defaultStats);
 
@@ -141,7 +141,7 @@ const FooterEditor = () => {
  const { siteContent, updateSiteContent } = useSite();
  const [saved, setSaved] = useState(false);
  const [form, setForm] = useState({
- tagline: 'The world\'s most advanced multi-disciplinary tech powerhouse. Dominating Cyber Security, AI, and Software Engineering from Addis Ababa to Miami.',
+  tagline: 'Nexyovi is a modern software and AI development company helping businesses build digital products, automate workflows, and modernize operations.',
  copyright_extra: 'Global. All Rights Reserved.'
  });
 
@@ -190,11 +190,11 @@ const AboutEditor = () => {
  const { siteContent, updateSiteContent } = useSite();
  const [saved, setSaved] = useState(false);
  const [form, setForm] = useState({
- tagline: 'Where Intelligence Meets Infrastructure',
- description: 'Nexyovi is a full-spectrum technology powerhouse headquartered in Addis Ababa with offices in Miami. We engineer elite digital solutions across Cybersecurity, AI, Cloud, and Software Development.',
- founded: '2020',
- employees: '30+',
- countries: '12+'
+  tagline: 'Modern software. Smarter AI. Real results.',
+  description: 'Nexyovi is a modern software and AI development company helping businesses build digital products, automate workflows, and modernize operations.',
+  founded: '2020',
+  employees: '20+',
+  countries: '2'
  });
 
  useEffect(() => {

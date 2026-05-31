@@ -2,96 +2,85 @@ import { motion } from 'framer-motion';
 import {
  ArrowRight,
  BrainCircuit,
- Cloud,
  Code,
  Database,
+ Globe,
+ Lightbulb,
  Network,
- Server,
- ShieldAlert,
- Smartphone
+ Smartphone,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const services = [
  {
+ id: 'software',
+ title: 'Software Development',
+ desc: 'Custom business systems, SaaS platforms, and enterprise applications.',
+ icon: Code,
+ accent: '#F5A800',
+ glow: 'rgba(245,168,0,0.12)',
+ tags: ['Custom Software', 'SaaS', 'Enterprise Apps'],
+ href: '/services/software',
+ },
+ {
  id: 'ai',
- title: 'AI Systems',
- desc: 'Custom LLM integrations and intelligent data pipelines that automate complex workflows.',
+ title: 'AI Development',
+ desc: 'AI assistants, workflow automation, LLM integrations, and intelligent tools.',
  icon: BrainCircuit,
- accent: '#06b6d4',
- glow: 'rgba(6,182,212,0.12)',
- tags: ['Predictive Models', 'Custom LLMs', 'Automation'],
+ accent: '#8b5cf6',
+ glow: 'rgba(139,92,246,0.12)',
+ tags: ['AI Assistants', 'Automation', 'LLM Integrations'],
  href: '/services/ai',
  },
  {
- id: 'cybersecurity',
- title: 'Cybersecurity',
- desc: 'Enterprise-grade threat mitigation, continuous monitoring, and zero-trust infrastructure.',
- icon: ShieldAlert,
- accent: '#10b981',
- glow: 'rgba(16,185,129,0.12)',
- tags: ['Zero-Trust', 'Threat Hunting', 'Compliance'],
- href: '/services/security',
- },
- {
- id: 'software',
- title: 'Software Engineering',
- desc: 'Enterprise architectures engineered for massive concurrency and global scale.',
- icon: Code,
- accent: '#F5A800',
- glow: 'rgba(37,99,235,0.12)',
- tags: ['Microservices', 'API Gateways', 'Event-Driven'],
- href: '/services/software',
- },
- {
- id: 'cloud',
- title: 'Cloud Infrastructure',
- desc: 'Resilient multi-cloud deployments with auto-scaling and cost optimization.',
- icon: Cloud,
- accent: '#8b5cf6',
- glow: 'rgba(139,92,246,0.12)',
- tags: ['Multi-Cloud', 'Kubernetes', 'IaC'],
- href: '/services/cloud',
- },
- {
- id: 'devops',
- title: 'DevOps & CI/CD',
- desc: 'Automated pipelines, infrastructure as code, and continuous delivery at scale.',
- icon: Server,
- accent: '#f59e0b',
- glow: 'rgba(245,158,11,0.12)',
- tags: ['GitOps', 'Terraform', 'Monitoring'],
- href: '/services/software',
- },
- {
- id: 'data',
- title: 'Data & Analytics',
- desc: 'Real-time data lakes, streaming pipelines, and executive intelligence dashboards.',
- icon: Database,
- accent: '#ec4899',
- glow: 'rgba(236,72,153,0.12)',
- tags: ['Data Lakes', 'Kafka', 'BI Dashboards'],
- href: '/services/data',
- },
- {
- id: 'networking',
- title: 'Networking',
- desc: 'Enterprise network design, SD-WAN, and high-availability connectivity solutions.',
- icon: Network,
+ id: 'web',
+ title: 'Web Platforms',
+ desc: 'Modern web applications built for performance and scalability.',
+ icon: Globe,
  accent: '#06b6d4',
  glow: 'rgba(6,182,212,0.12)',
- tags: ['SD-WAN', 'Zero-Trust', 'Redundancy'],
- href: '/services/networking',
+ tags: ['Web Apps', 'SPA', 'API-First'],
+ href: '/services/software',
  },
  {
  id: 'mobile',
  title: 'Mobile Applications',
- desc: 'Native and cross-platform mobile apps built for performance and enterprise security.',
+ desc: 'iOS and Android apps designed for real-world users.',
  icon: Smartphone,
  accent: '#10b981',
  glow: 'rgba(16,185,129,0.12)',
- tags: ['iOS & Android', 'React Native', 'Offline-First'],
+ tags: ['iOS', 'Android', 'Cross-Platform'],
  href: '/services/apps',
+ },
+ {
+ id: 'networking',
+ title: 'Networking & Infrastructure',
+ desc: 'Network design, cloud deployment, server management, and DevOps.',
+ icon: Network,
+ accent: '#f59e0b',
+ glow: 'rgba(245,158,11,0.12)',
+ tags: ['Cloud', 'DevOps', 'Infrastructure'],
+ href: '/services/networking',
+ },
+ {
+ id: 'consulting',
+ title: 'IT Consulting',
+ desc: 'Technology strategy, architecture reviews, and digital transformation guidance.',
+ icon: Lightbulb,
+ accent: '#ec4899',
+ glow: 'rgba(236,72,153,0.12)',
+ tags: ['Strategy', 'Architecture', 'Transformation'],
+ href: '/contact',
+ },
+ {
+ id: 'data',
+ title: 'Data & Analytics',
+ desc: 'Dashboards, reporting systems, and business intelligence solutions.',
+ icon: Database,
+ accent: '#3b82f6',
+ glow: 'rgba(59,130,246,0.12)',
+ tags: ['Dashboards', 'Reporting', 'BI'],
+ href: '/services/data',
  }];
 
 const ServicesSection = () => {
@@ -105,19 +94,19 @@ const ServicesSection = () => {
  <div className="lg:w-1/3">
  <div className="lg:sticky lg:top-32">
  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-6">
- <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse " />
- <span className="text-[11px] font-bold text-slate-600 uppercase tracking-widest">Core Technical Capabilities</span>
- </div>
+  <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse " />
+  <span className="text-[11px] font-bold text-slate-600 uppercase tracking-widest">What We Build</span>
+  </div>
 
- <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-6">
- Services <br />
- We <br />
- <span className="text-[#F5A800]">Provide</span>
- </h2>
+  <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-6">
+  Full-Stack <br />
+  Digital <br />
+  <span className="text-[#F5A800]">Services</span>
+  </h2>
 
- <p className="text-slate-600 text-lg leading-relaxed max-w-sm mb-10 font-medium">
- From threat mitigation to custom AI — we build the digital foundation of tomorrow's enterprise.
- </p>
+  <p className="text-slate-600 text-lg leading-relaxed max-w-sm mb-10 font-medium">
+  From software and AI to infrastructure and strategy — we deliver end-to-end digital solutions for modern businesses.
+  </p>
 
  <Link
  to="/services"

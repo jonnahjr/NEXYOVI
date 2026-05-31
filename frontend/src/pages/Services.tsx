@@ -90,10 +90,10 @@ const processSteps = [
 
 // ── Metrics ───────────────────────────────────────────────────
 const metrics = [
-  { value: 99.99, suffix: '%', label: 'Infrastructure Availability' },
   { value: 247, suffix: '', label: 'Active Monitoring & Support' },
-  { value: 50, suffix: '+', label: 'Technology Stacks' },
-  { value: 100, suffix: '+', label: 'Enterprise Deployments' },
+  { value: 6, suffix: '+', label: 'Core Service Verticals' },
+  { value: 15, suffix: '+', label: 'Technology Partners' },
+  { value: 4, suffix: '', label: 'Delivery Locations' },
 ];
 
 // ── Differentiators ───────────────────────────────────────────

@@ -41,12 +41,12 @@ const values = [
  }];
 
 const differentiators = [
- '30+ Elite Engineers across 4 countries',
- '100% On-Time Delivery Record',
+ 'Senior Engineers across multiple countries',
  'Enterprise Security on every engagement',
- 'GDPR, HIPAA & SOC-2 by default',
  'Dedicated technical lead per project',
- 'Full IP transfer at project completion'];
+ 'Full IP transfer at project completion',
+ 'Agile delivery with continuous deployment',
+ 'Security-first architecture by default'];
 
 const CompanyValues = () => {
  return (

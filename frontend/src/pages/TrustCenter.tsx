@@ -51,7 +51,7 @@ const TrustCenter = () => {
  {
  icon: Server,
  title: "Infrastructure",
- desc: "High-availability multi-region deployments with 99.9% SLA. DDoS protection and automated threat mitigation."
+ desc: "High-availability multi-region deployments with enterprise-grade SLA. DDoS protection and automated threat mitigation."
  },
  {
  icon: FileText,
