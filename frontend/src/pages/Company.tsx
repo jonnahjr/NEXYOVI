@@ -542,32 +542,32 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          10. TRUST & CERTIFICATIONS — Creamy White
+          10. TRUST & CERTIFICATIONS — Dark Section
          ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-[#f4f4f5] border-t border-slate-200 overflow-hidden">
+      <section className="relative py-28 md:py-36 bg-[#02040a] border-t border-white/[0.05] overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute bottom-0 right-1/4 w-[600px] h-[400px] bg-[#F5A800]/5 blur-[100px] rounded-full" />
+          <div className="absolute bottom-0 right-1/4 w-[600px] h-[400px] bg-[#F5A800]/8 blur-[100px] rounded-full" />
         </div>
         <div className="container max-w-5xl mx-auto px-6 relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="text-center mb-16">
             <motion.div variants={fadeUp}>
-              <SectionBadge label="Trust & Compliance" />
+              <SectionBadge label="Trust & Compliance" dark />
             </motion.div>
-            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-4">
-              Certifications{' '}<span className="text-slate-500">& Standards.</span>
+            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-4">
+              Certifications{' '}<span className="text-white/40">& Standards.</span>
             </motion.h2>
-            <motion.p variants={fadeUp} className="text-slate-600 text-lg font-medium max-w-xl mx-auto">We hold ourselves to the highest standards of security, privacy, and compliance — worldwide.</motion.p>
+            <motion.p variants={fadeUp} className="text-white/50 text-lg font-medium max-w-xl mx-auto">We hold ourselves to the highest standards of security, privacy, and compliance — worldwide.</motion.p>
           </motion.div>
 
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {certs.map((cert) => (
-              <motion.div key={cert.name} variants={fadeUp} className="group p-6 rounded-[24px] bg-white border border-slate-200 hover:border-[#F5A800]/40 transition-all duration-500">
+              <motion.div key={cert.name} variants={fadeUp} className="group p-6 rounded-[24px] bg-white/[0.03] border border-white/[0.08] hover:border-[#F5A800]/40 transition-all duration-500">
                 <div className="flex items-start justify-between mb-4">
                   <div className="w-11 h-11 rounded-2xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center text-[#F5A800] group-hover:bg-[#F5A800] group-hover:text-white transition-all duration-500"><ShieldCheck size={20} /></div>
-                  <span className={`text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full border ${cert.status === 'Compliant' ? 'bg-emerald-50 border-emerald-200 text-emerald-600' : 'bg-amber-50 border-amber-200 text-amber-600'}`}>{cert.status}</span>
+                  <span className={`text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full border ${cert.status === 'Compliant' ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' : 'bg-amber-500/10 border-amber-500/20 text-amber-400'}`}>{cert.status}</span>
                 </div>
-                <h3 className="text-lg font-black text-slate-950 mb-1 group-hover:text-[#F5A800] transition-colors">{cert.name}</h3>
-                <p className="text-slate-500 text-sm font-medium">{cert.desc}</p>
+                <h3 className="text-lg font-black text-white mb-1 group-hover:text-[#F5A800] transition-colors">{cert.name}</h3>
+                <p className="text-white/50 text-sm font-medium">{cert.desc}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -575,29 +575,29 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          11. CAREERS — Light Section
+          11. CAREERS — Dark Section
          ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-white border-t border-slate-200 overflow-hidden">
+      <section className="relative py-28 md:py-36 bg-[#02040a] border-t border-white/[0.05] overflow-hidden">
         <div className="container max-w-5xl mx-auto px-6 relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="text-center mb-16">
             <motion.div variants={fadeUp}>
-              <SectionBadge label="Careers" />
+              <SectionBadge label="Careers" dark />
             </motion.div>
-            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-4">
+            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-4">
               Join the{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Team.</span>
             </motion.h2>
-            <motion.p variants={fadeUp} className="text-slate-500 text-lg font-medium max-w-xl mx-auto">Build modern software and AI solutions with a team that ships, learns, and grows together.</motion.p>
+            <motion.p variants={fadeUp} className="text-white/50 text-lg font-medium max-w-xl mx-auto">Build modern software and AI solutions with a team that ships, learns, and grows together.</motion.p>
           </motion.div>
 
           {featuredJobs.length > 0 ? (
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="space-y-4 max-w-3xl mx-auto">
               {featuredJobs.map((job: any) => (
-                <motion.div key={job.id} variants={fadeUp} className="group relative bg-white rounded-[20px] border border-slate-200 p-6 transition-all duration-500 hover:border-[#F5A800]/30 hover:-translate-y-0.5 flex items-center justify-between">
+                <motion.div key={job.id} variants={fadeUp} className="group relative bg-white/[0.03] rounded-[20px] border border-white/[0.08] p-6 transition-all duration-500 hover:border-[#F5A800]/30 hover:-translate-y-0.5 flex items-center justify-between">
                   <div>
-                    <h3 className="text-lg font-black text-slate-950 group-hover:text-[#F5A800] transition-colors">{job.title}</h3>
-                    <p className="text-slate-500 text-sm font-medium mt-1">{job.department} · {job.location}</p>
+                    <h3 className="text-lg font-black text-white group-hover:text-[#F5A800] transition-colors">{job.title}</h3>
+                    <p className="text-white/40 text-sm font-medium mt-1">{job.department} · {job.location}</p>
                   </div>
-                  <Link to={`/jobs/${job.id}`} className="shrink-0 w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-500 group-hover:bg-[#F5A800] group-hover:text-white group-hover:border-[#F5A800] transition-all duration-300">
+                  <Link to={`/jobs/${job.id}`} className="shrink-0 w-10 h-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white/40 group-hover:bg-[#F5A800] group-hover:text-white group-hover:border-[#F5A800] transition-all duration-300">
                     <ArrowRight size={16} />
                   </Link>
                 </motion.div>
@@ -610,7 +610,7 @@ export default function Company() {
             </motion.div>
           ) : (
             <motion.div variants={fadeUp} className="text-center">
-              <p className="text-slate-400 text-lg font-medium">No open positions right now. Check back soon.</p>
+              <p className="text-white/30 text-lg font-medium">No open positions right now. Check back soon.</p>
             </motion.div>
           )}
         </div>
