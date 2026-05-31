@@ -11,6 +11,18 @@ import redietLinkedin from '../assets/linkedin_rediet_tsigeberhan.jpg';
 
 const initialTeam = [
  { id: '1', name: 'Yonas Bogale', role: 'Founder & CEO', bio: 'Visionary leader with 12+ years in tech and business strategy across two continents.', img: yonasImg },
+ { id: '2', name: 'Amanuel Tesfaye', role: 'Chief Technology Officer', bio: 'Software architect and engineer with deep expertise in distributed systems, cloud infrastructure, and AI/ML deployment.', initials: 'AT', color: '#8b5cf6' },
+ { id: '3', name: 'Selamawit Hailu', role: 'Head of Engineering', bio: 'Leads engineering teams across web, mobile, and infrastructure. Passionate about building scalable systems and mentoring developers.', initials: 'SH', color: '#10b981' },
+ { id: '4', name: 'Dawit Eshetu', role: 'Senior Full-Stack Developer', bio: 'Builds production-grade web applications with React, Node.js, and cloud-native technologies. Focused on performance and clean architecture.', initials: 'DE', color: '#3b82f6' },
+ { id: '5', name: 'Meron Tadesse', role: 'UI/UX Designer', bio: 'Designs intuitive interfaces and experiences for web and mobile products. Advocates for user-centered design and accessibility.', initials: 'MT', color: '#ec4899' },
+ { id: '6', name: 'Henok Alemu', role: 'DevOps Engineer', bio: 'Automates infrastructure, manages CI/CD pipelines, and ensures system reliability. Expert in Docker, Kubernetes, and cloud platforms.', initials: 'HA', color: '#06b6d4' },
+ { id: '7', name: 'Tsion Wondimu', role: 'Project Manager', bio: 'Keeps projects on track, on time, and on budget. Bridges client goals with engineering execution across all service verticals.', initials: 'TW', color: '#f59e0b' },
+ { id: '8', name: 'Betelhem Assefa', role: 'AI/ML Engineer', bio: 'Develops intelligent systems and LLM-powered solutions. Passionate about making AI practical and accessible for real business problems.', initials: 'BA', color: '#F5A800' },
+ { id: '9', name: 'Nahom Girmachew', role: 'Backend Developer', bio: 'Designs and builds scalable server-side systems, REST APIs, and data pipelines with Node.js and Python.', initials: 'NG', color: '#a855f7' },
+ { id: '10', name: 'Frehiwot Tadesse', role: 'QA Engineer', bio: 'Ensures product quality through automated and manual testing. Builds test frameworks and enforces release standards.', initials: 'FT', color: '#14b8a6' },
+ { id: '11', name: 'Kidus Yonas', role: 'Mobile Developer', bio: 'Builds cross-platform mobile applications with React Native and Flutter. Focused on smooth UX and reliable offline support.', initials: 'KY', color: '#e11d48' },
+ { id: '12', name: 'Liya Wondesen', role: 'Data Analyst', bio: 'Turns raw data into actionable insights. Builds dashboards, reports, and data models that drive business decisions.', initials: 'LW', color: '#0ea5e9' },
+ { id: '13', name: 'Biruk Mamo', role: 'Security Engineer', bio: 'Hardens infrastructure, conducts penetration testing, and enforces security best practices across all projects and systems.', initials: 'BM', color: '#84cc16' },
 ];
 
 const initialTestimonials = [

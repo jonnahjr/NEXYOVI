@@ -1,49 +1,37 @@
-import { animate, motion, useInView, useMotionValue, useTransform } from 'framer-motion';
-import { useEffect, useRef } from 'react';
-import { Building2, Activity, Globe, ShieldCheck } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { Code, Gamepad2, Shield, Sparkles } from 'lucide-react';
 
 const metrics = [
  {
-  value: 'Enterprise',
-  label: 'Enterprise Deployments',
-  icon: Building2,
+  headline: '25+ Projects Delivered',
+  tags: ['Software', 'AI', 'Infrastructure'],
+  sub: 'Addis Ababa Based',
+  icon: Code,
   color: '#F5A800',
  },
  {
-  value: 24,
-  suffix: '/7',
-  label: 'Active Monitoring',
-  icon: Activity,
-  color: '#3b82f6',
- },
- {
-  value: 'Global',
-  label: 'Operations',
-  icon: Globe,
+  headline: '10+ Technologies Used Daily',
+  tags: ['Modern Stack', 'Cloud Native', 'Open Source'],
+  sub: 'Production Ready',
+  icon: Sparkles,
   color: '#8b5cf6',
  },
  {
-  value: 'Zero',
-  label: 'Critical Security Breaches',
-  icon: ShieldCheck,
+  headline: 'Growing Since 2024',
+  tags: ['Multi-Industry', 'Security-Focused', 'Modern Engineering'],
+  sub: 'Trusted by Startups & Enterprises',
+  icon: Shield,
   color: '#10b981',
  },
+ {
+  headline: 'Zero Critical Breaches',
+  tags: ['Encrypted by Default', 'Zero Trust', 'Audited'],
+  sub: 'Security-First Development',
+  icon: Gamepad2,
+  color: '#3b82f6',
+ },
 ];
-
-function AnimatedCounter({ value, suffix, duration = 2.5 }: { value: number; suffix: string; duration?: number }) {
- const count = useMotionValue(0);
- const rounded = useTransform(count, (latest) => Math.floor(latest) + suffix);
- const ref = useRef(null);
- const isInView = useInView(ref, { once: true, margin: '-60px' });
-
- useEffect(() => {
-  if (isInView) {
-   animate(count, value, { duration, ease: [0.16, 1, 0.3, 1] });
-  }
- }, [isInView, value, duration, count]);
-
- return <motion.span ref={ref} className="tabular-nums">{rounded}</motion.span>;
-}
 
 const containerVariants = {
  hidden: {},
@@ -92,14 +80,14 @@ export default function CompanyMetrics() {
        <span className="absolute inline-flex h-full w-full rounded-full bg-[#F5A800] animate-ping opacity-75" />
        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#F5A800]" />
       </span>
-      <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50">By The Numbers</span>
+      <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50">Trust Metrics</span>
      </div>
-     <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight">
-      Proven at{' '}
-      <span className="bg-gradient-to-r from-[#F5A800] via-amber-400 to-[#8b5cf6] bg-clip-text text-transparent">
-       scale
-      </span>
-     </h2>
+      <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight">
+       Built to{' '}
+       <span className="bg-gradient-to-r from-[#F5A800] via-amber-400 to-[#8b5cf6] bg-clip-text text-transparent">
+        deliver
+       </span>
+      </h2>
     </motion.div>
 
     {/* Metrics grid */}
@@ -142,20 +130,26 @@ export default function CompanyMetrics() {
           <Icon size={20} style={{ color: metric.color }} strokeWidth={2} />
          </div>
 
-         {/* Value + Label */}
-         <div>
+         {/* Headline + Tags */}
+         <div className="text-center">
           <div
-           className="text-5xl md:text-6xl font-black tracking-tight transition-colors duration-500"
+           className="text-2xl md:text-3xl font-black tracking-tight transition-colors duration-500 leading-tight"
            style={{ color: metric.color }}
           >
-           {typeof metric.value === 'string' ? (
-            <span>{metric.value}</span>
-           ) : (
-            <AnimatedCounter value={metric.value} suffix={metric.suffix} />
-           )}
+           {metric.headline}
           </div>
-          <div className="mt-1.5 text-[11px] font-bold uppercase tracking-[0.3em] text-white/40 group-hover:text-white/60 transition-colors duration-500">
-           {metric.label}
+          <div className="flex flex-wrap items-center justify-center gap-1.5 mt-4">
+           {metric.tags.map((tag) => (
+            <span
+             key={tag}
+             className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.15em] border border-white/[0.06] bg-white/[0.03] text-white/40"
+            >
+             {tag}
+            </span>
+           ))}
+          </div>
+          <div className="mt-3 text-[11px] font-medium text-white/25">
+           {metric.sub}
           </div>
          </div>
         </div>

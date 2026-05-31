@@ -56,7 +56,7 @@ const HeroEditor = () => {
  value={form.subtitle}
  onChange={e => setForm({ ...form, subtitle: e.target.value })}
  className={textareaClass}
-  placeholder="We engineer enterprise-grade cloud ecosystems..."
+ placeholder="We engineer enterprise-grade cloud ecosystems..."
  />
  </div>
  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -76,65 +76,22 @@ const HeroEditor = () => {
  );
 };
 
-// ── STATS SECTION EDITOR ──
-const StatsEditor = () => {
- const { siteContent, updateSiteContent } = useSite();
- const [saved, setSaved] = useState(false);
- const defaultStats = [
- { value: 'Enterprise', label: 'Deployments' },
- { value: '24/7', label: 'Active Monitoring' },
- { value: 'AI Native', label: 'Intelligence' },
- { value: 'Zero Trust', label: 'Security' }
- ];
- const [stats, setStats] = useState<any[]>(defaultStats);
-
- useEffect(() => {
- if (siteContent?.stats) setStats(siteContent.stats);
- }, [siteContent]);
-
- const handleSave = async (e: any) => {
- e.preventDefault();
- await updateSiteContent('stats', stats);
- setSaved(true);
- setTimeout(() => setSaved(false), 3000);
- };
-
- return (
+// ── METRICS NOTE ──
+const MetricsNote = () => (
  <div className="space-y-5">
- <p className="text-sm text-white/40">Edit the four key metrics displayed in the Trust Bar below the hero section.</p>
- <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
- {stats.map((stat, i) => (
- <div key={i} className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-4 space-y-3">
- <p className="text-xs font-bold text-white/20 uppercase tracking-widest">Stat #{i + 1}</p>
- <div>
- <label className={labelClass}>Value / Number</label>
- <input
- type="text"
- value={stat.value}
- onChange={e => { const n = [...stats]; n[i] = { ...n[i], value: e.target.value }; setStats(n); }}
- className={inputClass + " text-xl font-black text-[#F5A800]"}
- placeholder="150+"
- />
+ <div className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-6">
+ <div className="flex items-center gap-3 mb-4">
+ <BarChart3 size={20} className="text-[#F5A800]" />
+ <h4 className="text-sm font-bold text-white uppercase tracking-widest">Trust Metrics</h4>
  </div>
- <div>
- <label className={labelClass}>Label</label>
- <input
- type="text"
- value={stat.label}
- onChange={e => { const n = [...stats]; n[i] = { ...n[i], label: e.target.value }; setStats(n); }}
- className={inputClass}
- placeholder="Enterprise Deployments"
- />
+ <p className="text-sm text-white/60 leading-relaxed mb-4">
+ Trust metrics (the four stat cards below the hero) are hardcoded directly in the
+ <code className="text-[#F5A800] bg-white/[0.04] px-1.5 py-0.5 rounded mx-1">CompanyMetrics.tsx</code>
+ component. To update them, edit that component's source code.
+ </p>
  </div>
  </div>
- ))}
- </div>
- <div className="flex justify-end">
- <SaveButton onSave={handleSave} saved={saved} />
- </div>
- </div>
- );
-};
+);
 
 // ── FOOTER CONTENT EDITOR ──
 const FooterEditor = () => {
@@ -242,7 +199,7 @@ const AboutEditor = () => {
 // ── MAIN CONTENT PAGE ──
 const tabs = [
  { id: 'hero', label: 'Hero Section', icon: LayoutTemplate, description: 'Main headline, subtitle and CTA buttons' },
- { id: 'stats', label: 'Stats / Trust Bar', icon: BarChart3, description: 'Key metrics below the hero' },
+ { id: 'metrics', label: 'Trust Metrics', icon: BarChart3, description: 'Hardcoded stat cards (edit in code)' },
  { id: 'about', label: 'About / Company', icon: Globe, description: 'Company identity and key facts' },
  { id: 'footer', label: 'Footer Text', icon: FileText, description: 'Footer tagline and copyright text' }];
 
@@ -253,7 +210,7 @@ const AdminContent = () => {
  const renderEditor = () => {
  switch (activeTab) {
  case 'hero': return <HeroEditor />;
- case 'stats': return <StatsEditor />;
+ case 'metrics': return <MetricsNote />;
  case 'about': return <AboutEditor />;
  case 'footer': return <FooterEditor />;
  default: return null;

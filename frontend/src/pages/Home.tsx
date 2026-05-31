@@ -1,9 +1,7 @@
-import AIIntelligenceSection from '../components/AIIntelligenceSection';
 import BottlenecksSection from '../components/BottlenecksSection';
 import ClientLogos from '../components/ClientLogos';
 import CompanyMetrics from '../components/CompanyMetrics';
 import CoreDisciplines from '../components/CoreDisciplines';
-import CyberDefenseSection from '../components/CyberDefenseSection';
 import EnterpriseTrustBar from '../components/EnterpriseTrustBar';
 import FeaturedCaseStudy from '../components/FeaturedCaseStudy';
 import FeaturedProjects from '../components/FeaturedProjects';
@@ -12,7 +10,6 @@ import Hero from '../components/Hero';
 import HeroTrustSection from '../components/HeroTrustSection';
 import ProcessSection from '../components/ProcessSection';
 import IndustriesSection from '../components/IndustriesSection';
-import NetworkInfraSection from '../components/NetworkInfraSection';
 import ServicesSection from '../components/ServicesSection';
 import TechPartners from '../components/TechPartners';
 import Testimonials from '../components/Testimonials';
@@ -44,16 +41,7 @@ const Home = () => {
  {/* 6. Core Services Grid (Bento) */}
  <ServicesSection />
 
- {/* 7. Cybersecurity Systems */}
- <CyberDefenseSection />
-
- {/* 8. Networking Infrastructure */}
- <NetworkInfraSection />
-
- {/* 9. AI Intelligence Systems */}
- <AIIntelligenceSection />
-
- {/* 10. Our Process */}
+ {/* 7. Our Process */}
  <ProcessSection />
 
  {/* 11. Technology Partners */}
