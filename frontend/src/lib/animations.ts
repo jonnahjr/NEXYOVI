@@ -131,7 +131,7 @@ export const hoverLift = {
 };
 
 export const hoverGlow = {
-  whileHover: { y: -4, boxShadow: '0 0 40px rgba(37,99,235,0.4)', transition: { duration: 0.3 } },
+  whileHover: { y: -4, transition: { duration: 0.3 } },
   whileTap:   { scale: 0.98 },
 };
 

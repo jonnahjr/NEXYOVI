@@ -14,54 +14,54 @@ import ServicesSection from '../components/ServicesSection';
 import Testimonials from '../components/Testimonials';
 
 const Home = () => {
-  return (
-    <div className="bg-[#02040a] min-h-screen text-white font-sans selection:bg-[#F5A800]/30">
+ return (
+ <div className="bg-slate-50 min-h-screen text-slate-900 font-sans selection:bg-[#F5A800]/30">
 
-      {/* 1. Cinematic Hero */}
-      <Hero />
+ {/* 1. Cinematic Hero */}
+ <Hero />
 
-      {/* 2. Enterprise Trust Layer */}
-      <EnterpriseTrustBar />
+ {/* 2. Enterprise Trust Layer */}
+ <EnterpriseTrustBar />
 
-      {/* 3. Core Disciplines / Philosophy */}
-      <CoreDisciplines />
+ {/* 3. Core Disciplines / Philosophy */}
+ <CoreDisciplines />
 
-      {/* 4. Core Services Grid (Bento) */}
-      <ServicesSection />
+ {/* 4. Core Services Grid (Bento) */}
+ <ServicesSection />
 
-      {/* 5. Cybersecurity Systems */}
-      <CyberDefenseSection />
+ {/* 5. Cybersecurity Systems */}
+ <CyberDefenseSection />
 
-      {/* 6. Networking Infrastructure */}
-      <NetworkInfraSection />
+ {/* 6. Networking Infrastructure */}
+ <NetworkInfraSection />
 
-      {/* 7. AI Intelligence Systems */}
-      <AIIntelligenceSection />
+ {/* 7. AI Intelligence Systems */}
+ <AIIntelligenceSection />
 
-      {/* 8. Bottlenecks — Problem vs. Solution */}
-      <BottlenecksSection />
+ {/* 8. Bottlenecks — Problem vs. Solution */}
+ <BottlenecksSection />
 
-      {/* 9. Industries */}
-      <IndustriesSection />
+ {/* 9. Industries */}
+ <IndustriesSection />
 
-      {/* 9. Enterprise Case Studies */}
-      <FeaturedCaseStudy />
+ {/* 9. Enterprise Case Studies */}
+ <FeaturedCaseStudy />
 
-      {/* 10. Company Metrics */}
-      <CompanyMetrics />
+ {/* 10. Company Metrics */}
+ <CompanyMetrics />
 
-      {/* 11. Founder Vision */}
-      {/* Note: I will use FounderStory for Founder Vision as they serve the same narrative purpose */}
-      <FounderStory />
+ {/* 11. Founder Vision */}
+ {/* Note: I will use FounderStory for Founder Vision as they serve the same narrative purpose */}
+ <FounderStory />
 
-      {/* 12. Client Testimonials */}
-      <Testimonials />
+ {/* 12. Client Testimonials */}
+ <Testimonials />
 
-      {/* 13. Final Enterprise CTA */}
-      <HeroTrustSection />
+ {/* 13. Final Enterprise CTA */}
+ <HeroTrustSection />
 
-    </div>
-  );
+ </div>
+ );
 };
 
 export default Home;
