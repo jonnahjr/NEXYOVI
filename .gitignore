@@ -36,3 +36,6 @@ dist-ssr/
 # Build
 build/
 **/build/
+
+# Windows reserved device names (nul, con, aux, etc.)
+nul
