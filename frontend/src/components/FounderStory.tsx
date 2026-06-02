@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Linkedin } from 'lucide-react';
 import { useRef } from 'react';
 import yonasImg from '../assets/yonas.jpg';
 
@@ -73,33 +74,41 @@ export default function FounderStory() {
       </div>
      </motion.div>
 
-     {/* Right: Content */}
-     <motion.div
-      initial={{ opacity: 0, x: 30 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-     >
-      <div className="flex items-start gap-6 mb-8">
-       <span className="text-[72px] md:text-[96px] font-black text-white/[0.04] leading-none tracking-tighter select-none">7</span>
-       <div className="pt-2">
+      {/* Right: Content */}
+      <motion.div
+       initial={{ opacity: 0, x: 30 }}
+       whileInView={{ opacity: 1, x: 0 }}
+       viewport={{ once: true }}
+       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+       className="flex flex-col justify-center"
+      >
+       <div className="mb-10">
         <h2 className="text-[42px] md:text-[52px] font-black text-white tracking-[-0.03em] leading-[1.05]">
          Yonas Bogale
         </h2>
-        <div className="text-[13px] font-bold text-white/30 tracking-[0.2em] uppercase mt-1">Founder & CEO</div>
+        <div className="text-[13px] font-bold text-[#F5A800] tracking-[0.2em] uppercase mt-2">Founder & CEO</div>
        </div>
-      </div>
 
-      <p className="text-white/60 text-lg md:text-xl leading-relaxed mb-8">
-       Passionate about building practical technology that helps organizations grow faster, operate smarter, and compete in a digital-first world.
-      </p>
+       <div className="text-2xl md:text-3xl font-black text-white leading-tight mb-8">
+        "Building practical software and AI systems that help organizations modernize operations, improve efficiency, and unlock new revenue opportunities."
+       </div>
 
-      <div className="h-px w-full bg-white/[0.06] my-6" />
+       <div className="h-px w-24 bg-white/20 mb-8" />
 
-      <p className="text-white/40 text-base md:text-lg leading-relaxed">
-       Nexyovi was founded to help businesses access modern software engineering, AI capabilities, and digital infrastructure without the complexity of large consulting firms.
-      </p>
-     </motion.div>
+       <p className="text-white/60 text-lg leading-relaxed mb-10">
+        Nexyovi was established with a singular focus: delivering production-ready engineering and real AI value. We strip away the consulting bloat and focus entirely on shipping high-performance software that solves hard business problems. 
+       </p>
+
+       <a
+        href="https://www.linkedin.com/in/yonas-bogale/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-[#0a66c2]/10 border border-[#0a66c2]/20 text-white font-bold hover:bg-[#0a66c2]/20 transition-all duration-300 w-fit"
+       >
+        <Linkedin size={20} className="text-[#0a66c2]" />
+        Connect on LinkedIn
+       </a>
+      </motion.div>
 
     </div>
    </div>

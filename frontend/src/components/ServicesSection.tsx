@@ -140,7 +140,12 @@ const ServicesSection = () => {
  {s.tags.map((tag) => (
  <span
  key={tag}
- className="text-[12px] font-bold px-5 py-2.5 rounded-full bg-slate-100 text-slate-600 uppercase tracking-widest border border-slate-200"
+ className="text-[12px] font-bold px-5 py-2.5 rounded-full uppercase tracking-widest border transition-colors duration-300"
+ style={{
+  backgroundColor: '#F5A800',
+  borderColor: '#F5A800',
+  color: '#000000',
+ }}
  >
  {tag}
  </span>

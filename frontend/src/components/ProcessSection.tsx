@@ -132,15 +132,7 @@ export default function ProcessSection() {
         {steps[0].num}
        </div>
 
-       {/* Step label */}
-       <div className="text-center">
-        <h3 ref={leftLabelRef} className="text-[28px] md:text-[36px] font-black text-white tracking-tight leading-tight transition-all duration-200">
-         {steps[0].label}
-        </h3>
-        <p ref={leftDescRef} className="text-white/40 text-base md:text-lg leading-relaxed mt-4 max-w-sm mx-auto transition-all duration-200">
-         {steps[0].desc}
-        </p>
-       </div>
+       {/* Left side will only contain emoji and number to prevent text duplication */}
 
        {/* Step indicator dots */}
        <div className="flex items-center gap-2 mt-8">

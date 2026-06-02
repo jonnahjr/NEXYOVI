@@ -20,8 +20,8 @@ const solutions = [
  },
  {
  id: '04', tag: 'Credentialing', title: 'Digital Certification',
- desc: 'Blockchain-anchored academic credential systems that make student achievements verifiable, portable, and tamper-proof. Integrated with LinkedIn, employer APIs, and global credential networks.',
- specs: ['Blockchain-Anchored Records', 'Employer API Integrations', 'Verifiable Credentials (VC)'], icon: Award
+ desc: 'Secure digital academic credential systems that make student achievements verifiable, portable, and tamper-proof. Integrated with LinkedIn, employer APIs, and global credential networks.',
+ specs: ['Secure Digital Records', 'Employer API Integrations', 'Verifiable Credentials (VC)'], icon: Award
  }
 ];
 
@@ -48,7 +48,7 @@ const EduTech = () => {
  <div className="pt-[80px] bg-slate-900">
  <div className="container mx-auto px-6 lg:px-16">
  <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10">
- {[{ value: '6.3B', label: 'Learners served by EdTech globally' }, { value: '40%', label: 'Better outcomes with AI personalization' }, { value: '99.9%', label: 'Streaming uptime SLA for institutions' }, { value: 'Web3', label: 'Blockchain-verified credential issuance' }].map((m, i) => (
+ {[{ value: '6.3B', label: 'Learners served by EdTech globally' }, { value: '40%', label: 'Better outcomes with AI personalization' }, { value: '99.9%', label: 'Streaming uptime SLA for institutions' }, { value: 'Trust', label: 'Verifiable credential issuance' }].map((m, i) => (
  <div key={i} className="py-10 px-8">
  <div className="text-3xl md:text-4xl font-black text-white tracking-tighter mb-2">{m.value}</div>
  <div className="text-xs font-bold uppercase tracking-widest text-white/50">{m.label}</div>

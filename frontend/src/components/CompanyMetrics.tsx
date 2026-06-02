@@ -1,35 +1,49 @@
 import { motion } from 'framer-motion';
 import { useRef } from 'react';
-import { Code, Gamepad2, Shield, Sparkles } from 'lucide-react';
+import { Server, Activity, ShieldCheck, Briefcase, Globe, Cpu } from 'lucide-react';
 
 const metrics = [
  {
-  headline: '25+ Projects Delivered',
-  tags: ['Software', 'AI', 'Infrastructure'],
-  sub: 'Addis Ababa Based',
-  icon: Code,
+  headline: '99.9%',
+  tags: ['High Availability', 'SLA'],
+  sub: 'Infrastructure Uptime',
+  icon: Server,
   color: '#F5A800',
  },
  {
-  headline: '10+ Technologies Used Daily',
-  tags: ['Modern Stack', 'Cloud Native', 'Open Source'],
-  sub: 'Production Ready',
-  icon: Sparkles,
+  headline: '24/7',
+  tags: ['Proactive', 'Response'],
+  sub: 'System Monitoring',
+  icon: Activity,
   color: '#8b5cf6',
  },
  {
-  headline: 'Growing Since 2024',
-  tags: ['Multi-Industry', 'Security-Focused', 'Modern Engineering'],
-  sub: 'Trusted by Startups & Enterprises',
-  icon: Shield,
+  headline: 'Security-First',
+  tags: ['Encrypted', 'Compliant'],
+  sub: 'Engineering Standards',
+  icon: ShieldCheck,
   color: '#10b981',
  },
  {
-  headline: 'Security-first Engineering',
-  tags: ['Encrypted by Default', 'Modern Security', 'Audited'],
-  sub: 'Security-First Development',
-  icon: Gamepad2,
+  headline: 'Multi-Industry',
+  tags: ['FinTech', 'HealthTech', 'Gov'],
+  sub: 'Domain Expertise',
+  icon: Briefcase,
+  color: '#ef4444',
+ },
+ {
+  headline: 'Global',
+  tags: ['Distributed', 'Scalable'],
+  sub: 'Delivery Model',
+  icon: Globe,
   color: '#3b82f6',
+ },
+ {
+  headline: 'AI & Software',
+  tags: ['Engineers', 'Architects'],
+  sub: 'Specialist Teams',
+  icon: Cpu,
+  color: '#0ea5e9',
  },
 ];
 
@@ -80,7 +94,7 @@ export default function CompanyMetrics() {
        <span className="absolute inline-flex h-full w-full rounded-full bg-[#F5A800] animate-ping opacity-75" />
        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#F5A800]" />
       </span>
-      <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50">Trust Metrics</span>
+       <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50">Delivery Metrics</span>
      </div>
       <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-[-0.04em] leading-[0.95] max-w-2xl mx-auto">
        Built to{' '}
@@ -91,13 +105,13 @@ export default function CompanyMetrics() {
     </motion.div>
 
     {/* Metrics grid */}
-    <motion.div
-     variants={containerVariants}
-     initial="hidden"
-     whileInView="visible"
-     viewport={{ once: true, margin: '-60px' }}
-     className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4"
-    >
+     <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-60px' }}
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+     >
      {metrics.map((metric, i) => {
       const Icon = metric.icon;
       return (

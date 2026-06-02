@@ -124,7 +124,6 @@ function App() {
  <Route path="/cloud" element={<Navigate to="/services/cloud" replace />} />
  <Route path="/data" element={<Navigate to="/services/data" replace />} />
  <Route path="/apps" element={<Navigate to="/services/apps" replace />} />
- <Route path="/web3" element={<Navigate to="/services/software" replace />} />
 
  <Route path="/industries" element={<Industries />} />
  <Route path="/fintech" element={<Navigate to="/industries" replace />} />

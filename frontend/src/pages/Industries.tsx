@@ -13,7 +13,7 @@ import { EASE_EXPO } from '../lib/animations';
 const industries = [
   {
     id: 'fintech', name: 'FinTech', icon: Activity, accent: '#F5A800',
-    desc: 'High-frequency trading systems, secure payment gateways, core banking modernization, and blockchain infrastructure engineered for zero latency.',
+    desc: 'High-frequency trading systems, secure payment gateways, and core banking modernization engineered for zero latency.',
     challenges: ['Fraud Detection & Prevention', 'Regulatory Compliance (PCI-DSS)', 'Payment Processing at Scale', 'Risk Management Systems'],
   },
   {

@@ -144,7 +144,6 @@ const Footer = () => {
  { label: 'Software Engineering', path: '/software' },
  { label: 'Artificial Intelligence', path: '/ai' },
  { label: 'Cloud & DevOps', path: '/cloud' },
- { label: 'Web3 & Blockchain', path: '/web3' },
  { label: 'Data & Analytics', path: '/data' },
  { label: 'Mobile App Dev', path: '/apps' }
  ].map(item => (

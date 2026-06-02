@@ -65,17 +65,12 @@ const techLogos = [
   { name: 'Palantir', url: 'https://upload.wikimedia.org/wikipedia/commons/1/13/Palantir_Technologies_logo.svg' },
   { name: 'Anduril', url: 'https://upload.wikimedia.org/wikipedia/commons/3/3d/Anduril_Industries_Logo.svg' },
   { name: 'OpenAI', url: 'https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg' },
-  { name: 'Cloudflare', url: 'https://upload.wikimedia.org/wikipedia/commons/9/94/Cloudflare_Logo.svg' },
-  { name: 'Stripe', url: 'https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg' },
-  { name: 'Cisco', url: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Cisco_logo_blue_2016.svg' },
 ];
 
 export default function TrustLogos() {
   return (
     <section className="relative py-16 overflow-hidden">
-
       <div className="container mx-auto px-6 max-w-6xl">
-
         {/* Heading — compact, subtle */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
@@ -85,7 +80,7 @@ export default function TrustLogos() {
           className="text-center mb-10"
         >
           <h2 className="text-slate-500 text-xs font-bold uppercase tracking-[0.25em]">
-            Trusted by fast companies across the globe
+            Technologies & Organizations We've Worked With
           </h2>
         </motion.div>
 
@@ -118,66 +113,6 @@ export default function TrustLogos() {
             </motion.div>
           </motion.div>
         </div>
-
-        {/* Divider */}
-        <div className="w-full h-px bg-slate-200/50 my-8 max-w-md mx-auto" />
-
-        {/* Metrics row — super compact, inline */}
-        <motion.div
-          initial={{ opacity: 0, y: 6 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.15 }}
-          className="flex items-center justify-center gap-6 md:gap-10"
-        >
-          <div className="flex items-center gap-2">
-            <Activity size={14} className="text-[#10b981]" />
-            <span className="text-slate-700 text-sm font-semibold font-mono">24/7</span>
-            <span className="text-slate-400 text-[10px] font-bold uppercase tracking-wider hidden sm:inline">Monitoring</span>
-          </div>
-          <span className="w-px h-6 bg-slate-200" />
-          <div className="flex items-center gap-2">
-            <Server size={14} className="text-[#F5A800]" />
-            <span className="text-slate-700 text-sm font-semibold font-mono">Security-first</span>
-            <span className="text-slate-400 text-[10px] font-bold uppercase tracking-wider hidden sm:inline">Engineering</span>
-          </div>
-          <span className="w-px h-6 bg-slate-200" />
-          <div className="flex items-center gap-2">
-            <Globe size={14} className="text-[#8b5cf6]" />
-            <span className="text-slate-700 text-sm font-semibold font-mono">Global</span>
-            <span className="text-slate-400 text-[10px] font-bold uppercase tracking-wider hidden sm:inline">Operations</span>
-          </div>
-        </motion.div>
-
-        {/* Tech partner logos — auto-scrolling marquee */}
-        <div className="relative mt-6">
-          <div className="absolute inset-y-0 left-0 w-24 md:w-40 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-24 md:w-40 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none" />
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.25 }}
-            className="overflow-hidden"
-          >
-            <motion.div
-              animate={{ x: ['0%', '-50%'] }}
-              transition={{ ease: 'linear', duration: 30, repeat: Infinity }}
-              className="flex items-center gap-12 md:gap-16 min-w-max"
-            >
-              {[...techLogos, ...techLogos].map((logo, i) => (
-                <img
-                  key={i}
-                  src={logo.url}
-                  alt={logo.name}
-                  className="h-5 md:h-6 object-contain"
-                />
-              ))}
-            </motion.div>
-          </motion.div>
-        </div>
-
       </div>
     </section>
   );

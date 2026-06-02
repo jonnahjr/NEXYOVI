@@ -128,7 +128,7 @@ export const jobs = [
  desc: 'Lead the engineering of high-throughput financial systems in the Middle East. You will architect real-time payment engines and digital asset management platforms.',
  responsibilities: [
  'Scale high-frequency trading and transaction systems.',
- 'Integrate blockchain and DLT for secure asset tracking.',
+ 'Scale secure and compliant digital payment architectures.',
  'Ensure compliance with regional financial regulations and standards.',
  'Collaborate with global clients to define the future of digital finance.'
  ],

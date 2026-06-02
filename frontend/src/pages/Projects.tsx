@@ -264,26 +264,6 @@ const PROJECTS: Project[] = [
       { label: 'Auto-Remediation', value: '89%' }],
   },
   {
-    id: 'nexchain',
-    title: 'NexChain',
-    subtitle: 'Secure Enterprise Core',
-    category: 'Software',
-    tags: ['Security', 'Cloud-Native', 'Scalability'],
-    icon: Globe,
-    color: '#a855f7',
-    glow: 'rgba(168,85,247,0.15)',
-    gradient: 'from-[#a855f7]/20 via-[#a855f7]/5 to-transparent',
-    year: '2023',
-    status: 'Completed',
-    impact: '14 enterprise dApps shipped',
-    description:
-      'A full-stack Web3 engineering framework allowing enterprises to build, audit, and deploy production-grade decentralized applications on EVM-compatible L2 chains with gas abstraction.',
-    metrics: [
-      { label: 'Smart Contracts', value: '1,200+' },
-      { label: 'Audit Score', value: '98/100' },
-      { label: 'Gas Savings', value: '94%' }],
-  },
-  {
     id: 'fortify-soc',
     title: 'Fortify SOC',
     subtitle: 'Autonomous Security Operations Center',
