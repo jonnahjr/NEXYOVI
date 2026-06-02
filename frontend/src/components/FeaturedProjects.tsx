@@ -58,7 +58,7 @@ const cardVariants = {
 
 export default function FeaturedProjects() {
  return (
-  <section className="relative bg-[#02040a] py-28 border-t border-white/[0.04] overflow-hidden">
+  <section className="relative bg-[#02040a] py-36 border-t border-white/[0.04] overflow-hidden">
    <div className="absolute inset-0 z-0">
     <div className="absolute left-1/3 top-1/4 w-[500px] h-[500px] rounded-full bg-[#F5A800]/5 blur-[160px]" />
     <div className="absolute right-1/4 bottom-1/4 w-[400px] h-[400px] rounded-full bg-[#8b5cf6]/5 blur-[140px]" />
@@ -78,7 +78,7 @@ export default function FeaturedProjects() {
        <span className="w-2 h-2 rounded-full bg-[#F5A800] animate-pulse" />
        <span className="text-[11px] font-bold text-[#F5A800] uppercase tracking-[0.2em]">Featured Projects</span>
       </div>
-      <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight">
+      <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-[-0.04em] leading-[0.95]">
        Products we've <br />
        <span className="bg-gradient-to-r from-[#F5A800] to-amber-400 bg-clip-text text-transparent">shipped.</span>
       </h2>
@@ -104,7 +104,7 @@ export default function FeaturedProjects() {
       <motion.div
        key={i}
        variants={cardVariants}
-       className="group relative overflow-hidden rounded-[20px] border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl transition-all duration-500 hover:border-white/[0.12] hover:bg-white/[0.04]"
+       className="group relative overflow-hidden rounded-[20px] border border-white/[0.08] bg-white/[0.03] transition-all duration-500 hover:border-white/[0.15] hover:bg-white/[0.05]"
       >
        {/* Screenshot row */}
        <div className="relative h-48 overflow-hidden">

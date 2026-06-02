@@ -41,7 +41,7 @@ const Pricing = () => {
  <div className="text-center mb-16">
  <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">Flexible Service Tiers</h2>
  <p className="text-xl text-white/50 max-w-2xl mx-auto mb-12">
- Tailored IT and Security solutions designed to scale with your business. <br className="hidden md:block" /> From Addis Ababa & Miami to the world.
+ Tailored IT and Security solutions designed to scale with your business. <br className="hidden md:block" /> From Addis Ababa to the world.
  </p>
  </div>
 

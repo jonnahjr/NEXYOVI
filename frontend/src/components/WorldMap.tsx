@@ -5,8 +5,7 @@ import { motion, useAnimation } from "framer-motion";
 const locations = [
  // Addis Ababa, Ethiopia (East Africa Horn)
  { name: "Addis Ababa", type: "MAIN HEADQUARTERS", x: 57, y: 50 },
- // Miami, USA (Florida Peninsula)
- { name: "Miami Hub", type: "GLOBAL REMOTE HUB", x: 30, y: 39 }];
+];
 
 export default function WorldMap() {
  const containerRef = useRef<HTMLDivElement>(null);
@@ -62,27 +61,7 @@ export default function WorldMap() {
  }}
  />
 
- {/* Connection SVG Line */}
- <svg className="absolute inset-0 w-full h-full z-20 overflow-visible " viewBox="0 0 100 100" preserveAspectRatio="none">
- <motion.path
- d={`M ${locations[0].x} ${locations[0].y} Q 42 30 ${locations[1].x} ${locations[1].y}`}
- fill="none"
- stroke="url(#cyber-grad)"
- strokeWidth="0.5"
- strokeDasharray="4 4"
- initial={{ pathLength: 0, opacity: 0 }}
- animate={{ pathLength: 1, opacity: 1 }}
- transition={{ duration: 4, ease: "easeInOut", repeat: Infinity, repeatType: "reverse", repeatDelay: 1 }}
- />
- 
- <defs>
- <linearGradient id="cyber-grad" x1="0%" y1="0%" x2="100%" y2="0%">
- <stop offset="0%" stopColor="#06b6d4" />
- <stop offset="50%" stopColor="#a855f7" />
- <stop offset="100%" stopColor="#06b6d4" />
- </linearGradient>
- </defs>
- </svg>
+
 
  {/* Glowing Pins */}
  {locations.map((loc, i) => (

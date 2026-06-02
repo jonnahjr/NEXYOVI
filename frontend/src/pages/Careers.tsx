@@ -80,7 +80,7 @@ const Careers = () => {
     <div className="absolute inset-0 bg-gradient-to-r from-[#0A0F1C]/70 via-[#0A0F1C]/50 to-[#0A0F1C]/30" />
  </div>
 
- <div<div className="container mx-auto px-6 lg:px-24 relative z-10">
+ <div className="container mx-auto px-6 lg:px-24 relative z-10">
  <div className="max-w-3xl">
  <motion.div
  initial={{ opacity: 0, y: 20 }}

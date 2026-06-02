@@ -16,15 +16,6 @@ const OfficesPage = () => {
  time: 'GMT+3 (East Africa Time)',
  description: 'The core center of company leadership, mission-critical operations, and technical innovation.'
  },
- {
- city: 'Miami, Florida, USA',
- role: 'Global Remote Operations Hub',
- address: 'Brickell Avenue, Miami, FL, USA',
- phone: '+1 (305) 000-0000',
- email: 'global@nexyovi.com',
- time: 'EST (GMT-5)',
- description: 'Representing our international developers, remote technical teams, and global support network.'
- }
  ];
 
  return (
@@ -60,7 +51,7 @@ const OfficesPage = () => {
  {/* Hubs Grid */}
  <section className="py-32">
  <div className="container-narrow">
- <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+ <div className="grid grid-cols-1 gap-12 max-w-xl mx-auto">
  {hubs.map((hub, i) => (
  <motion.div 
  key={i}

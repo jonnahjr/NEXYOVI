@@ -14,17 +14,7 @@ const hubs = [
  number: '01',
  highlight: true,
  },
- {
- city: 'Miami',
- country: 'United States',
- role: 'Global Remote Hub',
- addr: 'Brickell Avenue, FL, USA',
- phone: '+1 (305) 000-0000',
- timezone: 'EST — UTC-5',
- accent: '#06b6d4',
- number: '02',
- highlight: false,
- }];
+];
 
 const CompanyHubs = () => {
  return (
@@ -60,7 +50,7 @@ const CompanyHubs = () => {
  initial="hidden"
  whileInView="visible"
  viewport={viewport}
- className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mb-8"
+ className="grid grid-cols-1 gap-6 max-w-xl mb-8"
  >
  {hubs.map((hub) => (
  <motion.div
@@ -114,22 +104,7 @@ const CompanyHubs = () => {
  ))}
  </motion.div>
 
- {/* Follow-the-sun bar */}
- <motion.div
- variants={fadeUp}
- initial="hidden"
- whileInView="visible"
- viewport={viewport}
- className="max-w-4xl p-6 rounded-2xl bg-[#111111] border border-white/5 flex flex-col sm:flex-row items-center gap-4 justify-between"
- >
- <div className="flex items-center gap-3">
- <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
- <p className="text-white text-sm font-medium">Follow-the-Sun Model — Always On</p>
- </div>
- <p className="text-[#7a7a7a] text-xs text-center sm:text-right">
- When Addis Ababa closes, Miami opens. Zero downtime. Maximum velocity.
- </p>
- </motion.div>
+
 
  </div>
  </section>

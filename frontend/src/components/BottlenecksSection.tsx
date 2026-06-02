@@ -45,7 +45,7 @@ const BottlenecksSection = () => {
  return (
  <section
  ref={containerRef}
- className="relative bg-[#02040a] py-32 border-t border-white/[0.04] overflow-hidden"
+ className="relative bg-[#02040a] py-40 border-t border-white/[0.04] overflow-hidden"
  >
  {/* Subtle noise texture */}
  <div
@@ -122,11 +122,11 @@ const BottlenecksSection = () => {
  initial={{ opacity: 0, y: 30, scale: 0.96 }}
  animate={headingInView ? { opacity: 1, y: 0, scale: 1 } : {}}
  transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
- className="text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-[-0.04em] leading-[0.95] my-10 pointer-events-none"
+ className="text-6xl md:text-7xl lg:text-8xl font-black text-white tracking-[-0.04em] leading-[0.9] my-14 pointer-events-none"
  >
  Eliminate the bottlenecks
  <br />
- <span className="text-white/30">that hold you back</span>
+ <span className="text-white/40">that hold you back</span>
  </motion.h2>
 
  {/* Bubble 3 */}

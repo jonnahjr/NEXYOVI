@@ -33,7 +33,7 @@ export default function FounderStory() {
      transition={{ duration: 0.5 }}
      className="mb-16"
     >
-     <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-white/[0.06] bg-white/[0.03] backdrop-blur-sm">
+     <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-white/10 bg-white/[0.06]">
       <span className="relative flex h-2 w-2">
        <span className="absolute inline-flex h-full w-full rounded-full bg-[#F5A800] animate-ping opacity-75" />
        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#F5A800]" />
@@ -83,20 +83,20 @@ export default function FounderStory() {
       <div className="flex items-start gap-6 mb-8">
        <span className="text-[72px] md:text-[96px] font-black text-white/[0.04] leading-none tracking-tighter select-none">7</span>
        <div className="pt-2">
-        <h2 className="text-[32px] md:text-[42px] font-black text-white tracking-[-0.03em] leading-[1.1]">
+        <h2 className="text-[42px] md:text-[52px] font-black text-white tracking-[-0.03em] leading-[1.05]">
          Yonas Bogale
         </h2>
         <div className="text-[13px] font-bold text-white/30 tracking-[0.2em] uppercase mt-1">Founder & CEO</div>
        </div>
       </div>
 
-      <p className="text-white/60 text-base md:text-[17px] leading-relaxed mb-6">
+      <p className="text-white/60 text-lg md:text-xl leading-relaxed mb-8">
        Passionate about building practical technology that helps organizations grow faster, operate smarter, and compete in a digital-first world.
       </p>
 
       <div className="h-px w-full bg-white/[0.06] my-6" />
 
-      <p className="text-white/40 text-[15px] leading-relaxed">
+      <p className="text-white/40 text-base md:text-lg leading-relaxed">
        Nexyovi was founded to help businesses access modern software engineering, AI capabilities, and digital infrastructure without the complexity of large consulting firms.
       </p>
      </motion.div>

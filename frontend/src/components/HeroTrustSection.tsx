@@ -12,7 +12,7 @@ const checklist = [
  {
    text: "Built for scale, not demos",
    icon: Cloud,
-   desc: "Architected for real-world production: enterprise-grade uptime, auto-scaling, and edge-case resilience from day one.",
+   desc: "Architected for real-world production: production-ready uptime, auto-scaling, and edge-case resilience from day one.",
  },
  {
    text: "Measurable and defensible ROI",
@@ -84,7 +84,7 @@ const HeroTrustSection = () => {
            whileInView={{ opacity: 1, y: 0 }}
            viewport={viewport}
            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-           className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.03em] leading-[1.05] mb-4"
+           className="text-5xl md:text-6xl lg:text-7xl font-black text-slate-950 tracking-[-0.03em] leading-[0.95] mb-6"
          >
            Ready to build
            <br />
@@ -98,7 +98,7 @@ const HeroTrustSection = () => {
            whileInView={{ opacity: 1, y: 0 }}
            viewport={viewport}
            transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-           className="text-slate-600 text-[16px] leading-relaxed max-w-2xl mb-12 font-medium"
+           className="text-slate-600 text-lg md:text-xl leading-relaxed max-w-2xl mb-16 font-medium"
          >
            Let's engineer the next breakthrough for your enterprise — from
            initial scoping to global deployment. We move fast and build to last.
@@ -144,7 +144,7 @@ const HeroTrustSection = () => {
                  whileInView="visible"
                  viewport={viewport}
                  whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                 className="group relative p-6 rounded-2xl bg-white/70 backdrop-blur-sm border border-slate-200 hover:border-[#F5A800]/40 transition-all duration-300 cursor-pointer"
+                 className="group relative p-8 rounded-2xl bg-white border border-slate-200 hover:border-[#F5A800]/40 hover:shadow-lg transition-all duration-300 cursor-pointer"
                >
                  <div className="flex items-start gap-4">
                    {/* Icon */}
@@ -154,10 +154,10 @@ const HeroTrustSection = () => {
 
                    {/* Content */}
                    <div className="flex-1 min-w-0">
-                     <h3 className="text-[15px] font-bold text-slate-900 mb-1 tracking-tight group-hover:text-[#F5A800] transition-colors">
+                     <h3 className="text-base md:text-lg font-bold text-slate-900 mb-1 tracking-tight group-hover:text-[#F5A800] transition-colors">
                        {item.text}
                      </h3>
-                     <p className="text-[13px] text-slate-500 leading-relaxed font-medium">
+                     <p className="text-sm text-slate-500 leading-relaxed font-medium">
                        {item.desc}
                      </p>
                    </div>
@@ -176,11 +176,11 @@ const HeroTrustSection = () => {
            whileInView={{ opacity: 1, y: 0 }}
            viewport={viewport}
            transition={{ delay: 0.6, duration: 0.5 }}
-           className="mt-10 p-5 rounded-2xl bg-white/50 border border-slate-200 flex items-start gap-4"
+           className="mt-12 p-6 rounded-2xl bg-white border border-slate-200 flex items-start gap-4 shadow-sm"
          >
            <ShieldCheck size={20} className="text-slate-400 shrink-0 mt-0.5" />
-           <p className="text-slate-600 text-[14px] leading-relaxed font-medium">
-             <span className="text-slate-900 font-bold">Enterprise-grade guarantee.</span>{' '}
+           <p className="text-slate-600 text-[15px] leading-relaxed font-medium">
+             <span className="text-slate-900 font-bold">Production-ready guarantee.</span>{' '}
              Our systems are delivered with full documentation, architectural blueprints, and compliance readiness.
            </p>
          </motion.div>
@@ -213,7 +213,7 @@ const HeroTrustSection = () => {
              whileInView={{ opacity: 1, y: 0 }}
              viewport={viewport}
              transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-             className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-[-0.03em] leading-[1.05] mb-6"
+             className="text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-[-0.03em] leading-[0.95] mb-8"
            >
              From vision to{' '}
              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">
@@ -228,7 +228,7 @@ const HeroTrustSection = () => {
              whileInView={{ opacity: 1, y: 0 }}
              viewport={viewport}
              transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-             className="text-white/50 text-[16px] leading-relaxed max-w-xl mx-auto mb-10 font-medium"
+             className="text-white/50 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-12 font-medium"
            >
              Book a no-pressure 45-minute strategy session. We'll review your current setup, identify 2–3 high-impact opportunities, and give you a clear next-step plan — at zero cost or obligation.
            </motion.p>

@@ -25,8 +25,8 @@ const metrics = [
   color: '#10b981',
  },
  {
-  headline: 'Zero Critical Breaches',
-  tags: ['Encrypted by Default', 'Zero Trust', 'Audited'],
+  headline: 'Security-first Engineering',
+  tags: ['Encrypted by Default', 'Modern Security', 'Audited'],
   sub: 'Security-First Development',
   icon: Gamepad2,
   color: '#3b82f6',
@@ -75,14 +75,14 @@ export default function CompanyMetrics() {
      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
      className="text-center mb-16"
     >
-     <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-white/[0.06] bg-white/[0.03] backdrop-blur-sm mb-8">
+     <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-white/10 bg-white/[0.06] mb-8">
       <span className="relative flex h-2 w-2">
        <span className="absolute inline-flex h-full w-full rounded-full bg-[#F5A800] animate-ping opacity-75" />
        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#F5A800]" />
       </span>
       <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50">Trust Metrics</span>
      </div>
-      <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight">
+      <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-[-0.04em] leading-[0.95] max-w-2xl mx-auto">
        Built to{' '}
        <span className="bg-gradient-to-r from-[#F5A800] via-amber-400 to-[#8b5cf6] bg-clip-text text-transparent">
         deliver
@@ -104,7 +104,7 @@ export default function CompanyMetrics() {
        <motion.div
         key={i}
         variants={cardVariants}
-        className="group relative overflow-hidden rounded-[24px] border border-white/[0.06] bg-white/[0.02] p-8 text-center backdrop-blur-xl transition-all duration-500 hover:border-white/[0.12] hover:bg-white/[0.04]"
+        className="group relative overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.03] p-8 text-center transition-all duration-500 hover:border-white/15 hover:bg-white/[0.05]"
        >
         {/* Hover glow */}
         <div
@@ -133,7 +133,7 @@ export default function CompanyMetrics() {
          {/* Headline + Tags */}
          <div className="text-center">
           <div
-           className="text-2xl md:text-3xl font-black tracking-tight transition-colors duration-500 leading-tight"
+           className="text-xl md:text-2xl font-black tracking-tight transition-colors duration-500 leading-tight"
            style={{ color: metric.color }}
           >
            {metric.headline}
@@ -175,7 +175,7 @@ export default function CompanyMetrics() {
      transition={{ duration: 0.6, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
      className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 mt-16"
     >
-     {['GDPR Compliant', 'Encrypted Infrastructure', 'Zero Trust Architecture'].map((cert, i) => (
+     {['GDPR Compliant', 'Encrypted Infrastructure', 'Modern Security Practices'].map((cert, i) => (
       <div key={i} className="flex items-center gap-2 text-white/30 hover:text-white/50 transition-colors duration-300">
        <span className="w-1 h-1 rounded-full bg-emerald-500/60" />
        <span className="text-[10px] font-bold uppercase tracking-[0.2em]">{cert}</span>

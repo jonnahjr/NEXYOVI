@@ -1,18 +1,21 @@
 import BottlenecksSection from '../components/BottlenecksSection';
-import ClientLogos from '../components/ClientLogos';
 import CompanyMetrics from '../components/CompanyMetrics';
 import CoreDisciplines from '../components/CoreDisciplines';
-import EnterpriseTrustBar from '../components/EnterpriseTrustBar';
+import TrustLogos from '../components/TrustLogos';
+import EngagementModels from '../components/EngagementModels';
+import EnterpriseCapabilities from '../components/EnterpriseCapabilities';
 import FeaturedCaseStudy from '../components/FeaturedCaseStudy';
 import FeaturedProjects from '../components/FeaturedProjects';
 import FounderStory from '../components/FounderStory';
+import GlobalPresence from '../components/GlobalPresence';
 import Hero from '../components/Hero';
 import HeroTrustSection from '../components/HeroTrustSection';
 import ProcessSection from '../components/ProcessSection';
 import IndustriesSection from '../components/IndustriesSection';
 import ServicesSection from '../components/ServicesSection';
-import TechPartners from '../components/TechPartners';
+import TechEcosystem from '../components/TechEcosystem';
 import Testimonials from '../components/Testimonials';
+import TrustedByMarquee from '../components/TrustedByMarquee';
 import WhyNexyoviSection from '../components/WhyNexyoviSection';
 import WhySwitchSection from '../components/WhySwitchSection';
 
@@ -20,55 +23,55 @@ const Home = () => {
  return (
  <div className="bg-slate-50 min-h-screen text-slate-900 font-sans selection:bg-[#F5A800]/30">
 
- {/* 1. Cinematic Hero */}
  <Hero />
-
- {/* 2. Client Logos */}
- <ClientLogos />
-
- {/* 3. Enterprise Trust Layer */}
- <EnterpriseTrustBar />
-
- {/* 4. Why Businesses Choose Nexyovi */}
+ <TrustLogos />
  <WhyNexyoviSection />
-
- {/* 5. Why Companies Switch */}
  <WhySwitchSection />
-
- {/* 5. Core Disciplines / Philosophy */}
  <CoreDisciplines />
 
- {/* 6. Core Services Grid (Bento) */}
+ {/* 7. Core Services Grid (Bento) */}
  <ServicesSection />
 
- {/* 7. Our Process */}
+ {/* 8. Enterprise Capabilities */}
+ <EnterpriseCapabilities />
+
+ {/* 9. Our Process */}
  <ProcessSection />
 
- {/* 11. Technology Partners */}
- <TechPartners />
+ {/* 10. Technology Ecosystem */}
+ <TechEcosystem />
 
- {/* 12. Bottlenecks — Problem vs. Solution */}
+ {/* 11. Bottlenecks — Problem vs. Solution */}
  <BottlenecksSection />
 
  {/* 12. Featured Projects */}
  <FeaturedProjects />
 
- {/* 13. Industries */}
- <IndustriesSection />
-
- {/* 14. Enterprise Case Studies */}
- <FeaturedCaseStudy />
-
- {/* 14. Company Metrics */}
- <CompanyMetrics />
-
- {/* 15. Founder Vision */}
- <FounderStory />
-
- {/* 16. Client Testimonials */}
+ {/* 13. Client Testimonials */}
  <Testimonials />
 
- {/* 17. Final Enterprise CTA */}
+ {/* 14. Founder Vision */}
+ <FounderStory />
+
+ {/* 15. Company Metrics */}
+ <CompanyMetrics />
+
+ {/* 16. Global Presence */}
+ <GlobalPresence />
+
+ {/* 17. Industries */}
+ <IndustriesSection />
+
+ {/* 18. Enterprise Case Studies */}
+ <FeaturedCaseStudy />
+
+ {/* 19. Engagement Models */}
+ <EngagementModels />
+
+ {/* 20. Trusted By Marquee */}
+ <TrustedByMarquee />
+
+ {/* 21. Final Enterprise CTA */}
  <HeroTrustSection />
 
  </div>

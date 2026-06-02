@@ -5,7 +5,7 @@ const pillars = [
   {
   icon: Users,
   title: 'Team Collaboration',
-  desc: 'Cross-functional squads across Addis Ababa and Miami work in synchronized sprints — bridging time zones without missing a beat. Every engineer owns their outcome.',
+  desc: 'Cross-functional squads across Addis Ababa work in synchronized sprints — bridging teams without missing a beat. Every engineer owns their outcome.',
   stat: '2',
   statLabel: 'Continents',
   },

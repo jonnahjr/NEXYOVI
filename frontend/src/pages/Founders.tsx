@@ -38,7 +38,7 @@ const FoundersPage = () => {
  Yonas Bogale founded Nexyovi with a mission to bridge the digital gap in emerging markets while providing world-class tech services to global clients. 
  </p>
  <p className="text-slate-600 text-lg leading-relaxed">
- Under his leadership, the company has grown from a local startup to an international technology firm operating between Addis Ababa and Miami.
+ Under his leadership, the company has grown from a local startup to an international technology firm operating out of Addis Ababa with a global reach.
  </p>
  </div>
  <div className="space-y-12">
@@ -46,10 +46,7 @@ const FoundersPage = () => {
  <h3 className="text-slate-900 font-bold text-xl mb-4 tracking-tight">Addis Ababa Headquarters</h3>
  <p className="text-slate-500 leading-relaxed">Focusing on regional digital transformation, fiber optic infrastructure, and localized software solutions.</p>
  </div>
- <div>
- <h3 className="text-slate-900 font-bold text-xl mb-4 tracking-tight">Miami Operations</h3>
- <p className="text-slate-500 leading-relaxed">Specializing in global Cyber Security audits, AI innovation, and international consulting services.</p>
- </div>
+
  </div>
  </div>
  </div>

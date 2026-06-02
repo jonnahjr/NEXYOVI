@@ -36,11 +36,10 @@ const FeaturedCaseStudy = () => {
  <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse " />
  <span className="text-[11px] font-bold text-[#F5A800] uppercase tracking-widest">Mission Accomplished</span>
  </div>
- <h2 className="text-4xl md:text-5xl lg:text-7xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95]">Production<br />Case Study</h2>
- </div>
- <p className="text-slate-600 text-lg leading-relaxed max-w-sm font-medium">
- Predictive Logistics Interface engineering for absolute scale and efficiency.
- </p>
+ <h2 className="text-5xl md:text-6xl lg:text-8xl font-black text-slate-950 tracking-[-0.04em] leading-[0.9]">Production<br />Case Study</h2>
+ </div><p className="text-slate-600 text-xl leading-relaxed max-w-sm font-medium">
+    Predictive Logistics Interface engineering for absolute scale and efficiency.
+    </p>
  </motion.div>
 
  {/* Bento Grid */}
@@ -86,8 +85,8 @@ const FeaturedCaseStudy = () => {
  <div className="w-14 h-14 rounded-[16px] bg-slate-100 border border-slate-200 flex items-center justify-center mb-6 group-hover:border-[#F5A800]/30 transition-colors">
  <Globe size={22} className="text-slate-600 group-hover:text-[#F5A800] transition-colors" />
  </div>
- <h4 className="text-2xl font-black text-slate-950 mb-2">Addis Ababa & Miami</h4>
- <p className="text-slate-500 text-sm font-medium">Global Remote Operations</p>
+ <h4 className="text-2xl font-black text-slate-950 mb-2">Addis Ababa</h4>
+ <p className="text-slate-500 text-sm font-medium">Global Engineering Operations</p>
  </div>
  </motion.div>
 

@@ -72,7 +72,7 @@ const Testimonials = () => {
  >
  <div className="inline-flex items-center gap-2 mb-3">
  <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
- <span className="text-[12px] font-medium text-white/70 tracking-wide">Client Testimonials</span>
+ <span className="text-[13px] font-bold text-white/70 tracking-wide uppercase">Client Testimonials</span>
  </div>
  </motion.div>
  </div>
@@ -118,7 +118,7 @@ const Testimonials = () => {
  key={i}
  whileHover={{ y: isDragging ? 0 : -6 }}
  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
- className="w-[400px] md:w-[420px] shrink-0 p-8 flex flex-col bg-[#111111] border border-white/5 rounded-[28px] transition-all duration-500 group/card relative hover:border-white/20 hover:bg-white/[0.04]"
+ className="w-[420px] md:w-[460px] shrink-0 p-10 flex flex-col bg-[#111111] border border-white/8 rounded-[28px] transition-all duration-500 group/card relative hover:border-white/20 hover:bg-white/[0.05]"
  >
  <div className="flex items-center gap-5 mb-8">
  <div className="w-14 h-14 rounded-full overflow-hidden border border-white/10 group-hover/card:border-white/40 transition-all duration-500 shrink-0">
@@ -126,7 +126,7 @@ const Testimonials = () => {
  </div>
  <div className="min-w-0 flex-1">
  <div className="flex items-center gap-2">
- <h4 className="text-white font-bold text-lg tracking-tight truncate">{t.name}</h4>
+ <h4 className="text-white font-bold text-xl tracking-tight truncate">{t.name}</h4>
  {t.linkedin && (
  <a
  href={t.linkedin}
@@ -146,7 +146,7 @@ const Testimonials = () => {
 
  <div className="relative mb-8 flex-grow">
  <Quote size={24} className="text-white/5 absolute -top-4 -left-4" />
- <p className="text-[#9CA3AF] text-sm md:text-base leading-relaxed font-medium whitespace-normal italic group-hover/card:text-white transition-colors">
+ <p className="text-[#9CA3AF] text-base md:text-lg leading-relaxed font-medium whitespace-normal italic group-hover/card:text-white transition-colors">
  "{t.content}"
  </p>
  </div>

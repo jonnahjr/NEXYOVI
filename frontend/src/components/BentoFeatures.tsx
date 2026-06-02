@@ -57,7 +57,7 @@ const BentoFeatures = () => {
  <p className="text-emerald-400 font-bold flex items-center gap-2">
  <span className="w-1 h-1 rounded-full bg-emerald-400" /> SYSTEM_HARDENING: COMPLETE
  </p>
- <p className="text-white/40">AUDITING: Global endpoints in Addis & Miami...</p>
+ <p className="text-white/40">AUDITING: Global endpoints in Addis Ababa...</p>
  <p className="text-blue-400 font-semibold italic">THREAT_LEVEL: 0% Detected</p>
  </div>
  </div>

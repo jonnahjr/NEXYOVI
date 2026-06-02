@@ -87,20 +87,20 @@ const ServicesSection = () => {
   <span className="text-[11px] font-bold text-slate-600 uppercase tracking-widest">What We Build</span>
   </div>
 
-  <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-6">
+  <h2 className="text-6xl md:text-7xl lg:text-8xl font-black text-slate-950 tracking-[-0.04em] leading-[0.9] mb-8">
   Full-Stack <br />
   Digital <br />
   <span className="text-[#F5A800]">Services</span>
   </h2>
 
-  <p className="text-slate-600 text-lg leading-relaxed max-w-sm mb-10 font-medium">
+  <p className="text-slate-600 text-xl leading-relaxed max-w-md mb-12 font-medium">
   From software and AI to infrastructure and strategy — we deliver end-to-end digital solutions for modern businesses.
   </p>
 
  <Link
  to="/services"
  id="services-explore-all"
- className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-slate-950 text-white font-bold text-[14px] transition-all hover:scale-105 hover:bg-[#F5A800]"
+ className="inline-flex items-center gap-3 px-10 py-5 rounded-full bg-slate-950 text-white font-bold text-[15px] transition-all hover:scale-105 hover:bg-[#F5A800]"
  >
  Explore All Capabilities
  <ArrowRight size={16} />
@@ -120,27 +120,27 @@ const ServicesSection = () => {
  whileInView={{ opacity: 1, y: 0 }}
  viewport={{ once: true, margin: "-100px" }}
  transition={{ delay: 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
- className="sticky group relative flex flex-col md:flex-row gap-8 p-10 bg-white border border-slate-200 rounded-[32px] hover:border-[#F5A800]/40 transition-all duration-500 overflow-hidden"
+ className="sticky group relative flex flex-col md:flex-row gap-10 p-12 bg-white border border-slate-200 rounded-[32px] hover:border-[#F5A800]/40 transition-all duration-500 overflow-hidden"
  style={{ top: `${topOffset}px`, zIndex: i + 10 }}
  >
  <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
  <div className="w-16 h-16 rounded-[20px] bg-slate-100 flex items-center justify-center shrink-0 border border-slate-200 group-hover:border-[#F5A800]/30 transition-colors relative z-10">
- <Icon size={28} className="text-slate-500 group-hover:text-[#F5A800] transition-colors" />
+ <Icon size={28} className="text-slate-600 group-hover:text-[#F5A800] transition-colors" />
  </div>
 
  <div className="flex flex-col relative z-10 w-full">
- <h3 className="text-2xl md:text-3xl font-black text-slate-950 tracking-tight mb-3 group-hover:text-[#F5A800] transition-colors">
+ <h3 className="text-3xl md:text-4xl font-black text-slate-950 tracking-tight mb-4 group-hover:text-[#F5A800] transition-colors">
  {s.title}
  </h3>
- <p className="text-slate-600 text-[15px] leading-relaxed mb-6 font-medium max-w-lg">
+ <p className="text-slate-600 text-base md:text-lg leading-relaxed mb-6 font-medium max-w-lg">
  {s.desc}
  </p>
  <div className="flex flex-wrap gap-2">
  {s.tags.map((tag) => (
  <span
  key={tag}
- className="text-[11px] font-bold px-4 py-2 rounded-full bg-slate-100 text-slate-600 uppercase tracking-widest border border-slate-200"
+ className="text-[12px] font-bold px-5 py-2.5 rounded-full bg-slate-100 text-slate-600 uppercase tracking-widest border border-slate-200"
  >
  {tag}
  </span>

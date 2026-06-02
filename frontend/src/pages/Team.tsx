@@ -31,7 +31,7 @@ const TeamPage = () => {
  The Minds Behind <br/> <span className="text-white/40">The Tech Powerhouse.</span>
  </motion.h1>
  <p className="text-[#797d86] text-xl max-w-2xl mx-auto leading-relaxed mb-12">
- "A global powerhouse is only as strong as its engineers. We've gathered some of the finest tech minds from Addis Ababa to Miami."
+ "A global powerhouse is only as strong as its engineers. We've gathered some of the finest tech minds from Addis Ababa and beyond."
  </p>
  <div className="flex justify-center gap-4">
  <Link to="/careers" className="px-10 py-5 bg-white text-black font-bold rounded-full hover:scale-105 transition-all">Join the Mission</Link>

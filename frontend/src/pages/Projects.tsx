@@ -11,17 +11,15 @@ import {
   Globe,
   Layers,
   Lock,
-  MapPin,
   ShieldCheck,
   Star,
   TrendingUp,
   Users,
   Wifi,
-  Zap,
 } from 'lucide-react';
-import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { EASE_EXPO, revealUp, staggerContainer } from '../lib/animations';
+import { EASE_EXPO, EASE_CINEMA, staggerContainer, viewport } from '../lib/animations';
 
 import market1 from '../assets/market/1.png';
 import market2 from '../assets/market/2.png';
@@ -43,13 +41,11 @@ import tele2 from '../assets/tele/2.png';
 import tele3 from '../assets/tele/3.png';
 import tele4 from '../assets/tele/4.png';
 
-const NeuralCanvas = lazy(() => import('../components/three/NeuralCanvas'));
-
 // ── Easing ────────────────────────────────────────────────────
 const SPRING_GENTLE = { type: 'spring' as const, stiffness: 120, damping: 24 };
 
 // ── Animated Counter ─────────────────────────────────────────
-const Counter = ({ value, duration = 2, decimals = 0, suffix = "" }: { value: number; duration?: number; decimals?: number; suffix?: string }) => {
+const Counter = ({ value, duration = 2, decimals = 0, suffix = '' }: { value: number; duration?: number; decimals?: number; suffix?: string }) => {
   const count = useMotionValue(0);
   const rounded = useTransform(count, (latest) => latest.toFixed(decimals) + suffix);
   const ref = useRef(null);
@@ -57,7 +53,7 @@ const Counter = ({ value, duration = 2, decimals = 0, suffix = "" }: { value: nu
 
   useEffect(() => {
     if (isInView) {
-      animate(count, value, { duration, ease: "easeOut" });
+      animate(count, value, { duration, ease: 'easeOut' });
     }
   }, [isInView, value, duration, count]);
 
@@ -75,7 +71,7 @@ const RingGauge = ({ value, label, color, max = 100, size = 80 }: { value: numbe
 
   useEffect(() => {
     if (isInView) {
-      animate(progress, (value / max) * 100, { duration: 2, ease: "easeOut" });
+      animate(progress, (value / max) * 100, { duration: 2, ease: 'easeOut' });
     }
   }, [isInView, value, max, progress]);
 
@@ -104,6 +100,22 @@ const RingGauge = ({ value, label, color, max = 100, size = 80 }: { value: numbe
     </motion.div>
   );
 };
+
+// ── TextReveal ────────────────────────────────────────────────
+function TextReveal({ children, className, delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+  return (
+    <div className={`overflow-hidden ${className || ''}`}>
+      <motion.div
+        initial={{ y: '100%', clipPath: 'inset(0 0 100% 0)' }}
+        whileInView={{ y: 0, clipPath: 'inset(0 0 0% 0)' }}
+        viewport={viewport}
+        transition={{ duration: 0.9, delay, ease: EASE_CINEMA }}
+      >
+        {children}
+      </motion.div>
+    </div>
+  );
+}
 
 // ── Types ─────────────────────────────────────────────────────
 type Category = 'All' | 'Software' | 'AI Systems' | 'Infrastructure' | 'Data Systems' | 'Security';
@@ -310,7 +322,8 @@ const PROJECTS: Project[] = [
       { label: 'PR Review Speed', value: '12×' },
       { label: 'Bug Detection', value: '78% earlier' },
       { label: 'Test Coverage', value: '94%' }],
-  }];
+  },
+];
 
 // ── Sub-components ────────────────────────────────────────────
 
@@ -444,48 +457,6 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
   );
 };
 
-// ── Dark Product Showcase Card ────────────────────────────────
-const FeatureItem = ({ icon, label }: { icon: string; label: string }) => (
-  <motion.div
-    whileHover={{ x: 6 }}
-    className="flex items-center gap-3 hover:-translate-y-0.5 transition-transform"
-  >
-    <div className="w-9 h-9 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-base shrink-0">
-      {icon}
-    </div>
-    <span className="text-slate-600 font-semibold text-sm">{label}</span>
-  </motion.div>
-);
-
-const StoreButton = ({ dark = false, platform = 'app-store' }: { dark?: boolean; platform: 'app-store' | 'google-play' }) => {
-  const isGoogle = platform === 'google-play';
-  const bg = isGoogle ? 'bg-slate-900 text-white' : dark ? 'bg-white/10 border border-white/20' : 'bg-black text-white';
-  const textColor = isGoogle ? 'text-white' : dark ? 'text-white' : 'text-white';
-
-  return (
-    <motion.a
-      href="#"
-      whileHover={{ scale: 1.03, y: -2 }}
-      whileTap={{ scale: 0.97 }}
-      className={`flex items-center gap-2.5 px-5 py-3 rounded-2xl font-bold text-sm select-none ${bg} ${textColor}`}
-    >
-      {isGoogle ? (
-        <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M3.18 23.76c.35.2.75.21 1.12.02l12.6-7.16-2.85-2.87L3.18 23.76zM.5 1.63C.19 1.99 0 2.52 0 3.21v17.57c0 .7.19 1.22.5 1.58l.08.08 9.85-9.85v-.23L.58 1.55.5 1.63zM20.52 10.7l-2.6-1.48-3.18 3.18 3.18 3.18 2.62-1.49c.75-.43.75-1.12 0-1.53l-.02.14zM4.3.24L16.9 7.4l-2.85 2.85L3.18.26C3.54.07 3.94.08 4.3.24z" />
-        </svg>
-      ) : (
-        <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-        </svg>
-      )}
-      <div className="text-left leading-tight">
-        <div className="text-[9px] font-medium opacity-70">{isGoogle ? 'GET IT ON' : 'Download on the'}</div>
-        <div className="text-[13px] font-black tracking-tight">{isGoogle ? 'Google Play' : 'App Store'}</div>
-      </div>
-    </motion.a>
-  );
-};
-
 // ── Draggable Slider ──────────────────────────────────────────
 const DraggableSlider = ({ children, className }: { children: React.ReactNode, className?: string }) => {
   const ref = React.useRef<HTMLDivElement>(null);
@@ -536,7 +507,72 @@ const DraggableSlider = ({ children, className }: { children: React.ReactNode, c
   );
 };
 
-// ── Main Page ──────────────────────────────────────────────────
+// ── FeatureItem ───────────────────────────────────────────────
+const FeatureItem = ({ icon, label }: { icon: string; label: string }) => (
+  <motion.div
+    whileHover={{ x: 6 }}
+    className="flex items-center gap-3 hover:-translate-y-0.5 transition-transform"
+  >
+    <div className="w-9 h-9 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-base shrink-0">
+      {icon}
+    </div>
+    <span className="text-slate-600 font-semibold text-sm">{label}</span>
+  </motion.div>
+);
+
+// ── StoreButton ───────────────────────────────────────────────
+const StoreButton = ({ dark = false, platform = 'app-store' }: { dark?: boolean; platform: 'app-store' | 'google-play' }) => {
+  const isGoogle = platform === 'google-play';
+  const bg = isGoogle ? 'bg-slate-900 text-white' : dark ? 'bg-white/10 border border-white/20' : 'bg-black text-white';
+  const textColor = isGoogle ? 'text-white' : dark ? 'text-white' : 'text-white';
+
+  return (
+    <motion.a
+      href="#"
+      whileHover={{ scale: 1.03, y: -2 }}
+      whileTap={{ scale: 0.97 }}
+      className={`flex items-center gap-2.5 px-5 py-3 rounded-2xl font-bold text-sm select-none ${bg} ${textColor}`}
+    >
+      {isGoogle ? (
+        <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M3.18 23.76c.35.2.75.21 1.12.02l12.6-7.16-2.85-2.87L3.18 23.76zM.5 1.63C.19 1.99 0 2.52 0 3.21v17.57c0 .7.19 1.22.5 1.58l.08.08 9.85-9.85v-.23L.58 1.55.5 1.63zM20.52 10.7l-2.6-1.48-3.18 3.18 3.18 3.18 2.62-1.49c.75-.43.75-1.12 0-1.53l-.02.14zM4.3.24L16.9 7.4l-2.85 2.85L3.18.26C3.54.07 3.94.08 4.3.24z" />
+        </svg>
+      ) : (
+        <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+        </svg>
+      )}
+      <div className="text-left leading-tight">
+        <div className="text-[9px] font-medium opacity-70">{isGoogle ? 'GET IT ON' : 'Download on the'}</div>
+        <div className="text-[13px] font-black tracking-tight">{isGoogle ? 'Google Play' : 'App Store'}</div>
+      </div>
+    </motion.a>
+  );
+};
+
+// ══════════════════════════════════════════════════════════════
+//  MAIN PAGE
+// ══════════════════════════════════════════════════════════════
+
+// ── MouseGlow (from Services) ────────────────────────────────
+function MouseGlow() {
+  const [pos, setPos] = useState({ x: -200, y: -200 });
+  const handleMouse = useCallback((e: MouseEvent) => {
+    setPos({ x: e.clientX, y: e.clientY });
+  }, []);
+  useEffect(() => {
+    window.addEventListener('mousemove', handleMouse);
+    return () => window.removeEventListener('mousemove', handleMouse);
+  }, [handleMouse]);
+  return (
+    <div className="fixed inset-0 pointer-events-none z-[999] transition-none hidden lg:block"
+      style={{ background: `radial-gradient(600px circle at ${pos.x}px ${pos.y}px, rgba(245,168,0,0.03), transparent 40%)` }} />
+  );
+}
+
+// ══════════════════════════════════════════════════════════════
+//  MAIN PAGE
+// ══════════════════════════════════════════════════════════════
 
 export default function Projects() {
   const [activeCategory, setActiveCategory] = useState<Category>('All');
@@ -548,12 +584,15 @@ export default function Projects() {
   const featured = PROJECTS.find((p) => p.featured);
   const caseStudyLink = featured ? `/projects/${featured.id}` : '/projects';
 
-  // ── Scroll Parallax ──
-  const heroRef = useRef<HTMLElement>(null);
-  const { scrollY } = useScroll();
-  const contentY = useTransform(scrollY, [0, 700], [0, -80]);
-  const canvasY = useTransform(scrollY, [0, 700], [0, 120]);
-  const heroOpacity = useTransform(scrollY, [0, 500], [1, 0]);
+  // ── Hero Parallax (matching Services page) ──
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.8], [1, 0.95]);
+  const heroBlur = useTransform(scrollYProgress, [0, 0.8], ['blur(0px)', 'blur(6px)']);
 
   // ── Stats ──
   const stats = [
@@ -563,118 +602,98 @@ export default function Projects() {
     { icon: Clock, label: 'Avg Time to Ship', value: 12, suffix: ' wks' },
   ];
 
-  // ── Floating stat pills (hero) ──
-  const floatingPills = [
-    { val: 24, suffix: '/7', label: 'Monitoring', color: '#10b981' },
-    { val: 4, suffix: '', label: 'Delivery Locations', color: '#F5A800' },
-    { val: 6, suffix: '+', label: 'Service Verticals', color: '#8b5cf6' },
-  ];
-
   return (
     <div className="bg-slate-50 min-h-screen text-slate-900 font-sans selection:bg-[#F5A800]/30 overflow-x-clip">
+      <MouseGlow />
 
       {/* ═══════════════════════════════════════════════════════════
-          HERO — Cinematic, 3D, Scroll-Driven, NeuralCanvas Background
+          HERO — Matching Services Page Style
           ═══════════════════════════════════════════════════════════ */}
-      <section ref={heroRef} className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-24 pb-32">
+      <section
+        ref={heroRef}
+        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#02040a]"
+      >
+        {/* ── Atmosphere glow orbs (matching Services) ── */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-[#F5A800]/10 rounded-full blur-[160px]" />
+          <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#8b5cf6]/8 rounded-full blur-[140px]" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[400px] bg-gradient-to-b from-[#02040a] to-transparent opacity-60" />
+        </div>
 
-        {/* ── NeuralCanvas 3D Background ── */}
-        <motion.div style={{ y: canvasY }} className="absolute inset-0 z-0 opacity-30">
-          <Suspense fallback={null}>
-            <NeuralCanvas />
-          </Suspense>
-        </motion.div>
-
-        {/* Scanline grid */}
-        <div
-          className="absolute inset-0 opacity-[0.02] pointer-events-none"
-          style={{
-            backgroundImage: 'linear-gradient(rgba(245,168,0,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(245,168,0,0.6) 1px, transparent 1px)',
-            backgroundSize: '60px 60px',
-          }}
-        />
-        {/* Bottom fade */}
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#02040a] via-[#02040a]/80 to-transparent" />
+        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-[#02040a]/30 via-transparent to-[#02040a]/85 pointer-events-none" />
+        <div className="absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,_transparent_20%,_#02040a_80%)] pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#02040a] to-transparent z-[2] pointer-events-none" />
 
         {/* ── Main Hero Content ── */}
         <motion.div
-          style={{ y: contentY, opacity: heroOpacity }}
-          className="container relative z-10 flex flex-col items-center text-center"
+          style={{ opacity: heroOpacity, scale: heroScale, filter: heroBlur }}
+          className="relative z-10 container max-w-5xl mx-auto px-6 text-center pt-32 pb-24"
         >
+          {/* Badge */}
           <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
-            className="flex flex-col items-center max-w-5xl"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: EASE_EXPO }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-[#F5A800]/20 backdrop-blur-md mb-8"
           >
-            {/* Badge */}
-            <motion.div
-              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_EXPO } } }}
-              className="mb-8"
-            >
-              <div className="badge">
-                <Zap size={11} />
-                Our Work
-              </div>
-            </motion.div>
-
-            {/* Headline — cinematic scale + blur reveal */}
-            <motion.h1
-              variants={{
-                hidden: { opacity: 0, scale: 0.92, filter: 'blur(12px)' },
-                visible: {
-                  opacity: 1, scale: 1, filter: 'blur(0px)',
-                  transition: { duration: 1.1, delay: 0.15, ease: EASE_EXPO },
-                },
-              }}
-              className="text-[48px] md:text-[72px] lg:text-[90px] font-black text-white tracking-[-0.04em] leading-[1.0] mb-8"
-            >
-              Engineering{' '}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">
-                the Future,
-              </span>
-              <br />
-              <span className="text-white/20">One Project at a Time.</span>
-            </motion.h1>
-
-            {/* Subheadline */}
-            <motion.p
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.75, delay: 0.25, ease: EASE_EXPO } },
-              }}
-              className="text-[16px] md:text-[20px] text-white/50 font-medium leading-relaxed mb-12 max-w-2xl"
-            >
-              From autonomous AI defense systems to quantum-hardened fintech platforms — explore our portfolio of enterprise-grade projects shaping the next decade of technology.
-            </motion.p>
-
-            {/* CTAs */}
-            <motion.div
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.75, delay: 0.35, ease: EASE_EXPO } },
-              }}
-              className="flex flex-wrap items-center justify-center gap-4 mb-20"
-            >
-              <Link to="/contact" className="group relative inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-black font-bold text-[14px] transition-all hover:scale-105">
-                Start a Project
-                <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link to={caseStudyLink} className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold text-[14px] transition-all hover:bg-white/10 hover:border-white/20">
-                Case Studies
-                <ArrowUpRight size={14} />
-              </Link>
-            </motion.div>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse shadow-[0_0_8px_rgba(245,168,0,0.6)]" />
+            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#F5A800]">Our Work</span>
           </motion.div>
 
-          {/* ── Floating Stat Pills — 3D floating animation ── */}
+          {/* Headline — TextReveal split into two lines (matching Services) */}
+          <TextReveal className="mb-2">
+            <h1 className="text-[48px] md:text-[72px] lg:text-[96px] font-black tracking-[-0.04em] leading-[0.9] text-white">
+              Engineering the{' '}
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">
+                Future,
+              </span>
+            </h1>
+          </TextReveal>
+          <TextReveal delay={0.15}>
+            <h1 className="text-[48px] md:text-[72px] lg:text-[96px] font-black tracking-[-0.04em] leading-[0.9] mb-6">
+              <span className="text-white/20">One Project at a Time.</span>
+            </h1>
+          </TextReveal>
+
+          {/* Subheadline */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35, duration: 0.7, ease: EASE_EXPO }}
+            className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed mb-10"
+          >
+            From autonomous AI defense systems to quantum-hardened fintech platforms — explore our portfolio of enterprise-grade projects shaping the next decade of technology.
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.6, ease: EASE_EXPO }}
+            className="flex flex-wrap items-center justify-center gap-4 mb-20"
+          >
+            <Link to="/contact" className="group relative inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-black font-bold text-[14px] transition-all hover:scale-105">
+              Start a Project
+              <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <Link to={caseStudyLink} className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold text-[14px] transition-all hover:bg-white/10 hover:border-white/20">
+              Case Studies
+              <ArrowUpRight size={14} />
+            </Link>
+          </motion.div>
+
+          {/* ── Floating Stat Pills ── */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.8, ease: EASE_EXPO }}
             className="flex flex-wrap items-center justify-center gap-3"
           >
-            {floatingPills.map((item, i) => (
+            {[
+              { val: 24, suffix: '/7', label: 'Monitoring', color: '#10b981' },
+              { val: 4, suffix: '', label: 'Delivery Locations', color: '#F5A800' },
+              { val: 6, suffix: '+', label: 'Service Verticals', color: '#8b5cf6' },
+            ].map((item, i) => (
               <motion.div
                 key={item.label}
                 animate={{ y: [0, -10, 0] }}
@@ -692,7 +711,6 @@ export default function Projects() {
                 }}
               >
                 <div className="flex items-baseline gap-0.5">
-                  {item.prefix && <span className="text-lg font-black text-white/70">{item.prefix}</span>}
                   <span className="text-lg font-black" style={{ color: item.color }}>
                     <Counter value={item.val} suffix={item.suffix} duration={2.5} />
                   </span>
@@ -703,35 +721,29 @@ export default function Projects() {
           </motion.div>
         </motion.div>
 
-        {/* Scroll indicator */}
+        {/* Scroll indicator — matching Services */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.4 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          transition={{ delay: 1.2, duration: 1 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         >
-          <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/20">Scroll</span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-4 h-6 rounded-full border border-white/10 flex items-start justify-center p-1"
-          >
-            <motion.div className="w-1 h-1.5 rounded-full bg-white/30" />
-          </motion.div>
+          <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/25">Scroll to explore</span>
+          <div className="w-px h-10 bg-gradient-to-b from-white/25 to-transparent" />
         </motion.div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
           STATS BAR — Animated Counters
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden border-t border-slate-200 py-16" style={{ background: '#f4f4f5' }}>
-        <div className="container relative z-10">
+      <section className="relative overflow-hidden border-t border-slate-200 py-16 bg-[#f4f4f5]">
+        <div className="container relative z-10 mx-auto px-6">
           <motion.div
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-60px' }}
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3"
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
           >
             {stats.map((stat) => {
               const Icon = stat.icon;
@@ -747,13 +759,7 @@ export default function Projects() {
                 >
                   <Icon size={18} className="text-[#F5A800] mb-3 transition-all duration-300" />
                   <div className="text-2xl md:text-3xl font-black text-slate-900 mb-1">
-                    {stat.label === 'Avg Client Rating' ? (
-                      <><Counter value={stat.value} duration={2.5} decimals={2} />{stat.suffix}</>
-                    ) : stat.label === 'Avg Time to Ship' ? (
-                      <><Counter value={stat.value} duration={2.5} />{stat.suffix}</>
-                    ) : (
-                      <Counter value={stat.value} duration={2.5} suffix={stat.suffix} />
-                    )}
+                    <Counter value={stat.value} duration={2.5} suffix={stat.suffix} />
                   </div>
                   <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400">{stat.label}</div>
                 </motion.div>
@@ -764,11 +770,17 @@ export default function Projects() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
-          FEATURED PROJECT
+          FEATURED PROJECT — Dark Enterprise Redesign
           ═══════════════════════════════════════════════════════════ */}
       {featured && (
-        <section className="relative py-28 overflow-hidden bg-white border-t border-slate-200">
-          <div className="container relative z-10">
+        <section className="relative py-28 overflow-hidden bg-[#02040a] border-t border-white/5">
+          {/* Atmosphere glow */}
+          <div className="absolute inset-0 z-0 pointer-events-none">
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#F5A800]/5 blur-[140px] rounded-full" />
+            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#8b5cf6]/4 blur-[120px] rounded-full" />
+          </div>
+
+          <div className="container relative z-10 mx-auto px-6">
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -776,32 +788,31 @@ export default function Projects() {
               variants={staggerContainer}
             >
               {/* Section label */}
-              <motion.div variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_EXPO } },
-              }} className="flex items-center gap-4 mb-14">
-                <div className="badge">
-                  <Star size={11} />
-                  Featured Project
-                </div>
-                <div className="h-px flex-1 bg-gradient-to-r from-[#F5A800]/20 to-transparent hidden" />
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_EXPO } },
+                }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-[#F5A800]/20 backdrop-blur-md mb-10"
+              >
+                <Star size={11} className="text-[#F5A800]" />
+                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#F5A800]">Featured Project</span>
               </motion.div>
 
-              {/* Featured Card */}
+              {/* Featured Card — Dark */}
               <motion.div
                 variants={{
                   hidden: { opacity: 0, y: 40, scale: 0.97 },
                   visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.9, ease: EASE_EXPO } },
                 }}
-                className="relative rounded-[40px] overflow-hidden border border-slate-200 min-h-[500px] group transition-all duration-700 hover:border-[#F5A800]/30"
-                style={{
-                  background: '#f4f4f5',
-                }}
+                className="relative rounded-[40px] overflow-hidden border border-white/[0.08] min-h-[500px] group transition-all duration-700 hover:border-[#F5A800]/30"
+                style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)' }}
               >
-                {/* BG wash */}
+                {/* Subtle grid overlay */}
+                <div className="absolute inset-0 opacity-[0.015] pointer-events-none"
+                  style={{ backgroundImage: 'radial-gradient(circle, rgba(245,168,0,0.3) 0.5px, transparent 0.5px)', backgroundSize: '32px 32px' }} />
 
-
-                <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 p-10 md:p-14 items-center">
+                <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 p-10 md:p-14 items-start">
                   {/* Left — Content */}
                   <div className="lg:col-span-7">
                     <motion.div
@@ -821,57 +832,59 @@ export default function Projects() {
                       </div>
 
                       <p className="text-[10px] font-black uppercase tracking-[0.35em] text-[#F5A800] mb-3">{featured.category} — {featured.year}</p>
-                      <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.0] mb-4">
+                      <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.0] mb-4">
                         {featured.title}
                       </h2>
-                      <p className="text-lg text-slate-500 font-medium mb-6">{featured.subtitle}</p>
-                      <p className="text-slate-500 text-lg leading-relaxed mb-8 max-w-xl">
+                      <p className="text-lg text-white/40 font-medium mb-6">{featured.subtitle}</p>
+                      <p className="text-white/50 text-lg leading-relaxed mb-8 max-w-xl">
                         {featured.description}
                       </p>
 
                       <div className="flex flex-wrap gap-3 mb-10">
                         {featured.tags.map((tag) => (
-                          <span key={tag}                  className="text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg bg-[#F5A800]/10 border border-[#F5A800]/20 text-[#B45309]">
+                          <span key={tag} className="text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg bg-[#F5A800]/10 border border-[#F5A800]/20 text-[#FFD166]">
                             {tag}
                           </span>
                         ))}
                       </div>
 
                       <div className="flex items-center gap-4">
-                        <Link to="/contact" className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black font-bold text-[13px] transition-all hover:scale-105">
+                        <Link to="/contact" className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#F5A800] text-black font-bold text-[13px] transition-all hover:bg-white hover:scale-105">
                           Start Similar Project <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                         </Link>
-                        <Link to={caseStudyLink} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-100 border border-slate-200 text-slate-700 font-bold text-[13px] transition-all hover:bg-slate-200">
+                        <Link to={caseStudyLink} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 border border-white/10 text-white/70 font-bold text-[13px] transition-all hover:bg-white/10 hover:border-white/20 hover:text-white">
                           See Case Study
                         </Link>
                       </div>
                     </motion.div>
                   </div>
 
-                  {/* Right — Metrics HUD with animated ring gauges */}
+                  {/* Right — Metrics HUD */}
                   <div className="lg:col-span-5">
                     <motion.div
                       initial={{ opacity: 0, x: 20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.7, delay: 0.4, ease: EASE_EXPO }}
-                      className="rounded-3xl p-8 bg-white border border-slate-200"
+                      className="rounded-3xl p-8 bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm"
                     >
-                      {/* Header */}                      <div className="flex items-center justify-between mb-8 pb-5 border-b border-slate-200">
-                            <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-slate-400">System Telemetry</span>                      <motion.span
-                            animate={{ opacity: [1, 0.4, 1] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                            className="flex items-center gap-2 text-[10px] font-mono font-bold tracking-widest uppercase text-emerald-600"
-                          >
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
-                            Live
-                          </motion.span>
+                      {/* Header */}
+                      <div className="flex items-center justify-between mb-8 pb-5 border-b border-white/[0.06]">
+                        <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-white/30">System Telemetry</span>
+                        <motion.span
+                          animate={{ opacity: [1, 0.4, 1] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                          className="flex items-center gap-2 text-[10px] font-mono font-bold tracking-widest uppercase text-emerald-400"
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                          Live
+                        </motion.span>
                       </div>
 
                       {/* Ring gauges */}
                       <div className="flex justify-around mb-8">
                         <RingGauge value={500} label="Threats Blocked" color="#F5A800" max={600} size={80} />
-                        <RingGauge value={99.998} label="Accuracy" color="#10b981" max={100} size={80} />
+                        <RingGauge value={99.998} label="Accuracy %" color="#10b981" max={100} size={80} />
                         <RingGauge value={8} label="Latency (ms)" color="#06b6d4" max={15} size={80} />
                       </div>
 
@@ -884,10 +897,11 @@ export default function Projects() {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={SPRING_GENTLE}
-                          >                      <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">{metric.label}</div>
-                              <div className="flex items-end gap-4">
-                                <div className="text-3xl md:text-4xl font-black text-slate-900">{metric.value}</div>
-                              <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden mb-2">
+                          >
+                            <div className="text-[10px] font-black uppercase tracking-widest text-white/30 mb-2">{metric.label}</div>
+                            <div className="flex items-end gap-4">
+                              <div className="text-3xl md:text-4xl font-black text-white">{metric.value}</div>
+                              <div className="flex-1 h-1.5 bg-white/[0.06] rounded-full overflow-hidden mb-2">
                                 <motion.div
                                   initial={{ width: 0 }}
                                   whileInView={{ width: `${[82, 96, 75][j]}%` }}
@@ -906,13 +920,86 @@ export default function Projects() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.8 }}
-                        className="p-4 rounded-2xl bg-[#F5A800]/5 border border-[#F5A800]/10 flex items-center gap-3"
+                        className="p-4 rounded-2xl bg-[#F5A800]/5 border border-[#F5A800]/15 flex items-center gap-3"
                       >
                         <TrendingUp size={14} className="text-[#F5A800]" />
-                        <span className="text-sm font-bold text-slate-700">{featured.impact}</span>
+                        <span className="text-sm font-bold text-white/70">{featured.impact}</span>
                       </motion.div>
                     </motion.div>
                   </div>
+                </div>
+
+                {/* ── Capabilities Carousel ── */}
+                <div className="mx-10 md:mx-14 mb-10 md:mb-14 pt-10 border-t border-white/[0.06]">
+                  <motion.div
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.5, duration: 0.6, ease: EASE_EXPO }}
+                    className="flex items-center gap-2 mb-6"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse shadow-[0_0_8px_rgba(245,168,0,0.6)]" />
+                    <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#F5A800]">Full-Service Capabilities</span>
+                  </motion.div>
+
+                  <DraggableSlider className="-mx-2 px-0">
+                    {[
+                      {
+                        icon: '🌐',
+                        title: 'Website Development',
+                        desc: 'Custom websites, landing pages, and web portals built with modern frameworks for speed, SEO, and conversion.',
+                        accent: '#06b6d4',
+                      },
+                      {
+                        icon: '🧠',
+                        title: 'AI Development & Implementation',
+                        desc: 'Custom LLM integrations, predictive models, intelligent agents, and ML pipelines tailored to your workflow.',
+                        accent: '#8b5cf6',
+                      },
+                      {
+                        icon: '📱',
+                        title: 'App Development',
+                        desc: 'Native iOS, Android, and cross-platform mobile applications with seamless backend integration.',
+                        accent: '#10b981',
+                      },
+                      {
+                        icon: '⚙️',
+                        title: 'Web-Based Systems',
+                        desc: 'Complex web applications, SaaS platforms, dashboards, and internal tools engineered for scale.',
+                        accent: '#F5A800',
+                      },
+                      {
+                        icon: '🛠️',
+                        title: 'Software Customization',
+                        desc: 'Enterprise software tailoring, plugin development, legacy system modernization, and API integrations.',
+                        accent: '#f97316',
+                      },
+                      {
+                        icon: '🔗',
+                        title: 'Networking & Installation',
+                        desc: 'Infrastructure setup, network architecture, server deployment, and secure system configuration.',
+                        accent: '#ef4444',
+                      },
+                    ].map((cap, i) => (
+                      <motion.div
+                        key={cap.title}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.6 + i * 0.05, duration: 0.5, ease: EASE_EXPO }}
+                        className="min-w-[260px] sm:min-w-[280px] p-5 rounded-[20px] bg-white/[0.03] border border-white/[0.08] hover:border-[#F5A800]/30 hover:bg-white/[0.06] transition-all duration-500 shrink-0 snap-start group"
+                      >
+                        <div
+                          className="w-10 h-10 rounded-[12px] flex items-center justify-center text-lg mb-4 transition-all duration-500 group-hover:scale-110"
+                          style={{ background: `${cap.accent}12`, border: `1px solid ${cap.accent}25` }}
+                        >
+                          {cap.icon}
+                        </div>
+                        <h4 className="text-sm font-black text-white mb-2 group-hover:text-[#F5A800] transition-colors duration-300">{cap.title}</h4>
+                        <p className="text-white/40 text-xs leading-relaxed">{cap.desc}</p>
+                      </motion.div>
+                    ))}
+                  </DraggableSlider>
                 </div>
               </motion.div>
             </motion.div>
@@ -921,11 +1008,10 @@ export default function Projects() {
       )}
 
       {/* ═══════════════════════════════════════════════════════════
-          PROJECT GRID
+          PROJECT GRID — All Projects
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-28" style={{ background: '#f4f4f5' }}>
-  
-        <div className="container relative z-10">
+      <section className="relative py-28 bg-[#f4f4f5] border-t border-slate-200">
+        <div className="container relative z-10 mx-auto px-6">
           {/* Section header */}
           <motion.div
             initial="hidden"
@@ -935,24 +1021,36 @@ export default function Projects() {
             className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16"
           >
             <div>
-              <motion.p variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_EXPO } },
-              }} className="section-label text-slate-500 mb-3">All Projects</motion.p>
-              <motion.h2 variants={{
-                hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
-                visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: EASE_EXPO } },
-              }} className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_EXPO } },
+                }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-4"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
+                <span className="text-[11px] font-bold text-slate-600 uppercase tracking-widest">All Projects</span>
+              </motion.div>
+              <motion.h2
+                variants={{
+                  hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
+                  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: EASE_EXPO } },
+                }}
+                className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight"
+              >
                 Explore the Full{' '}
-                <span className="text-gradient-aurora">Portfolio</span>
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Portfolio</span>
               </motion.h2>
             </div>
 
             {/* Filter tabs */}
-            <motion.div variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.2, ease: EASE_EXPO } },
-            }} className="flex flex-wrap gap-2">
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.2, ease: EASE_EXPO } },
+              }}
+              className="flex flex-wrap gap-2"
+            >
               {CATEGORIES.map((cat) => (
                 <button
                   key={cat}
@@ -1000,10 +1098,10 @@ export default function Projects() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
-          FEATURED PRODUCT: NEXI MARKETS — Cream Theme
+          FEATURED PRODUCT: NEXI MARKETS
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-24 overflow-hidden border-t border-slate-200" style={{ background: '#f4f4f5' }}>
-        <div className="container relative z-10">
+      <section className="relative py-24 overflow-hidden border-t border-slate-200 bg-[#f4f4f5]">
+        <div className="container relative z-10 mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
             {/* LEFT: Content */}
@@ -1014,10 +1112,13 @@ export default function Projects() {
               variants={staggerContainer}
               className="flex flex-col"
             >
-              <motion.div variants={revealUp} className="mb-6">
-                <div className="badge text-slate-700 border-slate-300 bg-white/50 mb-4">
-                  <Zap size={11} />
-                  Nexyovi
+              <motion.div variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE_EXPO } },
+              }} className="mb-6">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 mb-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">Nexyovi</span>
                 </div>
                 <h2 className="text-5xl md:text-6xl font-black text-slate-900 leading-[0.95] tracking-tight">
                   Nexi <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Markets</span>
@@ -1027,11 +1128,17 @@ export default function Projects() {
                 </p>
               </motion.div>
 
-              <motion.p variants={revealUp} className="text-slate-500 text-base leading-relaxed mb-6 max-w-md">
+              <motion.p variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.05, ease: EASE_EXPO } },
+              }} className="text-slate-500 text-base leading-relaxed mb-6 max-w-md">
                 Nexi Markets is your all-in-one shopping destination offering millions of products across categories with fast delivery, secure payments, and unbeatable deals.
               </motion.p>
 
-              <motion.div variants={revealUp} className="flex flex-col gap-3 mb-8">
+              <motion.div variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.1, ease: EASE_EXPO } },
+              }} className="flex flex-col gap-3 mb-8">
                 {[
                   { icon: '📦', label: 'Millions of Products' },
                   { icon: '🚚', label: 'Fast & Reliable Delivery' },
@@ -1041,7 +1148,10 @@ export default function Projects() {
                 ))}
               </motion.div>
 
-              <motion.div variants={revealUp} className="flex items-center gap-4 mb-8 pb-8 border-b border-slate-200">
+              <motion.div variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.15, ease: EASE_EXPO } },
+              }} className="flex items-center gap-4 mb-8 pb-8 border-b border-slate-200">
                 <div className="flex -space-x-2">
                   {['#F5A800', '#10b981', '#8b5cf6', '#ef4444'].map((c, i) => (
                     <div key={i} className="w-8 h-8 rounded-full border-2 border-white flex items-center justify-center text-[11px] font-black text-white" style={{ backgroundColor: c }}>
@@ -1060,7 +1170,10 @@ export default function Projects() {
                 </div>
               </motion.div>
 
-              <motion.div variants={revealUp} className="flex flex-wrap gap-3">
+              <motion.div variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.2, ease: EASE_EXPO } },
+              }} className="flex flex-wrap gap-3">
                 <StoreButton platform="app-store" />
                 <StoreButton platform="google-play" />
               </motion.div>
@@ -1094,10 +1207,10 @@ export default function Projects() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
-          FEATURED PRODUCT: NEXI LOCATE — Cream Theme
+          FEATURED PRODUCT: NEXI LOCATE
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-24 overflow-hidden border-t border-slate-200" style={{ background: '#f4f4f5' }}>
-        <div className="container relative z-10">
+      <section className="relative py-24 overflow-hidden border-t border-slate-200 bg-[#f4f4f5]">
+        <div className="container relative z-10 mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
             {/* LEFT: Screens */}
@@ -1131,10 +1244,13 @@ export default function Projects() {
               variants={staggerContainer}
               className="flex flex-col order-1 lg:order-2"
             >
-              <motion.div variants={revealUp} className="mb-6">
-                <div className="badge mb-4 text-[#ea580c] bg-white/50 border-slate-300">
-                  <MapPin size={11} />
-                  Nexyovi
+              <motion.div variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE_EXPO } },
+              }} className="mb-6">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 mb-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">Nexyovi</span>
                 </div>
                 <h2 className="text-5xl md:text-6xl font-black text-slate-900 leading-[0.95] tracking-tight">
                   Nexi <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ea580c] to-[#f59e0b]">Locate</span>
@@ -1144,11 +1260,17 @@ export default function Projects() {
                 </p>
               </motion.div>
 
-              <motion.p variants={revealUp} className="text-slate-500 text-base leading-relaxed mb-6 max-w-md">
+              <motion.p variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.05, ease: EASE_EXPO } },
+              }} className="text-slate-500 text-base leading-relaxed mb-6 max-w-md">
                 Nexi Locate helps you discover the best places near you in Addis Ababa. Restaurants, cafes, hotels, gyms, clubs, spots and more. Rate, review and share your favorite places.
               </motion.p>
 
-              <motion.div variants={revealUp} className="flex gap-3 mb-6 flex-wrap">
+              <motion.div variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.1, ease: EASE_EXPO } },
+              }} className="flex gap-3 mb-6 flex-wrap">
                 {[
                   { icon: '🍽', label: 'Restaurants' }, { icon: '☕', label: 'Cafes' },
                   { icon: '🏨', label: 'Hotels' }, { icon: '💪', label: 'Gyms' },
@@ -1167,7 +1289,10 @@ export default function Projects() {
                 ))}
               </motion.div>
 
-              <motion.div variants={revealUp} className="grid grid-cols-2 gap-3 mb-8">
+              <motion.div variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.15, ease: EASE_EXPO } },
+              }} className="grid grid-cols-2 gap-3 mb-8">
                 {[
                   { icon: '📍', title: 'Discover Nearby', desc: 'Find the best places around you.' },
                   { icon: '➕', title: 'Add Your Places', desc: 'Add favorites for others to discover.' },
@@ -1186,7 +1311,10 @@ export default function Projects() {
                 ))}
               </motion.div>
 
-              <motion.div variants={revealUp} className="flex flex-wrap gap-3">
+              <motion.div variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.2, ease: EASE_EXPO } },
+              }} className="flex flex-wrap gap-3">
                 <StoreButton platform="google-play" />
                 <StoreButton platform="app-store" />
               </motion.div>
@@ -1197,10 +1325,10 @@ export default function Projects() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
-          FEATURED PRODUCT: TELE-PSYCHIATRY — Cream Theme
+          FEATURED PRODUCT: TELE-PSYCHIATRY
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-24 overflow-hidden border-t border-slate-200" style={{ background: '#f4f4f5' }}>
-        <div className="container relative z-10">
+      <section className="relative py-24 overflow-hidden border-t border-slate-200 bg-[#f4f4f5]">
+        <div className="container relative z-10 mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
             {/* LEFT: Content */}
@@ -1211,27 +1339,39 @@ export default function Projects() {
               variants={staggerContainer}
               className="flex flex-col"
             >
-              <motion.div variants={revealUp} className="flex items-center gap-3 mb-6">
+              <motion.div variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE_EXPO } },
+              }} className="flex items-center gap-3 mb-6">
                 <motion.div
                   whileHover={{ scale: 1.1, rotate: -5 }}
                   className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#0d9488] to-[#2dd4bf] flex items-center justify-center text-2xl"
                 >🧠</motion.div>
                 <div>
-                  <h3 className="text-xl font-black text-slate-900 tracking-tight">tele-phychatriy</h3>
+                  <h3 className="text-xl font-black text-slate-900 tracking-tight">Tele-Psychiatry</h3>
                   <p className="text-[#2dd4bf] font-bold text-xs tracking-wide">Your Mental Well-being, Our Priority</p>
                 </div>
               </motion.div>
 
-              <motion.h2 variants={revealUp} className="text-5xl md:text-6xl font-black text-slate-900 leading-[0.95] tracking-tight mb-4">
+              <motion.h2 variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.05, ease: EASE_EXPO } },
+              }} className="text-5xl md:text-6xl font-black text-slate-900 leading-[0.95] tracking-tight mb-4">
                 Mental health care,<br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0d9488] to-[#2dd4bf]">anytime, anywhere.</span>
               </motion.h2>
 
-              <motion.p variants={revealUp} className="text-slate-500 text-base leading-relaxed mb-6 max-w-md">
+              <motion.p variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.1, ease: EASE_EXPO } },
+              }} className="text-slate-500 text-base leading-relaxed mb-6 max-w-md">
                 Connect with licensed psychiatrists and therapists across Ethiopia through secure online consultations.
               </motion.p>
 
-              <motion.div variants={revealUp} className="flex flex-col gap-3 mb-8">
+              <motion.div variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.15, ease: EASE_EXPO } },
+              }} className="flex flex-col gap-3 mb-8">
                 {[
                   { icon: '📹', label: 'Online Consultations' },
                   { icon: '📅', label: 'Easy Appointments' },
@@ -1243,7 +1383,10 @@ export default function Projects() {
                 ))}
               </motion.div>
 
-              <motion.div variants={revealUp} className="flex flex-wrap gap-2 mb-8 pb-8 border-b border-slate-200">
+              <motion.div variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.2, ease: EASE_EXPO } },
+              }} className="flex flex-wrap gap-2 mb-8 pb-8 border-b border-slate-200">
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200">
                   <span className="text-base">🇪🇹</span>
                   <span className="text-slate-600 text-xs font-semibold">Built for Ethiopia</span>
@@ -1254,7 +1397,10 @@ export default function Projects() {
                 </div>
               </motion.div>
 
-              <motion.div variants={revealUp} className="flex flex-wrap gap-3">
+              <motion.div variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.25, ease: EASE_EXPO } },
+              }} className="flex flex-wrap gap-3">
                 <StoreButton platform="app-store" />
                 <StoreButton platform="google-play" />
               </motion.div>
@@ -1288,10 +1434,13 @@ export default function Projects() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
-          CTA — Light Section
+          CTA SECTION
           ═══════════════════════════════════════════════════════════ */}
       <section className="relative py-32 bg-white border-t border-slate-200 overflow-hidden">
-        <div className="container relative z-10">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#F5A800]/2 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-[#F5A800]/3 blur-[100px] rounded-full pointer-events-none" />
+
+        <div className="container relative z-10 mx-auto px-6">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -1299,42 +1448,37 @@ export default function Projects() {
             variants={staggerContainer}
             className="flex flex-col items-center text-center max-w-3xl mx-auto"
           >
-            <motion.div variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_EXPO } },
-            }} className="badge mb-8">
-              <Zap size={11} />
-              Let's Build Together
-            </motion.div>
-
-            <motion.h2
-              variants={{
-                hidden: { opacity: 0, scale: 0.94, filter: 'blur(10px)' },
-                visible: { opacity: 1, scale: 1, filter: 'blur(0px)', transition: { duration: 1.1, delay: 0.1, ease: EASE_EXPO } },
-              }}
-              className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[0.95] mb-8 text-slate-900"
-            >
-              Your Next{' '}
-              <span className="text-gradient-aurora">Breakthrough</span>
-              <br />
-              Starts Here.
-            </motion.h2>
-
-            <motion.p
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.75, delay: 0.2, ease: EASE_EXPO } },
-              }}
-              className="text-slate-500 text-lg leading-relaxed mb-12 max-w-xl"
-            >
-              From ideation to enterprise deployment, our engineers become your team — shipping critical infrastructure faster than you thought possible.
-            </motion.p>
-
             <motion.div
               variants={{
                 hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.75, delay: 0.3, ease: EASE_EXPO } },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_EXPO } },
               }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F5A800]/10 border border-[#F5A800]/20 mb-8"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse shadow-[0_0_8px_rgba(245,168,0,0.6)]" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#F5A800]">Let's Build Together</span>
+            </motion.div>
+
+            <TextReveal>
+              <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[0.95] mb-8 text-slate-900">
+                Your Next{' '}
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Breakthrough</span>
+                <br />
+                Starts Here.
+              </h2>
+            </TextReveal>
+
+            <TextReveal delay={0.1}>
+              <p className="text-slate-500 text-lg leading-relaxed mb-12 max-w-xl font-medium">
+                From ideation to enterprise deployment, our engineers become your team — shipping critical infrastructure faster than you thought possible.
+              </p>
+            </TextReveal>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.25, duration: 0.6, ease: EASE_EXPO }}
               className="flex flex-wrap items-center justify-center gap-4"
             >
               <Link to="/contact" className="group relative inline-flex items-center gap-2 px-8 py-4 rounded-full bg-slate-950 text-white font-bold text-[14px] transition-all hover:scale-105 hover:bg-[#F5A800]">

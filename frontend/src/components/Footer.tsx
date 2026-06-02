@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, Twitter, Linkedin, Youtube, Slack, Instagram, MessagesSquare, Send, ArrowRight, Mail, Phone, X } from 'lucide-react';
+import { Github, Twitter, Linkedin, Youtube, Slack, Instagram, MessagesSquare, Send, ArrowRight, Mail, Phone, X, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import myLogo from '../assets/logo 1.png';
 
@@ -184,8 +184,7 @@ const Footer = () => {
  </li>
  <li>
  <Link to="/careers" className="group block">
- <p className="text-white text-[14px] font-medium transition-colors group-hover:text-white/70">Careers</p>
- <p className="text-[#6B7280] text-[12px]">We are hiring developers!</p>
+ <p className="text-white text-[14px] font-medium transition-colors group-hover:text-white/70">Careers</p>              <p className="text-[#6B7280] text-[12px]">Join Our Engineering Team</p>
  </Link>
  </li>
  <li>
@@ -233,10 +232,41 @@ const Footer = () => {
  {item}
  </button>
  ))}
- <Link to="/admin/login" className="text-[12px] text-[#F5A800]/20 hover:text-[#F5A800] transition-colors uppercase tracking-widest font-black">Admin</Link>
- </div>
- </div>
- </div>
+              </div>
+              </div>
+              </div>
+
+              {/* Locations & Trust row */}
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 py-10 border-t border-white/5">
+                <div>
+                  <h4 className="text-white/40 font-bold text-[11px] uppercase tracking-[0.2em] mb-3">Global Locations</h4>
+                  <div className="flex flex-wrap gap-4">
+                    <div className="flex items-center gap-2 text-[#6B7280] text-[12px]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800]" />
+                      Addis Ababa, Ethiopia
+                    </div>
+                    <div className="flex items-center gap-2 text-[#6B7280] text-[12px]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800]" />
+                      Miami, Florida
+                    </div>
+                    <div className="flex items-center gap-2 text-[#6B7280] text-[12px]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800]" />
+                      Remote Worldwide
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-white/40 font-bold text-[11px] uppercase tracking-[0.2em] mb-3">Trust & Infrastructure</h4>
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+                    {['Security-First Engineering', 'Privacy-Focused Development', 'Enterprise Infrastructure', 'Modern Cloud Architecture'].map((item) => (
+                      <div key={item} className="flex items-center gap-1.5 text-[#6B7280] text-[10px] font-bold uppercase tracking-wider">
+                        <CheckCircle size={10} className="text-[#F5A800] shrink-0" />
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
 
  </div>
 

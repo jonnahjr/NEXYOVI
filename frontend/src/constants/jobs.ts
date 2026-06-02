@@ -120,26 +120,6 @@ export const jobs = [
  ]
  },
  { 
- title: 'Security Architect', 
- dept: 'Engineering', 
- location: 'Miami, USA', 
- type: 'Full-time',
- id: 'JOB-SEC-01',
- desc: 'Design and implement zero-trust security architectures for global enterprise clients. You will be responsible for the cryptographic integrity of our distributed systems.',
- responsibilities: [
- 'Develop multi-layer defense-in-depth strategies.',
- 'Conduct advanced penetration testing and threat modeling.',
- 'Architect secure identity and access management (IAM) systems.',
- 'Lead incident response and forensic analysis for technical breaches.'
- ],
- requirements: [
- '7+ years in cybersecurity architecture.',
- 'Expertise in zero-trust frameworks and AES-256 encryption.',
- 'Relevant certifications (CISSP, CISM, or equivalent).',
- 'Experience with secure cloud-native infrastructure (AWS/Azure).'
- ]
- },
- { 
  title: 'FinTech Solutions Lead', 
  dept: 'Engineering', 
  location: 'Dubai', 

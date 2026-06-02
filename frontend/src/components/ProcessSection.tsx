@@ -137,7 +137,7 @@ export default function ProcessSection() {
         <h3 ref={leftLabelRef} className="text-[28px] md:text-[36px] font-black text-white tracking-tight leading-tight transition-all duration-200">
          {steps[0].label}
         </h3>
-        <p ref={leftDescRef} className="text-white/40 text-[15px] leading-relaxed mt-3 max-w-sm mx-auto transition-all duration-200">
+        <p ref={leftDescRef} className="text-white/40 text-base md:text-lg leading-relaxed mt-4 max-w-sm mx-auto transition-all duration-200">
          {steps[0].desc}
         </p>
        </div>
@@ -161,7 +161,7 @@ export default function ProcessSection() {
          <div
           key={step.num}
           ref={(el) => { cardRefs.current[i] = el; }}
-          className="group relative overflow-hidden rounded-[24px] border border-white/[0.06] bg-gradient-to-b from-white/[0.04] to-white/[0.01] p-8 transition-all duration-500 hover:border-white/[0.12]"
+          className="group relative overflow-hidden rounded-[24px] border border-white/[0.08] bg-white/[0.03] p-10 transition-all duration-500 hover:border-white/[0.15]"
          >
           <div
            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
@@ -170,7 +170,7 @@ export default function ProcessSection() {
 
           <div className="relative z-10 space-y-5">
            <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-[16px] flex items-center justify-center text-2xl bg-white/[0.04] border border-white/[0.06]">
+            <div className="w-14 h-14 rounded-[16px] flex items-center justify-center text-2xl bg-white/[0.05] border border-white/[0.08]">
              {step.emoji}
             </div>
             <span className="text-[11px] font-black uppercase tracking-[0.2em] text-white/20">
@@ -179,10 +179,10 @@ export default function ProcessSection() {
            </div>
 
            <div>
-            <h3 className="text-[28px] md:text-[32px] font-black text-white tracking-[-0.02em] leading-[1.1] mb-4">
+            <h3 className="text-[32px] md:text-[36px] font-black text-white tracking-[-0.02em] leading-[1.1] mb-5">
              {step.label}
             </h3>
-            <p className="text-white/40 text-[15px] leading-relaxed max-w-lg">
+            <p className="text-white/40 text-base md:text-lg leading-relaxed max-w-lg">
              {step.desc}
             </p>
            </div>

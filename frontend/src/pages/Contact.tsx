@@ -320,28 +320,11 @@ export default function Contact() {
  </div>
  </motion.div>
 
- <div className="lg:col-span-6 filter sepia-[0.3] hue-rotate-[190deg] saturate-[1.5] contrast-[1.2] opacity-80">
+ <div className="lg:col-span-9 filter sepia-[0.3] hue-rotate-[190deg] saturate-[1.5] contrast-[1.2] opacity-80 mx-auto">
  <WorldMap />
  </div>
 
- <motion.div
- initial={{ opacity: 0, x: 20 }}
- whileInView={{ opacity: 1, x: 0 }}
- viewport={{ once: true }}
- className="lg:col-span-3 card-hud p-8"
- >
- <div className="badge-cyan mb-6">HUB</div>
- <h3 className="text-2xl font-black text-white mb-4">Miami.</h3>
- <p className="text-[#9CA3AF] text-sm leading-relaxed mb-8">
- Representing our international developers, remote technical teams, and global support network.
- </p>
- <div className="space-y-3 pt-6 border-t border-white/10">
- <div className="flex items-center gap-3 text-white/60 text-xs font-bold font-mono">
- <div className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse " />
- ACTIVE / EST
- </div>
- </div>
- </motion.div>
+
 
  </div>
  </div>

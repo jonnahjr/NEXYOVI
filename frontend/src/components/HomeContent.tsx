@@ -110,8 +110,8 @@ const HomeContent = () => {
  <div className="w-14 h-14 rounded-[16px] bg-slate-100 border border-slate-200 flex items-center justify-center mb-6 group-hover:border-[#F5A800]/30 transition-colors">
  <Globe size={22} className="text-slate-600 group-hover:text-[#F5A800] transition-colors" />
  </div>
- <h4 className="text-2xl font-black text-slate-950 mb-2">Addis Ababa & Miami</h4>
- <p className="text-slate-500 text-sm font-medium">Global Remote Operations</p>
+ <h4 className="text-2xl font-black text-slate-950 mb-2">Addis Ababa</h4>
+ <p className="text-slate-500 text-sm font-medium">Global Engineering Operations</p>
  </div>
  </motion.div>
 

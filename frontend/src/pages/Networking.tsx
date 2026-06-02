@@ -16,7 +16,7 @@ const NetworkingPage = () => {
  Global <span className="text-blue-500">Networking</span>
  </motion.h1>
  <p className="text-slate-500 text-2xl max-w-3xl leading-relaxed mb-12">
- The backbone of your enterprise. High-speed connectivity, fiber optics, and secure network infrastructure across Addis Ababa and Miami.
+ The backbone of your enterprise. High-speed connectivity, fiber optics, and secure network infrastructure across Addis Ababa and global remote locations.
  </p>
  </div>
  <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-500/5 to-transparent pointer-events-none" />

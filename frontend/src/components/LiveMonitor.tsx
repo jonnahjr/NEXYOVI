@@ -5,7 +5,7 @@ const LiveMonitor = () => {
  const [logs, setLogs] = useState<string[]>([
  '> INITIALIZING NEXYOVI CORE...',
  '> CONNECTING TO GLOBAL_GATEWAY... DONE',
- '> SYNCHRONIZING MIAMI_EDG_01... DONE',
+ '> SYNCHRONIZING REMOTE_EDGE_01... DONE',
  '> SECURITY MASKING: ACTIVE']);
 
  useEffect(() => {

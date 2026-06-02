@@ -32,7 +32,7 @@ const CompanyStory = () => {
  {[
  { year: '2018', title: 'Founded', desc: 'Bootstrapped the first prototype in a co‑working space, focusing on AI‑driven automation.' },
  { year: '2020', title: 'Series A', desc: 'Secured $10M to expand globally and launch the first SaaS product.' },
-  { year: '2022', title: 'Global Hubs', desc: 'Opened a US office in Miami, bridging African talent with American markets.' },
+  { year: '2022', title: 'Global Hubs', desc: 'Expanded operations with remote teams across time zones, bridging African talent with global markets.' },
  { year: '2024', title: 'Enterprise Suite', desc: 'Released a full‑stack platform for finance, health, and government sectors.' }].map((item, i) => (
  <motion.div
  key={i}
