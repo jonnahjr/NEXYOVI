@@ -155,8 +155,7 @@ const Footer = () => {
  {[
  { label: 'Fintech', path: '/industries' },
  { label: 'HealthTech', path: '/industries' },
- { label: 'GovTech', path: '/industries' },
- { label: 'Success Stories', path: '/projects' }
+ { label: 'GovTech', path: '/industries' }
  ].map(item => (
  <li key={item.label}><Link to={item.path} className="text-[#6B7280] hover:text-white transition-colors text-[14px]">{item.label}</Link></li>
  ))}
@@ -201,8 +200,8 @@ const Footer = () => {
  <p className="text-[#6B7280] text-[12px]">How we work &amp; global offices</p>
  </Link>
  <Link to="/projects" className="group block">
- <p className="text-white text-[14px] font-medium transition-colors group-hover:text-white/70">Success Stories</p>
- <p className="text-[#6B7280] text-[12px]">Our portfolio of projects</p>
+ <p className="text-white text-[14px] font-medium transition-colors group-hover:text-white/70">Case Studies</p>
+ <p className="text-[#6B7280] text-[12px]">Real projects, real results</p>
  </Link>
  <Link to="/legal" className="group block">
  <p className="text-white text-[14px] font-medium transition-colors group-hover:text-white/70">Trust Center</p>
