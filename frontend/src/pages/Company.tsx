@@ -343,28 +343,120 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          5. MISSION & VISION — Light Section
+          5. MISSION & VISION — Dark · Two-Pillar Cards
          ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-white section-divider-light overflow-hidden">
+      <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
+        {/* Atmosphere */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/3 w-[500px] h-[500px] bg-[#F5A800]/4 rounded-full blur-[120px]" />
+          <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#F5A800]/8 rounded-full blur-[140px]" />
+          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[#10b981]/6 rounded-full blur-[120px]" />
         </div>
+
         <div className="container max-w-5xl mx-auto px-6 relative z-10">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid md:grid-cols-2 gap-6">
-            <motion.div variants={fadeUp} className="relative p-10 md:p-12 rounded-[32px] bg-gradient-to-br from-white to-[#f4f4f5] border border-slate-200 overflow-hidden group hover:border-[#F5A800]/30 transition-all duration-500">
-              <div className="absolute top-0 right-0 p-8 opacity-[0.03]"><Compass size={160} /></div>
-              <div className="relative z-10">
-                <div className="w-14 h-14 rounded-2xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center mb-6"><Compass size={28} className="text-[#F5A800]" /></div>
-                <h3 className="text-3xl font-black text-slate-950 mb-4">Our Mission</h3>
-                <p className="text-slate-600 text-lg leading-relaxed">To build software systems, AI platforms, and cloud infrastructure that power modern organizations — delivering enterprise-grade engineering that moves businesses forward across Africa and beyond.</p>
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: EASE_EXPO }}
+            className="text-center mb-16"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] mb-6">
+              <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/60">Why We Exist</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-black text-white tracking-[-0.04em] leading-[0.95]">
+              Mission &{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#10b981] to-[#34d399]">Vision.</span>
+            </h2>
+          </motion.div>
+
+          {/* Two cards */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid md:grid-cols-2 gap-6"
+          >
+            {/* ── Mission Card ── */}
+            <motion.div
+              variants={fadeUp}
+              className="group relative rounded-[28px] bg-white/[0.03] border border-white/[0.08] overflow-hidden hover:border-[#F5A800]/30 transition-all duration-500"
+            >
+              {/* Top gradient accent */}
+              <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-transparent opacity-80" />
+
+              {/* Decorative background icon */}
+              <div className="absolute -top-8 -right-8 opacity-[0.04] group-hover:opacity-[0.06] transition-opacity duration-700">
+                <Compass size={260} className="text-white" />
+              </div>
+
+              {/* Content */}
+              <div className="relative z-10 p-10 md:p-12">
+                {/* Icon */}
+                <div className="w-14 h-14 rounded-2xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center mb-6 group-hover:bg-[#F5A800] group-hover:border-[#F5A800] transition-all duration-500">
+                  <Compass size={28} className="text-[#F5A800] group-hover:text-white transition-colors duration-500" />
+                </div>
+
+                {/* Label + title */}
+                <div className="flex items-center gap-3 mb-5">
+                  <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#F5A800]">01 · Mission</span>
+                  <span className="h-px flex-1 bg-gradient-to-r from-[#F5A800]/30 to-transparent" />
+                </div>
+
+                <h3 className="text-3xl md:text-4xl font-black text-white tracking-[-0.03em] leading-[0.95] mb-5">
+                  Building the{' '}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">future</span>
+                  {' '}of digital infrastructure.
+                </h3>
+
+                <p className="text-white/50 text-base md:text-lg leading-relaxed font-medium">
+                  To build software systems, AI platforms, and cloud infrastructure that power modern organizations — delivering enterprise-grade engineering that moves businesses forward across Africa and beyond.
+                </p>
+
+                {/* Bottom accent line */}
+                <div className="mt-8 h-px w-12 bg-gradient-to-r from-[#F5A800] to-transparent" />
               </div>
             </motion.div>
-            <motion.div variants={fadeUp} className="relative p-10 md:p-12 rounded-[32px] bg-gradient-to-br from-white to-[#f4f4f5] border border-slate-200 overflow-hidden group hover:border-[#F5A800]/30 transition-all duration-500">
-              <div className="absolute top-0 right-0 p-8 opacity-[0.03]"><Target size={160} /></div>
-              <div className="relative z-10">
-                <div className="w-14 h-14 rounded-2xl bg-[#10b981]/10 border border-[#10b981]/20 flex items-center justify-center mb-6"><Target size={28} className="text-[#10b981]" /></div>
-                <h3 className="text-3xl font-black text-slate-950 mb-4">Our Vision</h3>
-                <p className="text-slate-600 text-lg leading-relaxed">To be Africa's most trusted engineering partner — known for shipping enterprise-grade systems that are secure, scalable, and built to last. No hype, just measurable results.</p>
+
+            {/* ── Vision Card ── */}
+            <motion.div
+              variants={fadeUp}
+              className="group relative rounded-[28px] bg-white/[0.03] border border-white/[0.08] overflow-hidden hover:border-[#10b981]/30 transition-all duration-500"
+            >
+              {/* Top gradient accent */}
+              <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#10b981] via-[#34d399] to-transparent opacity-80" />
+
+              {/* Decorative background icon */}
+              <div className="absolute -top-8 -right-8 opacity-[0.04] group-hover:opacity-[0.06] transition-opacity duration-700">
+                <Target size={260} className="text-white" />
+              </div>
+
+              {/* Content */}
+              <div className="relative z-10 p-10 md:p-12">
+                {/* Icon */}
+                <div className="w-14 h-14 rounded-2xl bg-[#10b981]/10 border border-[#10b981]/20 flex items-center justify-center mb-6 group-hover:bg-[#10b981] group-hover:border-[#10b981] transition-all duration-500">
+                  <Target size={28} className="text-[#10b981] group-hover:text-white transition-colors duration-500" />
+                </div>
+
+                {/* Label + title */}
+                <div className="flex items-center gap-3 mb-5">
+                  <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#10b981]">02 · Vision</span>
+                  <span className="h-px flex-1 bg-gradient-to-r from-[#10b981]/30 to-transparent" />
+                </div>
+
+                <h3 className="text-3xl md:text-4xl font-black text-white tracking-[-0.03em] leading-[0.95] mb-5">
+                  Africa's most{' '}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#10b981] to-[#34d399]">trusted</span>
+                  {' '}engineering partner.
+                </h3>
+
+                <p className="text-white/50 text-base md:text-lg leading-relaxed font-medium">
+                  To be Africa's most trusted engineering partner — known for shipping enterprise-grade systems that are secure, scalable, and built to last. No hype, just measurable results.
+                </p>
+
+                {/* Bottom accent line */}
+                <div className="mt-8 h-px w-12 bg-gradient-to-r from-[#10b981] to-transparent" />
               </div>
             </motion.div>
           </motion.div>
@@ -386,17 +478,29 @@ export default function Company() {
             <motion.p variants={fadeUp} className="text-slate-500 text-lg font-medium max-w-xl mx-auto">Uncompromising standards that guide our engineering and define every partnership.</motion.p>
           </motion.div>
 
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {values.map((v) => {
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {values.map((v, i) => {
               const Icon = v.icon;
               return (
-                <motion.div key={v.title} variants={fadeUp} className="group relative rounded-[24px] border border-slate-200 bg-white p-8 overflow-hidden cursor-default hover:border-[#F5A800]/30 transition-all duration-500">
-                  <div className="absolute top-0 left-0 right-0 h-[3px] opacity-0 group-hover:opacity-100 transition-all duration-500" style={{ background: `linear-gradient(90deg, ${v.accent}, transparent)` }} />
-                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110" style={{ backgroundColor: `${v.accent}12`, borderColor: `${v.accent}25`, color: v.accent }}>
-                    <Icon size={22} />
+                <motion.div key={v.title} variants={fadeUp} className="group relative rounded-[32px] border border-slate-200 bg-white p-10 overflow-hidden cursor-default hover:shadow-2xl hover:shadow-slate-200/50 hover:-translate-y-2 transition-all duration-500 hover:border-transparent">
+                  {/* Accent Background that fades in on hover */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500" style={{ backgroundColor: v.accent }} />
+                  
+                  {/* Subtle top gradient line */}
+                  <div className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-all duration-500" style={{ background: `linear-gradient(90deg, ${v.accent}, transparent)` }} />
+                  
+                  {/* Large background number */}
+                  <div className="absolute -bottom-6 -right-4 text-[120px] font-black leading-none opacity-[0.03] group-hover:opacity-[0.06] group-hover:-translate-x-2 group-hover:-translate-y-2 transition-all duration-500 select-none font-mono" style={{ color: v.accent }}>
+                    0{i + 1}
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3 tracking-tight">{v.title}</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed font-medium">{v.desc}</p>
+
+                  {/* Icon Container */}
+                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-8 shadow-sm transition-all duration-500 group-hover:scale-110 group-hover:rotate-3" style={{ backgroundColor: `${v.accent}12`, color: v.accent }}>
+                    <Icon size={28} className="transition-transform duration-500 group-hover:-rotate-6" />
+                  </div>
+
+                  <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tight group-hover:text-slate-950 transition-colors">{v.title}</h3>
+                  <p className="text-slate-500 text-base leading-relaxed font-medium relative z-10">{v.desc}</p>
                 </motion.div>
               );
             })}
