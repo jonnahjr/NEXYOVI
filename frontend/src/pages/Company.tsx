@@ -146,7 +146,7 @@ export default function Company() {
   const heroScale = useTransform(scrollYProgress, [0, 0.8], [1, 0.95]);
 
   return (
-    <div className="min-h-screen bg-[#f4f4f5]">
+    <div className="min-h-screen bg-white">
 
       {/* ═══════════════════════════════════════
           1. HERO — Dark · Glow Orbs · Scroll Parallax
@@ -201,10 +201,10 @@ export default function Company() {
             transition={{ delay: 0.5, duration: 0.6, ease: EASE_EXPO }}
             className="flex flex-wrap items-center justify-center gap-4"
           >
-            <Link to="/contact" className="group btn-gold text-[15px] px-10 py-5">
+            <a href="mailto:contact@nexyovi.com" className="group btn-gold text-[15px] px-10 py-5">
               <span className="relative z-10">Start a Project</span>
               <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
-            </Link>
+            </a>
             <Link to="/services" className="group btn-ghost text-[15px] px-10 py-5">
               <span className="relative z-10">Explore Services</span>
             </Link>
@@ -222,25 +222,61 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          2. OUR STORY — Dark
+          2. OUR STORY — Dark · Split Layout
          ═══════════════════════════════════════ */}
       <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#F5A800]/8 rounded-full blur-[140px]" />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#8b5cf6]/8 rounded-full blur-[100px]" />
+          <div className="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-[#F5A800]/6 rounded-full blur-[140px]" />
+          <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#8b5cf6]/5 rounded-full blur-[100px]" />
         </div>
-        <div className="container max-w-4xl mx-auto px-6 relative z-10">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center">
-            <motion.div variants={fadeUp}>
-              <SectionBadge label="Our Story" dark />
+        <div className="container max-w-5xl mx-auto px-6 relative z-10">
+          <div className="grid md:grid-cols-[1fr_1.6fr] gap-12 md:gap-16 items-center">
+
+            {/* Left: Year anchor + origin stat */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="text-center md:text-left"
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                className="inline-flex"
+              >
+                <span className="text-[100px] md:text-[130px] lg:text-[150px] font-black text-white tracking-[-0.05em] leading-[0.85]">
+                  2024
+                </span>
+              </motion.div>
+              <div className="mt-3 h-px w-16 bg-gradient-to-r from-[#F5A800] to-transparent mx-auto md:mx-0" />
+              <p className="text-white/40 text-[13px] font-bold uppercase tracking-[0.25em] mt-4">
+                Founded · Year One
+              </p>
             </motion.div>
-            <motion.p variants={fadeUp} className="text-white/60 text-lg leading-relaxed max-w-3xl mx-auto mb-6">
-              Founded in 2024, Nexyovi was built to help businesses access high-quality software engineering, AI development, cloud infrastructure, and digital transformation services without the complexity of large consulting firms.
-            </motion.p>
-            <motion.p variants={fadeUp} className="text-white/60 text-lg leading-relaxed max-w-3xl mx-auto">
-              Today we help startups, enterprises, public institutions, and mission-driven organizations design, build, and scale modern digital systems.
-            </motion.p>
-          </motion.div>
+
+            {/* Right: Story text */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="space-y-6"
+            >
+              <motion.div variants={fadeUp}>
+                <SectionBadge label="Our Story" dark />
+              </motion.div>
+              <p className="text-white/60 text-base md:text-lg leading-[1.8] font-medium">
+                Founded in 2024, Nexyovi was built to help businesses access high-quality software engineering, AI development, cloud infrastructure, and digital transformation services without the complexity of large consulting firms.
+              </p>
+              <p className="text-white/60 text-base md:text-lg leading-[1.8] font-medium">
+                Today we help startups, enterprises, public institutions, and mission-driven organizations design, build, and scale modern digital systems.
+              </p>
+            </motion.div>
+
+          </div>
         </div>
       </section>
 
@@ -452,18 +488,7 @@ export default function Company() {
               );
             })}
 
-            {/* Head of Product placeholder card */}
-            <motion.div
-              variants={fadeUp}
-              className="group bg-white rounded-[24px] border border-slate-200 p-8 text-center transition-all duration-500 hover:-translate-y-1 hover:border-[#F5A800]/30"
-            >
-              <div className="w-24 h-24 rounded-full mx-auto mb-5 overflow-hidden border-2 border-dashed border-slate-300 bg-slate-50 flex items-center justify-center group-hover:border-[#F5A800]/40 transition-all duration-500">
-                <span className="text-2xl font-black text-slate-300 group-hover:text-[#F5A800]/60 transition-colors">HP</span>
-              </div>
-              <h3 className="text-xl font-black text-slate-950 mb-0.5 group-hover:text-[#F5A800] transition-colors">Head of Product</h3>
-              <p className="text-[11px] font-black uppercase tracking-[0.15em] text-slate-400 mb-3">Open Position</p>
-              <p className="text-slate-400 text-sm leading-relaxed font-medium max-w-xs mx-auto italic">Joining the leadership team soon.</p>
-            </motion.div>
+
           </motion.div>
 
           {/* Distributed team note */}
@@ -653,20 +678,13 @@ export default function Company() {
               transition={{ delay: 0.25, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-wrap items-center justify-center gap-4"
             >
-              <Link to="/contact" className="group btn-gold text-[15px] px-10 py-5">
+              <a href="mailto:contact@nexyovi.com" className="group btn-gold text-[15px] px-10 py-5">
                 <span className="relative z-10">Start a Project</span>
                 <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
-              </Link>
-              <Link to="/contact" className="group btn-ghost text-[15px] px-10 py-5">
+              </a>
+              <a href="mailto:contact@nexyovi.com" className="group btn-ghost text-[15px] px-10 py-5">
                 <Calendar size={16} className="relative z-10 opacity-60 group-hover:opacity-100 transition-opacity" />
-                <span className="relative z-10">Schedule a Consultation</span>
-              </Link>
-              <a
-                href={`mailto:${settings.email}`}
-                className="group btn-ghost text-[14px] px-8 py-[13px]"
-              >
                 <span className="relative z-10">Or email us directly</span>
-                <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
               </a>
             </motion.div>
           </motion.div>
