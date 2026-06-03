@@ -1,20 +1,17 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import {
   ArrowRight,
-  BarChart3,
   Building2,
   Calendar,
+  ChevronDown,
   Cloud,
   Code2,
   Compass,
   Cpu,
-  Database,
-  FileCode,
   Globe,
   Heart,
   Landmark,
   Linkedin,
-  Network,
   Rocket,
   Shield,
   ShieldCheck,
@@ -22,7 +19,7 @@ import {
   Users,
   Zap,
 } from 'lucide-react';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSite } from '../context/SiteContext';
 import { EASE_EXPO, fadeUp, staggerContainer } from '../lib/animations';
@@ -50,16 +47,6 @@ const values = [
   { icon: Heart, title: 'Client Obsession', desc: 'Your success is our success. We measure our performance entirely by the quantifiable improvements we deliver.', accent: '#ec4899' },
 ];
 
-const techEcosystem = [
-  { category: 'Frontend', icon: Code2, items: ['React', 'Next.js', 'Angular', 'Vue.js', 'Flutter'], accent: '#06b6d4' },
-  { category: 'Backend', icon: FileCode, items: ['Node.js', 'Python', 'Java', 'Go', 'Rust'], accent: '#8b5cf6' },
-  { category: 'Cloud', icon: Cloud, items: ['AWS', 'Azure', 'Google Cloud', 'DigitalOcean', 'Vercel'], accent: '#F5A800' },
-  { category: 'DevOps', icon: Network, items: ['Docker', 'Kubernetes', 'Terraform', 'Ansible', 'CI/CD'], accent: '#ec4899' },
-  { category: 'AI & Data', icon: Cpu, items: ['OpenAI', 'LangChain', 'TensorFlow', 'PyTorch', 'Vector DB'], accent: '#10b981' },
-  { category: 'Databases', icon: Database, items: ['PostgreSQL', 'MongoDB', 'Redis', 'Kafka', 'Elasticsearch'], accent: '#f59e0b' },
-];
-
-
 /* ═══════════════════════════════════════════
    Section Badge Helper
    ═══════════════════════════════════════════ */
@@ -70,12 +57,84 @@ const SectionBadge = ({ label, dark }: { label: string; dark?: boolean }) => (
 );
 
 /* ═══════════════════════════════════════════
-   Inline SVG icons
-   ═══════════════════════════════════════════ */
-
-/* ═══════════════════════════════════════════
    Company Page Component
    ═══════════════════════════════════════════ */
+function OrganizationsAccordion() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggle = (i: number) => {
+    setOpenIndex(openIndex === i ? null : i);
+  };
+
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={staggerContainer}
+      className="max-w-xl mx-auto"
+    >
+      {[
+        { icon: Rocket, label: 'Startups', desc: 'MVP acceleration, product launches, and scaling engineering teams' },
+        { icon: Heart, label: 'NGOs & Non-Profits', desc: 'Mission-critical systems, donor platforms, and operational tools' },
+        { icon: ShieldCheck, label: 'Healthcare Providers', desc: 'HIPAA-compliant platforms, telemedicine, and patient analytics' },
+        { icon: Landmark, label: 'Financial Institutions', desc: 'Payment infrastructure, fraud detection, and regulatory compliance' },
+        { icon: Building2, label: 'Government Organizations', desc: 'Secure digital infrastructure, identity systems, and citizen services' },
+      ].map((item, i) => {
+        const Icon = item.icon;
+        const isOpen = openIndex === i;
+
+        return (
+          <motion.div key={item.label} variants={fadeUp} className="mb-3">
+            <button
+              type="button"
+              onClick={() => toggle(i)}
+              className="w-full flex items-center gap-4 px-6 py-4 rounded-[20px] bg-white border border-slate-200 hover:border-[#F5A800]/30 transition-all duration-300 text-left group"
+            >
+              <div className="w-11 h-11 rounded-xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center shrink-0 text-[#F5A800] group-hover:bg-[#F5A800] group-hover:text-white transition-all duration-300">
+                <Icon size={18} />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-[15px] font-black text-slate-950 tracking-tight group-hover:text-[#F5A800] transition-colors text-left">
+                  {item.label}
+                </h3>
+              </div>
+              <motion.div
+                animate={{ rotate: isOpen ? 180 : 0 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="w-7 h-7 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0 group-hover:bg-[#F5A800]/10 group-hover:border-[#F5A800]/30 transition-colors"
+              >
+                <ChevronDown size={14} className="text-slate-500" />
+              </motion.div>
+            </button>
+
+            <AnimatePresence initial={false}>
+              {isOpen && (
+                <motion.div
+                  key="content"
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  className="overflow-hidden"
+                >
+                  <div className="px-6 pb-4 pt-3">
+                    <div className="pl-[60px]">
+                      <p className="text-slate-500 text-[13px] leading-relaxed font-medium">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        );
+      })}
+    </motion.div>
+  );
+}
+
 export default function Company() {
   const { team, settings } = useSite();
   const heroRef = useRef<HTMLDivElement>(null);
@@ -202,157 +261,12 @@ export default function Company() {
             </motion.p>
           </motion.div>
 
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="flex flex-wrap justify-center gap-3">
-            {[
-              { icon: Rocket, label: 'Startups', desc: 'MVP acceleration, product launches, and scaling engineering teams' },
-              { icon: Heart, label: 'NGOs & Non-Profits', desc: 'Mission-critical systems, donor platforms, and operational tools' },
-              { icon: ShieldCheck, label: 'Healthcare Providers', desc: 'HIPAA-compliant platforms, telemedicine, and patient analytics' },
-              { icon: Landmark, label: 'Financial Institutions', desc: 'Payment infrastructure, fraud detection, and regulatory compliance' },
-              { icon: Building2, label: 'Government Organizations', desc: 'Secure digital infrastructure, identity systems, and citizen services' },
-            ].map((item) => {
-              const Icon = item.icon;
-              return (
-                <motion.div
-                  key={item.label}
-                  variants={fadeUp}
-                  className="group relative flex items-center gap-4 px-6 py-4 rounded-[20px] bg-white border border-slate-200 hover:border-[#F5A800]/30 hover:-translate-y-0.5 transition-all duration-300 cursor-default"
-                >
-                  <div className="w-11 h-11 rounded-xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center shrink-0 text-[#F5A800] group-hover:bg-[#F5A800] group-hover:text-white transition-all duration-300">
-                    <Icon size={18} />
-                  </div>
-                  <div className="text-left">
-                    <h3 className="text-[15px] font-black text-slate-950 tracking-tight group-hover:text-[#F5A800] transition-colors">{item.label}</h3>
-                    <p className="text-[12px] text-slate-500 font-medium leading-snug mt-0.5 max-w-[180px]">{item.desc}</p>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </motion.div>
+          <OrganizationsAccordion />
         </div>
       </section>
 
       {/* ═══════════════════════════════════════
-          4. OUR CAPABILITIES — Dark Section
-         ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/3 w-[600px] h-[600px] bg-[#F5A800]/8 rounded-full blur-[140px]" />
-        </div>
-        <div className="container max-w-5xl mx-auto px-6 relative z-10">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-16">
-            <motion.div variants={fadeUp}>
-              <SectionBadge label="Our Capabilities" dark />
-            </motion.div>
-            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-4">
-              Full-Spectrum{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Capabilities.</span>
-            </motion.h2>
-            <motion.p variants={fadeUp} className="text-white/50 text-lg font-medium max-w-xl mx-auto">End-to-end capabilities across the full technology stack — from code to infrastructure.</motion.p>
-          </motion.div>
-
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {[
-              { title: 'Full-Stack Engineering', desc: 'Web, mobile, and backend systems engineered for scale, performance, and maintainability.', icon: Code2 },
-              { title: 'AI & Automation Expertise', desc: 'Custom LLM integrations, intelligent agents, and workflow automation for real business problems.', icon: Cpu },
-              { title: 'Cloud-Native Delivery', desc: 'Multi-cloud architecture, Kubernetes orchestration, and serverless deployments at global scale.', icon: Cloud },
-              { title: 'Enterprise Security Practices', desc: 'Zero-trust principles, automated security scanning, and compliance-aware engineering built into every delivery.', icon: Shield },
-              { title: '24/7 Monitoring', desc: 'Infrastructure observability, incident response, and SLA-backed support across all production systems.', icon: BarChart3 },
-              { title: 'End-to-End Product Lifecycle', desc: 'From discovery and design to deployment and ongoing operations — we own the full cycle.', icon: Target },
-            ].map((item, i) => {
-              const Icon = item.icon;
-              return (
-                <motion.div
-                  key={item.title}
-                  variants={fadeUp}
-                  className="group bg-white/[0.03] rounded-[20px] border border-white/[0.08] p-6 md:p-8 text-center hover:border-[#F5A800]/30 transition-all duration-500"
-                >
-                  <div className="w-11 h-11 rounded-xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center mx-auto mb-4 text-[#F5A800] group-hover:bg-[#F5A800] group-hover:text-white transition-all duration-300">
-                    <Icon size={20} />
-                  </div>
-                  <h3 className="text-lg font-black text-white mb-2 tracking-tight">{item.title}</h3>
-                  <p className="text-white/40 text-[12px] leading-relaxed font-medium">{item.desc}</p>
-                </motion.div>
-              );
-            })}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════
-          5. HOW WE ENGAGE — Light Section
-         ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-white section-divider-light overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/3 w-[500px] h-[500px] bg-[#F5A800]/5 blur-[120px] rounded-full" />
-        </div>
-        <div className="container max-w-5xl mx-auto px-6 relative z-10">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-14">
-            <motion.div variants={fadeUp}>
-              <SectionBadge label="How We Engage" />
-            </motion.div>
-            <motion.p variants={fadeUp} className="text-slate-500 text-lg font-medium max-w-2xl mx-auto">
-              Four proven engagement models designed to match your organization's goals, timeline, and level of technical ownership.
-            </motion.p>
-          </motion.div>
-
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid sm:grid-cols-2 gap-5">
-            {[
-              { icon: Users, title: 'Dedicated Teams', desc: 'Embedded engineers working alongside your organization as a seamless extension of your team. Full access to our technical leadership and engineering practices.' },
-              { icon: Target, title: 'Project Delivery', desc: 'Fixed-scope, milestone-driven execution with clear deliverables, timelines, and budgets. End-to-end delivery from specification to deployment.' },
-              { icon: Code2, title: 'Technical Consulting', desc: 'Architecture reviews, AI strategy, cloud modernization roadmaps, and security assessments led by senior engineers and domain experts.' },
-              { icon: Shield, title: 'Managed Operations', desc: 'Ongoing monitoring, infrastructure maintenance, incident response, and production support with SLA-backed reliability guarantees.' },
-            ].map((item) => {
-              const Icon = item.icon;
-              return (
-                <motion.div
-                  key={item.title}
-                  variants={fadeUp}
-                  className="group relative rounded-[24px] border border-slate-200 bg-white p-8 transition-all duration-500 hover:border-[#F5A800]/30 hover:-translate-y-0.5"
-                >
-                  <div className="flex items-center gap-4 mb-5">
-                    <div className="w-12 h-12 rounded-2xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center text-[#F5A800] group-hover:bg-[#F5A800] group-hover:text-white transition-all duration-300 shrink-0">
-                      <Icon size={22} />
-                    </div>
-                    <h3 className="text-xl font-black text-slate-950 tracking-tight group-hover:text-[#F5A800] transition-colors">{item.title}</h3>
-                  </div>
-                  <p className="text-slate-500 text-sm leading-relaxed font-medium">{item.desc}</p>
-                </motion.div>
-              );
-            })}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════
-          6. MISSION & VISION — Creamy White
-         ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-white section-divider-light overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/3 w-[500px] h-[500px] bg-[#F5A800]/4 rounded-full blur-[120px]" />
-        </div>
-        <div className="container max-w-5xl mx-auto px-6 relative z-10">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid md:grid-cols-2 gap-6">
-            <motion.div variants={fadeUp} className="relative p-10 md:p-12 rounded-[32px] bg-gradient-to-br from-white to-[#f4f4f5] border border-slate-200 overflow-hidden group hover:border-[#F5A800]/30 transition-all duration-500">
-              <div className="absolute top-0 right-0 p-8 opacity-[0.03]"><Compass size={160} /></div>
-              <div className="relative z-10">
-                <div className="w-14 h-14 rounded-2xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center mb-6"><Compass size={28} className="text-[#F5A800]" /></div>
-                <h3 className="text-3xl font-black text-slate-950 mb-4">Our Mission</h3>
-                <p className="text-slate-600 text-lg leading-relaxed">To build software systems, AI platforms, and cloud infrastructure that power modern organizations — delivering enterprise-grade engineering that moves businesses forward across Africa and beyond.</p>
-              </div>
-            </motion.div>
-            <motion.div variants={fadeUp} className="relative p-10 md:p-12 rounded-[32px] bg-gradient-to-br from-white to-[#f4f4f5] border border-slate-200 overflow-hidden group hover:border-[#F5A800]/30 transition-all duration-500">
-              <div className="absolute top-0 right-0 p-8 opacity-[0.03]"><Target size={160} /></div>
-              <div className="relative z-10">
-                <div className="w-14 h-14 rounded-2xl bg-[#10b981]/10 border border-[#10b981]/20 flex items-center justify-center mb-6"><Target size={28} className="text-[#10b981]" /></div>
-                <h3 className="text-3xl font-black text-slate-950 mb-4">Our Vision</h3>
-                <p className="text-slate-600 text-lg leading-relaxed">To be Africa's most trusted engineering partner — known for shipping enterprise-grade systems that are secure, scalable, and built to last. No hype, just measurable results.</p>
-              </div>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════
-          7. FEATURED PROJECTS — Dark Section
+          4. FEATURED PROJECTS — Dark Section (proof first)
          ═══════════════════════════════════════ */}
       <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
         <div className="container max-w-6xl mx-auto px-6 relative z-10">
@@ -393,7 +307,36 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          8. CORE PRINCIPLES — Light Section
+          5. MISSION & VISION — Light Section
+         ═══════════════════════════════════════ */}
+      <section className="relative py-28 md:py-36 bg-white section-divider-light overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/3 w-[500px] h-[500px] bg-[#F5A800]/4 rounded-full blur-[120px]" />
+        </div>
+        <div className="container max-w-5xl mx-auto px-6 relative z-10">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid md:grid-cols-2 gap-6">
+            <motion.div variants={fadeUp} className="relative p-10 md:p-12 rounded-[32px] bg-gradient-to-br from-white to-[#f4f4f5] border border-slate-200 overflow-hidden group hover:border-[#F5A800]/30 transition-all duration-500">
+              <div className="absolute top-0 right-0 p-8 opacity-[0.03]"><Compass size={160} /></div>
+              <div className="relative z-10">
+                <div className="w-14 h-14 rounded-2xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center mb-6"><Compass size={28} className="text-[#F5A800]" /></div>
+                <h3 className="text-3xl font-black text-slate-950 mb-4">Our Mission</h3>
+                <p className="text-slate-600 text-lg leading-relaxed">To build software systems, AI platforms, and cloud infrastructure that power modern organizations — delivering enterprise-grade engineering that moves businesses forward across Africa and beyond.</p>
+              </div>
+            </motion.div>
+            <motion.div variants={fadeUp} className="relative p-10 md:p-12 rounded-[32px] bg-gradient-to-br from-white to-[#f4f4f5] border border-slate-200 overflow-hidden group hover:border-[#F5A800]/30 transition-all duration-500">
+              <div className="absolute top-0 right-0 p-8 opacity-[0.03]"><Target size={160} /></div>
+              <div className="relative z-10">
+                <div className="w-14 h-14 rounded-2xl bg-[#10b981]/10 border border-[#10b981]/20 flex items-center justify-center mb-6"><Target size={28} className="text-[#10b981]" /></div>
+                <h3 className="text-3xl font-black text-slate-950 mb-4">Our Vision</h3>
+                <p className="text-slate-600 text-lg leading-relaxed">To be Africa's most trusted engineering partner — known for shipping enterprise-grade systems that are secure, scalable, and built to last. No hype, just measurable results.</p>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════
+          6. CORE PRINCIPLES — Light Section
          ═══════════════════════════════════════ */}
       <section className="relative py-28 md:py-36 bg-white section-divider-light overflow-hidden">
         <div className="container max-w-6xl mx-auto px-6 relative z-10">
@@ -426,71 +369,7 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          9. TECHNOLOGY ECOSYSTEM — Dark Marquee
-         ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
-        <style>{`
-          @keyframes tech-scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-          }
-          .animate-tech-scroll {
-            animation: tech-scroll 50s linear infinite;
-          }
-          .animate-tech-scroll:hover {
-            animation-play-state: paused;
-          }
-        `}</style>
-        
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 right-1/4 w-[600px] h-[400px] bg-[#8b5cf6]/8 rounded-full blur-[120px]" />
-          <div className="absolute top-1/2 left-1/4 w-[500px] h-[400px] bg-[#F5A800]/5 rounded-full blur-[100px]" />
-          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#02040a] to-transparent z-20" />
-          <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#02040a] to-transparent z-20" />
-        </div>
-
-        <div className="container max-w-6xl mx-auto px-6 relative z-10">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-16">
-            <motion.div variants={fadeUp}>
-              <SectionBadge label="Our Technology Ecosystem" dark />
-            </motion.div>
-            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-4">
-              Technologies We{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Engineer With.</span>
-            </motion.h2>
-            <motion.p variants={fadeUp} className="text-white/50 text-lg font-medium max-w-xl mx-auto">
-              Modern tooling across the full stack — from frontend to infrastructure.
-            </motion.p>
-          </motion.div>
-        </div>
-
-        {/* Single continuous marquee track */}
-        <div className="relative z-10 w-full overflow-hidden">
-          {(() => {
-            const allTechs = techEcosystem.flatMap(cat => cat.items.map(tech => ({
-              name: tech,
-              Icon: cat.icon,
-              color: cat.accent,
-            })));
-
-            return (
-              <div className="flex w-max animate-tech-scroll">
-                {allTechs.map((tech, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center gap-2.5 px-5 py-3.5 mr-2 rounded-full bg-white/[0.02] border border-white/[0.05] hover:border-[#F5A800]/40 hover:bg-white/[0.05] transition-colors cursor-default backdrop-blur-sm shrink-0"
-                  >
-                    <tech.Icon size={18} style={{ color: tech.color }} />
-                    <span className="text-white/90 font-bold tracking-wide text-[14px] whitespace-nowrap">{tech.name}</span>
-                  </div>
-                ))}
-              </div>
-            );
-          })()}
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════
-          10. LEADERSHIP — Creamy White
+          7. LEADERSHIP / TEAM — Light Section
          ═══════════════════════════════════════ */}
       <section className="relative py-28 md:py-36 bg-white section-divider-light overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
@@ -605,10 +484,52 @@ export default function Company() {
         </div>
       </section>
 
+      {/* ═══════════════════════════════════════
+          8. OUR CAPABILITIES — Dark Section (trimmed)
+         ═══════════════════════════════════════ */}
+      <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/3 w-[600px] h-[600px] bg-[#F5A800]/8 rounded-full blur-[140px]" />
+        </div>
+        <div className="container max-w-5xl mx-auto px-6 relative z-10">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-16">
+            <motion.div variants={fadeUp}>
+              <SectionBadge label="Our Capabilities" dark />
+            </motion.div>
+            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-4">
+              Full-Spectrum{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Capabilities.</span>
+            </motion.h2>
+            <motion.p variants={fadeUp} className="text-white/50 text-lg font-medium max-w-xl mx-auto">End-to-end capabilities across the full technology stack — from code to infrastructure.</motion.p>
+          </motion.div>
 
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { title: 'Full-Stack Engineering', desc: 'Web, mobile, and backend systems engineered for scale, performance, and maintainability.', icon: Code2 },
+              { title: 'AI & Automation Expertise', desc: 'Custom LLM integrations, intelligent agents, and workflow automation for real business problems.', icon: Cpu },
+              { title: 'Cloud-Native Delivery', desc: 'Multi-cloud architecture, Kubernetes orchestration, and serverless deployments at global scale.', icon: Cloud },
+              { title: 'Enterprise Security Practices', desc: 'Zero-trust principles, automated security scanning, and compliance-aware engineering built into every delivery.', icon: Shield },
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={item.title}
+                  variants={fadeUp}
+                  className="group bg-white/[0.03] rounded-[20px] border border-white/[0.08] p-6 md:p-8 text-center hover:border-[#F5A800]/30 transition-all duration-500"
+                >
+                  <div className="w-11 h-11 rounded-xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center mx-auto mb-4 text-[#F5A800] group-hover:bg-[#F5A800] group-hover:text-white transition-all duration-300">
+                    <Icon size={20} />
+                  </div>
+                  <h3 className="text-lg font-black text-white mb-2 tracking-tight">{item.title}</h3>
+                  <p className="text-white/40 text-[12px] leading-relaxed font-medium">{item.desc}</p>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </div>
+      </section>
 
       {/* ═══════════════════════════════════════
-          11. SECURITY & COMPLIANCE READINESS — Dark Section
+          9. SECURITY & COMPLIANCE — Dark Section
          ═══════════════════════════════════════ */}
       <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
@@ -645,7 +566,52 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          12. FINAL CTA — Dark Section
+          10. HOW WE ENGAGE — Light Section (near CTA)
+         ═══════════════════════════════════════ */}
+      <section className="relative py-28 md:py-36 bg-white section-divider-light overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/3 w-[500px] h-[500px] bg-[#F5A800]/5 blur-[120px] rounded-full" />
+        </div>
+        <div className="container max-w-5xl mx-auto px-6 relative z-10">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-14">
+            <motion.div variants={fadeUp}>
+              <SectionBadge label="How We Engage" />
+            </motion.div>
+            <motion.p variants={fadeUp} className="text-slate-500 text-lg font-medium max-w-2xl mx-auto">
+              Four proven engagement models designed to match your organization's goals, timeline, and level of technical ownership.
+            </motion.p>
+          </motion.div>
+
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid sm:grid-cols-2 gap-5">
+            {[
+              { icon: Users, title: 'Dedicated Teams', desc: 'Embedded engineers working alongside your organization as a seamless extension of your team. Full access to our technical leadership and engineering practices.' },
+              { icon: Target, title: 'Project Delivery', desc: 'Fixed-scope, milestone-driven execution with clear deliverables, timelines, and budgets. End-to-end delivery from specification to deployment.' },
+              { icon: Code2, title: 'Technical Consulting', desc: 'Architecture reviews, AI strategy, cloud modernization roadmaps, and security assessments led by senior engineers and domain experts.' },
+              { icon: Shield, title: 'Managed Operations', desc: 'Ongoing monitoring, infrastructure maintenance, incident response, and production support with SLA-backed reliability guarantees.' },
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={item.title}
+                  variants={fadeUp}
+                  className="group relative rounded-[24px] border border-slate-200 bg-white p-8 transition-all duration-500 hover:border-[#F5A800]/30 hover:-translate-y-0.5"
+                >
+                  <div className="flex items-center gap-4 mb-5">
+                    <div className="w-12 h-12 rounded-2xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center text-[#F5A800] group-hover:bg-[#F5A800] group-hover:text-white transition-all duration-300 shrink-0">
+                      <Icon size={22} />
+                    </div>
+                    <h3 className="text-xl font-black text-slate-950 tracking-tight group-hover:text-[#F5A800] transition-colors">{item.title}</h3>
+                  </div>
+                  <p className="text-slate-500 text-sm leading-relaxed font-medium">{item.desc}</p>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════
+          11. FINAL CTA — Dark Section
          ═══════════════════════════════════════ */}
       <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
@@ -706,8 +672,6 @@ export default function Company() {
           </motion.div>
         </div>
       </section>
-
-
 
     </div>
   );

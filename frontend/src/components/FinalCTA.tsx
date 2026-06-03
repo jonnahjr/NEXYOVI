@@ -84,13 +84,13 @@ export default function FinalCTA() {
             transition={{ duration: 0.5, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <Link
-              to="/contact"
+            <a
+              href="mailto:contact@nexyovi.com"
               className="group btn-gold btn-gold-pulse text-[15px] px-9 py-[14px]"
             >
               <span className="relative z-10">Secure Your Strategy Session</span>
               <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
-            </Link>
+            </a>
 
             <a
               href={`mailto:${settings.email}`}

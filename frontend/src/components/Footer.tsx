@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, Twitter, Linkedin, Youtube, Slack, Instagram, MessagesSquare, Send, ArrowRight, Mail, Phone, X, CheckCircle } from 'lucide-react';
+import { Github, Twitter, Linkedin, Youtube, Slack, Instagram, MessagesSquare, Send, ArrowRight, Mail, Phone, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import myLogo from '../assets/logo 1.png';
 
@@ -128,10 +128,7 @@ const Footer = () => {
  
  <div className="space-y-3 pt-6 border-t border-white/5">
  <div className="flex items-center gap-3 text-[#6B7280] text-[13px] hover:text-white transition-colors cursor-pointer">
- <Mail size={14} className="shrink-0" /> <a href={`mailto:${settings.email}`} className="truncate">{settings.email}</a>
- </div>
- <div className="flex items-center gap-3 text-[#6B7280] text-[13px] hover:text-white transition-colors cursor-pointer">
- <Phone size={14} className="shrink-0" /> <a href={`tel:${settings.phone}`}>{settings.phone}</a>
+ <Mail size={14} className="shrink-0" /> <a href="mailto:contact@nexyovi.com" className="truncate">contact@nexyovi.com</a>
  </div>
  </div>
  </div>
@@ -156,10 +153,10 @@ const Footer = () => {
  <h4 className="text-white font-bold text-[14px] uppercase tracking-widest mb-8">Industries</h4>
  <ul className="space-y-4">
  {[
- { label: 'Fintech', path: '/fintech' },
- { label: 'HealthTech', path: '/health' },
- { label: 'GovTech', path: '/govtech' },
- { label: 'Success Stories', path: '/portfolio' }
+ { label: 'Fintech', path: '/industries' },
+ { label: 'HealthTech', path: '/industries' },
+ { label: 'GovTech', path: '/industries' },
+ { label: 'Success Stories', path: '/projects' }
  ].map(item => (
  <li key={item.label}><Link to={item.path} className="text-[#6B7280] hover:text-white transition-colors text-[14px]">{item.label}</Link></li>
  ))}
@@ -170,24 +167,25 @@ const Footer = () => {
  <h4 className="text-white font-bold text-[14px] uppercase tracking-widest mb-8">Company</h4>
  <ul className="space-y-6">
  <li>
- <Link to="/company/story" className="group block">
+ <Link to="/company" className="group block">
  <p className="text-white text-[14px] font-medium transition-colors group-hover:text-white/70">Our Story</p>
- <p className="text-[#6B7280] text-[12px]">Background & milestones</p>
+ <p className="text-[#6B7280] text-[12px]">Background &amp; milestones</p>
  </Link>
  </li>
  <li>
- <Link to="/company/leadership" className="group block">
+ <Link to="/company" className="group block">
  <p className="text-white text-[14px] font-medium transition-colors group-hover:text-white/70">Leadership</p>
- <p className="text-[#6B7280] text-[12px]">Founders & engineering leaders</p>
+ <p className="text-[#6B7280] text-[12px]">Founders &amp; engineering leaders</p>
  </Link>
  </li>
  <li>
  <Link to="/careers" className="group block">
- <p className="text-white text-[14px] font-medium transition-colors group-hover:text-white/70">Careers</p>              <p className="text-[#6B7280] text-[12px]">Join Our Engineering Team</p>
+ <p className="text-white text-[14px] font-medium transition-colors group-hover:text-white/70">Careers</p>
+ <p className="text-[#6B7280] text-[12px]">Join Our Engineering Team</p>
  </Link>
  </li>
  <li>
- <Link to="/company/impact" className="group block">
+ <Link to="/company" className="group block">
  <p className="text-white text-[14px] font-medium transition-colors group-hover:text-white/70">Impact</p>
  <p className="text-[#6B7280] text-[12px]">Measured outcomes</p>
  </Link>
@@ -198,17 +196,17 @@ const Footer = () => {
  <div>
  <h4 className="text-white font-bold text-[14px] uppercase tracking-widest mb-8">Connectivity</h4>
  <div className="space-y-6">
- <Link to="/company/culture" className="group block">
+ <Link to="/company" className="group block">
  <p className="text-white text-[14px] font-medium transition-colors group-hover:text-white/70">Culture</p>
- <p className="text-[#6B7280] text-[12px]">How we work & global offices</p>
+ <p className="text-[#6B7280] text-[12px]">How we work &amp; global offices</p>
  </Link>
- <Link to="/portfolio" className="group block">
+ <Link to="/projects" className="group block">
  <p className="text-white text-[14px] font-medium transition-colors group-hover:text-white/70">Success Stories</p>
  <p className="text-[#6B7280] text-[12px]">Our portfolio of projects</p>
  </Link>
  <Link to="/legal" className="group block">
  <p className="text-white text-[14px] font-medium transition-colors group-hover:text-white/70">Trust Center</p>
- <p className="text-[#6B7280] text-[12px]">Security & compliance</p>
+ <p className="text-[#6B7280] text-[12px]">Security &amp; compliance</p>
  </Link>
  </div>
  </div>
@@ -233,38 +231,6 @@ const Footer = () => {
  ))}
               </div>
               </div>
-              </div>
-
-              {/* Locations & Trust row */}
-              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 py-10 border-t border-white/5">
-                <div>
-                  <h4 className="text-white/40 font-bold text-[11px] uppercase tracking-[0.2em] mb-3">Global Locations</h4>
-                  <div className="flex flex-wrap gap-4">
-                    <div className="flex items-center gap-2 text-[#6B7280] text-[12px]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800]" />
-                      Addis Ababa, Ethiopia
-                    </div>
-                    <div className="flex items-center gap-2 text-[#6B7280] text-[12px]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800]" />
-                      Miami, Florida
-                    </div>
-                    <div className="flex items-center gap-2 text-[#6B7280] text-[12px]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800]" />
-                      Remote Worldwide
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="text-white/40 font-bold text-[11px] uppercase tracking-[0.2em] mb-3">Trust & Infrastructure</h4>
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
-                    {['Security-First Engineering', 'Privacy-Focused Development', 'Enterprise Infrastructure', 'Modern Cloud Architecture'].map((item) => (
-                      <div key={item} className="flex items-center gap-1.5 text-[#6B7280] text-[10px] font-bold uppercase tracking-wider">
-                        <CheckCircle size={10} className="text-[#F5A800] shrink-0" />
-                        {item}
-                      </div>
-                    ))}
-                  </div>
-                </div>
               </div>
 
  </div>
