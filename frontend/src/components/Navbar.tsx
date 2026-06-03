@@ -133,16 +133,15 @@ const Navbar = () => {
 
  {/* CTA Button */}
  <div className="hidden lg:flex z-20">
- <Link
- to="/contact"
- onClick={handleNavClick('/contact')}
- className="group relative px-5 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 transition-all hover:bg-white/20"
- >
- <span className="relative z-10 text-[13px] font-medium tracking-wide text-white">
- Start a project
- </span>
- </Link>
- </div>
+    <Link
+      to="/contact"
+      onClick={handleNavClick('/contact')}
+      className="group btn-gold text-[13px] px-5 py-2.5"
+    >
+      <span className="relative z-10">Start a project</span>
+      <svg className="relative z-10 w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>
+    </Link>
+  </div>
 
  {/* Mobile Toggle */}
  <button
@@ -198,13 +197,14 @@ const Navbar = () => {
  transition={{ delay: navLinks.length * 0.05 + 0.1 }}
  className="pt-6 mt-2 border-t border-white/10"
  >
- <Link
- to="/contact"
- onClick={handleNavClick('/contact')}
- className="flex justify-center items-center w-full py-4 rounded-xl bg-[#F5A800]/90 text-white text-[14px] font-medium tracking-wide hover:bg-[#F5A800]"
- >
- Initiate Project
- </Link>
+  <Link
+    to="/contact"
+    onClick={handleNavClick('/contact')}
+    className="btn-accent text-[14px] py-3.5 w-full justify-center rounded-xl"
+  >
+    <span className="relative z-10">Initiate Project</span>
+    <svg className="relative z-10 w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>
+  </Link>
  </motion.div>
  </div>
  </motion.div>

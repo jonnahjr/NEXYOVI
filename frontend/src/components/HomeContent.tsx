@@ -125,7 +125,7 @@ const HomeContent = () => {
  <h4 className="text-2xl font-black text-white mb-2">Ready to examine the architecture?</h4>
  <p className="text-white/50 font-medium">Read the full technical breakdown in our portfolio.</p>
  </div>
- <Link to="/portfolio" className="relative z-10 inline-flex shrink-0 items-center gap-3 px-8 py-4 bg-white text-black hover:bg-[#F5A800] rounded-full font-black text-[12px] uppercase tracking-widest transition-all hover:scale-105 duration-300">
+ <Link to="/portfolio" className="relative z-10 inline-flex shrink-0 items-center gap-3 px-8 py-4 bg-white text-black hover:bg-[#F5A800] rounded-full font-black text-[12px] uppercase tracking-widest shadow-[0_4px_14px_rgba(0,0,0,0.08)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(245,168,0,0.2)]">
  Examine Details <ChevronRight size={16} />
  </Link>
  </motion.div>

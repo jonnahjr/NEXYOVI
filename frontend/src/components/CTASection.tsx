@@ -53,17 +53,16 @@ const CTASection = () => {
  <Link
  to="/contact"
  id="cta-section-start"
- className="group btn-primary relative overflow-hidden w-full md:w-auto"
+ className="group btn-gold text-[14px] px-9 py-4 w-full md:w-auto"
  >
- <div className="absolute inset-y-0 -left-full w-1/2 skew-x-[-18deg] bg-white/15 transition-transform duration-700 group-hover:translate-x-[400%]" />
  <span className="relative z-10">Start a Project</span>
- <ArrowRight size={15} className="relative z-10 group-hover:translate-x-1 transition-transform" />
+ <ArrowRight size={15} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
  </Link>
 
  <Link
  to="/services"
  id="cta-section-services"
- className="btn-ghost w-full md:w-auto"
+ className="btn-ghost text-[14px] px-9 py-4 w-full md:w-auto"
  >
  Our Services
  </Link>

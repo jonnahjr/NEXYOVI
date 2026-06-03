@@ -1,15 +1,15 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Activity, Shield, Globe } from 'lucide-react';
+import { Activity, ArrowRight, Globe, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { EASE_EXPO, staggerContainer } from '../lib/animations';
-import ethio from '../assets/ethio_transparent.png';
-import cbe from '../assets/cbe_transparent.png';
-import zemen from '../assets/zemen-bank-logo_transparent.png';
 import insa from '../assets/Insa-09_transparent.png';
-import global from '../assets/global_transparent.png';
-import aau from '../assets/aau-02_transparent.png';
 import aastu from '../assets/aastu-01_transparent.png';
+import aau from '../assets/aau-02_transparent.png';
 import bdu from '../assets/bdu-05.png';
+import cbe from '../assets/cbe_transparent.png';
+import ethio from '../assets/ethio_transparent.png';
+import global from '../assets/global_transparent.png';
+import zemen from '../assets/zemen-bank-logo_transparent.png';
+import { EASE_EXPO, staggerContainer } from '../lib/animations';
 
 const VIDEO_URL =
   'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260508_215831_c6a8989c-d716-4d8d-8745-e972a2eec711.mp4';
@@ -59,28 +59,53 @@ const Hero = () => {
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.2, ease: EASE_EXPO as any } } }}
                 className="text-[56px] md:text-[76px] lg:text-[88px] font-black text-white tracking-[-0.04em] leading-[0.95] mb-10"
               >
-                Build Better <br />
-                Software. <br />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">Faster.</span>
+                Ethiopia's <br />
+                Premier <br />
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">Software & AI Partner.</span>
               </motion.h1>
 
               <motion.p
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.75, delay: 0.3, ease: EASE_EXPO as any } } }}
                 className="text-[18px] md:text-[20px] text-white/80 font-medium leading-[1.8] mb-16 max-w-[560px]"
               >
-                We design and develop custom software, AI solutions, web platforms, mobile applications, and modern IT infrastructure for growing businesses.
+                We design and develop custom software, AI solutions, web platforms, mobile applications, and modern IT infrastructure for enterprises across Africa.
               </motion.p>
 
               <motion.div
                 variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.4, ease: EASE_EXPO as any } } }}
                 className="flex flex-wrap items-center gap-4"
               >
-                <Link to="/contact" id="hero-cta-start-project" className="group relative inline-flex items-center gap-3 px-10 py-5 rounded-full bg-white text-black font-bold text-[16px] transition-all hover:scale-105">
-                  Start a Project
-                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                {/* ── Primary CTA ── */}
+                <Link
+                  to="/contact"
+                  id="hero-cta-start-project"
+                  className="group btn-gold btn-gold-pulse text-[16px] px-10 py-5"
+                >
+                  {/* Extra cinematic shimmer layer */}
+                  <motion.span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-y-[10%] left-[-30%] w-[38%] skew-x-[-18deg] rounded-full bg-gradient-to-r from-transparent via-white/50 to-transparent blur-md z-20"
+                    animate={{ x: ['-150%', '340%'] }}
+                    transition={{ duration: 3.2, repeat: Infinity, repeatDelay: 1.6, ease: 'easeInOut' }}
+                  />
+                  <span className="relative z-10">Start a Project</span>
+                  <ArrowRight size={18} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
                 </Link>
-                <Link to="/portfolio" id="hero-cta-view-work" className="inline-flex items-center gap-3 px-10 py-5 rounded-full bg-white/10 border border-white/15 text-white font-bold text-[16px] transition-all hover:bg-white/15 hover:border-white/25">
-                  View Our Work
+
+                {/* ── Secondary CTA ── */}
+                <Link
+                  to="/portfolio"
+                  id="hero-cta-view-work"
+                  className="group btn-ghost text-[16px] px-10 py-5"
+                >
+                  <motion.span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-y-[12%] left-[-34%] w-[40%] skew-x-[-18deg] rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent blur-lg z-20"
+                    animate={{ x: ['-150%', '345%'] }}
+                    transition={{ duration: 3.5, repeat: Infinity, repeatDelay: 1.8, ease: 'easeInOut' }}
+                  />
+                  <span className="relative z-10">View Our Work</span>
+                  <ArrowRight size={16} className="relative z-10 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
                 </Link>
               </motion.div>
             </div>

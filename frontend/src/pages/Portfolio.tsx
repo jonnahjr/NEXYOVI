@@ -176,7 +176,7 @@ export default function Portfolio() {
  </p>
 
  {/* Link to detail page using dummy AI/Security routes for now, could be dynamic */}
- <Link to={`/case-studies/${i === 1 ? 'ai-smart-logistics' : 'global-bank-security'}`} className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white text-black font-black uppercase tracking-widest text-xs hover:scale-105 transition-transform group/btn ">
+ <Link to={`/case-studies/${i === 1 ? 'ai-smart-logistics' : 'global-bank-security'}`} className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white text-black font-black uppercase tracking-widest text-xs shadow-[0_4px_14px_rgba(0,0,0,0.08)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(245,168,0,0.15)] group/btn ">
  Access Full Briefing <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
  </Link>
  </div>

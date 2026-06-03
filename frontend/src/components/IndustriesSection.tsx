@@ -20,14 +20,15 @@ const industries = [
     icon: DollarSign,
     title: 'FinTech',
     subtitle: 'Financial Technology',
-    desc: 'Ultra-low latency trading systems, secure payment gateways, and core banking modernization built to PCI-DSS standards.',
+    desc: 'Payment systems, digital banking platforms, and financial analytics with security & compliance at the core.',
     accent: '#10b981',
     metrics: [
-      { value: '<1ms', label: 'Latency' },
       { value: 'PCI-DSS', label: 'Compliance' },
+      { value: 'Secure', label: 'Payments' },
       { value: '99.99%', label: 'Uptime' },
     ],
-    tags: ['Smart Contracts', 'Payment APIs', 'Risk Analytics'],
+    tags: ['Payment Systems', 'Digital Banking', 'Financial Analytics', 'Security & Compliance'],
+    cta: 'View Industry',
   },
   {
     id: 'healthtech',
@@ -42,6 +43,7 @@ const industries = [
       { value: 'Real-Time', label: 'Analytics' },
     ],
     tags: ['Telemedicine', 'Patient AI', 'EHR Systems'],
+    cta: 'View Industry',
   },
   {
     id: 'logistics',
@@ -56,6 +58,7 @@ const industries = [
       { value: 'IoT', label: 'Fleet Tracking' },
     ],
     tags: ['Route AI', 'IoT Tracking', 'Warehouse Systems'],
+    cta: 'Explore Sector',
   },
   {
     id: 'government',
@@ -70,6 +73,7 @@ const industries = [
       { value: 'On-Prem', label: 'Deployments' },
     ],
     tags: ['Sovereign Cloud', 'Identity & Access', 'Audit Trails'],
+    cta: 'Explore Sector',
   },
   {
     id: 'education',
@@ -84,6 +88,7 @@ const industries = [
       { value: 'AI', label: 'Tutoring' },
     ],
     tags: ['LMS', 'AI Tutoring', 'Campus Systems'],
+    cta: 'Learn More',
   },
   {
     id: 'manufacturing',
@@ -98,6 +103,7 @@ const industries = [
       { value: 'Edge', label: 'Computing' },
     ],
     tags: ['Smart Factory', 'Predictive Maint.', 'IIoT'],
+    cta: 'View Solutions',
   },
   {
     id: 'retail',
@@ -112,6 +118,7 @@ const industries = [
       { value: 'Real-Time', label: 'Inventory' },
     ],
     tags: ['eCommerce', 'Personalization', 'Inventory AI'],
+    cta: 'View Industry',
   },
   {
     id: 'energy',
@@ -126,6 +133,7 @@ const industries = [
       { value: '24/7', label: 'Monitoring' },
     ],
     tags: ['Smart Grid', 'SCADA', 'Renewables'],
+    cta: 'Explore Sector',
   },
 ];
 
@@ -133,7 +141,7 @@ const IndustriesSection = () => {
   const [active, setActive] = useState(0);
 
   return (
-    <section className="relative bg-[#f4f4f5] py-32 border-t border-slate-200 overflow-hidden">
+    <section className="relative bg-slate-50 py-32 section-divider-light overflow-hidden">
       {/* Background Atmosphere */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.015]"
         style={{
@@ -152,18 +160,12 @@ const IndustriesSection = () => {
             className="lg:w-[34%]"
           >
             <div className="lg:sticky lg:top-32">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-6">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
-                <span className="text-[11px] font-bold text-slate-600 uppercase tracking-widest">
-                  Solutions That Transform
-                </span>
-              </div>
-              <h2 className="text-5xl md:text-7xl lg:text-8xl font-black text-slate-950 tracking-[-0.04em] leading-[0.9] mb-8">
+              <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-slate-950 tracking-[-0.04em] leading-[0.92] mb-6">
                 Industries <br />
-                We <br />
+                <span className="block text-center -translate-x-4">We</span>
                 <span className="text-[#F5A800]">Empower</span>
               </h2>
-              <p className="text-slate-600 text-lg md:text-xl leading-relaxed max-w-md mb-12 font-medium">
+              <p className="text-slate-600 text-base md:text-lg leading-relaxed max-w-md mb-10 font-medium">
                 Deep domain expertise across eight core industries — from fintech and healthcare to government and energy. We build solutions that understand your industry.
               </p>
 
@@ -179,104 +181,104 @@ const IndustriesSection = () => {
 
           <div className="lg:w-[66%] flex flex-col gap-3">
             {industries.map((ind, i) => {
-            const isActive = i === active;
-            const Icon = ind.icon;
+              const isActive = i === active;
+              const Icon = ind.icon;
 
-            return (
-              <div
-                key={ind.id}
-                onMouseEnter={() => setActive(i)}
-                className={`group cursor-pointer relative overflow-hidden transition-all duration-700 border rounded-[26px] ${isActive ? 'bg-white border-slate-200 shadow-[0_16px_30px_-18px_rgba(0,0,0,0.05)]' : 'bg-white/40 border-slate-200/50 hover:bg-white/80 hover:border-slate-200 shadow-sm'}`}
-              >
-                {/* Active Glow Gradient */}
+              return (
                 <div
-                  className="absolute inset-0 opacity-0 transition-opacity duration-700 pointer-events-none"
-                  style={{ background: `radial-gradient(circle at 50% 50%, ${ind.accent}0A 0%, transparent 50%)`, opacity: isActive ? 1 : 0 }}
-                />
+                  key={ind.id}
+                  onMouseEnter={() => setActive(i)}
+                  className={`group cursor-pointer relative overflow-hidden transition-all duration-700 border rounded-[26px] ${isActive ? 'bg-white border-slate-200 shadow-[0_16px_30px_-18px_rgba(0,0,0,0.05)]' : 'bg-white/40 border-slate-200/50 hover:bg-white/80 hover:border-slate-200 shadow-sm'}`}
+                >
+                  {/* Active Glow Gradient */}
+                  <div
+                    className="absolute inset-0 opacity-0 transition-opacity duration-700 pointer-events-none"
+                    style={{ background: `radial-gradient(circle at 50% 50%, ${ind.accent}0A 0%, transparent 50%)`, opacity: isActive ? 1 : 0 }}
+                  />
 
-                <div className="py-3.5 lg:py-4 px-4 lg:px-6 relative z-10 flex flex-col">
-                  
-                  {/* Row Header (Always visible) */}
-                  <div className="flex items-center justify-between gap-5">
-                    <div className="flex items-center gap-4 lg:gap-6">
-                      <div className="text-lg font-bold font-mono text-slate-400 w-6">
-                        0{i + 1}
-                      </div>
-                      <h3 className={`text-lg md:text-xl lg:text-[28px] font-black tracking-[-0.02em] transition-all duration-500 ${isActive ? 'text-slate-900 translate-x-1.5' : 'text-slate-500 group-hover:text-slate-800'}`}>
-                        {ind.title}
-                      </h3>
-                    </div>
-                    
-                    {!isActive && (
-                      <ArrowRight size={20} className="text-slate-400 group-hover:text-[#F5A800] transition-colors hidden md:block" />
-                    )}
-                  </div>
+                  <div className="py-3.5 lg:py-4 px-4 lg:px-6 relative z-10 flex flex-col">
 
-                  {/* Expandable Content Area */}
-                  <AnimatePresence>
-                    {isActive && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                        className="overflow-hidden"
-                      >
-                        <div className="pt-3 pb-0 flex flex-col lg:flex-row gap-6 lg:items-start pl-10 lg:pl-12">
-                          
-                          {/* Left: Description & Tags */}
-                          <div className="flex-1 border-l-2 border-slate-100 pl-4 lg:pl-5">
-                            <div className="flex items-center gap-2 mb-4">
-                              <div className="w-8 h-8 rounded-full bg-[#F8F5EB] border border-slate-200 flex items-center justify-center">
-                                <Icon size={14} style={{ color: ind.accent }} />
-                              </div>
-                              <div className="text-[10px] font-bold tracking-[0.2em] uppercase" style={{ color: ind.accent }}>
-                                {ind.subtitle}
-                              </div>
-                            </div>
-
-                            <p className="text-slate-600 text-[13px] leading-relaxed mb-5 max-w-md font-medium">
-                              {ind.desc}
-                            </p>
-                            
-                            <div className="flex flex-wrap gap-2">
-                              {ind.tags.map((tag) => (
-                                <span key={tag} className="px-2.5 py-1 rounded-full bg-[#F8F5EB] border border-slate-200 text-slate-600 text-[9px] font-bold uppercase tracking-wider">
-                                  {tag}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-
-                          {/* Right: Metrics & CTA */}
-                          <div className="flex flex-col sm:flex-row lg:flex-col gap-2.5 w-full lg:w-44 shrink-0">
-                            <div className="grid grid-cols-2 lg:grid-cols-1 gap-2 w-full">
-                              {ind.metrics.map(m => (
-                                <div key={m.label} className="bg-[#F8F5EB] border border-slate-200/60 rounded-xl p-2.5 flex flex-col justify-center">
-                                  <div className="text-base font-bold text-slate-900 tracking-tight">{m.value}</div>
-                                  <div className="text-[9px] font-bold uppercase tracking-[0.1em] text-slate-500 mt-0.5">{m.label}</div>
-                                </div>
-                              ))}
-                            </div>
-                            
-                            <Link 
-                              to="/industries" 
-                              className="mt-1 w-full lg:w-auto px-5 py-3 rounded-xl bg-[#F5A800] text-black font-bold text-xs flex items-center justify-between hover:scale-105 transition-all group/btn shadow-md shadow-[#F5A800]/20"
-                            >
-                              Explore
-                              <ArrowRight size={14} className="text-black/60 group-hover/btn:text-black group-hover/btn:translate-x-1 transition-all" />
-                            </Link>
-                          </div>
-
+                    {/* Row Header (Always visible) */}
+                    <div className="flex items-center justify-between gap-5">
+                      <div className="flex items-center gap-4 lg:gap-6">
+                        <div className="text-lg font-bold font-mono text-slate-400 w-6">
+                          0{i + 1}
                         </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                  
+                        <h3 className={`text-lg md:text-xl lg:text-[28px] font-black tracking-[-0.02em] transition-all duration-500 ${isActive ? 'text-slate-900 translate-x-1.5' : 'text-slate-500 group-hover:text-slate-800'}`}>
+                          {ind.title}
+                        </h3>
+                      </div>
+
+                      {!isActive && (
+                        <ArrowRight size={20} className="text-slate-400 group-hover:text-[#F5A800] transition-colors hidden md:block" />
+                      )}
+                    </div>
+
+                    {/* Expandable Content Area */}
+                    <AnimatePresence>
+                      {isActive && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                          className="overflow-hidden"
+                        >
+                          <div className="pt-3 pb-0 flex flex-col lg:flex-row gap-6 lg:items-start pl-10 lg:pl-12">
+
+                            {/* Left: Description & Tags */}
+                            <div className="flex-1 border-l-2 border-slate-100 pl-4 lg:pl-5">
+                              <div className="flex items-center gap-2 mb-4">
+                                <div className="w-8 h-8 rounded-full bg-[#F8F5EB] border border-slate-200 flex items-center justify-center">
+                                  <Icon size={14} style={{ color: ind.accent }} />
+                                </div>
+                                <div className="text-[10px] font-bold tracking-[0.2em] uppercase" style={{ color: ind.accent }}>
+                                  {ind.subtitle}
+                                </div>
+                              </div>
+
+                              <p className="text-slate-600 text-[13px] leading-relaxed mb-5 max-w-md font-medium">
+                                {ind.desc}
+                              </p>
+
+                              <div className="flex flex-wrap gap-2">
+                                {ind.tags.map((tag) => (
+                                  <span key={tag} className="px-2.5 py-1 rounded-full bg-[#F8F5EB] border border-slate-200 text-slate-600 text-[9px] font-bold uppercase tracking-wider">
+                                    {tag}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+
+                            {/* Right: Metrics & CTA */}
+                            <div className="flex flex-col sm:flex-row lg:flex-col gap-2.5 w-full lg:w-44 shrink-0">
+                              <div className="grid grid-cols-2 lg:grid-cols-1 gap-2 w-full">
+                                {ind.metrics.map(m => (
+                                  <div key={m.label} className="bg-[#F8F5EB] border border-slate-200/60 rounded-xl p-2.5 flex flex-col justify-center">
+                                    <div className="text-base font-bold text-slate-900 tracking-tight">{m.value}</div>
+                                    <div className="text-[9px] font-bold uppercase tracking-[0.1em] text-slate-500 mt-0.5">{m.label}</div>
+                                  </div>
+                                ))}
+                              </div>
+
+                              <Link
+                                to="/industries"
+                                className="mt-1 w-full lg:w-auto px-5 py-3 rounded-xl bg-[#F5A800] text-black font-bold text-xs flex items-center justify-between hover:scale-105 transition-all group/btn shadow-md shadow-[#F5A800]/20"
+                              >
+                                {ind.cta}
+                                <ArrowRight size={14} className="text-black/60 group-hover/btn:text-black group-hover/btn:translate-x-1 transition-all" />
+                              </Link>
+                            </div>
+
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
           </div>
         </div>
       </div>

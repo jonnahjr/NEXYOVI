@@ -42,10 +42,10 @@ export default function CloudService() {
  </motion.p>
 
  <motion.div variants={revealUp}>
- <Link to="/contact" className="btn-primary group !bg-[#8b5cf6]/20 !border-[#8b5cf6]/40 hover:!bg-[#8b5cf6]/30 !text-white">
- Begin Migration
- <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
- </Link>
+              <Link to="/contact" className="group btn-accent text-[14px] px-8 py-4">
+                <span className="relative z-10">Start Cloud Migration</span>
+                <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1 transition-transform" />
+              </Link>
  </motion.div>
  </motion.div>
  </div>

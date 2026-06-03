@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Globe, MapPin, Clock, Phone, Mail } from 'lucide-react';
+import { Globe, MapPin, Clock, Mail } from 'lucide-react';
 import CTASection from '../components/CTASection';
 
 import officeHero from '../assets/hero_office.png';
@@ -11,7 +11,7 @@ const OfficesPage = () => {
  city: 'Addis Ababa, Ethiopia',
  role: 'Main Headquarters & Operational Core',
  address: 'Bole District, Addis Ababa, Ethiopia',
- phone: '+251 911 000 000',
+
  email: 'hq@nexyovi.com',
  time: 'GMT+3 (East Africa Time)',
  description: 'The core center of company leadership, mission-critical operations, and technical innovation.'
@@ -75,19 +75,12 @@ const OfficesPage = () => {
  <MapPin size={16} className="text-slate-500" />
  </div>
  <p className="text-lg text-slate-600">{hub.address}</p>
- </div>
- <div className="flex gap-6 items-start">
- <div className="shrink-0 w-10 h-10 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center">
- <Phone size={16} className="text-slate-500" />
- </div>
- <p className="text-lg text-slate-600">{hub.phone}</p>
- </div>
- <div className="flex gap-6 items-start">
- <div className="shrink-0 w-10 h-10 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center">
- <Mail size={16} className="text-slate-500" />
- </div>
- <p className="text-lg text-slate-600">{hub.email}</p>
- </div>
+ </div>          <div className="flex gap-6 items-start">
+              <div className="shrink-0 w-10 h-10 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center">
+                <Mail size={16} className="text-slate-500" />
+              </div>
+              <p className="text-lg text-slate-600">{hub.email}</p>
+            </div>
  <div className="flex gap-6 items-start">
  <div className="shrink-0 w-10 h-10 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center">
  <Clock size={16} className="text-slate-500" />

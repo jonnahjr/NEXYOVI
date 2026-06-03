@@ -114,13 +114,13 @@ const Careers = () => {
  >
  <button
  onClick={() => document.getElementById('positions')?.scrollIntoView({ behavior: 'smooth' })}
- className="px-10 py-5 bg-[#F5A800] text-white text-xs font-black uppercase tracking-[0.2em] rounded-full hover:bg-white hover:text-black transition-all "
+ className="px-10 py-5 bg-[#F5A800] text-white text-xs font-black uppercase tracking-[0.2em] rounded-full shadow-[0_4px_14px_rgba(245,168,0,0.25)] transition-all duration-300 hover:bg-white hover:text-black hover:shadow-[0_8px_30px_rgba(245,168,0,0.35)] hover:-translate-y-0.5 "
  >
  View Open Positions
  </button>
  <button
  onClick={() => setIsLifeModalOpen(true)}
- className="px-10 py-5 bg-transparent border border-slate-300 text-slate-700 text-xs font-black uppercase tracking-[0.2em] rounded-full hover:bg-white/10 transition-all flex items-center gap-3 group"
+ className="px-10 py-5 bg-transparent border border-slate-300 text-slate-700 text-xs font-black uppercase tracking-[0.2em] rounded-full transition-all duration-300 hover:bg-white/10 hover:shadow-[0_8px_30px_rgba(245,168,0,0.08)] hover:-translate-y-0.5 flex items-center gap-3 group"
  >
  <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center group-hover:bg-[#F5A800] group-hover:text-white transition-all">
  <Play size={12} fill="currentColor" />
@@ -348,7 +348,7 @@ const Careers = () => {
  <p className="text-slate-500 text-lg leading-relaxed mb-12 max-w-xl font-medium">
  At Nexyovi, we believe in a culture of trust, respect, collaboration and continuous improvement. We celebrate wins, learn from challenges and support each other every step of the way.
  </p>
- <button className="px-10 py-5 bg-slate-900 text-white text-xs font-black uppercase tracking-[0.2em] rounded-full hover:bg-[#F5A800] transition-all flex items-center gap-4 group">
+ <button className="px-10 py-5 bg-slate-900 text-white text-xs font-black uppercase tracking-[0.2em] rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition-all duration-300 hover:bg-[#F5A800] hover:shadow-[0_8px_30px_rgba(245,168,0,0.25)] hover:-translate-y-0.5 flex items-center gap-4 group">
  Life at Nexyovi <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
  </button>
  </div>
@@ -371,7 +371,7 @@ const Careers = () => {
  </p>
  </div>
  </div>
- <button className="px-10 py-5 bg-[#F5A800] text-white text-xs font-black uppercase tracking-[0.2em] rounded-full hover:bg-white hover:text-black transition-all whitespace-nowrap">
+ <button className="px-10 py-5 bg-[#F5A800] text-white text-xs font-black uppercase tracking-[0.2em] rounded-full shadow-[0_4px_14px_rgba(245,168,0,0.25)] transition-all duration-300 hover:bg-white hover:text-black hover:shadow-[0_8px_30px_rgba(245,168,0,0.35)] hover:-translate-y-0.5 whitespace-nowrap">
  Send Your Resume
  </button>
  </div>

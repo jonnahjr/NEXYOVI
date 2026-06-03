@@ -42,10 +42,10 @@ export default function InfrastructureService() {
  </motion.p>
 
  <motion.div variants={revealUp}>
- <Link to="/contact" className="btn-primary group !bg-[#0ea5e9]/20 !border-[#0ea5e9]/40 !text-white">
- Scale Your Infrastructure
- <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
- </Link>
+              <Link to="/contact" className="group btn-cyan text-[14px] px-8 py-4">
+                <span className="relative z-10">Architect Your Infrastructure</span>
+                <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1 transition-transform" />
+              </Link>
  </motion.div>
  </motion.div>
  </div>

@@ -138,7 +138,7 @@ const CompanyLeadership = () => {
  <span className="text-[11px] font-bold text-white/60 uppercase tracking-[0.2em]">The People</span>
  </div>
  <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-[-0.04em] leading-none text-white mb-5">
- Meet Our <span className="text-white/40">Leadership</span>
+ Meet Our <span className="text-white/40">Team</span>
  </h2>
  <p className="text-white/50 text-lg max-w-xl font-medium">
  Seasoned experts who've built, scaled, and secured systems across two continents.

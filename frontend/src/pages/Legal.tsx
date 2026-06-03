@@ -136,11 +136,11 @@ const Legal = () => {
  </motion.div>
  </div>
 
- <div className="mt-12 text-center">
- <Link to="/" className="px-8 py-3 bg-slate-950 border border-slate-200 text-white font-black text-[13px] uppercase tracking-widest rounded-full hover:bg-[#F5A800] transition-all">
- Return to Home
- </Link>
- </div>
+  <div className="mt-12 text-center">
+  <Link to="/" className="group btn-dark text-[13px] px-8 py-3 uppercase tracking-widest">
+  <span className="relative z-10">Return to Home</span>
+  </Link>
+  </div>
  </div>
  </div>
  );

@@ -156,7 +156,7 @@ const CoreDisciplines = () => {
      >
       <Link
        to="/services"
-       className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white shadow-lg border border-gray-100 text-gray-900 font-bold text-[13px] uppercase tracking-widest transition-all hover:shadow-xl hover:border-gray-200 hover:scale-105"
+       className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white shadow-[0_4px_14px_rgba(0,0,0,0.08)] border border-gray-100 text-gray-900 font-bold text-[13px] uppercase tracking-widest transition-all duration-300 hover:shadow-[0_8px_30px_rgba(245,168,0,0.15)] hover:border-gray-200 hover:scale-105 hover:-translate-y-0.5"
       >
        Explore All Services
        <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform text-[#F5A800]" />

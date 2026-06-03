@@ -54,7 +54,7 @@ const containerVariants = {
 
 const cardVariants = {
  hidden: { opacity: 0, y: 40, scale: 0.95 },
- visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+ visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const } },
 };
 
 export default function CompanyMetrics() {

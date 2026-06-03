@@ -41,9 +41,9 @@ export default function ITConsultingService() {
  </motion.p>
 
  <motion.div variants={revealUp}>
- <Link to="/contact" className="btn-primary group !bg-[#f59e0b]/20 !border-[#f59e0b]/40 hover:!bg-[#f59e0b]/30 !text-white">
- Book a Strategy Session
- <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+ <Link to="/contact" className="group btn-gold text-[14px] px-8 py-4">
+ <span className="relative z-10">Start Your Strategy</span>
+ <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1 transition-transform" />
  </Link>
  </motion.div>
  </motion.div>
@@ -107,7 +107,10 @@ export default function ITConsultingService() {
  <div className="container text-center">
  <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6">Let's talk strategy.</h2>
  <p className="text-slate-500 text-lg mb-10 max-w-xl mx-auto">Book a free 30-minute consultation with one of our senior engineers.</p>
- <Link to="/contact" className="btn-3d-amber">Schedule a Call <ArrowRight size={14} /></Link>
+ <Link to="/contact" className="group btn-dark text-[15px] px-10 py-5 mt-10">
+ <span className="relative z-10">Schedule a Call</span>
+ <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
+ </Link>
  </div>
  </section>
  </>

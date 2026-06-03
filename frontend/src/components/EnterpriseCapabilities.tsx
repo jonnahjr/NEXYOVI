@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { BrainCircuit, Code, Smartphone, Cloud, Shield, Database, Cog, Network, BarChart3, ArrowRight } from 'lucide-react';
+import { BarChart3, BrainCircuit, Cloud, Code, Cog, Database, Network, Shield, Smartphone } from 'lucide-react';
 
 const capabilities = [
   {
@@ -55,12 +55,6 @@ const capabilities = [
     title: 'Analytics & BI',
     desc: 'Real-time dashboards, predictive analytics, custom reporting engines, and data visualization platforms.',
     tag: 'Insights',
-  },
-  {
-    icon: ArrowRight,
-    title: 'Modernization Programs',
-    desc: 'Legacy system migration, cloud migration, technical debt reduction, and digital transformation roadmaps.',
-    tag: 'Transformation',
   },
 ];
 
@@ -139,35 +133,6 @@ export default function EnterpriseCapabilities() {
               ))}
             </div>
           </div>
-        </motion.div>
-
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-60px' }}
-          className="mt-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3"
-        >
-          {capabilities.map((cap, i) => {
-            const Icon = cap.icon;
-
-            return (
-              <motion.div
-                key={cap.title}
-                variants={cardVariants}
-                className="group rounded-[18px] border border-slate-200 bg-white p-4 transition-all duration-300 hover:border-[#F5A800]/40"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-[14px] bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0 transition-colors duration-300 group-hover:border-[#F5A800]/30 group-hover:bg-[#F5A800]/10">
-                    <Icon size={18} className="text-slate-700 group-hover:text-[#F5A800] transition-colors duration-300" />
-                  </div>
-                  <h3 className="text-lg md:text-xl font-black tracking-[-0.03em] leading-tight text-slate-950">
-                    {cap.title}
-                  </h3>
-                </div>
-              </motion.div>
-            );
-          })}
         </motion.div>
       </div>
     </section>

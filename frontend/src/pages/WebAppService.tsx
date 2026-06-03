@@ -41,10 +41,10 @@ export default function WebAppService() {
  </motion.p>
 
  <motion.div variants={revealUp}>
- <Link to="/contact" className="btn-primary group !bg-[#0ea5e9]/20 !border-[#0ea5e9]/40 hover:!bg-[#0ea5e9]/30 !text-white">
- Start Your Web Project
- <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
- </Link>
+              <Link to="/contact" className="group btn-cyan text-[14px] px-8 py-4">
+                <span className="relative z-10">Start Your Web Project</span>
+                <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1 transition-transform" />
+              </Link>
  </motion.div>
  </motion.div>
  </div>
@@ -85,7 +85,10 @@ export default function WebAppService() {
  <div className="container text-center">
  <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6">Ready to build your web platform?</h2>
  <p className="text-slate-500 text-lg mb-10 max-w-xl mx-auto">Let's turn your requirements into a scalable, secure, and beautiful web application.</p>
- <Link to="/contact" className="btn-3d-amber">Get a Free Consultation <ArrowRight size={14} /></Link>
+            <Link to="/contact" className="group btn-dark text-[15px] px-10 py-5 mt-10">
+              <span className="relative z-10">Get a Free Consultation</span>
+              <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
+            </Link>
  </div>
  </section>
  </>

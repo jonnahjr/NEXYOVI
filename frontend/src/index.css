@@ -185,44 +185,322 @@
         border-color: rgba(255, 255, 255, 0.12);
         transform: translateY(-2px);
     }
-    /* ── Buttons ── */
-    .btn-primary {
-        @apply inline-flex items-center justify-center gap-3 font-medium text-[13px] text-black transition-all duration-300 cursor-pointer;
-        padding: 12px 24px;
+    /* ══════════════════════════════════════════
+       NEXYOVI — PREMIUM BUTTON SYSTEM v3
+       Cinematic · Animated · Classic · Modern
+    ══════════════════════════════════════════ */
+
+    /* ── Shared base ── */
+    .btn {
+        @apply inline-flex items-center justify-center gap-3 select-none cursor-pointer font-semibold text-[13px] tracking-wide;
+        position: relative;
+        overflow: hidden;
         border-radius: var(--radius-full);
+        padding: 13px 26px;
+        transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                    background 0.3s ease,
+                    border-color 0.3s ease;
+        -webkit-font-smoothing: antialiased;
+    }
+    /* Shimmer sweep pseudo-element (all buttons share it) */
+    .btn::before {
+        content: '';
+        position: absolute;
+        inset-y: 0;
+        left: -45%;
+        width: 40%;
+        border-radius: 50%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+        transform: skewX(-18deg);
+        transition: none;
+        pointer-events: none;
+        filter: blur(6px);
+        opacity: 0;
+    }
+    .btn:hover::before {
+        opacity: 1;
+        animation: btn-shimmer 0.75s ease-in-out forwards;
+    }
+    /* Inner top highlight (glass edge) */
+    .btn::after {
+        content: '';
+        position: absolute;
+        inset-x: 0;
+        top: 0;
+        height: 45%;
+        border-radius: var(--radius-full) var(--radius-full) 0 0;
+        background: linear-gradient(to bottom, rgba(255,255,255,0.15), transparent);
+        pointer-events: none;
+    }
+    .btn:hover  { transform: translateY(-3px) scale(1.018); }
+    .btn:active { transform: translateY(1px) scale(0.985); transition-duration: 0.1s; }
+
+    /* ── PRIMARY — Crisp white pill, gold glow on hover ── */
+    .btn-primary {
+        @apply btn;
         background: #ffffff;
-        border: 1px solid transparent;
+        color: #0d1117;
+        border: 1px solid rgba(0,0,0,0.06);
     }
     .btn-primary:hover {
-        background: #f3f4f6;
-        transform: translateY(-2px);
+        background: #ffffff;
+        border-color: rgba(245,168,0,0.25);
     }
     .btn-primary:active {
-        transform: translateY(0);
     }
+
+    /* ── GHOST — Frosted glass, white border ── */
     .btn-ghost {
-        @apply inline-flex items-center justify-center gap-3 font-medium text-[13px] text-white transition-all duration-300 cursor-pointer;
-        padding: 12px 24px;
+        @apply inline-flex items-center justify-center gap-3 select-none cursor-pointer font-semibold text-[13px] tracking-wide;
+        position: relative;
+        overflow: hidden;
         border-radius: var(--radius-full);
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(8px);
+        padding: 13px 26px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.12);
+        color: rgba(255,255,255,0.82);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                    background 0.3s ease,
+                    border-color 0.3s ease,
+                    color 0.25s ease;
+        -webkit-font-smoothing: antialiased;
+    }
+    .btn-ghost::before {
+        content: '';
+        position: absolute;
+        inset-y: 0;
+        left: -45%;
+        width: 40%;
+        border-radius: 50%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+        transform: skewX(-18deg);
+        pointer-events: none;
+        filter: blur(6px);
+        opacity: 0;
+    }
+    .btn-ghost:hover::before { opacity: 1; animation: btn-shimmer 0.75s ease-in-out forwards; }
+    .btn-ghost::after {
+        content: '';
+        position: absolute;
+        inset-x: 0;
+        top: 0;
+        height: 45%;
+        border-radius: var(--radius-full) var(--radius-full) 0 0;
+        background: linear-gradient(to bottom, rgba(255,255,255,0.08), transparent);
+        pointer-events: none;
     }
     .btn-ghost:hover {
-        background: rgba(255, 255, 255, 0.08);
-        border-color: rgba(255, 255, 255, 0.2);
+        background: rgba(255,255,255,0.09);
+        border-color: rgba(255,255,255,0.22);
+        color: #ffffff;
+        transform: translateY(-3px) scale(1.018);
     }
-    .btn-cyan {
-        @apply inline-flex items-center justify-center gap-3 font-medium text-[13px] text-white transition-all duration-300 cursor-pointer;
-        padding: 12px 24px;
+    .btn-ghost:active { transform: translateY(1px) scale(0.985); transition-duration: 0.1s; }
+
+    /* ── DARK — Near-black pill with gold glow ── */
+    .btn-dark {
+        @apply btn;
+        background: linear-gradient(135deg, #141a24 0%, #0d1117 100%);
+        color: #ffffff;
+        border: 1px solid rgba(255,255,255,0.08);
+    }
+    .btn-dark:hover {
+        background: linear-gradient(135deg, #1a2232 0%, #0f1520 100%);
+        border-color: rgba(245,168,0,0.2);
+    }
+    .btn-dark:active {
+    }
+
+    /* ── ACCENT / GOLD — Amber brand pill, the hero CTA ── */
+    .btn-accent {
+        @apply inline-flex items-center justify-center gap-3 select-none cursor-pointer font-bold text-[13px] tracking-wide;
+        position: relative;
+        overflow: hidden;
         border-radius: var(--radius-full);
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 13px 28px;
+        background: linear-gradient(135deg, #FFBF33 0%, #F5A800 50%, #e09600 100%);
+        color: #0d1117;
+        border: 1px solid rgba(255,190,50,0.4);
+        transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                    background 0.3s ease;
+        -webkit-font-smoothing: antialiased;
+    }
+    .btn-accent::before {
+        content: '';
+        position: absolute;
+        inset-y: 0;
+        left: -45%;
+        width: 40%;
+        border-radius: 50%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+        transform: skewX(-18deg);
+        pointer-events: none;
+        filter: blur(6px);
+        opacity: 0;
+    }
+    .btn-accent:hover::before { opacity: 1; animation: btn-shimmer 0.7s ease-in-out forwards; }
+    .btn-accent::after {
+        content: '';
+        position: absolute;
+        inset-x: 0;
+        top: 0;
+        height: 50%;
+        border-radius: var(--radius-full) var(--radius-full) 0 0;
+        background: linear-gradient(to bottom, rgba(255,255,255,0.28), transparent);
+        pointer-events: none;
+    }
+    .btn-accent:hover {
+        background: linear-gradient(135deg, #FFD166 0%, #FFBF33 50%, #F5A800 100%);
+        border-color: rgba(255,210,80,0.5);
+        transform: translateY(-3px) scale(1.022);
+    }
+    .btn-accent:active { transform: translateY(1px) scale(0.982); transition-duration: 0.1s; }
+
+    /* ── OUTLINE — Transparent, accent on hover ── */
+    .btn-outline {
+        @apply inline-flex items-center justify-center gap-3 select-none cursor-pointer font-semibold text-[13px] tracking-wide;
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--radius-full);
+        padding: 12px 26px;
+        background: transparent;
+        border: 1.5px solid rgba(0,0,0,0.14);
+        color: #475569;
+        transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                    border-color 0.3s ease,
+                    color 0.25s ease;
+        -webkit-font-smoothing: antialiased;
+    }
+    .btn-outline::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: linear-gradient(135deg, rgba(245,168,0,0.06), transparent);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+    }
+    .btn-outline:hover::before { opacity: 1; }
+    .btn-outline:hover {
+        border-color: rgba(245,168,0,0.55);
+        color: #C98700;
+        transform: translateY(-3px) scale(1.018);
+    }
+    .btn-outline:active { transform: translateY(1px) scale(0.985); transition-duration: 0.1s; }
+
+    /* ── GOLD GLASS — for dark section hero CTAs ── */
+    .btn-gold {
+        @apply inline-flex items-center justify-center gap-3 select-none cursor-pointer font-bold text-[14px] tracking-wide;
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--radius-full);
+        padding: 14px 32px;
+        background: linear-gradient(135deg, #FFBF33 0%, #F5A800 50%, #d48c00 100%);
+        color: #0d1117;
+        border: 1px solid rgba(255,200,60,0.45);
+        transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                    background 0.3s ease;
+        -webkit-font-smoothing: antialiased;
+    }
+    .btn-gold::before {
+        content: '';
+        position: absolute;
+        inset-y: 0;
+        left: -45%;
+        width: 40%;
+        border-radius: 50%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        transform: skewX(-18deg);
+        pointer-events: none;
+        filter: blur(8px);
+        opacity: 0;
+    }
+    .btn-gold:hover::before { opacity: 1; animation: btn-shimmer 0.7s ease-in-out forwards; }
+    .btn-gold::after {
+        content: '';
+        position: absolute;
+        inset-x: 0;
+        top: 0;
+        height: 50%;
+        border-radius: var(--radius-full) var(--radius-full) 0 0;
+        background: linear-gradient(to bottom, rgba(255,255,255,0.32), transparent);
+        pointer-events: none;
+    }
+    .btn-gold:hover {
+        background: linear-gradient(135deg, #FFD166 0%, #FFC107 50%, #F5A800 100%);
+        transform: translateY(-4px) scale(1.025);
+    }
+    .btn-gold:active { transform: translateY(1px) scale(0.98); transition-duration: 0.1s; }
+
+    /* ── 3D AMBER — alias for service pages ── */
+    .btn-3d-amber {
+        @apply btn-gold;
+    }
+    .btn-3d-amber:hover {
+        transform: translateY(-3px) scale(1.022);
+    }
+    .btn-3d-amber:active {
+        transform: translateY(2px) scale(0.978);
+    }
+
+    /* ── CYAN — frosted teal for networking / cloud service pages ── */
+    .btn-cyan {
+        @apply inline-flex items-center justify-center gap-3 select-none cursor-pointer font-bold text-[13px] tracking-wide;
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--radius-full);
+        padding: 13px 28px;
+        background: linear-gradient(135deg, rgba(6,182,212,0.18) 0%, rgba(14,165,233,0.12) 100%);
+        color: #22d3ee;
+        border: 1px solid rgba(6,182,212,0.30);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                    background 0.3s ease,
+                    border-color 0.3s ease;
+        -webkit-font-smoothing: antialiased;
+    }
+    .btn-cyan::before {
+        content: '';
+        position: absolute;
+        inset-y: 0;
+        left: -45%;
+        width: 40%;
+        border-radius: 50%;
+        background: linear-gradient(90deg, transparent, rgba(6,182,212,0.25), transparent);
+        transform: skewX(-18deg);
+        pointer-events: none;
+        filter: blur(6px);
+        opacity: 0;
+    }
+    .btn-cyan:hover::before { opacity: 1; animation: btn-shimmer 0.75s ease-in-out forwards; }
+    .btn-cyan::after {
+        content: '';
+        position: absolute;
+        inset-x: 0;
+        top: 0;
+        height: 45%;
+        border-radius: var(--radius-full) var(--radius-full) 0 0;
+        background: linear-gradient(to bottom, rgba(6,182,212,0.15), transparent);
+        pointer-events: none;
     }
     .btn-cyan:hover {
-        background: rgba(255, 255, 255, 0.12);
-        transform: translateY(-2px);
+        background: linear-gradient(135deg, rgba(6,182,212,0.28) 0%, rgba(14,165,233,0.22) 100%);
+        border-color: rgba(6,182,212,0.50);
+        color: #67e8f9;
+        transform: translateY(-3px) scale(1.018);
     }
+    .btn-cyan:active { transform: translateY(1px) scale(0.985); transition-duration: 0.1s; }
+
+    /* ── SM size modifier ── */
+    .btn-sm {
+        padding: 8px 18px !important;
+        font-size: 12px !important;
+    }
+
     /* ── Badge / Pill ── */
     .badge {
         @apply inline-flex items-center gap-2 font-black text-[10px] uppercase tracking-[0.35em];
@@ -260,6 +538,34 @@
         border: 1px solid rgba(239, 68, 68, 0.25);
         color: #f87171;
     }
+    /* ── Smooth section dividers (gradient fade instead of sharp line) ── */
+    .section-divider-light {
+        position: relative;
+    }
+    .section-divider-light::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 5%;
+        right: 5%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(0,0,0,0.08) 15%, rgba(0,0,0,0.08) 85%, transparent);
+        pointer-events: none;
+    }
+    .section-divider-dark {
+        position: relative;
+    }
+    .section-divider-dark::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 5%;
+        right: 5%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05) 15%, rgba(255,255,255,0.05) 85%, transparent);
+        pointer-events: none;
+    }
+
     /* ── Section Label ── */
     .section-label {
         @apply text-[10px] font-black uppercase tracking-[0.4em] text-[#F5A800] mb-4;
@@ -333,52 +639,21 @@
         background: rgba(245, 168, 0, 0.3);
         border-radius: 10px;
     }
-    /* ── Glass Button (legacy) ── */
+    /* ── Legacy pricing card buttons — now powered by the new system ── */
     .border-button-grey {
-        position: relative;
-        z-index: 0;
+        @apply btn-ghost;
+        border-radius: 12px;
+        width: 100%;
     }
-    .border-button-grey::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: -10;
-        border-radius: 9999px;
-        border: 1px solid transparent;
-        transition: opacity 0.2s;
-        background: linear-gradient(#111827, #111827) padding-box, linear-gradient(180deg, hsla(0, 0%, 100%, .3), hsla(0, 0%, 100%, .15)) border-box;
-    }
-    .border-button-grey::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: -10;
-        border-radius: 9999px;
-        border: 1px solid transparent;
-        transition: opacity 0.2s;
-        opacity: 0;
-        background: linear-gradient(#1F2937, #1F2937) padding-box, linear-gradient(180deg, hsla(0, 0%, 100%, .5), hsla(0, 0%, 100%, .25)) border-box;
-    }
-    .border-button-grey:hover::after {
-        opacity: 1;
-    }
-    .border-button-grey:hover::before {
-        opacity: 0;
+    .border-button-grey:hover {
+        background: rgba(255,255,255,0.09);
+        border-color: rgba(255,255,255,0.22);
     }
     .border-button-light {
-        position: relative;
-        border-radius: 9999px;
-        background: var(--accent-blue);
-        color: white;
-        transition: background 0.3s ease, transform 0.2s ease;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .border-button-light:hover {
-        background: #C98700;
-        transform: translateY(-2px);
-    }
-    .border-button-light:active {
-        transform: translateY(0);
+        @apply btn-accent;
+        border-radius: 12px;
+        width: 100%;
+        font-size: 15px;
     }
 }
 
@@ -533,12 +808,16 @@
     }
     /* Border rotate (used by glow-border) */
     @keyframes border-rotate {
-        from {
-            transform: rotate(0deg);
-        }
-        to {
-            transform: rotate(360deg);
-        }
+        from { transform: rotate(0deg); }
+        to   { transform: rotate(360deg); }
+    }
+    /* Button shimmer sweep */
+    @keyframes btn-shimmer {
+        0%   { left: -45%; opacity: 1; }
+        100% { left: 115%; opacity: 0; }
+    }
+    /* Button glow pulse (for .btn-gold variants) — disabled shadow */
+    .btn-gold-pulse {
     }
     /* Counter spin in */
     @keyframes spin-in {

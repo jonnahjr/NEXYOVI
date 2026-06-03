@@ -34,8 +34,8 @@ const TeamPage = () => {
  "A global powerhouse is only as strong as its engineers. We've gathered some of the finest tech minds from Addis Ababa and beyond."
  </p>
  <div className="flex justify-center gap-4">
- <Link to="/careers" className="px-10 py-5 bg-white text-black font-bold rounded-full hover:scale-105 transition-all">Join the Mission</Link>
- <Link to="/contact" className="px-10 py-5 border border-white/10 rounded-full hover:bg-white/5 transition-all">Work with Us</Link>
+ <Link to="/careers" className="px-10 py-5 bg-white text-black font-bold rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.08)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(245,168,0,0.15)]">Join the Mission</Link>
+ <Link to="/contact" className="px-10 py-5 border border-white/10 rounded-full transition-all duration-300 hover:bg-white/5 hover:shadow-[0_8px_30px_rgba(245,168,0,0.08)] hover:-translate-y-0.5">Work with Us</Link>
  </div>
  </div>
  </section>

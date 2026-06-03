@@ -120,7 +120,7 @@ const CaseStudyDetail = () => {
  <div className="w-2 h-2 rounded-full animate-pulse " style={{ backgroundColor: study.color, color: study.color }} />                  <span className="text-xs font-black uppercase tracking-widest text-slate-700">{study.category}</span>
  </div>
 
- <h1 className="text-5xl md:text-7xl lg:text-[80px] font-black tracking-tighter leading-[0.95] mb-8" style={{ 40` }}>
+ <h1 className="text-5xl md:text-7xl lg:text-[80px] font-black tracking-tighter leading-[0.95] mb-8">
  {study.title}
  </h1>                  <div className="flex flex-wrap items-center gap-8 text-sm font-medium text-slate-500">
  <div className="flex flex-col"> <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Client Entity</span>

@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 
 import { EASE_EXPO, EASE_CINEMA, viewport } from '../lib/animations';
+import TextReveal from '../components/TextReveal';
 
 // ── Service Data ──────────────────────────────────────────────
 const services = [
@@ -98,7 +99,7 @@ const metrics = [
 
 // ── Differentiators ───────────────────────────────────────────
 const differentiators = [
-  { icon: Award, title: 'Senior Engineering Teams', desc: 'Every engagement is led by architects who have shipped at global scale — Google, Amazon, and beyond. No junior allocation.' },
+  { icon: Award, title: 'Senior Engineering Teams', desc: 'Every engagement is led by experienced architects with a track record of shipping enterprise-scale systems. No junior allocation.' },
   { icon: Users, title: 'True Partnership Model', desc: 'We embed with your team, transfer knowledge continuously, and ensure you own the system — not us.' },
   { icon: CheckCircle, title: 'Outcome-Based Delivery', desc: 'We optimize for business KPIs, not technical vanity metrics. Measurable ROI before we scale engagement.' },
 ];
@@ -118,25 +119,7 @@ const techEcosystem = [
   { category: 'AI & Data', icon: BrainCircuit, items: ['OpenAI', 'LangChain', 'RAG Systems', 'PostgreSQL', 'MongoDB', 'Redis'] },
 ];
 
-// ══════════════════════════════════════════════════════════════
-//  TEXT REVEAL COMPONENT (clip-path animation)
-// ══════════════════════════════════════════════════════════════
-function TextReveal({ children, className, delay = 0, light = false }: {
-  children: React.ReactNode; className?: string; delay?: number; light?: boolean;
-}) {
-  return (
-    <div className={`overflow-hidden ${className || ''}`}>
-      <motion.div
-        initial={{ y: '100%', clipPath: 'inset(0 0 100% 0)' }}
-        whileInView={{ y: 0, clipPath: 'inset(0 0 0% 0)' }}
-        viewport={viewport}
-        transition={{ duration: 0.9, delay, ease: EASE_CINEMA }}
-      >
-        {children}
-      </motion.div>
-    </div>
-  );
-}
+
 
 // ══════════════════════════════════════════════════════════════
 //  ANIMATED COUNTER
@@ -447,16 +430,16 @@ export default function Services() {
           >
             <a
               href="#services-grid"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-black font-bold text-[14px] transition-all hover:scale-105 hover:bg-[#FFD166] hover:shadow-[0_0_40px_rgba(245,168,0,0.2)]"
+              className="group btn-gold text-[14px] px-8 py-4"
             >
-              View All Services
-              <ArrowRight size={16} />
+              <span className="relative z-10">View All Services</span>
+              <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1 transition-transform" />
             </a>
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold text-[14px] transition-all hover:bg-white/10 hover:border-white/20"
+              className="group btn-ghost text-[14px] px-8 py-4"
             >
-              Start a Project
+              <span className="relative z-10">Start a Project</span>
             </Link>
           </motion.div>
 
@@ -464,9 +447,8 @@ export default function Services() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2, duration: 1 }}
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+            className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
           >
-            <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/25">Scroll to explore</span>
             <div className="w-px h-10 bg-gradient-to-b from-white/25 to-transparent" />
           </motion.div>
         </motion.div>
@@ -517,10 +499,10 @@ export default function Services() {
           >
             <Link
               to="/contact"
-              className="group inline-flex items-center gap-2 px-8 py-4 rounded-full bg-slate-950 text-white font-bold text-[14px] transition-all hover:bg-[#F5A800] hover:shadow-[0_0_30px_rgba(245,168,0,0.15)]"
+              className="group btn-dark text-[14px] px-8 py-4"
             >
-              Need a custom solution? Let's talk
-              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              <span className="relative z-10">Need a custom solution? Let's talk</span>
+              <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
             </Link>
           </motion.div>
         </div>
@@ -818,16 +800,16 @@ export default function Services() {
             >
               <Link
                 to="/contact"
-                className="group inline-flex items-center gap-2 px-10 py-4 rounded-full bg-slate-950 text-white font-bold text-[15px] transition-all hover:bg-[#F5A800] hover:shadow-[0_0_30px_rgba(245,168,0,0.2)]"
+                className="group btn-gold text-[15px] px-10 py-4"
               >
-                Start a Project
-                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                <span className="relative z-10">Start a Project</span>
+                <ArrowRight size={18} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
               </Link>
               <Link
                 to="/company"
-                className="inline-flex items-center gap-2 px-10 py-4 rounded-full bg-white border border-slate-200 text-slate-800 font-bold text-[15px] transition-all hover:border-[#F5A800]/40 hover:text-[#F5A800]"
+                className="group btn-outline text-[15px] px-10 py-4"
               >
-                Learn About Us
+                <span>Learn About Us</span>
               </Link>
             </motion.div>
           </motion.div>

@@ -140,7 +140,7 @@ export default function NetworkInfraSection() {
  </motion.div>
 
  <motion.div variants={revealUp}>
- <Link to="/services/networking" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-slate-950 text-white font-medium text-[14px] transition-all hover:bg-slate-800">
+ <Link to="/services/networking" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-slate-950 text-white font-medium text-[14px] shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition-all duration-300 hover:bg-slate-800 hover:shadow-[0_8px_30px_rgba(245,168,0,0.2)] hover:-translate-y-0.5">
  View Infrastructure Solutions
  <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
  </Link>

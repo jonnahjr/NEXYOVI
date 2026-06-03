@@ -34,8 +34,8 @@ const Web3Service = () => {
  Harness the power of blockchain to build trustless, high-security ecosystems. Nexyovi leads the way in enterprise Web3 implementation.
  </p>
  <div className="flex justify-center gap-4">
- <Link to="/contact" className="px-12 py-5 bg-yellow-500 text-black font-black uppercase tracking-widest text-[13px] rounded-2xl hover:bg-yellow-400 transition-all ">Launch DApp</Link>
- <Link to="/contact" className="px-12 py-5 border-2 border-white/10 rounded-2xl hover:bg-white/5 transition-all text-white font-black uppercase tracking-widest text-[13px]">Audit Contract</Link>
+ <Link to="/contact" className="px-12 py-5 bg-yellow-500 text-black font-black uppercase tracking-widest text-[13px] rounded-2xl shadow-[0_4px_14px_rgba(234,179,8,0.25)] transition-all duration-300 hover:bg-yellow-400 hover:shadow-[0_8px_30px_rgba(234,179,8,0.35)] hover:-translate-y-0.5 ">Launch DApp</Link>
+ <Link to="/contact" className="px-12 py-5 border-2 border-white/10 rounded-2xl transition-all duration-300 hover:bg-white/5 hover:shadow-[0_8px_30px_rgba(245,168,0,0.08)] hover:-translate-y-0.5 text-white font-black uppercase tracking-widest text-[13px]">Audit Contract</Link>
  </div>
  </div>
  </section>

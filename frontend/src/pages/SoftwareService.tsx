@@ -37,7 +37,7 @@ export default function SoftwareService() {
  </motion.p>
 
  <motion.div variants={revealUp}>
- <Link to="/contact" className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white text-black font-black text-[12px] uppercase tracking-widest transition-all hover:scale-105 group">
+ <Link to="/contact" className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white text-black font-black text-[12px] uppercase tracking-widest shadow-[0_4px_14px_rgba(0,0,0,0.08)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(245,168,0,0.15)] group">
  Architect Your System
  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
  </Link>

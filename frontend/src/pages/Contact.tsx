@@ -105,18 +105,22 @@ export default function Contact() {
               <button
                 type="button"
                 onClick={() => openInquiry("project")}
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-slate-950 text-white font-bold text-[14px] transition-all hover:bg-[#F5A800] hover:scale-105 w-full sm:w-auto group"
+                className="group btn-dark w-full sm:w-auto text-[14px] px-8 py-4"
               >
-                Submit Project Brief
-                <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  Submit Project Brief
+                  <ArrowRight size={15} className="group-hover:translate-x-1.5 transition-transform duration-300" />
+                </span>
               </button>
               <button
                 type="button"
                 onClick={() => openInquiry("consultation")}
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white border border-slate-200 text-slate-700 font-bold text-[14px] transition-all hover:border-[#F5A800] hover:text-[#F5A800] w-full sm:w-auto group"
+                className="group btn-outline w-full sm:w-auto text-[14px] px-8 py-4 bg-white/50 backdrop-blur-sm"
               >
-                Book Strategy Call
-                <CalendarCheck size={15} className="text-[#F5A800] transition-transform group-hover:scale-110" />
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  Book Strategy Call
+                  <CalendarCheck size={15} className="text-[#F5A800] group-hover:scale-110 transition-transform duration-300" />
+                </span>
               </button>
             </motion.div>
           </motion.div>
@@ -266,26 +270,27 @@ export default function Contact() {
  placeholder="Describe your technical requirements, goals, and constraints."
  />
  </div>
+            <motion.button
+              type="submit"
+              disabled={isSubmitting}
+              whileHover={{ y: isSubmitting ? 0 : -2 }}
+              whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+              className="group btn-gold w-full h-14 flex items-center justify-center"
+            >
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                {isSubmitting ? (
+                  <Loader2 size={18} className="animate-spin" />
+                ) : isSuccess ? (
+                  <Check size={18} />
+                ) : (
+                  <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                )}
+                <span>
+                  {isSubmitting ? 'Encrypting & Transmitting...' : isSuccess ? 'Transmission Confirmed' : 'Transmit Brief'}
+                </span>
+              </span>
+            </motion.button>
  </div>
-
- <motion.button
- type="submit"
- disabled={isSubmitting}
- whileHover={{ y: isSubmitting ? 0 : -2 }}
- whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
- className="w-full btn-primary h-14"
- >
- {isSubmitting ? (
- <Loader2 size={18} className="animate-spin" />
- ) : isSuccess ? (
- <Check size={18} />
- ) : (
- <Send size={18} />
- )}
- <span>
- {isSubmitting ? 'Encrypting & Transmitting...' : isSuccess ? 'Transmission Confirmed' : 'Transmit Brief'}
- </span>
- </motion.button>
  </form>
  </motion.div>
 

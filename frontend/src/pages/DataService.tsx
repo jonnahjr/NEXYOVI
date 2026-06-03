@@ -42,10 +42,10 @@ export default function DataService() {
  </motion.p>
 
  <motion.div variants={revealUp}>
- <Link to="/contact" className="btn-primary group !bg-[#10b981]/20 !border-[#10b981]/40 hover:!bg-[#10b981]/30 !text-white">
- Build Data Systems
- <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
- </Link>
+              <Link to="/contact" className="group btn-dark text-[14px] px-8 py-4">
+                <span className="relative z-10">Leverage Your Data</span>
+                <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1 transition-transform" />
+              </Link>
  </motion.div>
  </motion.div>
  </div>

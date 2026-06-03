@@ -162,14 +162,14 @@ export default function About() {
  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
  <Link
  to="/careers"
- className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#F5A800] text-white font-black uppercase tracking-[0.18em] text-sm hover:bg-[#1d4ed8] transition-all"
+ className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#F5A800] text-white font-black uppercase tracking-[0.18em] text-sm shadow-[0_4px_14px_rgba(245,168,0,0.25)] transition-all duration-300 hover:bg-[#1d4ed8] hover:shadow-[0_8px_30px_rgba(245,168,0,0.35)] hover:-translate-y-0.5"
  >
  Explore All Roles
  <ArrowRight size={18} />
  </Link>
  <a
  href={`mailto:${settings.email}`}
- className="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-white/[0.08] text-white font-bold uppercase tracking-[0.18em] text-sm hover:bg-white/[0.05] transition-all"
+ className="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-white/[0.08] text-white font-bold uppercase tracking-[0.18em] text-sm transition-all duration-300 hover:bg-white/[0.05] hover:shadow-[0_8px_30px_rgba(245,168,0,0.08)] hover:-translate-y-0.5"
  >
  Contact Recruiting
  </a>

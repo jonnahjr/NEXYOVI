@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Globe, MapPin, Phone } from 'lucide-react';
+import { Globe, MapPin } from 'lucide-react';
 import { cardReveal, fadeUp, staggerContainer, viewport } from '../lib/animations';
 
 const hubs = [
@@ -8,7 +8,7 @@ const hubs = [
  country: 'Ethiopia',
  role: 'Main Headquarters',
  addr: 'Bole District, Ethiopia',
- phone: '+251 911 000 000',
+
  timezone: 'EAT — UTC+3',
  accent: '#F5A800',
  number: '01',
@@ -83,7 +83,6 @@ const CompanyHubs = () => {
  <div className="space-y-3 relative z-10">
  {[
  { icon: MapPin, value: hub.addr },
- { icon: Phone, value: hub.phone },
  { icon: Globe, value: hub.timezone }].map(({ icon: Icon, value }) => (
  <div key={value} className="flex items-center gap-3 text-sm text-[#7a7a7a]">
  <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 bg-white/5 border border-white/10">

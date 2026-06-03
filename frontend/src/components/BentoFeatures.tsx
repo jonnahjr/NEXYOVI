@@ -17,7 +17,7 @@ const BentoFeatures = () => {
  Engineering <br/> <span className="text-white/40 italic">at scale.</span>
  </h2>
  <p className="text-[#a1a1a6] text-xl max-w-xl leading-relaxed">
- We build systems that handle millions of requests while maintaining sub-millisecond latency. Our architecture is battle-tested in global markets.
+ We build high-throughput systems that maintain sub-millisecond latency. Our architecture is battle-tested in global markets.
  </p>
  </motion.div>
  </div>

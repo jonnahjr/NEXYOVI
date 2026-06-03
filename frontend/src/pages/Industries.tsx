@@ -8,6 +8,7 @@ import {
   Layers, Network, ChevronRight, Clock, MapPin
 } from 'lucide-react';
 import { EASE_EXPO } from '../lib/animations';
+import TextReveal from '../components/TextReveal';
 
 // ── Data ──────────────────────────────────────────────────────
 const industries = [
@@ -98,22 +99,7 @@ const techCapabilities = [
   'Cybersecurity', 'DevOps & SRE', 'Mobile Applications', 'Enterprise Integrations', 'Automation'
 ];
 
-function TextReveal({ children, className, delay = 0 }: {
-  children: React.ReactNode; className?: string; delay?: number;
-}) {
-  return (
-    <div className={`overflow-hidden ${className || ''}`}>
-      <motion.div
-        initial={{ y: '100%', clipPath: 'inset(0 0 100% 0)' }}
-        whileInView={{ y: 0, clipPath: 'inset(0 0 0% 0)' }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.9, delay, ease: EASE_EXPO }}
-      >
-        {children}
-      </motion.div>
-    </div>
-  );
-}
+
 
 function MouseGlow() {
   const [pos, setPos] = useState({ x: -200, y: -200 });
@@ -222,18 +208,17 @@ export default function Industries() {
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.6, ease: EASE_EXPO }}
             className="flex flex-wrap items-center justify-center gap-4"
           >
-            <a href="#industries-overview" className="inline-flex items-center gap-2 px-10 py-5 rounded-full bg-white text-black font-bold text-[15px] transition-all hover:scale-105 hover:bg-[#FFD166] hover:shadow-[0_0_40px_rgba(245,168,0,0.2)]">
-              Explore Industries
-              <ArrowRight size={16} />
+            <a href="#industries-overview" className="group btn-gold text-[15px] px-10 py-5">
+              <span className="relative z-10">Explore Industries</span>
+              <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1 transition-transform" />
             </a>
-            <Link to="/contact" className="inline-flex items-center gap-2 px-10 py-5 rounded-full bg-white/5 border border-white/10 text-white font-bold text-[15px] transition-all hover:bg-white/10 hover:border-white/20">
-              Start a Project
+            <Link to="/contact" className="group btn-ghost text-[15px] px-10 py-5">
+              <span className="relative z-10">Start a Project</span>
             </Link>
           </motion.div>
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5, duration: 1 }}
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-            <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/25">Scroll to explore</span>
+            className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
             <div className="w-px h-10 bg-gradient-to-b from-white/25 to-transparent" />
           </motion.div>
         </motion.div>
@@ -691,7 +676,11 @@ export default function Industries() {
                     <Icon size={26} style={{ color: p.accent }} />
                   </div>
                   <h3 className="text-xl font-black text-slate-950 tracking-tight mb-4 group-hover:text-[#F5A800] transition-colors duration-300">{p.title}</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed font-medium">{p.desc}</p>
+                  <p className="text-slate-500 text-sm leading-relaxed font-medium mb-8">{p.desc}</p>
+                  <Link to="/contact" className="group inline-flex items-center gap-2 text-[#F5A800] font-bold text-sm tracking-wide">
+                    Start Project
+                    <ArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform duration-300" />
+                  </Link>
                 </motion.div>
               );
             })}
@@ -731,11 +720,11 @@ export default function Industries() {
               transition={{ delay: 0.25, duration: 0.6, ease: EASE_EXPO }}
               className="flex flex-wrap items-center justify-center gap-4"
             >
-              <Link to="/contact" className="group inline-flex items-center gap-2 px-10 py-5 rounded-full bg-slate-950 text-white font-bold text-[15px] transition-all hover:scale-105 hover:bg-[#F5A800] hover:shadow-[0_0_30px_rgba(245,168,0,0.2)]">
+              <Link to="/contact" className="group inline-flex items-center gap-2 px-10 py-5 rounded-full bg-slate-950 text-white font-bold text-[15px] shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5 hover:bg-[#F5A800] hover:shadow-[0_8px_30px_rgba(245,168,0,0.25)]">
                 Start a Project
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link to="/contact" className="inline-flex items-center gap-2 px-10 py-5 rounded-full bg-white border border-slate-200 text-slate-800 font-bold text-[15px] transition-all hover:border-[#F5A800]/40 hover:text-[#F5A800]">
+              <Link to="/contact" className="inline-flex items-center gap-2 px-10 py-5 rounded-full bg-white border border-slate-200 text-slate-800 font-bold text-[15px] shadow-[0_4px_14px_rgba(0,0,0,0.04)] transition-all duration-300 hover:border-[#F5A800]/40 hover:text-[#F5A800] hover:shadow-[0_8px_30px_rgba(245,168,0,0.08)] hover:-translate-y-0.5">
                 Schedule a Strategy Session
               </Link>
             </motion.div>

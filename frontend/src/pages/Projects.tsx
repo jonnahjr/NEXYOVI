@@ -20,6 +20,7 @@ import {
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { EASE_EXPO, EASE_CINEMA, staggerContainer, viewport } from '../lib/animations';
+import TextReveal from '../components/TextReveal';
 
 import market1 from '../assets/market/1.png';
 import market2 from '../assets/market/2.png';
@@ -101,21 +102,7 @@ const RingGauge = ({ value, label, color, max = 100, size = 80 }: { value: numbe
   );
 };
 
-// ── TextReveal ────────────────────────────────────────────────
-function TextReveal({ children, className, delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
-  return (
-    <div className={`overflow-hidden ${className || ''}`}>
-      <motion.div
-        initial={{ y: '100%', clipPath: 'inset(0 0 100% 0)' }}
-        whileInView={{ y: 0, clipPath: 'inset(0 0 0% 0)' }}
-        viewport={viewport}
-        transition={{ duration: 0.9, delay, ease: EASE_CINEMA }}
-      >
-        {children}
-      </motion.div>
-    </div>
-  );
-}
+
 
 // ── Types ─────────────────────────────────────────────────────
 type Category = 'All' | 'Software' | 'AI Systems' | 'Infrastructure' | 'Data Systems' | 'Security';
@@ -652,13 +639,13 @@ export default function Projects() {
             transition={{ delay: 0.5, duration: 0.6, ease: EASE_EXPO }}
             className="flex flex-wrap items-center justify-center gap-4 mb-20"
           >
-            <Link to="/contact" className="group relative inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-black font-bold text-[14px] transition-all hover:scale-105">
-              Start a Project
-              <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            <Link to="/contact" className="group btn-gold text-[14px] px-8 py-4">
+              <span className="relative z-10">Start a Project</span>
+              <ChevronRight size={14} className="relative z-10 group-hover:translate-x-1 transition-transform" />
             </Link>
-            <Link to={caseStudyLink} className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white font-bold text-[14px] transition-all hover:bg-white/10 hover:border-white/20">
-              Case Studies
-              <ArrowUpRight size={14} />
+            <Link to={caseStudyLink} className="group btn-ghost text-[14px] px-8 py-4">
+              <span className="relative z-10">Case Studies</span>
+              <ArrowUpRight size={14} className="relative z-10" />
             </Link>
           </motion.div>
 
@@ -706,9 +693,8 @@ export default function Projects() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         >
-          <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/25">Scroll to explore</span>
           <div className="w-px h-10 bg-gradient-to-b from-white/25 to-transparent" />
         </motion.div>
       </section>
@@ -829,11 +815,12 @@ export default function Projects() {
                       </div>
 
                       <div className="flex items-center gap-4">
-                        <Link to="/contact" className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#F5A800] text-black font-bold text-[13px] transition-all hover:bg-white hover:scale-105">
-                          Start Similar Project <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        <Link to="/contact" className="group btn-gold text-[13px] px-6 py-3">
+                          <span className="relative z-10">Start Similar Project</span>
+                          <ArrowUpRight size={14} className="relative z-10 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                         </Link>
-                        <Link to={caseStudyLink} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 border border-white/10 text-white/70 font-bold text-[13px] transition-all hover:bg-white/10 hover:border-white/20 hover:text-white">
-                          See Case Study
+                        <Link to={caseStudyLink} className="group btn-ghost text-[13px] px-6 py-3">
+                          <span className="relative z-10">See Case Study</span>
                         </Link>
                       </div>
                     </motion.div>
@@ -1461,11 +1448,12 @@ export default function Projects() {
               transition={{ delay: 0.25, duration: 0.6, ease: EASE_EXPO }}
               className="flex flex-wrap items-center justify-center gap-4"
             >
-              <Link to="/contact" className="group relative inline-flex items-center gap-2 px-8 py-4 rounded-full bg-slate-950 text-white font-bold text-[14px] transition-all hover:scale-105 hover:bg-[#F5A800]">
-                Start a Project <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              <Link to="/contact" className="group btn-dark text-[14px] px-8 py-4">
+                <span className="relative z-10">Start a Project</span>
+                <ChevronRight size={14} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
               </Link>
-              <Link to="/services" className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-slate-100 border border-slate-200 text-slate-700 font-bold text-[14px] transition-all hover:bg-slate-200">
-                Explore Services <ArrowUpRight size={14} />
+              <Link to="/services" className="group btn-outline text-[14px] px-8 py-4 bg-white/50 backdrop-blur-sm">
+                <span>Explore Services</span>
               </Link>
             </motion.div>
           </motion.div>

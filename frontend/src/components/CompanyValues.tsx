@@ -141,7 +141,7 @@ const CompanyValues = () => {
  viewport={viewport}
  className="flex justify-center"
  >
- <Link to="/company" className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-slate-950 text-white font-bold text-[12px] uppercase tracking-widest hover:bg-slate-800 transition-all">
+ <Link to="/company" className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-slate-950 text-white font-bold text-[12px] uppercase tracking-widest shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition-all duration-300 hover:bg-slate-800 hover:shadow-[0_8px_30px_rgba(245,168,0,0.15)] hover:-translate-y-0.5">
  Learn more about Nexyovi
  <span className="text-white/80">→</span>
  </Link>

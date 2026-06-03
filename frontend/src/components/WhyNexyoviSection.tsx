@@ -1,27 +1,8 @@
 import { motion, useMotionValueEvent, useScroll, useSpring } from 'framer-motion';
+import { ChevronRight } from 'lucide-react';
 import { useLayoutEffect, useRef, useState } from 'react';
 
 const cards = [
-  {
-    title: 'Business-Focused Development',
-    desc: 'Every project starts with business goals, not technology trends.',
-    accent: '#F5A800',
-  },
-  {
-    title: 'Built For Real Usage',
-    desc: 'Production-ready software designed for real customers and daily operations.',
-    accent: '#8b5cf6',
-  },
-  {
-    title: 'AI With Practical Impact',
-    desc: 'Automation and AI solutions that reduce workload and improve efficiency.',
-    accent: '#10b981',
-  },
-  {
-    title: 'Enterprise-Grade Security',
-    desc: 'Robust architecture with military-grade encryption and compliance standards.',
-    accent: '#ef4444',
-  },
   {
     title: 'Scalable Cloud Infrastructure',
     desc: 'Cloud-native solutions designed to handle millions of users seamlessly as you grow.',
@@ -44,11 +25,11 @@ function computeFocus(distance: number, range: number) {
 }
 
 function computeOpacity(focus: number) {
-  return 0.32 + focus * 0.68;
+  return 1;
 }
 
 function computeScale(focus: number) {
-  return 0.8 + focus * 0.3;
+  return 1;
 }
 
 export default function WhyNexyoviSection() {
@@ -57,10 +38,10 @@ export default function WhyNexyoviSection() {
   const cardsContainerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [scrollMetrics, setScrollMetrics] = useState({
-    viewportHeight: 620,
+    viewportHeight: 430,
     startTranslate: 0,
-    endTranslate: -2040,
-    scrollDistance: 2040,
+    endTranslate: -1320,
+    scrollDistance: 1320,
   });
 
   const { scrollYProgress } = useScroll({
@@ -141,65 +122,81 @@ export default function WhyNexyoviSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[#f4f4f5] border-t border-slate-200"
+      className="relative bg-white section-divider-light"
       style={{ height: `${Math.ceil(scrollMetrics.viewportHeight + scrollMetrics.scrollDistance)}px` }}
     >
-      <div className="absolute inset-0 z-0 opacity-[0.03]" style={{
-        backgroundImage: 'radial-gradient(circle, #000 0.5px, transparent 0.5px)',
-        backgroundSize: '28px 28px',
-      }} />
+      <div className="absolute inset-0 z-0 bg-gradient-to-br from-slate-50 via-white to-slate-50/40" />
 
-      <div className="sticky top-0 h-screen overflow-hidden">
+      <div className="sticky top-0 h-[76vh] min-h-[620px] overflow-hidden">
         <div className="container max-w-7xl mx-auto relative z-10 px-6 h-full flex items-center">
-          <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-12 lg:gap-20 items-center w-full min-h-0">
+          <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-8 lg:gap-12 items-center w-full min-h-0">
 
-            {/* Left: Large Title */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="relative w-full"
-            >
-              <div className="lg:max-w-xl">
-                <h2 className="text-5xl md:text-7xl lg:text-8xl font-black text-slate-950 tracking-[-0.04em] leading-[0.9]">
-                  Why Businesses
-                  <br />
-                  Work With
-                  <br />
-                  <span className="text-[#F5A800]">Nexyovi</span>
-                </h2>
-                <p className="mt-8 max-w-lg text-lg md:text-xl leading-relaxed text-slate-600 font-medium">
-                  Practical delivery, secure systems, and scalable platforms built for real business growth.
-                </p>
-              </div>
-            </motion.div>
+            {/* Left: Large Title + Arrow */}
+            <div className="flex flex-col items-center lg:flex-row gap-4">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="relative w-full"
+              >
+                <div className="lg:max-w-md">
+                  <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.94]">
+                    <span className="text-[#F5A800]">Nexyovi</span>
+                  </h2>
+                </div>
+              </motion.div>
+
+              {/* Animated Arrow */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                animate={{
+                  x: [0, 15, 0],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.2,
+                }}
+                className="hidden lg:block flex-shrink-0"
+              >
+                <ChevronRight
+                  size={64}
+                  strokeWidth={3}
+                  className="text-[#F5A800] animate-pulse"
+                />
+              </motion.div>
+            </div>
 
             {/* Right: Cards container — slides up */}
-            <div ref={cardsViewportRef} className="relative h-[560px] md:h-[620px] overflow-hidden px-5 py-10">
-              <div ref={cardsContainerRef} className="absolute inset-x-5 top-10 space-y-6">
+            <div ref={cardsViewportRef} className="relative h-[360px] md:h-[430px] overflow-hidden px-4 py-4">
+              <div ref={cardsContainerRef} className="absolute inset-x-4 top-4 space-y-3">
                 {cards.map((card, i) => {
                   return (
                     <div
                       key={card.title}
                       ref={(el) => { cardRefs.current[i] = el; }}
-                      className="group relative min-h-[220px] origin-center overflow-hidden rounded-[40px] border border-slate-700 bg-slate-900 p-8 md:p-10 transition-all duration-500 hover:border-slate-500 will-change-transform"
+                      className="group relative min-h-[150px] origin-center overflow-hidden rounded-[28px] border border-slate-200 bg-white p-5 md:p-6 transition-all duration-500 hover:border-[#F5A800]/40"
                     >
-                      <div className="relative z-10 space-y-5">
+                      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                      <div className="relative z-10 space-y-3">
                         <div>
                           <h3
-                            className="text-[28px] md:text-[32px] font-black tracking-[-0.02em] leading-[1.1] mb-4 text-white"
+                            className="text-[18px] md:text-[20px] font-black tracking-[-0.02em] leading-[1.15] mb-2 text-slate-900"
                           >
                             {card.title}
                           </h3>
-                          <p className="text-white/80 text-[16px] leading-relaxed max-w-lg font-medium">
+                          <p className="text-slate-600 text-[14px] md:text-[15px] leading-relaxed max-w-md font-medium">
                             {card.desc}
                           </p>
                         </div>
 
-                        <div className="flex items-center gap-3 pt-2">
-                          <div className="h-[2px] flex-1 max-w-[60px] rounded-full transition-all duration-500 group-hover:max-w-[100px]" style={{ backgroundColor: card.accent }} />
-                          <span className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-white/75">
+                        <div className="flex items-center gap-2 pt-1">
+                          <div className="h-[2px] flex-1 max-w-[44px] rounded-full transition-all duration-500 group-hover:max-w-[80px]" style={{ backgroundColor: card.accent }} />
+                          <span className="text-[9px] font-bold uppercase tracking-[0.18em] opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-slate-700">
                             Learn more
                           </span>
                         </div>
@@ -212,7 +209,7 @@ export default function WhyNexyoviSection() {
           </div>
 
           {/* Bottom fade */}
-          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#f4f4f5] to-transparent pointer-events-none z-20" />
+          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white to-transparent pointer-events-none z-20" />
         </div>
       </div>
     </section>
