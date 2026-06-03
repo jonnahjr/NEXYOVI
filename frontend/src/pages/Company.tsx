@@ -6,7 +6,6 @@ import {
   ChevronDown,
   Cloud,
   Code2,
-  Compass,
   Cpu,
   Globe,
   Heart,
@@ -343,164 +342,93 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          5. MISSION & VISION — Dark · Two-Pillar Cards
+          5. MISSION & VISION — Light · Clean Editorial
          ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
-        {/* Atmosphere */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#F5A800]/8 rounded-full blur-[140px]" />
-          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[#10b981]/6 rounded-full blur-[120px]" />
-        </div>
-
+      <section className="relative py-28 md:py-36 bg-white section-divider-light overflow-hidden">
         <div className="container max-w-5xl mx-auto px-6 relative z-10">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: EASE_EXPO }}
+            transition={{ duration: 0.5, ease: EASE_EXPO }}
             className="text-center mb-16"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] mb-6">
-              <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/60">Why We Exist</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 border border-slate-200 shadow-sm mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800]" />
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-600">Why We Exist</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-black text-white tracking-[-0.04em] leading-[0.95]">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95]">
               Mission &{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#10b981] to-[#34d399]">Vision.</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Vision.</span>
             </h2>
           </motion.div>
 
-          {/* Two cards */}
+          {/* Content — removed outer box wrapper */}
           <motion.div
-            initial="hidden"
-            whileInView="visible"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            variants={staggerContainer}
-            className="grid md:grid-cols-2 gap-6"
+            transition={{ duration: 0.6, delay: 0.1, ease: EASE_EXPO }}
+            className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-100"
           >
-            {/* ── Mission Card ── */}
-            <motion.div
-              variants={fadeUp}
-              className="group relative rounded-[28px] bg-white/[0.03] border border-white/[0.08] overflow-hidden hover:border-[#F5A800]/30 transition-all duration-500"
-            >
-              {/* Top gradient accent */}
-              <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-transparent opacity-80" />
+            {/* ── Mission ── */}
+            <div className="p-10 md:p-12 lg:p-14">
+              <h3 className="text-2xl md:text-3xl font-black text-slate-950 tracking-[-0.03em] leading-[1.1] mb-5">
+                Building the future of digital infrastructure.
+              </h3>
 
-              {/* Decorative background icon */}
-              <div className="absolute -top-8 -right-8 opacity-[0.04] group-hover:opacity-[0.06] transition-opacity duration-700">
-                <Compass size={260} className="text-white" />
-              </div>
+              <p className="text-slate-600 text-base leading-relaxed">
+                To build software systems, AI platforms, and cloud infrastructure that power modern organizations — delivering enterprise-grade engineering that moves businesses forward across Africa and beyond.
+              </p>
+            </div>
 
-              {/* Content */}
-              <div className="relative z-10 p-10 md:p-12">
-                {/* Icon */}
-                <div className="w-14 h-14 rounded-2xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center mb-6 group-hover:bg-[#F5A800] group-hover:border-[#F5A800] transition-all duration-500">
-                  <Compass size={28} className="text-[#F5A800] group-hover:text-white transition-colors duration-500" />
-                </div>
+            {/* ── Vision ── */}
+            <div className="p-10 md:p-12 lg:p-14">
+              <h3 className="text-2xl md:text-3xl font-black text-slate-950 tracking-[-0.03em] leading-[1.1] mb-5">
+                Africa's most trusted engineering partner.
+              </h3>
 
-                {/* Label + title */}
-                <div className="flex items-center gap-3 mb-5">
-                  <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#F5A800]">01 · Mission</span>
-                  <span className="h-px flex-1 bg-gradient-to-r from-[#F5A800]/30 to-transparent" />
-                </div>
-
-                <h3 className="text-3xl md:text-4xl font-black text-white tracking-[-0.03em] leading-[0.95] mb-5">
-                  Building the{' '}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">future</span>
-                  {' '}of digital infrastructure.
-                </h3>
-
-                <p className="text-white/50 text-base md:text-lg leading-relaxed font-medium">
-                  To build software systems, AI platforms, and cloud infrastructure that power modern organizations — delivering enterprise-grade engineering that moves businesses forward across Africa and beyond.
-                </p>
-
-                {/* Bottom accent line */}
-                <div className="mt-8 h-px w-12 bg-gradient-to-r from-[#F5A800] to-transparent" />
-              </div>
-            </motion.div>
-
-            {/* ── Vision Card ── */}
-            <motion.div
-              variants={fadeUp}
-              className="group relative rounded-[28px] bg-white/[0.03] border border-white/[0.08] overflow-hidden hover:border-[#10b981]/30 transition-all duration-500"
-            >
-              {/* Top gradient accent */}
-              <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#10b981] via-[#34d399] to-transparent opacity-80" />
-
-              {/* Decorative background icon */}
-              <div className="absolute -top-8 -right-8 opacity-[0.04] group-hover:opacity-[0.06] transition-opacity duration-700">
-                <Target size={260} className="text-white" />
-              </div>
-
-              {/* Content */}
-              <div className="relative z-10 p-10 md:p-12">
-                {/* Icon */}
-                <div className="w-14 h-14 rounded-2xl bg-[#10b981]/10 border border-[#10b981]/20 flex items-center justify-center mb-6 group-hover:bg-[#10b981] group-hover:border-[#10b981] transition-all duration-500">
-                  <Target size={28} className="text-[#10b981] group-hover:text-white transition-colors duration-500" />
-                </div>
-
-                {/* Label + title */}
-                <div className="flex items-center gap-3 mb-5">
-                  <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#10b981]">02 · Vision</span>
-                  <span className="h-px flex-1 bg-gradient-to-r from-[#10b981]/30 to-transparent" />
-                </div>
-
-                <h3 className="text-3xl md:text-4xl font-black text-white tracking-[-0.03em] leading-[0.95] mb-5">
-                  Africa's most{' '}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#10b981] to-[#34d399]">trusted</span>
-                  {' '}engineering partner.
-                </h3>
-
-                <p className="text-white/50 text-base md:text-lg leading-relaxed font-medium">
-                  To be Africa's most trusted engineering partner — known for shipping enterprise-grade systems that are secure, scalable, and built to last. No hype, just measurable results.
-                </p>
-
-                {/* Bottom accent line */}
-                <div className="mt-8 h-px w-12 bg-gradient-to-r from-[#10b981] to-transparent" />
-              </div>
-            </motion.div>
+              <p className="text-slate-600 text-base leading-relaxed">
+                To be Africa's most trusted engineering partner — known for shipping enterprise-grade systems that are secure, scalable, and built to last. No hype, just measurable results.
+              </p>
+            </div>
           </motion.div>
         </div>
       </section>
 
       {/* ═══════════════════════════════════════
-          6. CORE PRINCIPLES — Light Section
+          6. CORE PRINCIPLES — Dark · Capabilities Style
          ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-white section-divider-light overflow-hidden">
+      <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/3 w-[600px] h-[600px] bg-[#F5A800]/8 rounded-full blur-[140px]" />
+        </div>
         <div className="container max-w-6xl mx-auto px-6 relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-16">
             <motion.div variants={fadeUp}>
-              <SectionBadge label="Core Principles" />
+              <SectionBadge label="Core Principles" dark />
             </motion.div>
-            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-4">
+            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-4">
               Built on{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Principles.</span>
             </motion.h2>
-            <motion.p variants={fadeUp} className="text-slate-500 text-lg font-medium max-w-xl mx-auto">Uncompromising standards that guide our engineering and define every partnership.</motion.p>
+            <motion.p variants={fadeUp} className="text-white/50 text-lg font-medium max-w-xl mx-auto">Uncompromising standards that guide our engineering and define every partnership.</motion.p>
           </motion.div>
 
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {values.map((v, i) => {
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+            {values.map((v) => {
               const Icon = v.icon;
               return (
-                <motion.div key={v.title} variants={fadeUp} className="group relative rounded-[32px] border border-slate-200 bg-white p-10 overflow-hidden cursor-default hover:shadow-2xl hover:shadow-slate-200/50 hover:-translate-y-2 transition-all duration-500 hover:border-transparent">
-                  {/* Accent Background that fades in on hover */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500" style={{ backgroundColor: v.accent }} />
-                  
-                  {/* Subtle top gradient line */}
-                  <div className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-all duration-500" style={{ background: `linear-gradient(90deg, ${v.accent}, transparent)` }} />
-                  
-                  {/* Large background number */}
-                  <div className="absolute -bottom-6 -right-4 text-[120px] font-black leading-none opacity-[0.03] group-hover:opacity-[0.06] group-hover:-translate-x-2 group-hover:-translate-y-2 transition-all duration-500 select-none font-mono" style={{ color: v.accent }}>
-                    0{i + 1}
+                <motion.div
+                  key={v.title}
+                  variants={fadeUp}
+                  className="group bg-white/[0.03] rounded-[20px] border border-white/[0.08] p-6 md:p-8 text-center hover:border-[#F5A800]/30 transition-all duration-500"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center mx-auto mb-4 text-[#F5A800] group-hover:bg-[#F5A800] group-hover:text-white transition-all duration-300">
+                    <Icon size={22} />
                   </div>
-
-                  {/* Icon Container */}
-                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-8 shadow-sm transition-all duration-500 group-hover:scale-110 group-hover:rotate-3" style={{ backgroundColor: `${v.accent}12`, color: v.accent }}>
-                    <Icon size={28} className="transition-transform duration-500 group-hover:-rotate-6" />
-                  </div>
-
-                  <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tight group-hover:text-slate-950 transition-colors">{v.title}</h3>
-                  <p className="text-slate-500 text-base leading-relaxed font-medium relative z-10">{v.desc}</p>
+                  <h3 className="text-lg font-black text-white mb-2 tracking-tight">{v.title}</h3>
+                  <p className="text-white/40 text-[12px] leading-relaxed font-medium">{v.desc}</p>
                 </motion.div>
               );
             })}
@@ -509,7 +437,51 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          7. LEADERSHIP / TEAM — Light Section
+          7. OUR CAPABILITIES — Dark Section (trimmed)
+         ═══════════════════════════════════════ */}
+      <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/3 w-[600px] h-[600px] bg-[#F5A800]/8 rounded-full blur-[140px]" />
+        </div>
+        <div className="container max-w-5xl mx-auto px-6 relative z-10">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-16">
+            <motion.div variants={fadeUp}>
+              <SectionBadge label="Our Capabilities" dark />
+            </motion.div>
+            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-4">
+              Full-Spectrum{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Capabilities.</span>
+            </motion.h2>
+            <motion.p variants={fadeUp} className="text-white/50 text-lg font-medium max-w-xl mx-auto">End-to-end capabilities across the full technology stack — from code to infrastructure.</motion.p>
+          </motion.div>
+
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { title: 'Full-Stack Engineering', desc: 'Web, mobile, and backend systems engineered for scale, performance, and maintainability.', icon: Code2 },
+              { title: 'AI & Automation Expertise', desc: 'Custom LLM integrations, intelligent agents, and workflow automation for real business problems.', icon: Cpu },
+              { title: 'Cloud-Native Delivery', desc: 'Multi-cloud architecture, Kubernetes orchestration, and serverless deployments at global scale.', icon: Cloud },
+              { title: 'Enterprise Security Practices', desc: 'Zero-trust principles, automated security scanning, and compliance-aware engineering built into every delivery.', icon: Shield },
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={item.title}
+                  variants={fadeUp}
+                  className="group bg-white/[0.03] rounded-[20px] border border-white/[0.08] p-6 md:p-8 text-center hover:border-[#F5A800]/30 transition-all duration-500"
+                >
+                  <div className="w-11 h-11 rounded-xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center mx-auto mb-4 text-[#F5A800] group-hover:bg-[#F5A800] group-hover:text-white transition-all duration-300">
+                    <Icon size={20} />
+                  </div>
+                  <h3 className="text-lg font-black text-white mb-2 tracking-tight">{item.title}</h3>
+                  <p className="text-white/40 text-[12px] leading-relaxed font-medium">{item.desc}</p>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════
+          8. LEADERSHIP / TEAM — Light Section
          ═══════════════════════════════════════ */}
       <section className="relative py-28 md:py-36 bg-white section-divider-light overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
@@ -609,50 +581,6 @@ export default function Company() {
                 Supported by a distributed team of software engineers, AI specialists, designers, DevOps engineers, and infrastructure experts across multiple regions.
               </p>
             </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════
-          8. OUR CAPABILITIES — Dark Section (trimmed)
-         ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/3 w-[600px] h-[600px] bg-[#F5A800]/8 rounded-full blur-[140px]" />
-        </div>
-        <div className="container max-w-5xl mx-auto px-6 relative z-10">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-16">
-            <motion.div variants={fadeUp}>
-              <SectionBadge label="Our Capabilities" dark />
-            </motion.div>
-            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-4">
-              Full-Spectrum{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Capabilities.</span>
-            </motion.h2>
-            <motion.p variants={fadeUp} className="text-white/50 text-lg font-medium max-w-xl mx-auto">End-to-end capabilities across the full technology stack — from code to infrastructure.</motion.p>
-          </motion.div>
-
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { title: 'Full-Stack Engineering', desc: 'Web, mobile, and backend systems engineered for scale, performance, and maintainability.', icon: Code2 },
-              { title: 'AI & Automation Expertise', desc: 'Custom LLM integrations, intelligent agents, and workflow automation for real business problems.', icon: Cpu },
-              { title: 'Cloud-Native Delivery', desc: 'Multi-cloud architecture, Kubernetes orchestration, and serverless deployments at global scale.', icon: Cloud },
-              { title: 'Enterprise Security Practices', desc: 'Zero-trust principles, automated security scanning, and compliance-aware engineering built into every delivery.', icon: Shield },
-            ].map((item) => {
-              const Icon = item.icon;
-              return (
-                <motion.div
-                  key={item.title}
-                  variants={fadeUp}
-                  className="group bg-white/[0.03] rounded-[20px] border border-white/[0.08] p-6 md:p-8 text-center hover:border-[#F5A800]/30 transition-all duration-500"
-                >
-                  <div className="w-11 h-11 rounded-xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center mx-auto mb-4 text-[#F5A800] group-hover:bg-[#F5A800] group-hover:text-white transition-all duration-300">
-                    <Icon size={20} />
-                  </div>
-                  <h3 className="text-lg font-black text-white mb-2 tracking-tight">{item.title}</h3>
-                  <p className="text-white/40 text-[12px] leading-relaxed font-medium">{item.desc}</p>
-                </motion.div>
-              );
-            })}
           </motion.div>
         </div>
       </section>

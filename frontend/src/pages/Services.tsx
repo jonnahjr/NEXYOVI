@@ -86,15 +86,15 @@ const processSteps = [
   { step: '01', title: 'Discovery & Audit', desc: 'Deep-dive audit of your current infrastructure, workflows, and business goals. We identify quick wins and long-term strategic opportunities.', icon: Target },
   { step: '02', title: 'Architecture Design', desc: 'We design a tailored solution architecture — selecting the right stack, patterns, and deployment strategy for your specific requirements.', icon: Layers },
   { step: '03', title: 'Build & Deploy', desc: 'Agile development with continuous delivery. Your team shadows every sprint. Production deployment with zero-downtime cutover.', icon: Zap },
-  { step: '04', title: 'Monitor & Scale', desc: 'Post-launch observability, performance tuning, and iterative improvements. We stay until your team is fully self-sufficient.', icon: BarChart3 },
+  { step: '04', title: 'Monitor & Scale', desc: 'Post-launch observability, performance tuning, and iterative improvements. We build, transfer knowledge, and transition ownership with full documentation and training.', icon: BarChart3 },
 ];
 
 // ── Metrics ───────────────────────────────────────────────────
 const metrics = [
-  { value: 247, suffix: '', label: 'Active Monitoring & Support' },
-  { value: 6, suffix: '+', label: 'Core Service Verticals' },
-  { value: 15, suffix: '+', label: 'Technology Partners' },
-  { value: 4, suffix: '', label: 'Delivery Locations' },
+  { value: 247, suffix: '', label: 'System Monitoring & Support' },
+  { value: 6, suffix: '+', label: 'Core Engineering Disciplines' },
+  { value: 15, suffix: '+', label: 'Global Delivery Coverage' },
+  { value: 4, suffix: '', label: 'Production-Grade Systems' },
 ];
 
 // ── Differentiators ───────────────────────────────────────────
@@ -106,17 +106,17 @@ const differentiators = [
 
 // ── Testimonials ──────────────────────────────────────────────
 const testimonials = [
-  { quote: 'From siloed data to fraud prevention — they unified our pipelines and deployed real-time detection, reducing fraud by 82% within months.', name: 'Emily Carter', role: 'VP of Data Science', company: 'Enterprise Fintech' },
-  { quote: 'Moved from approved POC to production in 90 days. Built, deployed, and scaled with full MLOps — saving $10.7M in year one.', name: 'Sarah Chen', role: 'VP of Engineering', company: 'Enterprise SaaS' },
-  { quote: 'Accurate models are easy. They delivered compliant, explainable systems that actually run in production — with full governance and regulatory approval.', name: 'Arif Rahman', role: 'Head of Data & AI', company: 'HealthTech Leader' },
+  { quote: 'We unified our data pipelines and deployed real-time fraud detection, reducing fraud by 82% within months.', name: 'Emily Carter', role: 'VP of Data Science', company: 'Enterprise Fintech' },
+  { quote: 'Approved POC to production in 90 days. Built, deployed, and scaled with full MLOps — $10.7M saved in year one.', name: 'Sarah Chen', role: 'VP of Engineering', company: 'Enterprise SaaS' },
+  { quote: 'They delivered compliant, explainable systems that actually run in production — with full governance and regulatory approval.', name: 'Arif Rahman', role: 'Head of Data & AI', company: 'HealthTech Leader' },
 ];
 
 // ── Technology Ecosystem ──────────────────────────────────────
 const techEcosystem = [
-  { category: 'Frontend', icon: Monitor, items: ['React', 'Next.js', 'TypeScript', 'Vue.js'] },
-  { category: 'Backend', icon: Terminal, items: ['Node.js', 'Python', 'Go', 'Rust'] },
-  { category: 'Cloud & DevOps', icon: Cloud, items: ['AWS', 'Azure', 'GCP', 'Docker', 'Kubernetes', 'Terraform'] },
-  { category: 'AI & Data', icon: BrainCircuit, items: ['OpenAI', 'LangChain', 'RAG Systems', 'PostgreSQL', 'MongoDB', 'Redis'] },
+  { category: 'Frontend', icon: Monitor, items: ['React', 'Next.js', 'TypeScript'] },
+  { category: 'Backend', icon: Terminal, items: ['Node.js', 'Python', 'Go'] },
+  { category: 'Cloud & DevOps', icon: Cloud, items: ['AWS', 'Azure', 'Kubernetes'] },
+  { category: 'AI & Data', icon: BrainCircuit, items: ['OpenAI', 'LangChain', 'PostgreSQL'] },
 ];
 
 
@@ -195,7 +195,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
       className="group relative cursor-pointer"
     >
       <Link to={service.href} className="block h-full">
-        <div className="relative h-full p-8 rounded-[20px] bg-white border border-slate-200 transition-all duration-500 group-hover:border-[#F5A800]/40 group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.08),_0_0_40px_rgba(245,168,0,0.04)] overflow-hidden">
+        <div className="relative h-full p-8 rounded-[20px] bg-white/[0.03] border border-white/[0.08] transition-all duration-500 group-hover:border-[#F5A800]/40 group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.3),_0_0_40px_rgba(245,168,0,0.06)] overflow-hidden">
           {/* Hover radial glow */}
           <div
             className="absolute -top-24 -right-24 w-48 h-48 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
@@ -219,12 +219,12 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
           </div>
 
           {/* Title */}
-          <h3 className="relative text-xl font-bold text-slate-900 mb-3 tracking-tight group-hover:text-[#F5A800] transition-colors duration-300">
+          <h3 className="relative text-xl font-bold text-white mb-3 tracking-tight group-hover:text-[#F5A800] transition-colors duration-300">
             {service.title}
           </h3>
 
           {/* Description */}
-          <p className="relative text-slate-500 text-sm leading-relaxed mb-6 line-clamp-3">
+          <p className="relative text-white/50 text-sm leading-relaxed mb-6 line-clamp-3">
             {service.longDesc}
           </p>
 
@@ -233,7 +233,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
             {service.tags.slice(0, 3).map((tag) => (
               <span
                 key={tag}
-                className="text-[9px] font-bold uppercase tracking-[0.15em] px-3 py-1.5 rounded-full border border-slate-200 text-slate-400 bg-slate-50 group-hover:border-slate-300 group-hover:text-slate-600 transition-all duration-300"
+                className="text-[9px] font-bold uppercase tracking-[0.15em] px-3 py-1.5 rounded-full border border-white/[0.08] text-white/30 bg-white/[0.04] group-hover:border-white/[0.15] group-hover:text-white/60 transition-all duration-300"
               >
                 {tag}
               </span>
@@ -241,7 +241,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
           </div>
 
           {/* Bottom CTA */}
-          <div className="relative flex items-center gap-2 text-slate-300 group-hover:text-[#F5A800] transition-colors duration-300">
+          <div className="relative flex items-center gap-2 text-white/30 group-hover:text-[#F5A800] transition-colors duration-300">
             <span className="text-[11px] font-bold uppercase tracking-[0.15em]">View Details</span>
             <ArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform duration-300" />
           </div>
@@ -290,7 +290,7 @@ function ProcessStep({ step, title, desc, icon: Icon, index }: {
 }
 
 // ══════════════════════════════════════════════════════════════
-//  TECH STACK BADGE
+//  TECH STACK BADGE — compact
 // ══════════════════════════════════════════════════════════════
 function TechCategory({ category, icon: Icon, items }: {
   category: string; icon: React.ElementType; items: string[];
@@ -301,19 +301,19 @@ function TechCategory({ category, icon: Icon, items }: {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={viewport}
       transition={{ duration: 0.6, ease: EASE_EXPO }}
-      className="p-6 rounded-[20px] bg-white border border-slate-200 hover:border-[#F5A800]/30 transition-all duration-300 hover:shadow-[0_4px_20px_rgba(0,0,0,0.04)]"
+      className="p-4 rounded-[16px] bg-white/[0.03] border border-white/[0.08] hover:border-[#F5A800]/30 transition-all duration-300"
     >
-      <div className="flex items-center gap-3 mb-4">
-        <div className="w-10 h-10 rounded-[12px] bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center">
-          <Icon size={18} className="text-[#F5A800]" />
+      <div className="flex items-center gap-2.5 mb-3">
+        <div className="w-8 h-8 rounded-[10px] bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center shrink-0">
+          <Icon size={14} className="text-[#F5A800]" />
         </div>
-        <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider">{category}</h3>
+        <h3 className="text-[11px] font-bold text-white/70 uppercase tracking-wider">{category}</h3>
       </div>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-1.5">
         {items.map((item) => (
           <span
             key={item}
-            className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 text-[11px] font-bold hover:bg-[#F5A800]/5 hover:border-[#F5A800]/30 hover:text-[#F5A800] transition-all duration-200"
+            className="px-2 py-1 rounded-md bg-white/[0.04] border border-white/[0.08] text-white/40 text-[10px] font-bold hover:bg-[#F5A800]/10 hover:border-[#F5A800]/30 hover:text-[#F5A800] transition-all duration-200"
           >
             {item}
           </span>
@@ -455,10 +455,13 @@ export default function Services() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-          SERVICES GRID — light section
+          SERVICES GRID — dark section
           ══════════════════════════════════════════════════════ */}
-      <section id="services-grid" className="relative py-32 bg-slate-50">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-[#F5A800]/3 blur-[150px] rounded-full pointer-events-none" />
+      <section id="services-grid" className="relative py-32 bg-[#02040a] section-divider-dark overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/3 w-[700px] h-[500px] bg-[#F5A800]/8 rounded-full blur-[140px]" />
+          <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-[#8b5cf6]/5 rounded-full blur-[100px]" />
+        </div>
 
         <div className="container max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <motion.div
@@ -468,17 +471,18 @@ export default function Services() {
             transition={{ duration: 0.7, ease: EASE_EXPO }}
             className="max-w-2xl mb-16"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 backdrop-blur-md mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] backdrop-blur-md mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">What We Build</span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">What We Build</span>
             </div>
             <TextReveal>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-4">
-                Full-Spectrum Engineering.
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-4">
+                Full-Spectrum{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Engineering.</span>
               </h2>
             </TextReveal>
             <TextReveal delay={0.1}>
-              <p className="text-slate-500 text-lg leading-relaxed max-w-xl font-medium">
+              <p className="text-white/50 text-lg leading-relaxed max-w-xl font-medium">
                 From architecture to deployment to ongoing operations — every capability your organization needs to build, secure, and scale.
               </p>
             </TextReveal>
@@ -499,7 +503,7 @@ export default function Services() {
           >
             <Link
               to="/contact"
-              className="group btn-dark text-[14px] px-8 py-4"
+              className="group btn-gold text-[14px] px-8 py-4"
             >
               <span className="relative z-10">Need a custom solution? Let's talk</span>
               <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
@@ -547,10 +551,13 @@ export default function Services() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-          TECHNOLOGY ECOSYSTEM
+          TECHNOLOGY ECOSYSTEM — dark
           ══════════════════════════════════════════════════════ */}
-      <section className="relative py-32 bg-slate-50 border-t border-slate-200">
-        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-[#8b5cf6]/2 blur-[140px] rounded-full pointer-events-none" />
+      <section className="relative py-32 bg-[#02040a] section-divider-dark overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-[#8b5cf6]/8 rounded-full blur-[140px]" />
+          <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-[#F5A800]/6 rounded-full blur-[100px]" />
+        </div>
 
         <div className="container max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
           <motion.div
@@ -560,24 +567,24 @@ export default function Services() {
             transition={{ duration: 0.7, ease: EASE_EXPO }}
             className="max-w-2xl mb-16"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">Technology Ecosystem</span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">Technology Ecosystem</span>
             </div>
             <TextReveal>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-4">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-4">
                 Modern Stack.{' '}
                 <span className="text-[#F5A800]">Proven Tools.</span>
               </h2>
             </TextReveal>
             <TextReveal delay={0.1}>
-              <p className="text-slate-500 text-lg leading-relaxed max-w-xl font-medium">
+              <p className="text-white/50 text-lg leading-relaxed max-w-xl font-medium">
                 We select the right tools for each project — from battle-tested frameworks to cutting-edge platforms.
               </p>
             </TextReveal>
           </motion.div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
             {techEcosystem.map((cat) => (
               <TechCategory key={cat.category} {...cat} />
             ))}
@@ -624,10 +631,14 @@ export default function Services() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-          WHY NEXYOVI — Differentiators (slate-50 bg)
+          WHY NEXYOVI — Differentiators (dark)
           ══════════════════════════════════════════════════════ */}
-      <section className="relative py-32 bg-slate-50 border-t border-slate-200">
-        <div className="container max-w-6xl mx-auto px-6 lg:px-8">
+      <section className="relative py-32 bg-[#02040a] section-divider-dark overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/3 w-[500px] h-[500px] bg-[#F5A800]/8 rounded-full blur-[120px]" />
+        </div>
+
+        <div className="container max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -635,17 +646,18 @@ export default function Services() {
             transition={{ duration: 0.7, ease: EASE_EXPO }}
             className="max-w-2xl mb-16"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">Why Choose Us</span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">Why Choose Us</span>
             </div>
             <TextReveal>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-4">
-                Built Different.
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-4">
+                Built{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Different.</span>
               </h2>
             </TextReveal>
             <TextReveal delay={0.1}>
-              <p className="text-slate-500 text-lg leading-relaxed max-w-xl font-medium">
+              <p className="text-white/50 text-lg leading-relaxed max-w-xl font-medium">
                 Not a consultancy. Not an agency. An engineering partner that ships.
               </p>
             </TextReveal>
@@ -662,13 +674,13 @@ export default function Services() {
                   viewport={viewport}
                   transition={{ delay: i * 0.12, duration: 0.7, ease: EASE_EXPO }}
                   whileHover={{ y: -4, transition: { duration: 0.3 } }}
-                  className="group p-8 rounded-[20px] bg-white border border-slate-200 hover:border-[#F5A800]/30 hover:shadow-[0_10px_40px_rgba(0,0,0,0.04)] transition-all duration-500"
+                  className="group p-8 rounded-[20px] bg-white/[0.03] border border-white/[0.08] hover:border-[#F5A800]/30 transition-all duration-500"
                 >
-                  <div className="w-12 h-12 rounded-[14px] bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center mb-5 group-hover:bg-[#F5A800]/20 group-hover:scale-110 transition-all duration-500">
-                    <Icon size={22} className="text-[#F5A800]" />
+                  <div className="w-12 h-12 rounded-[14px] bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center mb-5 group-hover:bg-[#F5A800] group-hover:text-white group-hover:scale-110 transition-all duration-500">
+                    <Icon size={22} className="text-[#F5A800] group-hover:text-white transition-colors" />
                   </div>
-                  <h3 className="text-lg font-bold text-slate-900 mb-3 group-hover:text-[#F5A800] transition-colors duration-300">{item.title}</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
+                  <h3 className="text-lg font-bold text-white mb-3 group-hover:text-[#F5A800] transition-colors duration-300">{item.title}</h3>
+                  <p className="text-white/50 text-sm leading-relaxed">{item.desc}</p>
                 </motion.div>
               );
             })}
@@ -741,11 +753,12 @@ export default function Services() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-          CTA SECTION (slate-50 bg)
+          CTA SECTION — dark
           ══════════════════════════════════════════════════════ */}
-      <section className="relative py-32 bg-slate-50 border-t border-slate-200">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#F5A800]/3 via-transparent to-transparent pointer-events-none" />
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-[#F5A800]/3 blur-[100px] rounded-full pointer-events-none" />
+      <section className="relative py-32 bg-[#02040a] section-divider-dark overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-[#F5A800]/8 rounded-full blur-[140px]" />
+        </div>
 
         <div className="container max-w-4xl mx-auto px-6 text-center relative z-10">
           <motion.div
@@ -754,20 +767,20 @@ export default function Services() {
             viewport={viewport}
             transition={{ duration: 0.7, ease: EASE_EXPO }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 mb-8">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-[#F5A800]/20 backdrop-blur-md mb-8">
               <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse shadow-[0_0_8px_rgba(245,168,0,0.6)]" />
               <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#F5A800]">Ready for Real Results</span>
             </div>
 
             <TextReveal>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-6">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-6">
                 Ready to Build Something{' '}
                 <span className="text-[#F5A800]">Extraordinary?</span>
               </h2>
             </TextReveal>
 
             <TextReveal delay={0.1}>
-              <p className="text-slate-500 text-lg leading-relaxed max-w-xl mx-auto mb-8 font-medium">
+              <p className="text-white/50 text-lg leading-relaxed max-w-xl mx-auto mb-8 font-medium">
                 Tell us about your project. We'll put together a free strategy session with a senior architect — no pitches, just honest guidance.
               </p>
             </TextReveal>
@@ -786,7 +799,7 @@ export default function Services() {
               ].map((benefit, i) => (
                 <div key={i} className="flex items-center gap-2">
                   <CheckCircle size={16} className="text-[#F5A800] shrink-0" />
-                  <span className="text-slate-500 text-sm font-medium">{benefit}</span>
+                  <span className="text-white/50 text-sm font-medium">{benefit}</span>
                 </div>
               ))}
             </motion.div>
@@ -807,9 +820,9 @@ export default function Services() {
               </Link>
               <Link
                 to="/company"
-                className="group btn-outline text-[15px] px-10 py-4"
+                className="group btn-ghost text-[15px] px-10 py-4"
               >
-                <span>Learn About Us</span>
+                <span className="relative z-10">Learn About Us</span>
               </Link>
             </motion.div>
           </motion.div>
