@@ -63,28 +63,33 @@ export default function NetworkInfraSection() {
  </svg>
 
  {/* Node: Top */}
- <div className="absolute top-[20%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center z-10">
- <Cloud size={20} className="text-slate-700" />
+ <div className="absolute top-[20%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-xl bg-[#030303] border border-white/10 flex items-center justify-center z-10 overflow-hidden shadow-md">
+ <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+ <Cloud size={20} className="text-zinc-400 relative z-10" />
  </div>
 
  {/* Node: Left */}
- <div className="absolute top-[50%] left-[20%] -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center z-10">
- <Server size={20} className="text-slate-700" />
+ <div className="absolute top-[50%] left-[20%] -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-xl bg-[#030303] border border-white/10 flex items-center justify-center z-10 overflow-hidden shadow-md">
+ <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+ <Server size={20} className="text-zinc-400 relative z-10" />
  </div>
 
  {/* Node: Right */}
- <div className="absolute top-[50%] left-[80%] -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center z-10">
- <Database size={20} className="text-slate-700" />
+ <div className="absolute top-[50%] left-[80%] -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-xl bg-[#030303] border border-white/10 flex items-center justify-center z-10 overflow-hidden shadow-md">
+ <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+ <Database size={20} className="text-zinc-400 relative z-10" />
  </div>
 
  {/* Node: Bottom */}
- <div className="absolute top-[80%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center z-10">
- <Cpu size={20} className="text-slate-700" />
+ <div className="absolute top-[80%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-xl bg-[#030303] border border-white/10 flex items-center justify-center z-10 overflow-hidden shadow-md">
+ <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+ <Cpu size={20} className="text-zinc-400 relative z-10" />
  </div>
 
  {/* Center Core */}
- <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center z-10 animate-pulse">
- <Network size={24} className="text-slate-800" />
+ <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-2xl bg-[#030303] border border-[#F5A800]/40 flex items-center justify-center z-10 animate-pulse overflow-hidden shadow-lg">
+ <div className="absolute inset-0 bg-gradient-to-b from-white/[0.12] to-transparent pointer-events-none" />
+ <Network size={24} className="text-[#F5A800] relative z-10" />
  </div>
 
  </div>
@@ -127,8 +132,9 @@ export default function NetworkInfraSection() {
  const Icon = feature.icon;
  return (
  <motion.div key={i} variants={revealUp} className="flex gap-4">
- <div className="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0">
- <Icon size={20} className="text-slate-700" />
+ <div className="relative w-12 h-12 rounded-xl bg-[#030303] border border-white/10 flex items-center justify-center shrink-0 overflow-hidden shadow-sm">
+ <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+ <Icon size={20} className="text-zinc-400 relative z-10" />
  </div>
  <div>
  <h4 className="text-slate-950 font-bold text-[14px] mb-1">{feature.title}</h4>

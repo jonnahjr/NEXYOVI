@@ -90,8 +90,9 @@ export default function WhySwitchSection() {
         {/* Problem */}
         <div className="col-span-5 group relative overflow-hidden rounded-[20px] border border-red-200 bg-white shadow-lg p-5 transition-all duration-300 hover:shadow-xl hover:border-red-300">
          <div className="relative z-10 flex items-start gap-3">
-          <div className="w-9 h-9 rounded-xl bg-red-50 border border-red-100 flex items-center justify-center shrink-0">
-           <ProblemIcon size={16} className="text-red-500" />
+          <div className="relative w-10 h-10 rounded-xl bg-[#030303] border border-white/10 flex items-center justify-center shrink-0 overflow-hidden shadow-sm group-hover:border-red-500/40 transition-all duration-300">
+           <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+           <ProblemIcon size={16} className="text-zinc-400 group-hover:text-red-400 transition-colors relative z-10" />
           </div>
           <div>
            <div className="font-bold text-gray-900 text-sm">{pair.problem.label}</div>
@@ -111,8 +112,9 @@ export default function WhySwitchSection() {
         {/* Solution */}
         <div className="col-span-5 group relative overflow-hidden rounded-[20px] border border-emerald-200 bg-white shadow-lg p-5 transition-all duration-300 hover:shadow-xl hover:border-emerald-300">
          <div className="relative z-10 flex items-start gap-3 justify-end text-right">
-          <div className="order-2 w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
-           <SolutionIcon size={16} className="text-emerald-500" />
+          <div className="order-2 relative w-10 h-10 rounded-xl bg-[#030303] border border-white/10 flex items-center justify-center shrink-0 overflow-hidden shadow-sm group-hover:border-emerald-500/40 transition-all duration-300">
+           <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+           <SolutionIcon size={16} className="text-zinc-400 group-hover:text-emerald-400 transition-colors relative z-10" />
           </div>
           <div className="order-1">
            <div className="font-bold text-gray-900 text-sm">{pair.solution.label}</div>

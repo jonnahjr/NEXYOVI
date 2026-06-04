@@ -7,6 +7,7 @@ import {
  Mail, Phone, ShieldCheck, Download, Globe, Database, CheckCircle2, ChevronRight, UserPlus, Server, Upload, RefreshCw, Sparkles, BrainCircuit, ScanSearch, Trophy, Medal, Flag, ChevronLeft, Briefcase, MoreVertical, Send, MessageSquare, AlertCircle
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useToast } from '../../context/ToastContext';
 
 type LeadStatus = 'New' | 'Contacted' | 'Qualified' | 'Proposal' | 'Closed Won';
 
@@ -211,8 +212,9 @@ const SIDEBAR_MENU = [
  { id: 'settings', icon: Settings, label: 'Settings' }];
 
 const CRMSystem = () => {
- const [activeTab, setActiveTab] = useState('dashboard');
- const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState('dashboard');
+  const [searchQuery, setSearchQuery] = useState('');
+  const { toast } = useToast();
 
  // UI States
  const [showNotifications, setShowNotifications] = useState(false);
@@ -337,19 +339,10 @@ const CRMSystem = () => {
  };
  const handleDeleteLead = (id: string) => setLeads(leads.filter(l => l.id !== id));
 
- // Export Logic
- const exportToCSV = () => {
- const headers = ['ID', 'Name', 'Company', 'Email', 'Phone', 'Status', 'Deal Value', 'Date Added'];
- const rows = leads.map(l => [l.id, l.name, l.company, l.email, l.phone, l.status, l.value, l.date]);
- const csvContent = "data:text/csv;charset=utf-8," + headers.join(",") + "\n" + rows.map(e => e.join(",")).join("\n");
- const link = document.createElement("a");
- link.href = encodeURI(csvContent);
- link.download = "nexyovi_crm_export.csv";
- document.body.appendChild(link);
- link.click();
- document.body.removeChild(link);
- setNotifications([{ id: Date.now(), title: 'Export Successful', message: 'Data exported to CSV.', time: 'Just now', read: false, icon: Download }, ...notifications]);
- };
+  // Export Logic
+  const exportToCSV = () => {
+    toast('Export simulated for demo purposes', 'info');
+  };
 
  // AI Tool Functions
  const handleAIEmailDraft = (targetName = "Alpha Logistics") => {
@@ -1185,7 +1178,7 @@ const CRMSystem = () => {
  </div>
  <div className="flex items-center justify-between border-t border-white/5 pt-4">
  {event.link ? (
- <a href="#" className="text-xs font-bold text-white bg-[#F5A800] hover:bg-blue-600 px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"><Globe size={14}/> Join Meeting</a>
+ <button onClick={(e) => { e.preventDefault(); toast('Joining simulated meeting...', 'info'); }} className="text-xs font-bold text-white bg-[#F5A800] hover:bg-blue-600 px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"><Globe size={14}/> Join Meeting</button>
  ) : (
  <span className="text-[10px] font-bold text-[#6B7280] uppercase tracking-widest flex items-center gap-1"><Building2 size={12}/> In-Person / Internal</span>
  )}

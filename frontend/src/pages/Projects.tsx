@@ -1,18 +1,15 @@
 import { AnimatePresence, animate, motion, useInView, useMotionValue, useScroll, useTransform } from 'framer-motion';
 import {
   ArrowUpRight,
-  BarChart3,
   ChevronRight,
   Clock,
   Cloud,
-  Code2,
   Cpu,
   Database,
   Globe,
   Layers,
   Lock,
   ShieldCheck,
-  Star,
   TrendingUp,
   Users,
   Wifi,
@@ -21,6 +18,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { EASE_EXPO, EASE_CINEMA, staggerContainer, viewport } from '../lib/animations';
 import TextReveal from '../components/TextReveal';
+import { useToast } from '../context/ToastContext';
 
 import market1 from '../assets/market/1.png';
 import market2 from '../assets/market/2.png';
@@ -42,9 +40,6 @@ import tele2 from '../assets/tele/2.png';
 import tele3 from '../assets/tele/3.png';
 import tele4 from '../assets/tele/4.png';
 
-// ── Easing ────────────────────────────────────────────────────
-const SPRING_GENTLE = { type: 'spring' as const, stiffness: 120, damping: 24 };
-
 // ── Animated Counter ─────────────────────────────────────────
 const Counter = ({ value, duration = 2, decimals = 0, suffix = '' }: { value: number; duration?: number; decimals?: number; suffix?: string }) => {
   const count = useMotionValue(0);
@@ -59,47 +54,6 @@ const Counter = ({ value, duration = 2, decimals = 0, suffix = '' }: { value: nu
   }, [isInView, value, duration, count]);
 
   return <motion.span ref={ref}>{rounded}</motion.span>;
-};
-
-// ── Animated Ring Gauge ──────────────────────────────────────
-const RingGauge = ({ value, label, color, max = 100, size = 80 }: { value: number; label: string; color: string; max?: number; size?: number }) => {
-  const strokeWidth = 5;
-  const radius = (size - strokeWidth) / 2;
-  const circumference = 2 * Math.PI * radius;
-  const progress = useMotionValue(0);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
-
-  useEffect(() => {
-    if (isInView) {
-      animate(progress, (value / max) * 100, { duration: 2, ease: 'easeOut' });
-    }
-  }, [isInView, value, max, progress]);
-
-  const dashOffset = useTransform(progress, (latest) => circumference * (1 - latest / 100));
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, scale: 0.8 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={SPRING_GENTLE}
-      className="flex flex-col items-center gap-1"
-    >
-      <svg width={size} height={size}>
-        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth={strokeWidth} />
-        <motion.circle
-          cx={size / 2} cy={size / 2} r={radius} fill="none"
-          stroke={color} strokeWidth={strokeWidth} strokeLinecap="round"
-          strokeDasharray={circumference}
-          style={{ strokeDashoffset: dashOffset, rotate: '-90deg', transformOrigin: 'center' }}
-        />
-      </svg>
-      <span className="text-lg font-black text-white">{value.toLocaleString()}</span>
-      <span className="text-[8px] font-bold uppercase tracking-widest text-white/30 text-center">{label}</span>
-    </motion.div>
-  );
 };
 
 
@@ -126,8 +80,6 @@ interface Project {
 }
 
 // ── Data ──────────────────────────────────────────────────────
-const CATEGORIES: Category[] = ['All', 'Software', 'AI Systems', 'Infrastructure', 'Data Systems', 'Security'];
-
 const PROJECTS: Project[] = [
   {
     id: 'neural-sentinel',
@@ -206,7 +158,6 @@ const PROJECTS: Project[] = [
     description:
       'A privately operated fiber-over-SD-WAN backbone connecting 38 metropolitan data centers with sub-2ms cross-region routing, purpose-built for latency-critical financial workloads.',
     metrics: [
-      { label: 'Avg Latency', value: '1.8ms' },
       { label: 'Bandwidth', value: '400 Gbps' },
       { label: 'Redundancy', value: 'N+3' }],
   },
@@ -226,7 +177,6 @@ const PROJECTS: Project[] = [
     description:
       'A cloud-native HSM service replacing costly on-prem hardware. Delivers FIPS 140-3 Level 3 cryptographic operations via API — from key generation to certificate signing — at enterprise scale.',
     metrics: [
-      { label: 'Keys Managed', value: '850M+' },
       { label: 'Crypto Ops/sec', value: '500K' },
       { label: 'Compliance', value: 'FIPS/PCI' }],
   },
@@ -251,67 +201,88 @@ const PROJECTS: Project[] = [
       { label: 'Auto-Remediation', value: '89%' }],
   },
   {
-    id: 'fortify-soc',
-    title: 'Fortify SOC',
-    subtitle: 'Autonomous Security Operations Center',
-    category: 'Security',
-    tags: ['SIEM', 'SOAR', 'Threat Hunting'],
-    icon: BarChart3,
-    color: '#ec4899',
-    glow: 'rgba(236,72,153,0.15)',
-    gradient: 'from-[#ec4899]/20 via-[#ec4899]/5 to-transparent',
+    id: 'pharmaflow',
+    title: 'PharmaFlow',
+    subtitle: 'Pharmacy & Prescription Management',
+    category: 'Data Systems',
+    tags: ['Inventory', 'HIPAA', 'Analytics'],
+    icon: Layers,
+    color: '#10b981',
+    glow: 'rgba(16,185,129,0.15)',
+    gradient: 'from-[#10b981]/20 via-[#10b981]/5 to-transparent',
     year: '2024',
-    status: 'In Progress',
-    impact: 'MTTR reduced by 91%',
+    status: 'Live',
+    impact: '200+ pharmacies onboarded',
     description:
-      'A fully autonomous SOC that ingests, correlates, and responds to security events across 200+ data sources. AI-driven playbooks resolve 91% of incidents without analyst intervention.',
+      'A comprehensive pharmacy management system handling inventory tracking, prescription fulfillment, regulatory compliance, and patient records. Built with HIPAA-compliant architecture and real-time stock alerts for operational efficiency.',
     metrics: [
-      { label: 'Events/Day', value: '2.4B' },
-      { label: 'MTTR', value: '4 min' },
-      { label: 'Coverage', value: '200+ feeds' }],
+      { label: 'Pharmacies', value: '200+' },
+      { label: 'Rx Processed/mo', value: '50K+' },
+      { label: 'Stock Accuracy', value: '99.8%' }],
   },
   {
-    id: 'velocode',
-    title: 'VeloCode Platform',
-    subtitle: 'AI-Assisted Enterprise Dev Platform',
-    category: 'AI/ML',
-    tags: ['LLM', 'Code Review', 'CI/CD'],
-    icon: Code2,
+    id: 'stockvue',
+    title: 'StockVue',
+    subtitle: 'Real-Time Inventory Management',
+    category: 'Software',
+    tags: ['Real-Time', 'Analytics', 'Automation'],
+    icon: Clock,
+    color: '#f97316',
+    glow: 'rgba(249,115,22,0.15)',
+    gradient: 'from-[#f97316]/20 via-[#f97316]/5 to-transparent',
+    year: '2024',
+    status: 'Live',
+    impact: '40% reduction in stockouts',
+    description:
+      'A real-time inventory and stock management platform for retail and warehouse operations. Provides multi-warehouse tracking, automated reordering based on demand forecasting, and comprehensive analytics dashboards.',
+    metrics: [
+      { label: 'Stockouts Reduced', value: '40%' },
+      { label: 'SKUs Tracked', value: '1M+' },
+      { label: 'Warehouses', value: '50+' }],
+  },
+  {
+    id: 'biteorder',
+    title: 'BiteOrder',
+    subtitle: 'Restaurant Website & Online Ordering',
+    category: 'Software',
+    tags: ['Online Ordering', 'Reservations', 'POS'],
+    icon: TrendingUp,
     color: '#14b8a6',
     glow: 'rgba(20,184,166,0.15)',
     gradient: 'from-[#14b8a6]/20 via-[#14b8a6]/5 to-transparent',
     year: '2024',
     status: 'Live',
-    impact: '3× faster shipping cycles',
+    impact: '300+ restaurant partners',
     description:
-      'An AI pair-programmer woven into the CI/CD pipeline. It reviews pull requests, suggests optimizations, detects security anti-patterns, and auto-generates unit tests — natively in the IDE.',
+      'A complete restaurant digital platform featuring custom websites, online ordering, table reservations, and POS integration. Includes real-time order tracking, menu management, and customer analytics for hospitality businesses.',
     metrics: [
-      { label: 'PR Review Speed', value: '12×' },
-      { label: 'Bug Detection', value: '78% earlier' },
-      { label: 'Test Coverage', value: '94%' }],
+      { label: 'Restaurants', value: '300+' },
+      { label: 'Orders/mo', value: '120K+' },
+      { label: 'Revenue Increase', value: '35%' }],
+  },
+  {
+    id: 'tablereserve',
+    title: 'TableReserve',
+    subtitle: 'Smart Reservation & Booking System',
+    category: 'Software',
+    tags: ['Booking', 'CRM', 'Calendar'],
+    icon: Users,
+    color: '#ec4899',
+    glow: 'rgba(236,72,153,0.15)',
+    gradient: 'from-[#ec4899]/20 via-[#ec4899]/5 to-transparent',
+    year: '2024',
+    status: 'Live',
+    impact: '1M+ reservations managed',
+    description:
+      'An intelligent reservation and booking management system for restaurants, hotels, and event venues. Features real-time availability, automated reminders, waitlist management, and comprehensive customer relationship tools.',
+    metrics: [
+      { label: 'Reservations', value: '1M+' },
+      { label: 'Venues', value: '500+' },
+      { label: 'No-Show Rate', value: '<4%' }],
   },
 ];
 
 // ── Sub-components ────────────────────────────────────────────
-
-const StatusBadge = ({ status }: { status: Project['status'] }) => {
-  const map = {
-    Live: { bg: 'bg-emerald-500/10', border: 'border-emerald-500/30', text: 'text-emerald-400', dot: 'bg-emerald-500' },
-    'In Progress': { bg: 'bg-amber-500/10', border: 'border-amber-500/30', text: 'text-amber-400', dot: 'bg-amber-500' },
-    Completed: { bg: 'bg-white/5', border: 'border-white/10', text: 'text-white/50', dot: 'bg-white/30' },
-  };
-  const s = map[status];
-  return (
-    <motion.span
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${s.bg} ${s.border} ${s.text}`}
-    >
-      <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${s.dot}`} />
-      {status}
-    </motion.span>
-  );
-};
 
 const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
   const Icon = project.icon;
@@ -334,7 +305,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
         hidden: { opacity: 0, y: 40, scale: 0.96 },
         visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: EASE_EXPO, delay: index * 0.06 } },
       }}
-      className="group relative rounded-[28px] overflow-hidden border border-slate-200 bg-white transition-all duration-500 cursor-pointer"
+      className="group relative rounded-[28px] overflow-hidden border border-white/10 bg-[#0a0a0e] transition-all duration-500 cursor-pointer"
       style={{
         perspective: 1000,
         transformStyle: 'preserve-3d',
@@ -355,12 +326,11 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
         <div className="flex items-start justify-between mb-6">
           <motion.div
             whileHover={{ scale: 1.15, rotate: -5 }}
-            className="w-12 h-12 rounded-2xl flex items-center justify-center border border-slate-200 bg-white transition-transform duration-300"
-            style={{ color: project.color }}
+            className="relative w-12 h-12 rounded-2xl bg-[#030303] border border-white/10 flex items-center justify-center transition-transform duration-300 overflow-hidden shadow-md group-hover:border-[#F5A800]/40"
           >
-            <Icon size={22} />
+            <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+            <Icon size={22} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" />
           </motion.div>
-          <StatusBadge status={project.status} />
         </div>
 
         {/* Category + Year */}
@@ -368,17 +338,17 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
           <span className="text-[10px] font-black uppercase tracking-[0.3em]" style={{ color: project.color }}>
             {project.category}
           </span>
-          <span className="text-[10px] text-slate-300 font-mono">{project.year}</span>
+          <span className="text-[10px] text-white/30 font-mono">{project.year}</span>
         </div>
 
         {/* Title */}
-        <h3 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight mb-1 leading-tight">
+        <h3 className="text-xl md:text-2xl font-black text-white tracking-tight mb-1 leading-tight">
           {project.title}
         </h3>
-        <p className="text-sm text-slate-500 font-medium mb-4">{project.subtitle}</p>
+        <p className="text-sm text-white/50 font-medium mb-4">{project.subtitle}</p>
 
         {/* Description */}
-        <p className="text-slate-500 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
+        <p className="text-white/50 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
           {project.description}
         </p>
 
@@ -387,7 +357,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200 text-slate-400"
+              className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-white/[0.03] border border-white/10 text-white/40"
             >
               {tag}
             </span>
@@ -395,20 +365,20 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
         </div>
 
         {/* Metrics strip */}
-        <div className="grid grid-cols-3 gap-2 mb-6 p-4 rounded-2xl bg-slate-50 border border-slate-200">
+        <div className="grid grid-cols-3 gap-2 mb-6 p-4 rounded-2xl bg-[#030303] border border-white/10">
           {project.metrics.map((m) => (
             <div key={m.label} className="text-center">
-              <div className="text-base md:text-lg font-black text-slate-900 mb-0.5">{m.value}</div>
-              <div className="text-[9px] font-bold uppercase tracking-widest text-slate-400">{m.label}</div>
+              <div className="text-base md:text-lg font-black text-white mb-0.5">{m.value}</div>
+              <div className="text-[9px] font-bold uppercase tracking-widest text-white/40">{m.label}</div>
             </div>
           ))}
         </div>
 
         {/* Impact + CTA */}
-        <div className="flex items-center justify-between pt-2 border-t border-slate-100">
+        <div className="flex items-center justify-between pt-2 border-t border-white/5">
           <motion.div className="flex items-center gap-2" whileHover={{ x: 3 }}>
             <TrendingUp size={12} style={{ color: project.color }} />
-            <span className="text-[11px] font-bold text-slate-400">{project.impact}</span>
+            <span className="text-[11px] font-bold text-white/40">{project.impact}</span>
           </motion.div>
           <Link
             to={`/projects/${project.id}`}
@@ -480,10 +450,11 @@ const FeatureItem = ({ icon, label }: { icon: string; label: string }) => (
     whileHover={{ x: 6 }}
     className="flex items-center gap-3 hover:-translate-y-0.5 transition-transform"
   >
-    <div className="w-9 h-9 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-base shrink-0">
-      {icon}
+    <div className="relative w-9 h-9 rounded-xl bg-[#030303] border border-white/10 flex items-center justify-center text-base shrink-0 overflow-hidden shadow-sm">
+      <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+      <span className="relative z-10 text-zinc-400">{icon}</span>
     </div>
-    <span className="text-slate-600 font-semibold text-sm">{label}</span>
+    <span className="text-white/60 font-semibold text-sm">{label}</span>
   </motion.div>
 );
 
@@ -492,10 +463,14 @@ const StoreButton = ({ dark = false, platform = 'app-store' }: { dark?: boolean;
   const isGoogle = platform === 'google-play';
   const bg = isGoogle ? 'bg-slate-900 text-white' : dark ? 'bg-white/10 border border-white/20' : 'bg-black text-white';
   const textColor = isGoogle ? 'text-white' : dark ? 'text-white' : 'text-white';
+  const { toast } = useToast();
 
   return (
-    <motion.a
-      href="#"
+    <motion.button
+      onClick={(e) => {
+        e.preventDefault();
+        toast(`Opening in ${isGoogle ? 'Google Play Store' : 'App Store'}...`, 'info');
+      }}
       whileHover={{ scale: 1.03, y: -2 }}
       whileTap={{ scale: 0.97 }}
       className={`flex items-center gap-2.5 px-5 py-3 rounded-2xl font-bold text-sm select-none ${bg} ${textColor}`}
@@ -513,7 +488,7 @@ const StoreButton = ({ dark = false, platform = 'app-store' }: { dark?: boolean;
         <div className="text-[9px] font-medium opacity-70">{isGoogle ? 'GET IT ON' : 'Download on the'}</div>
         <div className="text-[13px] font-black tracking-tight">{isGoogle ? 'Google Play' : 'App Store'}</div>
       </div>
-    </motion.a>
+    </motion.button>
   );
 };
 
@@ -542,14 +517,7 @@ function MouseGlow() {
 // ══════════════════════════════════════════════════════════════
 
 export default function Projects() {
-  const [activeCategory, setActiveCategory] = useState<Category>('All');
 
-  const filtered = activeCategory === 'All'
-    ? PROJECTS
-    : PROJECTS.filter((p) => p.category === activeCategory);
-
-  const featured = PROJECTS.find((p) => p.featured);
-  const caseStudyLink = featured ? `/projects/${featured.id}` : '/projects';
 
   // ── Hero Parallax (matching Services page) ──
   const heroRef = useRef<HTMLDivElement>(null);
@@ -570,7 +538,7 @@ export default function Projects() {
   ];
 
   return (
-    <div className="bg-slate-50 min-h-screen text-slate-900 font-sans selection:bg-[#F5A800]/30 overflow-x-clip">
+    <div className="bg-[#02040a] min-h-screen text-white font-sans selection:bg-[#F5A800]/30 overflow-x-clip">
       <MouseGlow />
 
       {/* ═══════════════════════════════════════════════════════════
@@ -639,11 +607,11 @@ export default function Projects() {
             transition={{ delay: 0.5, duration: 0.6, ease: EASE_EXPO }}
             className="flex flex-wrap items-center justify-center gap-4 mb-20"
           >
-            <Link to="/contact" className="group btn-gold text-[14px] px-8 py-4">
+            <a href="mailto:contact@nexyovi.com" className="group btn-gold text-[14px] px-8 py-4">
               <span className="relative z-10">Start a Project</span>
               <ChevronRight size={14} className="relative z-10 group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <Link to={caseStudyLink} className="group btn-ghost text-[14px] px-8 py-4">
+            </a>
+            <Link to="/projects" className="group btn-ghost text-[14px] px-8 py-4">
               <span className="relative z-10">Case Studies</span>
               <ArrowUpRight size={14} className="relative z-10" />
             </Link>
@@ -702,7 +670,7 @@ export default function Projects() {
       {/* ═══════════════════════════════════════════════════════════
           STATS BAR — Animated Counters
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden border-t border-slate-200 py-16 bg-[#f4f4f5]">
+      <section className="relative overflow-hidden border-t border-white/[0.05] py-16 bg-[#02040a]">
         <div className="container relative z-10 mx-auto px-6">
           <motion.div
             variants={staggerContainer}
@@ -720,14 +688,16 @@ export default function Projects() {
                     hidden: { opacity: 0, y: 30, scale: 0.95 },
                     visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: EASE_EXPO } },
                   }}
-                  whileHover={{ y: -6, borderColor: '#F5A800' }}
-                  className="flex flex-col items-center justify-center text-center py-8 px-4 rounded-2xl border border-slate-200 bg-white transition-all duration-500"
+                  className="flex flex-col items-center justify-center text-center"
                 >
-                  <Icon size={18} className="text-[#F5A800] mb-3 transition-all duration-300" />
-                  <div className="text-2xl md:text-3xl font-black text-slate-900 mb-1">
+                  <div className="relative w-11 h-11 rounded-[14px] bg-[#030303] border border-white/10 flex items-center justify-center mb-4 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 transition-colors duration-300">
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                    <Icon size={20} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" />
+                  </div>
+                  <div className="text-2xl md:text-3xl font-black text-white mb-1">
                     <Counter value={stat.value} duration={2.5} suffix={stat.suffix} />
                   </div>
-                  <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400">{stat.label}</div>
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-white/40">{stat.label}</div>
                 </motion.div>
               );
             })}
@@ -735,249 +705,11 @@ export default function Projects() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════════
-          FEATURED PROJECT — Dark Enterprise Redesign
-          ═══════════════════════════════════════════════════════════ */}
-      {featured && (
-        <section className="relative py-28 overflow-hidden bg-[#02040a] border-t border-white/5">
-          {/* Atmosphere glow */}
-          <div className="absolute inset-0 z-0 pointer-events-none">
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#F5A800]/5 blur-[140px] rounded-full" />
-            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#8b5cf6]/4 blur-[120px] rounded-full" />
-          </div>
-
-          <div className="container relative z-10 mx-auto px-6">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-80px' }}
-              variants={staggerContainer}
-            >
-              {/* Section label */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_EXPO } },
-                }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-[#F5A800]/20 backdrop-blur-md mb-10"
-              >
-                <Star size={11} className="text-[#F5A800]" />
-                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#F5A800]">Featured Project</span>
-              </motion.div>
-
-              {/* Featured Card — Dark */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 40, scale: 0.97 },
-                  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.9, ease: EASE_EXPO } },
-                }}
-                className="relative rounded-[40px] overflow-hidden border border-white/[0.08] min-h-[500px] group transition-all duration-700 hover:border-[#F5A800]/30"
-                style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)' }}
-              >
-                {/* Subtle grid overlay */}
-                <div className="absolute inset-0 opacity-[0.015] pointer-events-none"
-                  style={{ backgroundImage: 'radial-gradient(circle, rgba(245,168,0,0.3) 0.5px, transparent 0.5px)', backgroundSize: '32px 32px' }} />
-
-                <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 p-10 md:p-14 items-start">
-                  {/* Left — Content */}
-                  <div className="lg:col-span-7">
-                    <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.7, delay: 0.2, ease: EASE_EXPO }}
-                    >
-                      <div className="flex items-center gap-4 mb-6">
-                        <motion.div
-                          whileHover={{ scale: 1.15, rotate: -8 }}
-                          className="w-16 h-16 rounded-2xl flex items-center justify-center border border-white/10 bg-[#F5A800]/10 text-[#F5A800] transition-transform duration-500"
-                        >
-                          <featured.icon size={28} />
-                        </motion.div>
-                        <StatusBadge status={featured.status} />
-                      </div>
-
-                      <p className="text-[10px] font-black uppercase tracking-[0.35em] text-[#F5A800] mb-3">{featured.category} — {featured.year}</p>
-                      <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.0] mb-4">
-                        {featured.title}
-                      </h2>
-                      <p className="text-lg text-white/40 font-medium mb-6">{featured.subtitle}</p>
-                      <p className="text-white/50 text-lg leading-relaxed mb-8 max-w-xl">
-                        {featured.description}
-                      </p>
-
-                      <div className="flex flex-wrap gap-3 mb-10">
-                        {featured.tags.map((tag) => (
-                          <span key={tag} className="text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg bg-[#F5A800]/10 border border-[#F5A800]/20 text-[#FFD166]">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-
-                      <div className="flex items-center gap-4">
-                        <Link to="/contact" className="group btn-gold text-[13px] px-6 py-3">
-                          <span className="relative z-10">Start Similar Project</span>
-                          <ArrowUpRight size={14} className="relative z-10 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                        </Link>
-                        <Link to={caseStudyLink} className="group btn-ghost text-[13px] px-6 py-3">
-                          <span className="relative z-10">See Case Study</span>
-                        </Link>
-                      </div>
-                    </motion.div>
-                  </div>
-
-                  {/* Right — Metrics HUD */}
-                  <div className="lg:col-span-5">
-                    <motion.div
-                      initial={{ opacity: 0, x: 20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.7, delay: 0.4, ease: EASE_EXPO }}
-                      className="rounded-3xl p-8 bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm"
-                    >
-                      {/* Header */}
-                      <div className="flex items-center justify-between mb-8 pb-5 border-b border-white/[0.06]">
-                        <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-white/30">System Telemetry</span>
-                        <motion.span
-                          animate={{ opacity: [1, 0.4, 1] }}
-                          transition={{ duration: 2, repeat: Infinity }}
-                          className="flex items-center gap-2 text-[10px] font-mono font-bold tracking-widest uppercase text-emerald-400"
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                          Live
-                        </motion.span>
-                      </div>
-
-                      {/* Ring gauges */}
-                      <div className="flex justify-around mb-8">
-                        <RingGauge value={500} label="Threats Blocked" color="#F5A800" max={600} size={80} />
-                        <RingGauge value={99.998} label="Accuracy %" color="#10b981" max={100} size={80} />
-                        <RingGauge value={8} label="Latency (ms)" color="#06b6d4" max={15} size={80} />
-                      </div>
-
-                      {/* Metrics list */}
-                      <div className="flex flex-col gap-5 mb-6">
-                        {featured.metrics.map((metric, j) => (
-                          <motion.div
-                            key={j}
-                            initial={{ opacity: 0, x: -10 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={SPRING_GENTLE}
-                          >
-                            <div className="text-[10px] font-black uppercase tracking-widest text-white/30 mb-2">{metric.label}</div>
-                            <div className="flex items-end gap-4">
-                              <div className="text-3xl md:text-4xl font-black text-white">{metric.value}</div>
-                              <div className="flex-1 h-1.5 bg-white/[0.06] rounded-full overflow-hidden mb-2">
-                                <motion.div
-                                  initial={{ width: 0 }}
-                                  whileInView={{ width: `${[82, 96, 75][j]}%` }}
-                                  transition={{ duration: 1.4, delay: 0.6 + j * 0.15, ease: EASE_EXPO }}
-                                  className="h-full rounded-full bg-gradient-to-r from-[#F5A800] to-[#FFD166]"
-                                />
-                              </div>
-                            </div>
-                          </motion.div>
-                        ))}
-                      </div>
-
-                      {/* Impact badge */}
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.8 }}
-                        className="p-4 rounded-2xl bg-[#F5A800]/5 border border-[#F5A800]/15 flex items-center gap-3"
-                      >
-                        <TrendingUp size={14} className="text-[#F5A800]" />
-                        <span className="text-sm font-bold text-white/70">{featured.impact}</span>
-                      </motion.div>
-                    </motion.div>
-                  </div>
-                </div>
-
-                {/* ── Capabilities Carousel ── */}
-                <div className="mx-10 md:mx-14 mb-10 md:mb-14 pt-10 border-t border-white/[0.06]">
-                  <motion.div
-                    initial={{ opacity: 0, y: 15 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.5, duration: 0.6, ease: EASE_EXPO }}
-                    className="flex items-center gap-2 mb-6"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse shadow-[0_0_8px_rgba(245,168,0,0.6)]" />
-                    <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#F5A800]">Full-Service Capabilities</span>
-                  </motion.div>
-
-                  <DraggableSlider className="-mx-2 px-0">
-                    {[
-                      {
-                        icon: '🌐',
-                        title: 'Website Development',
-                        desc: 'Custom websites, landing pages, and web portals built with modern frameworks for speed, SEO, and conversion.',
-                        accent: '#06b6d4',
-                      },
-                      {
-                        icon: '🧠',
-                        title: 'AI Development & Implementation',
-                        desc: 'Custom LLM integrations, predictive models, intelligent agents, and ML pipelines tailored to your workflow.',
-                        accent: '#8b5cf6',
-                      },
-                      {
-                        icon: '📱',
-                        title: 'App Development',
-                        desc: 'Native iOS, Android, and cross-platform mobile applications with seamless backend integration.',
-                        accent: '#10b981',
-                      },
-                      {
-                        icon: '⚙️',
-                        title: 'Web-Based Systems',
-                        desc: 'Complex web applications, SaaS platforms, dashboards, and internal tools engineered for scale.',
-                        accent: '#F5A800',
-                      },
-                      {
-                        icon: '🛠️',
-                        title: 'Software Customization',
-                        desc: 'Enterprise software tailoring, plugin development, legacy system modernization, and API integrations.',
-                        accent: '#f97316',
-                      },
-                      {
-                        icon: '🔗',
-                        title: 'Networking & Installation',
-                        desc: 'Infrastructure setup, network architecture, server deployment, and secure system configuration.',
-                        accent: '#ef4444',
-                      },
-                    ].map((cap, i) => (
-                      <motion.div
-                        key={cap.title}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.6 + i * 0.05, duration: 0.5, ease: EASE_EXPO }}
-                        className="min-w-[260px] sm:min-w-[280px] p-5 rounded-[20px] bg-white/[0.03] border border-white/[0.08] hover:border-[#F5A800]/30 hover:bg-white/[0.06] transition-all duration-500 shrink-0 snap-start group"
-                      >
-                        <div
-                          className="w-10 h-10 rounded-[12px] flex items-center justify-center text-lg mb-4 transition-all duration-500 group-hover:scale-110"
-                          style={{ background: `${cap.accent}12`, border: `1px solid ${cap.accent}25` }}
-                        >
-                          {cap.icon}
-                        </div>
-                        <h4 className="text-sm font-black text-white mb-2 group-hover:text-[#F5A800] transition-colors duration-300">{cap.title}</h4>
-                        <p className="text-white/40 text-xs leading-relaxed">{cap.desc}</p>
-                      </motion.div>
-                    ))}
-                  </DraggableSlider>
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
-        </section>
-      )}
 
       {/* ═══════════════════════════════════════════════════════════
           PROJECT GRID — All Projects
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-28 bg-[#f4f4f5] border-t border-slate-200">
+      <section className="relative py-28 bg-[#02040a] border-t border-white/[0.05]">
         <div className="container relative z-10 mx-auto px-6">
           {/* Section header */}
           <motion.div
@@ -993,81 +725,48 @@ export default function Projects() {
                   hidden: { opacity: 0, y: 20 },
                   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_EXPO } },
                 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-4"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 mb-4"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
-                <span className="text-[11px] font-bold text-slate-600 uppercase tracking-widest">All Projects</span>
+                <span className="text-[11px] font-bold text-white/50 uppercase tracking-widest">All Projects</span>
               </motion.div>
               <motion.h2
                 variants={{
                   hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
                   visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: EASE_EXPO } },
                 }}
-                className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight"
+                className="text-4xl md:text-5xl font-black text-white tracking-tight"
               >
                 Explore the Full{' '}
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Portfolio</span>
               </motion.h2>
             </div>
 
-            {/* Filter tabs */}
-            <motion.div
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.2, ease: EASE_EXPO } },
-              }}
-              className="flex flex-wrap gap-2"
-            >
-              {CATEGORIES.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`px-4 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-300 ${
-                    activeCategory === cat
-                      ? 'bg-gradient-to-r from-[#F5A800] to-[#FFD166] text-black'
-                      : 'text-slate-400 border border-slate-300 hover:border-[#F5A800] hover:text-[#F5A800]'
-                  }`}
-                  style={activeCategory !== cat ? { background: 'white' } : {}}
-                >
-                  {cat}
-                </button>
-              ))}
-            </motion.div>
+
           </motion.div>
 
           {/* Grid */}
           <AnimatePresence mode="wait">
             <motion.div
-              key={activeCategory}
               variants={staggerContainer}
               initial="hidden"
               animate="visible"
-              exit={{ opacity: 0, y: 20, transition: { duration: 0.25 } }}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             >
-              {filtered.map((project, i) => (
+              {PROJECTS.map((project, i) => (
                 <ProjectCard key={project.id} project={project} index={i} />
               ))}
             </motion.div>
           </AnimatePresence>
 
-          {filtered.length === 0 && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="flex flex-col items-center justify-center py-32 text-center"
-            >
-              <div className="text-6xl mb-4 opacity-20">🔍</div>
-              <p className="text-slate-400 font-bold">No projects in this category yet.</p>
-            </motion.div>
-          )}
+
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
           FEATURED PRODUCT: NEXI MARKETS
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-24 overflow-hidden border-t border-slate-200 bg-[#f4f4f5]">
+      <section className="relative py-24 overflow-hidden border-t border-white/10 bg-[#02040a]">
         <div className="container relative z-10 mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
@@ -1083,14 +782,14 @@ export default function Projects() {
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE_EXPO } },
               }} className="mb-6">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 mb-4">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 mb-4">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">Nexyovi</span>
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">Nexyovi</span>
                 </div>
-                <h2 className="text-5xl md:text-6xl font-black text-slate-900 leading-[0.95] tracking-tight">
+                <h2 className="text-5xl md:text-6xl font-black text-white leading-[0.95] tracking-tight">
                   Nexi <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Markets</span>
                 </h2>
-                <p className="text-slate-400 text-xl font-semibold mt-3 leading-snug">
+                <p className="text-white/40 text-xl font-semibold mt-3 leading-snug">
                   Everything you need.<br />Delivered to you.
                 </p>
               </motion.div>
@@ -1098,7 +797,7 @@ export default function Projects() {
               <motion.p variants={{
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.05, ease: EASE_EXPO } },
-              }} className="text-slate-500 text-base leading-relaxed mb-6 max-w-md">
+              }} className="text-white/50 text-base leading-relaxed mb-6 max-w-md">
                 Nexi Markets is your all-in-one shopping destination offering millions of products across categories with fast delivery, secure payments, and unbeatable deals.
               </motion.p>
 
@@ -1118,7 +817,7 @@ export default function Projects() {
               <motion.div variants={{
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.15, ease: EASE_EXPO } },
-              }} className="flex items-center gap-4 mb-8 pb-8 border-b border-slate-200">
+              }} className="flex items-center gap-4 mb-8 pb-8 border-b border-white/10">
                 <div className="flex -space-x-2">
                   {['#F5A800', '#10b981', '#8b5cf6', '#ef4444'].map((c, i) => (
                     <div key={i} className="w-8 h-8 rounded-full border-2 border-white flex items-center justify-center text-[11px] font-black text-white" style={{ backgroundColor: c }}>
@@ -1131,9 +830,9 @@ export default function Projects() {
                     {[...Array(5)].map((_, i) => (
                       <svg key={i} className="w-3 h-3 text-[#F5A800]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
                     ))}
-                    <span className="text-slate-900 font-black text-xs ml-1">4.8/5</span>
+                    <span className="text-white font-black text-xs ml-1">4.8/5</span>
                   </div>
-                  <p className="text-slate-400 text-xs font-medium">50K+ Happy Customers</p>
+                  <p className="text-white/40 text-xs font-medium">50K+ Happy Customers</p>
                 </div>
               </motion.div>
 
@@ -1176,7 +875,7 @@ export default function Projects() {
       {/* ═══════════════════════════════════════════════════════════
           FEATURED PRODUCT: NEXI LOCATE
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-24 overflow-hidden border-t border-slate-200 bg-[#f4f4f5]">
+      <section className="relative py-24 overflow-hidden border-t border-white/10 bg-[#02040a]">
         <div className="container relative z-10 mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
@@ -1215,14 +914,14 @@ export default function Projects() {
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE_EXPO } },
               }} className="mb-6">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 mb-4">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 mb-4">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">Nexyovi</span>
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">Nexyovi</span>
                 </div>
-                <h2 className="text-5xl md:text-6xl font-black text-slate-900 leading-[0.95] tracking-tight">
+                <h2 className="text-5xl md:text-6xl font-black text-white leading-[0.95] tracking-tight">
                   Nexi <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ea580c] to-[#f59e0b]">Locate</span>
                 </h2>
-                <p className="text-slate-400 text-xl font-semibold mt-3 leading-snug">
+                <p className="text-white/40 text-xl font-semibold mt-3 leading-snug">
                   Explore. Discover.<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ea580c] to-[#f59e0b]">Experience Addis.</span>
                 </p>
               </motion.div>
@@ -1230,7 +929,7 @@ export default function Projects() {
               <motion.p variants={{
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.05, ease: EASE_EXPO } },
-              }} className="text-slate-500 text-base leading-relaxed mb-6 max-w-md">
+              }} className="text-white/50 text-base leading-relaxed mb-6 max-w-md">
                 Nexi Locate helps you discover the best places near you in Addis Ababa. Restaurants, cafes, hotels, gyms, clubs, spots and more. Rate, review and share your favorite places.
               </motion.p>
 
@@ -1248,10 +947,11 @@ export default function Projects() {
                     whileHover={{ y: -4 }}
                     className="flex flex-col items-center gap-1"
                   >
-                    <div className="w-10 h-10 rounded-2xl bg-white border border-slate-200 flex items-center justify-center text-lg hover:bg-[#ea580c]/10 hover:border-[#ea580c] transition-all duration-300 cursor-default">
-                      {cat.icon}
+                    <div className="relative w-10 h-10 rounded-2xl bg-[#030303] border border-white/10 flex items-center justify-center text-lg group-hover:border-[#ea580c]/40 transition-all duration-300 cursor-default overflow-hidden shadow-sm">
+                      <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                      <span className="relative z-10 text-zinc-400 group-hover:text-[#ea580c] transition-colors">{cat.icon}</span>
                     </div>
-                    <span className="text-slate-400 text-[9px] font-bold">{cat.label}</span>
+                    <span className="text-white/40 text-[9px] font-bold">{cat.label}</span>
                   </motion.div>
                 ))}
               </motion.div>
@@ -1269,11 +969,11 @@ export default function Projects() {
                   <motion.div
                     key={f.title}
                     whileHover={{ y: -4, borderColor: '#ea580c' }}
-                    className="p-3 rounded-2xl bg-white border border-slate-200 hover:bg-[#ea580c]/5 transition-all duration-300"
+                    className="p-3 rounded-2xl bg-white/[0.03] border border-white/10 hover:bg-[#ea580c]/5 transition-all duration-300"
                   >
                     <span className="text-lg">{f.icon}</span>
-                    <p className="text-slate-900 font-bold text-[12px] mt-1 mb-0.5">{f.title}</p>
-                    <p className="text-slate-500 text-[10px] leading-snug">{f.desc}</p>
+                    <p className="text-white font-bold text-[12px] mt-1 mb-0.5">{f.title}</p>
+                    <p className="text-white/50 text-[10px] leading-snug">{f.desc}</p>
                   </motion.div>
                 ))}
               </motion.div>
@@ -1294,7 +994,7 @@ export default function Projects() {
       {/* ═══════════════════════════════════════════════════════════
           FEATURED PRODUCT: TELE-PSYCHIATRY
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-24 overflow-hidden border-t border-slate-200 bg-[#f4f4f5]">
+      <section className="relative py-24 overflow-hidden border-t border-white/10 bg-[#02040a]">
         <div className="container relative z-10 mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
@@ -1315,7 +1015,7 @@ export default function Projects() {
                   className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#0d9488] to-[#2dd4bf] flex items-center justify-center text-2xl"
                 >🧠</motion.div>
                 <div>
-                  <h3 className="text-xl font-black text-slate-900 tracking-tight">Tele-Psychiatry</h3>
+                  <h3 className="text-xl font-black text-white tracking-tight">Tele-Psychiatry</h3>
                   <p className="text-[#2dd4bf] font-bold text-xs tracking-wide">Your Mental Well-being, Our Priority</p>
                 </div>
               </motion.div>
@@ -1323,7 +1023,7 @@ export default function Projects() {
               <motion.h2 variants={{
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.05, ease: EASE_EXPO } },
-              }} className="text-5xl md:text-6xl font-black text-slate-900 leading-[0.95] tracking-tight mb-4">
+              }} className="text-5xl md:text-6xl font-black text-white leading-[0.95] tracking-tight mb-4">
                 Mental health care,<br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0d9488] to-[#2dd4bf]">anytime, anywhere.</span>
               </motion.h2>
@@ -1331,7 +1031,7 @@ export default function Projects() {
               <motion.p variants={{
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.1, ease: EASE_EXPO } },
-              }} className="text-slate-500 text-base leading-relaxed mb-6 max-w-md">
+              }} className="text-white/50 text-base leading-relaxed mb-6 max-w-md">
                 Connect with licensed psychiatrists and therapists across Ethiopia through secure online consultations.
               </motion.p>
 
@@ -1353,14 +1053,14 @@ export default function Projects() {
               <motion.div variants={{
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.2, ease: EASE_EXPO } },
-              }} className="flex flex-wrap gap-2 mb-8 pb-8 border-b border-slate-200">
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200">
+              }} className="flex flex-wrap gap-2 mb-8 pb-8 border-b border-white/10">
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/10">
                   <span className="text-base">🇪🇹</span>
-                  <span className="text-slate-600 text-xs font-semibold">Built for Ethiopia</span>
+                  <span className="text-white/60 text-xs font-semibold">Built for Ethiopia</span>
                 </div>
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200">
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/10">
                   <span className="text-base">🛡️</span>
-                  <span className="text-slate-600 text-xs font-semibold">100% Confidential</span>
+                  <span className="text-white/60 text-xs font-semibold">100% Confidential</span>
                 </div>
               </motion.div>
 
@@ -1401,11 +1101,12 @@ export default function Projects() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
-          CTA SECTION
+          CTA SECTION — Dark
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-32 bg-white border-t border-slate-200 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#F5A800]/2 via-transparent to-transparent pointer-events-none" />
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-[#F5A800]/3 blur-[100px] rounded-full pointer-events-none" />
+      <section className="relative py-32 bg-[#02040a] border-t border-white/5 overflow-hidden section-divider-dark">
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute top-0 left-1/3 w-[600px] h-[600px] bg-[#F5A800]/8 blur-[140px] rounded-full" />
+        </div>
 
         <div className="container relative z-10 mx-auto px-6">
           <motion.div
@@ -1420,14 +1121,14 @@ export default function Projects() {
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_EXPO } },
               }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F5A800]/10 border border-[#F5A800]/20 mb-8"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-[#F5A800]/20 backdrop-blur-md mb-8"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse shadow-[0_0_8px_rgba(245,168,0,0.6)]" />
               <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#F5A800]">Let's Build Together</span>
             </motion.div>
 
             <TextReveal>
-              <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[0.95] mb-8 text-slate-900">
+              <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[0.95] mb-8 text-white">
                 Your Next{' '}
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Breakthrough</span>
                 <br />
@@ -1436,7 +1137,7 @@ export default function Projects() {
             </TextReveal>
 
             <TextReveal delay={0.1}>
-              <p className="text-slate-500 text-lg leading-relaxed mb-12 max-w-xl font-medium">
+              <p className="text-white/50 text-lg leading-relaxed mb-12 max-w-xl font-medium">
                 From ideation to enterprise deployment, our engineers become your team — shipping critical infrastructure faster than you thought possible.
               </p>
             </TextReveal>
@@ -1448,12 +1149,12 @@ export default function Projects() {
               transition={{ delay: 0.25, duration: 0.6, ease: EASE_EXPO }}
               className="flex flex-wrap items-center justify-center gap-4"
             >
-              <Link to="/contact" className="group btn-dark text-[14px] px-8 py-4">
+              <a href="mailto:contact@nexyovi.com" className="group btn-gold text-[14px] px-8 py-4">
                 <span className="relative z-10">Start a Project</span>
                 <ChevronRight size={14} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
-              </Link>
-              <Link to="/services" className="group btn-outline text-[14px] px-8 py-4 bg-white/50 backdrop-blur-sm">
-                <span>Explore Services</span>
+              </a>
+              <Link to="/services" className="group btn-ghost text-[14px] px-8 py-4">
+                <span className="relative z-10">Explore Services</span>
               </Link>
             </motion.div>
           </motion.div>

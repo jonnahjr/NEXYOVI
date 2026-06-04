@@ -49,8 +49,7 @@ const cardVariants = {
 
 export default function EngagementModels() {
   return (
-    <section className="relative bg-white py-28 section-divider-light overflow-hidden">
-      <div className="absolute inset-0 z-0 bg-gradient-to-br from-slate-50 via-white to-slate-50/40" />
+    <section className="relative bg-[#FCFBF8] py-28 border-t border-slate-200 overflow-hidden">
       <div className="container max-w-[1200px] mx-auto relative z-10 px-6">
         {/* Header */}
         <motion.div
@@ -62,7 +61,7 @@ export default function EngagementModels() {
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border border-slate-200 mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800]" />
-            <span className="text-[10px] font-bold text-slate-600 uppercase tracking-[0.18em]">How We Engage</span>
+            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.18em]">How We Engage</span>
           </div>
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-slate-950 tracking-[-0.03em] leading-[0.95] max-w-2xl">
             Flexible engagement models for every stage
@@ -85,14 +84,10 @@ export default function EngagementModels() {
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="group relative overflow-hidden rounded-[32px] border border-slate-200 bg-white p-8 md:p-10 transition-all duration-500 hover:border-[#F5A800]/40"
+                className="group relative overflow-hidden rounded-[32px] border border-slate-200 bg-white p-8 md:p-10 transition-all duration-500 hover:border-[#F5A800]/50"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none" />
                 <div className="relative z-10 space-y-4">
-                  <div className="flex items-center gap-4">
-                    <span className="text-[16px] font-mono font-bold text-[#F5A800]">0{i + 1}</span>
-                  </div>
-
                   <h3 className="text-3xl md:text-4xl font-bold text-slate-950 tracking-tight">{model.title}</h3>
                   <p className="text-slate-600 text-base md:text-lg leading-relaxed font-medium">{model.desc}</p>
 
@@ -130,7 +125,7 @@ export default function EngagementModels() {
         >
           <Link
             to="/contact"
-            className="group btn-dark text-[14px] px-9 py-4"
+            className="group btn-gold text-[14px] px-9 py-4"
           >
             <span className="relative z-10">Discuss Your Engagement</span>
             <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />

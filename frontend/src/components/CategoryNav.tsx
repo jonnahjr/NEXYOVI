@@ -1,4 +1,5 @@
 import React from 'react';
+import { useToast } from '../context/ToastContext';
 
 interface Category {
  _id: string;
@@ -23,6 +24,7 @@ const CategoryNav: React.FC<CategoryNavProps> = ({
  { _id: 'id-all-posts', title: 'All Posts', slug: { current: null } },
  ...categories
  ];
+ const { toast } = useToast();
 
  return (
  <section className="container order-2 mt-12 flex items-center justify-between gap-x-2 overflow-hidden lg:mt-8 lg:max-w-5xl md:mt-6 sm:mt-10">
@@ -33,8 +35,12 @@ const CategoryNav: React.FC<CategoryNavProps> = ({
  const isActive = cat.slug.current === activeCategory;
  return (
  <li key={cat._id} className="inline-flex gap-x-0.5">
- <a
- href="#"
+ <button
+ type="button"
+ onClick={(e) => {
+ e.preventDefault();
+ toast(`Filtered by category: ${cat.title}`, 'info');
+ }}
  title={cat.title}
  className={`
  whitespace-nowrap rounded-full px-[10px] py-[6px] text-[13px] font-medium leading-none tracking-tight 
@@ -48,7 +54,7 @@ const CategoryNav: React.FC<CategoryNavProps> = ({
  `}
  >
  <span className="sr-only">Category:</span> {cat.title}
- </a>
+ </button>
  </li>
  );
  })}

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import cyberAsset from '../assets/cybersecurity_shield.png';
 import logisticsAsset from '../assets/data_flow.png';
 
@@ -15,9 +16,9 @@ const CompanyPortfolio = () => {
  <div className="text-[#F5A800] text-xs font-black uppercase tracking-[0.4em] mb-4">Portfolio</div>
  <h2 className="text-4xl lg:text-5xl font-black tracking-tighter text-[#1F2937]">Proven Results & Case Studies.</h2>
  </div>
- <button className="inline-flex items-center gap-2 px-6 py-3 border border-[#F5A800]/20 rounded-full text-xs font-black uppercase tracking-widest hover:bg-[#F5A800] hover:text-white hover:border-[#F5A800] transition-all duration-300 text-[#F5A800] hover:shadow-[0_8px_30px_rgba(245,168,0,0.2)] hover:-translate-y-0.5 w-fit">
+ <Link to="/projects" className="inline-flex items-center gap-2 px-6 py-3 border border-[#F5A800]/20 rounded-full text-xs font-black uppercase tracking-widest hover:bg-[#F5A800] hover:text-white hover:border-[#F5A800] transition-all duration-300 text-[#F5A800] hover:shadow-[0_8px_30px_rgba(245,168,0,0.2)] hover:-translate-y-0.5 w-fit">
  Full Portfolio <ArrowUpRight size={14} />
- </button>
+ </Link>
  </div>
 
  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

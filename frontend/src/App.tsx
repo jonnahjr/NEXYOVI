@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import { useSite } from './context/SiteContext';
 import { useLenis } from './lib/lenis';
+import { ToastProvider } from './context/ToastContext';
 
 // ── Eager loaded (above the fold) ────────────────────────────
 import Home from './pages/Home';
@@ -13,8 +14,7 @@ import AdminLogin from './pages/admin/AdminLogin';
 
 // ── Lazy loaded pages ─────────────────────────────────────────
 const Company = lazy(() => import('./pages/Company'));
-const Careers = lazy(() => import('./pages/Careers'));
-const JobDetail = lazy(() => import('./pages/JobDetail'));
+
 const Contact = lazy(() => import('./pages/Contact'));
 const TrustCenter = lazy(() => import('./pages/TrustCenter'));
 const Story = lazy(() => import('./pages/company/Story'));
@@ -27,6 +27,7 @@ const Culture = lazy(() => import('./pages/company/Culture'));
 // Service subpages merged into massive scroll hub
 const Industries = lazy(() => import('./pages/Industries'));
 const Services = lazy(() => import('./pages/Services'));
+const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
 const ProjectsPage = lazy(() => import('./pages/Projects'));
 const CaseStudyDetail = lazy(() => import('./pages/CaseStudyDetail'));
 const CRMSystem = lazy(() => import('./pages/systems/CRMSystem'));
@@ -85,6 +86,7 @@ function App() {
  useLenis(!isStandalone);
 
  return (
+ <ToastProvider>
  <div className="min-h-screen bg-[#050816]">
  <ScrollToTop />
  {!isStandalone && <Navbar />}
@@ -105,16 +107,8 @@ function App() {
  {/* ── Public ── */}
  <Route path="/" element={<Home />} />
  <Route path="/services" element={<Services />} />
+ <Route path="/services/:serviceId" element={<ServiceDetail />} />
  <Route path="/systems/crm" element={<CRMSystem />} />
-
- {/* Service detail merged into /services hash links */}
- <Route path="/services/security" element={<Navigate to="/services#security" replace />} />
- <Route path="/services/software" element={<Navigate to="/services#software" replace />} />
- <Route path="/services/networking" element={<Navigate to="/services#networking" replace />} />
- <Route path="/services/ai" element={<Navigate to="/services#ai" replace />} />
- <Route path="/services/cloud" element={<Navigate to="/services#cloud" replace />} />
- <Route path="/services/data" element={<Navigate to="/services#data" replace />} />
- <Route path="/services/apps" element={<Navigate to="/services#apps" replace />} />
 
  {/* Legacy redirects */}
  <Route path="/security" element={<Navigate to="/services/security" replace />} />
@@ -132,8 +126,7 @@ function App() {
  <Route path="/retail" element={<Navigate to="/industries" replace />} />
  <Route path="/edu" element={<Navigate to="/industries" replace />} />
 
- <Route path="/careers" element={<Careers />} />
- <Route path="/careers/:id" element={<JobDetail />} />
+
  <Route path="/founders" element={<Navigate to="/#leadership" replace />} />
  <Route path="/team" element={<Navigate to="/#leadership" replace />} />
  <Route path="/offices" element={<Navigate to="/#offices" replace />} />
@@ -176,10 +169,11 @@ function App() {
  </AnimatePresence>
  </main>
 
- {!isStandalone && <Footer />}
- {!isStandalone && <Chatbot />}
- </div>
- );
+  {!isStandalone && <Footer />}
+        {!isStandalone && <Chatbot />}
+      </div>
+    </ToastProvider>
+  );
 }
 
 export default App;

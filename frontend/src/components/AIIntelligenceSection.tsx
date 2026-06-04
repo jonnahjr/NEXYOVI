@@ -48,8 +48,9 @@ export default function AIIntelligenceSection() {
  const Icon = cap.icon;
  return (
  <motion.div key={i} variants={revealUp} className="flex gap-4 p-4 rounded-2xl bg-white border border-slate-200 hover:bg-slate-50 transition-colors card-hud">
- <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0">
- <Icon size={18} className="text-slate-700" />
+ <div className="relative w-10 h-10 rounded-xl bg-[#030303] border border-white/10 flex items-center justify-center shrink-0 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 transition-all duration-300">
+ <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+ <Icon size={18} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors" />
  </div>
  <div>
  <h4 className="text-slate-950 font-bold text-[14px] mb-1">{cap.title}</h4>
@@ -83,8 +84,9 @@ export default function AIIntelligenceSection() {
 
  {/* Central Core */}
  <div className="absolute w-32 h-32 rounded-full bg-slate-100 blur-xl" />
- <div className="relative z-10 w-24 h-24 rounded-2xl bg-slate-100 border border-slate-200 flex items-center justify-center ">
- <BrainCircuit size={40} className="text-slate-800" />
+ <div className="relative z-10 w-24 h-24 rounded-2xl bg-[#030303] border border-white/10 flex items-center justify-center overflow-hidden shadow-sm">
+ <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+ <BrainCircuit size={40} className="relative z-10 text-zinc-400" />
  </div>
 
  {/* Orbiting Elements */}

@@ -90,8 +90,9 @@ function OrganizationsAccordion() {
               onClick={() => toggle(i)}
               className="w-full flex items-center gap-4 px-6 py-4 rounded-[20px] bg-white border border-slate-200 hover:border-[#F5A800]/30 transition-all duration-300 text-left group"
             >
-              <div className="w-11 h-11 rounded-xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center shrink-0 text-[#F5A800] group-hover:bg-[#F5A800] group-hover:text-white transition-all duration-300">
-                <Icon size={18} />
+              <div className="relative w-11 h-11 rounded-xl bg-[#030303] border border-white/10 flex items-center justify-center shrink-0 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 transition-all duration-300">
+                <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                <Icon size={18} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors" />
               </div>
               <div className="flex-1">
                 <h3 className="text-[15px] font-black text-slate-950 tracking-tight group-hover:text-[#F5A800] transition-colors text-left">
@@ -301,15 +302,15 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          4. FEATURED PROJECTS — Dark Section (proof first)
+          4. FEATURED PROJECTS — Creamy White
          ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
+      <section className="relative py-28 md:py-36 bg-[#FCFBF8] border-t border-slate-200 overflow-hidden">
         <div className="container max-w-6xl mx-auto px-6 relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-16">
             <motion.div variants={fadeUp}>
-              <SectionBadge label="Featured Projects" dark />
+              <SectionBadge label="Featured Projects" />
             </motion.div>
-            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-4">
+            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-4">
               Products We{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Built.</span>
             </motion.h2>
           </motion.div>
@@ -322,14 +323,15 @@ export default function Company() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08, duration: 0.5 }}
-                className="group bg-white/[0.03] rounded-[24px] border border-white/[0.08] p-8 transition-all duration-500 hover:-translate-y-1 hover:border-[#F5A800]/30 text-left"
+                className="group bg-white rounded-[24px] border border-slate-200 p-8 transition-all duration-500 hover:-translate-y-1 hover:border-[#F5A800]/40 text-left"
               >
-                <div className="w-12 h-12 rounded-2xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center mb-5 group-hover:bg-[#F5A800] group-hover:text-white transition-all duration-300">
-                  <Code2 size={22} className="text-[#F5A800] group-hover:text-white transition-colors" />
+                <div className="relative w-12 h-12 rounded-2xl bg-[#030303] border border-white/10 flex items-center justify-center mb-5 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 transition-all duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                  <Code2 size={22} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors" />
                 </div>
                 <span className="text-[10px] font-black text-[#F5A800] uppercase tracking-widest mb-2 block">{project.tag}</span>
-                <h3 className="text-xl font-black text-white mb-2 group-hover:text-[#F5A800] transition-colors">{project.title}</h3>
-                <p className="text-white/50 text-sm leading-relaxed font-medium">{project.desc}</p>
+                <h3 className="text-xl font-black text-slate-950 mb-2 group-hover:text-[#F5A800] transition-colors">{project.title}</h3>
+                <p className="text-slate-500 text-sm leading-relaxed font-medium">{project.desc}</p>
                 {project.outcome && (
                   <p className="text-[#F5A800]/80 text-[12px] font-semibold mt-4 leading-relaxed">
                     {project.outcome}
@@ -342,9 +344,12 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          5. MISSION & VISION — Light · Clean Editorial
+          5. MISSION & VISION — Dark
          ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-white section-divider-light overflow-hidden">
+      <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/3 w-[500px] h-[500px] bg-[#F5A800]/8 rounded-full blur-[140px]" />
+        </div>
         <div className="container max-w-5xl mx-auto px-6 relative z-10">
           {/* Header */}
           <motion.div
@@ -354,42 +359,41 @@ export default function Company() {
             transition={{ duration: 0.5, ease: EASE_EXPO }}
             className="text-center mb-16"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 border border-slate-200 shadow-sm mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800]" />
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-600">Why We Exist</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/60">Why We Exist</span>
             </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95]">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-[-0.04em] leading-[0.95]">
               Mission &{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Vision.</span>
             </h2>
           </motion.div>
 
-          {/* Content — removed outer box wrapper */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1, ease: EASE_EXPO }}
-            className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-100"
+            className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-white/10"
           >
             {/* ── Mission ── */}
             <div className="p-10 md:p-12 lg:p-14">
-              <h3 className="text-2xl md:text-3xl font-black text-slate-950 tracking-[-0.03em] leading-[1.1] mb-5">
+              <h3 className="text-2xl md:text-3xl font-black text-white tracking-[-0.03em] leading-[1.1] mb-5">
                 Building the future of digital infrastructure.
               </h3>
 
-              <p className="text-slate-600 text-base leading-relaxed">
+              <p className="text-white/50 text-base leading-relaxed">
                 To build software systems, AI platforms, and cloud infrastructure that power modern organizations — delivering enterprise-grade engineering that moves businesses forward across Africa and beyond.
               </p>
             </div>
 
             {/* ── Vision ── */}
             <div className="p-10 md:p-12 lg:p-14">
-              <h3 className="text-2xl md:text-3xl font-black text-slate-950 tracking-[-0.03em] leading-[1.1] mb-5">
+              <h3 className="text-2xl md:text-3xl font-black text-white tracking-[-0.03em] leading-[1.1] mb-5">
                 Africa's most trusted engineering partner.
               </h3>
 
-              <p className="text-slate-600 text-base leading-relaxed">
+              <p className="text-white/50 text-base leading-relaxed">
                 To be Africa's most trusted engineering partner — known for shipping enterprise-grade systems that are secure, scalable, and built to last. No hype, just measurable results.
               </p>
             </div>
@@ -398,21 +402,18 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          6. CORE PRINCIPLES — Dark · Capabilities Style
+          6. CORE PRINCIPLES — Creamy White
          ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/3 w-[600px] h-[600px] bg-[#F5A800]/8 rounded-full blur-[140px]" />
-        </div>
+      <section className="relative py-28 md:py-36 bg-[#FCFBF8] border-t border-slate-200 overflow-hidden">
         <div className="container max-w-6xl mx-auto px-6 relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-16">
             <motion.div variants={fadeUp}>
-              <SectionBadge label="Core Principles" dark />
+              <SectionBadge label="Core Principles" />
             </motion.div>
-            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-4">
+            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-4">
               Built on{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Principles.</span>
             </motion.h2>
-            <motion.p variants={fadeUp} className="text-white/50 text-lg font-medium max-w-xl mx-auto">Uncompromising standards that guide our engineering and define every partnership.</motion.p>
+            <motion.p variants={fadeUp} className="text-slate-600 text-lg font-medium max-w-xl mx-auto">Uncompromising standards that guide our engineering and define every partnership.</motion.p>
           </motion.div>
 
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid grid-cols-2 lg:grid-cols-3 gap-4">
@@ -422,13 +423,14 @@ export default function Company() {
                 <motion.div
                   key={v.title}
                   variants={fadeUp}
-                  className="group bg-white/[0.03] rounded-[20px] border border-white/[0.08] p-6 md:p-8 text-center hover:border-[#F5A800]/30 transition-all duration-500"
+                  className="group bg-white rounded-[20px] border border-slate-200 p-6 md:p-8 text-center hover:border-[#F5A800]/40 transition-all duration-500"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center mx-auto mb-4 text-[#F5A800] group-hover:bg-[#F5A800] group-hover:text-white transition-all duration-300">
-                    <Icon size={22} />
+                  <div className="relative w-12 h-12 rounded-xl bg-[#030303] border border-white/10 flex items-center justify-center mx-auto mb-4 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 transition-all duration-300">
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                    <Icon size={22} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors" />
                   </div>
-                  <h3 className="text-lg font-black text-white mb-2 tracking-tight">{v.title}</h3>
-                  <p className="text-white/40 text-[12px] leading-relaxed font-medium">{v.desc}</p>
+                  <h3 className="text-lg font-black text-slate-950 mb-2 tracking-tight">{v.title}</h3>
+                  <p className="text-slate-500 text-[12px] leading-relaxed font-medium">{v.desc}</p>
                 </motion.div>
               );
             })}
@@ -437,21 +439,18 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          7. OUR CAPABILITIES — Dark Section (trimmed)
+          7. OUR CAPABILITIES — Creamy White
          ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/3 w-[600px] h-[600px] bg-[#F5A800]/8 rounded-full blur-[140px]" />
-        </div>
+      <section className="relative py-28 md:py-36 bg-[#FCFBF8] border-t border-slate-200 overflow-hidden">
         <div className="container max-w-5xl mx-auto px-6 relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-16">
             <motion.div variants={fadeUp}>
-              <SectionBadge label="Our Capabilities" dark />
+              <SectionBadge label="Our Capabilities" />
             </motion.div>
-            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-4">
+            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-4">
               Full-Spectrum{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Capabilities.</span>
             </motion.h2>
-            <motion.p variants={fadeUp} className="text-white/50 text-lg font-medium max-w-xl mx-auto">End-to-end capabilities across the full technology stack — from code to infrastructure.</motion.p>
+            <motion.p variants={fadeUp} className="text-slate-600 text-lg font-medium max-w-xl mx-auto">End-to-end capabilities across the full technology stack — from code to infrastructure.</motion.p>
           </motion.div>
 
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -466,13 +465,14 @@ export default function Company() {
                 <motion.div
                   key={item.title}
                   variants={fadeUp}
-                  className="group bg-white/[0.03] rounded-[20px] border border-white/[0.08] p-6 md:p-8 text-center hover:border-[#F5A800]/30 transition-all duration-500"
+                  className="group bg-white rounded-[20px] border border-slate-200 p-6 md:p-8 text-center hover:border-[#F5A800]/40 transition-all duration-500"
                 >
-                  <div className="w-11 h-11 rounded-xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center mx-auto mb-4 text-[#F5A800] group-hover:bg-[#F5A800] group-hover:text-white transition-all duration-300">
-                    <Icon size={20} />
+                  <div className="relative w-11 h-11 rounded-xl bg-[#030303] border border-white/10 flex items-center justify-center mx-auto mb-4 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 transition-all duration-300">
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                    <Icon size={20} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors" />
                   </div>
-                  <h3 className="text-lg font-black text-white mb-2 tracking-tight">{item.title}</h3>
-                  <p className="text-white/40 text-[12px] leading-relaxed font-medium">{item.desc}</p>
+                  <h3 className="text-lg font-black text-slate-950 mb-2 tracking-tight">{item.title}</h3>
+                  <p className="text-slate-500 text-[12px] leading-relaxed font-medium">{item.desc}</p>
                 </motion.div>
               );
             })}
@@ -481,22 +481,22 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          8. LEADERSHIP / TEAM — Light Section
+          8. LEADERSHIP / TEAM — Dark Section
          ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-white section-divider-light overflow-hidden">
+      <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#F5A800]/5 blur-[140px] rounded-full" />
+          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#F5A800]/6 blur-[140px] rounded-full" />
           <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#8b5cf6]/5 blur-[100px] rounded-full" />
         </div>
         <div className="container max-w-5xl mx-auto px-6 relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-16">
             <motion.div variants={fadeUp}>
-              <SectionBadge label="Our Team" />
+              <SectionBadge label="Our Team" dark />
             </motion.div>
-            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-4">
+            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-4">
               Meet the{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Team.</span>
             </motion.h2>
-            <motion.p variants={fadeUp} className="text-slate-500 text-lg font-medium max-w-xl mx-auto">
+            <motion.p variants={fadeUp} className="text-white/50 text-lg font-medium max-w-xl mx-auto">
               Leadership team overseeing software engineering, AI innovation, and cloud infrastructure delivery across global markets.
             </motion.p>
           </motion.div>
@@ -518,9 +518,9 @@ export default function Company() {
                 </div>
               )}
             </div>
-            <h2 className="text-3xl md:text-4xl font-black text-slate-950 tracking-tight mb-1">Yonas Bogale</h2>
+            <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-1">Yonas Bogale</h2>
             <p className="text-[#F5A800] text-[12px] font-black uppercase tracking-[0.2em] mb-4">Founder & CEO</p>
-            <p className="text-slate-600 text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white/50 text-lg leading-relaxed max-w-2xl mx-auto">
               Leading Nexyovi's mission to build practical software, AI solutions, and digital infrastructure for modern businesses.
             </p>
           </motion.div>
@@ -534,7 +534,7 @@ export default function Company() {
                 <motion.div
                   key={member.id}
                   variants={fadeUp}
-                  className="group bg-white rounded-[24px] border border-slate-200 p-8 text-center transition-all duration-500 hover:-translate-y-1 hover:border-[#F5A800]/30"
+                  className="group bg-white/[0.03] rounded-[24px] border border-white/[0.08] p-8 text-center transition-all duration-500 hover:-translate-y-1 hover:border-[#F5A800]/30"
                 >
                   <div className="w-24 h-24 rounded-full mx-auto mb-5 overflow-hidden border-2 border-transparent group-hover:border-[#F5A800]/30 transition-all duration-500">
                     {member.img ? (
@@ -545,9 +545,9 @@ export default function Company() {
                       </div>
                     )}
                   </div>
-                  <h3 className="text-xl font-black text-slate-950 mb-0.5 group-hover:text-[#F5A800] transition-colors">{member.name}</h3>
+                  <h3 className="text-xl font-black text-white mb-0.5 group-hover:text-[#F5A800] transition-colors">{member.name}</h3>
                   <p className="text-[11px] font-black uppercase tracking-[0.15em] text-[#F5A800] mb-3">{member.role}</p>
-                  <p className="text-slate-500 text-sm leading-relaxed font-medium max-w-xs mx-auto mb-4">{member.bio}</p>
+                  <p className="text-white/50 text-sm leading-relaxed font-medium max-w-xs mx-auto mb-4">{member.bio}</p>
                   {member.linkedin && (
                     <a
                       href={member.linkedin}
@@ -567,6 +567,42 @@ export default function Company() {
 
           </motion.div>
 
+          {/* Core Team Grid */}
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={staggerContainer} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 max-w-6xl mx-auto mt-12">
+            {team.filter((m: any) => !['1', '2', '3'].includes(m.id)).map((member: any) => (
+              <motion.div
+                key={member.id}
+                variants={fadeUp}
+                className="group bg-white/[0.02] rounded-[20px] border border-white/[0.05] p-5 text-center transition-all duration-500 hover:-translate-y-1 hover:border-[#F5A800]/20 hover:bg-white/[0.04]"
+              >
+                <div className="w-16 h-16 rounded-full mx-auto mb-4 overflow-hidden border border-transparent group-hover:border-[#F5A800]/30 transition-all duration-500">
+                  {member.img ? (
+                    <img src={member.img} alt={member.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-white font-black text-sm" style={{ backgroundColor: member.color || '#8b5cf6' }}>
+                      {member.initials || member.name.split(' ').map((n: string) => n[0]).join('')}
+                    </div>
+                  )}
+                </div>
+                <h4 className="text-sm font-black text-white mb-1 group-hover:text-[#F5A800] transition-colors">{member.name}</h4>
+                <p className="text-[9px] font-black uppercase tracking-[0.1em] text-[#F5A800] mb-2">{member.role}</p>
+                <p className="text-white/40 text-[10px] leading-relaxed font-medium line-clamp-3 mb-3">{member.bio}</p>
+                {member.linkedin && (
+                  <a
+                    href={member.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white/5 border border-white/10 text-white/50 text-[9px] font-bold hover:bg-[#0a66c2]/20 hover:text-[#0a66c2] hover:border-[#0a66c2]/30 transition-all mx-auto"
+                    onClick={(e: React.MouseEvent) => e.stopPropagation()}
+                  >
+                    <Linkedin size={10} />
+                    LinkedIn
+                  </a>
+                )}
+              </motion.div>
+            ))}
+          </motion.div>
+
           {/* Distributed team note */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
@@ -575,9 +611,9 @@ export default function Company() {
             transition={{ delay: 0.3, duration: 0.6 }}
             className="text-center mt-10 max-w-2xl mx-auto"
           >
-            <div className="relative px-8 py-6 rounded-[20px] bg-white border border-slate-200">
+            <div className="relative px-8 py-6 rounded-[20px] bg-white/[0.03] border border-white/[0.08]">
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-[2px] bg-gradient-to-r from-transparent via-[#F5A800] to-transparent" />
-              <p className="text-slate-500 text-sm leading-relaxed font-medium">
+              <p className="text-white/50 text-sm leading-relaxed font-medium">
                 Supported by a distributed team of software engineers, AI specialists, designers, DevOps engineers, and infrastructure experts across multiple regions.
               </p>
             </div>
@@ -586,21 +622,18 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          9. SECURITY & COMPLIANCE — Dark Section
+          9. SECURITY & COMPLIANCE — Creamy White
          ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute bottom-0 right-1/4 w-[600px] h-[400px] bg-[#F5A800]/8 blur-[100px] rounded-full" />
-        </div>
+      <section className="relative py-28 md:py-36 bg-[#FCFBF8] border-t border-slate-200 overflow-hidden">
         <div className="container max-w-5xl mx-auto px-6 relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-16">
             <motion.div variants={fadeUp}>
-              <SectionBadge label="Security & Compliance" dark />
+              <SectionBadge label="Security & Compliance" />
             </motion.div>
-            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-4">
-              Security-First{' '}<span className="text-white/40">Engineering.</span>
+            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-4">
+              Security-First{' '}<span className="text-slate-400">Engineering.</span>
             </motion.h2>
-            <motion.p variants={fadeUp} className="text-white/50 text-lg font-medium max-w-xl mx-auto">Security is embedded at every layer of our engineering process — from architecture design through deployment and operations.</motion.p>
+            <motion.p variants={fadeUp} className="text-slate-600 text-lg font-medium max-w-xl mx-auto">Security is embedded at every layer of our engineering process — from architecture design through deployment and operations.</motion.p>
           </motion.div>
 
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -612,10 +645,13 @@ export default function Company() {
               { title: 'Enterprise Security Reviews', desc: 'Regular third-party security assessments, penetration testing, and architecture reviews to identify and remediate risks proactively.' },
               { title: 'Secure SDLC & CI/CD', desc: 'Automated security gates in our pipelines — from dependency scanning and SAST to container image signing and supply chain verification.' },
             ].map((item) => (
-              <motion.div key={item.title} variants={fadeUp} className="group p-6 rounded-[24px] bg-white/[0.03] border border-white/[0.08] hover:border-[#F5A800]/40 transition-all duration-500">
-                <div className="w-11 h-11 rounded-2xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center text-[#F5A800] group-hover:bg-[#F5A800] group-hover:text-white transition-all duration-500 mb-5"><ShieldCheck size={20} /></div>
-                <h3 className="text-lg font-black text-white mb-2 group-hover:text-[#F5A800] transition-colors">{item.title}</h3>
-                <p className="text-white/50 text-sm font-medium leading-relaxed">{item.desc}</p>
+              <motion.div key={item.title} variants={fadeUp} className="group p-6 rounded-[24px] bg-white border border-slate-200 hover:border-[#F5A800]/40 transition-all duration-500">
+                <div className="relative w-11 h-11 rounded-2xl bg-[#030303] border border-white/10 flex items-center justify-center overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 transition-all duration-500 mb-5">
+                  <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                  <ShieldCheck size={20} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors" />
+                </div>
+                <h3 className="text-lg font-black text-slate-950 mb-2 group-hover:text-[#F5A800] transition-colors">{item.title}</h3>
+                <p className="text-slate-500 text-sm font-medium leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -654,8 +690,9 @@ export default function Company() {
                   className="group relative rounded-[24px] border border-slate-200 bg-white p-8 transition-all duration-500 hover:border-[#F5A800]/30 hover:-translate-y-0.5"
                 >
                   <div className="flex items-center gap-4 mb-5">
-                    <div className="w-12 h-12 rounded-2xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center text-[#F5A800] group-hover:bg-[#F5A800] group-hover:text-white transition-all duration-300 shrink-0">
-                      <Icon size={22} />
+                    <div className="relative w-12 h-12 rounded-2xl bg-[#030303] border border-white/10 flex items-center justify-center shrink-0 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 transition-all duration-300">
+                      <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                      <Icon size={22} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors" />
                     </div>
                     <h3 className="text-xl font-black text-slate-950 tracking-tight group-hover:text-[#F5A800] transition-colors">{item.title}</h3>
                   </div>

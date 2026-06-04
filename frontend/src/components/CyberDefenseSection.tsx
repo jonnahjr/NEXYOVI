@@ -41,8 +41,9 @@ export default function CyberDefenseSection() {
  <motion.div variants={staggerContainer} className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
  {capabilities.map((cap, i) => (
  <motion.div key={i} variants={revealUp} className="flex gap-4 group">
- <div className="w-8 h-8 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0 group-hover:bg-slate-200 transition-colors">
- <Crosshair size={14} className="text-slate-700" />
+ <div className="relative w-8 h-8 rounded-lg bg-[#030303] border border-white/10 flex items-center justify-center shrink-0 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 transition-all duration-300">
+ <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+ <Crosshair size={14} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors" />
  </div>
  <div>
  <h4 className="text-slate-950 font-bold text-[14px] mb-1">{cap.title}</h4>
@@ -91,8 +92,9 @@ export default function CyberDefenseSection() {
  </div>
 
  {/* Center Icon */}
- <div className="relative z-10 w-16 h-16 rounded-2xl bg-slate-100 border border-slate-200 flex items-center justify-center ">
- <Shield size={24} className="text-slate-700" />
+ <div className="relative z-10 w-16 h-16 rounded-2xl bg-[#030303] border border-white/10 flex items-center justify-center overflow-hidden shadow-sm">
+ <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+ <Shield size={24} className="relative z-10 text-zinc-400" />
  </div>
 
  {/* Floating UI Elements */}

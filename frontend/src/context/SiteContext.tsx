@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { jobs as initialJobs } from '../constants/jobs';
 
 // Initial Team Data
 import yonasImg from '../assets/yonas.jpg';
@@ -40,7 +39,7 @@ const initialAdmins = [
 const initialSettings = {
  siteName: 'Nexyovi',
  email: 'info@nexyovi.com',
- phone: '+251 938 617 252',
+ phone: '+251938617252',
  address: 'Bole District, Addis Ababa, Ethiopia',
  socials: {
  twitter: '#',
@@ -99,9 +98,7 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
  });
 
  return () => subscription.unsubscribe();
- }, []);
-
- const [jobs, setJobs] = useState<any[]>(initialJobs); // Fallback to initial if db empty initially
+ }, []);  const [jobs, setJobs] = useState<any[]>([]);
  const [team, setTeam] = useState<any[]>(initialTeam);
  // Keep initial testimonials as the authoritative source (has linkedin, img fields)
  // Supabase is used for admin CRUD operations but initial data takes priority

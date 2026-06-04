@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
 import { CheckCircle2, FileText, Lock, Server, ShieldCheck } from 'lucide-react';
+import { useToast } from '../context/ToastContext';
 
 const TrustCenter = () => {
+ const { toast } = useToast();
  return (
  <div className="bg-slate-50 min-h-screen pt-32 pb-24">
  {/* Hero Section */}
@@ -68,8 +70,9 @@ const TrustCenter = () => {
  transition={{ delay: 0.3 + (i * 0.1) }}
  className="p-8 rounded-2xl bg-white border border-slate-200 hover:border-[#F5A800]/30 transition-all hover:shadow-md"
  >
- <div className="w-12 h-12 rounded-xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center text-[#F5A800] mb-6">
- <Icon size={24} />
+ <div className="relative w-12 h-12 rounded-xl bg-[#030303] border border-white/10 flex items-center justify-center mb-6 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 transition-colors duration-300">
+ <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+ <Icon size={24} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" />
  </div>
  <h3 className="text-xl font-black text-slate-950 mb-3">{pillar.title}</h3>
  <p className="text-slate-500 text-sm leading-relaxed">{pillar.desc}</p>
@@ -93,17 +96,20 @@ const TrustCenter = () => {
  "Acceptable Use Policy",
  "Cookie Policy"
  ].map((doc, i) => (
- <a
- key={i}
- href="#"
- className="group flex items-center justify-between p-5 rounded-xl bg-white border border-slate-200 hover:border-[#F5A800]/30 hover:shadow-md transition-all"
- >
- <div className="flex items-center gap-4">
- <CheckCircle2 size={18} className="text-[#F5A800]" />
- <span className="text-white font-medium">{doc}</span>
- </div>
- <span className="text-[#FFD166] text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Read</span>
- </a>
+            <button
+              key={i}
+              onClick={(e) => {
+                e.preventDefault();
+                toast(`Opening ${doc} document...`, 'info');
+              }}
+              className="w-full text-left group flex items-center justify-between p-5 rounded-xl bg-[#030303] border border-white/10 hover:border-[#F5A800]/30 hover:shadow-md transition-all"
+            >
+              <div className="flex items-center gap-4">
+                <CheckCircle2 size={18} className="text-[#F5A800]" />
+                <span className="text-white font-medium">{doc}</span>
+              </div>
+              <span className="text-[#F5A800] text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Read</span>
+            </button>
  ))}
  </div>
  </section>

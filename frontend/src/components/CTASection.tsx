@@ -49,15 +49,14 @@ const CTASection = () => {
  high-performance engineering to dominate their markets.
  </p>
 
- <div className="flex flex-col md:flex-row items-center justify-center gap-5">
- <Link
- to="/contact"
- id="cta-section-start"
- className="group btn-gold text-[14px] px-9 py-4 w-full md:w-auto"
- >
- <span className="relative z-10">Start a Project</span>
- <ArrowRight size={15} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
- </Link>
+ <div className="flex flex-col md:flex-row items-center justify-center gap-5">              <a
+                href="mailto:contact@nexyovi.com"
+                id="cta-section-start"
+                className="group btn-gold text-[14px] px-9 py-4 w-full md:w-auto"
+              >
+                <span className="relative z-10">Start a Project</span>
+                <ArrowRight size={15} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
+              </a>
 
  <Link
  to="/services"

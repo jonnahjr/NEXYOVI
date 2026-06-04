@@ -131,7 +131,7 @@ VALUES (
   'global',
   'Nexyovi',
   'contact@nexyovi.com',
-  '+251 911 000 000',
+  '+251938617252',
   'Addis Ababa, Ethiopia',
   '',
   '{"github":"https://github.com/nexyovi","linkedin":"https://linkedin.com/company/nexyovi","twitter":"https://twitter.com/nexyovi","youtube":"#","instagram":"#","discord":"#","slack":"#"}'::jsonb

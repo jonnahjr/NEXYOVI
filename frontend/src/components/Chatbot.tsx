@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, X } from 'lucide-react';
+import { useToast } from '../context/ToastContext';
 
 const Chatbot = () => {
  const [chatOpen, setChatOpen] = useState(false);
+ const [inputValue, setInputValue] = useState('');
+ const { toast } = useToast();
+
+ const handleSend = () => {
+   if (!inputValue.trim()) return;
+   toast('Connecting to live support agent...', 'info');
+   setInputValue('');
+ };
 
  return (
  <div className="fixed bottom-6 right-6 z-50">
@@ -36,8 +45,15 @@ const Chatbot = () => {
  </div>
  </div>
  <div className="p-4 border-t border-white/10 bg-white/5 relative">
- <input type="text" placeholder="Type your message..." className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 pb-3 pr-10 text-sm text-white focus:outline-none focus:border-[#F5A800] transition-colors" />
- <button className="absolute right-7 top-1/2 -translate-y-1/2 text-white/40 hover:text-white"><Send size={16}/></button>
+ <input 
+    type="text" 
+    value={inputValue}
+    onChange={(e) => setInputValue(e.target.value)}
+    onKeyDown={(e) => { if (e.key === 'Enter') handleSend(); }}
+    placeholder="Type your message..." 
+    className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 pb-3 pr-10 text-sm text-white focus:outline-none focus:border-[#F5A800] transition-colors" 
+  />
+ <button onClick={handleSend} className="absolute right-7 top-1/2 -translate-y-1/2 text-white/40 hover:text-white"><Send size={16}/></button>
  </div>
  </motion.div>
  )}

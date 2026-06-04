@@ -74,7 +74,7 @@ const services = [
 
 const ServicesSection = () => {
     return (
-        <section className="relative bg-white py-32 section-divider-light">
+        <section className="relative bg-[#FCFBF8] py-32 border-t border-slate-200">
             <div className="container relative z-10">
 
                 <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 relative">
@@ -95,7 +95,7 @@ const ServicesSection = () => {
                             <Link
                                 to="/services"
                                 id="services-explore-all"
-                                className="inline-flex items-center gap-3 px-10 py-5 rounded-full bg-slate-950 text-white font-bold text-[15px] transition-all hover:scale-105 hover:bg-[#F5A800]"
+                                className="inline-flex items-center gap-3 px-10 py-5 rounded-full bg-slate-950 text-white font-bold text-[15px] transition-all hover:scale-105 hover:bg-[#F5A800] hover:text-black"
                             >
                                 Explore All Capabilities
                                 <ArrowRight size={16} />
@@ -115,32 +115,28 @@ const ServicesSection = () => {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true, margin: "-100px" }}
                                     transition={{ delay: 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                                    className="sticky group relative flex flex-col md:flex-row gap-10 p-12 bg-white border border-slate-200 rounded-[32px] hover:border-[#F5A800]/40 transition-all duration-500 overflow-hidden"
+                                    className="sticky group relative flex flex-col md:flex-row gap-4 md:gap-6 p-6 md:p-8 bg-white border border-slate-200 rounded-[24px] hover:border-[#F5A800]/30 transition-all duration-500 overflow-hidden shadow-[0_2px_20px_-8px_rgba(0,0,0,0.04)]"
                                     style={{ top: `${topOffset}px`, zIndex: i + 10 }}
                                 >
                                     <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-                                    <div className="w-16 h-16 rounded-[20px] bg-slate-100 flex items-center justify-center shrink-0 border border-slate-200 group-hover:border-[#F5A800]/30 transition-colors relative z-10">
-                                        <Icon size={28} className="text-slate-600 group-hover:text-[#F5A800] transition-colors" />
+                                    <div className="relative w-12 h-12 rounded-[14px] bg-[#030303] flex items-center justify-center shrink-0 border border-white/10 group-hover:border-[#F5A800]/40 transition-all duration-300 shadow-sm overflow-hidden z-10">
+                                        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                                        <Icon size={20} className="text-zinc-400 group-hover:text-[#F5A800] transition-colors relative z-10" />
                                     </div>
 
                                     <div className="flex flex-col relative z-10 w-full">
-                                        <h3 className="text-3xl md:text-4xl font-black text-slate-950 tracking-tight mb-4 group-hover:text-[#F5A800] transition-colors">
+                                        <h3 className="text-xl md:text-2xl font-black text-slate-950 tracking-tight mb-2 group-hover:text-[#F5A800] transition-colors">
                                             {s.title}
                                         </h3>
-                                        <p className="text-slate-600 text-base md:text-lg leading-relaxed mb-6 font-medium max-w-lg">
+                                        <p className="text-slate-600 text-sm md:text-base leading-relaxed mb-4 font-medium max-w-lg">
                                             {s.desc}
                                         </p>
                                         <div className="flex flex-wrap gap-2">
                                             {s.tags.map((tag) => (
                                                 <span
                                                     key={tag}
-                                                    className="text-[12px] font-bold px-5 py-2.5 rounded-full uppercase tracking-widest border transition-colors duration-300"
-                                                    style={{
-                                                        backgroundColor: '#F5A800',
-                                                        borderColor: '#F5A800',
-                                                        color: '#000000',
-                                                    }}
+                                                    className="text-[10px] font-bold px-3 py-1.5 md:px-4 md:py-2 rounded-full uppercase tracking-widest bg-[#F5A800] border border-[#F5A800] text-black transition-all duration-300 hover:bg-[#e69a00]"
                                                 >
                                                     {tag}
                                                 </span>
@@ -149,8 +145,9 @@ const ServicesSection = () => {
                                     </div>
 
                                     {/* Arrow Icon */}
-                                    <div className="absolute top-10 right-10 w-10 h-10 rounded-full bg-slate-100 border border-slate-200 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-4 group-hover:translate-x-0 hidden md:flex z-10">
-                                        <ArrowRight size={16} className="text-[#F5A800]" />
+                                    <div className="absolute top-6 right-6 w-8 h-8 rounded-xl bg-[#030303] border border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-4 group-hover:translate-x-0 hidden md:flex z-10 overflow-hidden shadow-sm">
+                                        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                                        <ArrowRight size={12} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800]" />
                                     </div>
 
                                     {/* Link wrapper */}

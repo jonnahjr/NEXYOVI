@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, CheckCircle2, ShieldCheck, TrendingUp, Zap } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { useSite } from '../context/SiteContext';
 import { viewport } from '../lib/animations';
 
@@ -100,14 +99,14 @@ const HeroTrustSection = () => {
             transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col sm:flex-row gap-4 mb-16"
           >
-            <Link
-              to="/contact"
+            <a
+              href="mailto:contact@nexyovi.com"
               id="cta-start-project"
               className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-slate-950 text-white font-bold text-[14px] shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition-all duration-300 hover:bg-[#F5A800] hover:scale-105 hover:shadow-[0_8px_30px_rgba(245,168,0,0.25)] hover:-translate-y-0.5"
             >
               <span className="relative z-10">Start a Project</span>
               <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            </a>
 
             <a
               href={`mailto:${settings.email}`}
@@ -136,8 +135,9 @@ const HeroTrustSection = () => {
                 >
                   <div className="flex items-start gap-4">
                     {/* Icon */}
-                    <div className="w-10 h-10 shrink-0 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-600 transition-all duration-300 group-hover:bg-[#F5A800] group-hover:text-white group-hover:border-[#F5A800]">
-                      <Icon size={18} strokeWidth={2} />
+                    <div className="relative w-10 h-10 shrink-0 rounded-xl bg-[#030303] border border-white/10 flex items-center justify-center overflow-hidden shadow-sm transition-all duration-300 group-hover:border-[#F5A800]/40">
+                      <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                      <Icon size={18} strokeWidth={2} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors" />
                     </div>
 
                     {/* Content */}
@@ -237,13 +237,13 @@ const HeroTrustSection = () => {
               transition={{ duration: 0.5, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col sm:flex-row items-center justify-center gap-4"
             >
-              <Link
-                to="/contact"
+              <a
+                href="mailto:contact@nexyovi.com"
                 className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-white text-slate-950 font-bold text-[14px] shadow-[0_4px_14px_rgba(0,0,0,0.08)] transition-all duration-300 hover:bg-[#F5A800] hover:scale-105 hover:text-white hover:shadow-[0_8px_30px_rgba(245,168,0,0.2)] hover:-translate-y-0.5"
               >
                 <span className="relative z-10">Secure Your Strategy Session</span>
                 <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              </a>
 
               <a
                 href={`mailto:${settings.email}`}

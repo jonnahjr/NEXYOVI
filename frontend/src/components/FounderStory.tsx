@@ -19,7 +19,7 @@ export default function FounderStory() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/[0.06]">
             <span className="w-2 h-2 rounded-full bg-[#F5A800] animate-pulse" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50">Meet The Founder</span>
+            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50">Leadership</span>
           </div>
         </motion.div>
 
@@ -54,9 +54,16 @@ export default function FounderStory() {
             <p className="text-[#F5A800] font-bold uppercase tracking-[0.2em] text-sm mb-8">
               Founder & CEO
             </p>
-            <p className="text-lg md:text-xl text-white/80 leading-relaxed mb-10 max-w-lg">
-              "Building practical software and AI systems that help organizations modernize operations and create measurable business value."
-            </p>
+
+            <div className="space-y-6 text-white/80 leading-relaxed font-medium mb-10 max-w-lg">
+              <p>
+                Nexyovi was founded on a singular vision: to bring world-class engineering rigor to digital transformation. Too often, organizations are sold bloated software that lacks security, scalability, and long-term viability. We exist to change that narrative.
+              </p>
+              <p>
+                Our engineering philosophy is deeply rooted in security-first architecture. Whether we are building a fintech payment gateway or deploying sovereign cloud infrastructure for public institutions, we believe that robust systems are built from the ground up, not patched together as an afterthought.
+              </p>
+            </div>
+
             <a
               href="https://www.linkedin.com/in/yonas-bogale/"
               target="_blank"

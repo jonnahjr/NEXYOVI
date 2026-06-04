@@ -90,8 +90,9 @@ const HomeContent = () => {
  className="group bg-white rounded-[32px] border border-slate-200 p-8 flex flex-col justify-between hover:border-[#F5A800]/40  transition-all duration-500"
  >
  <div>
- <div className="w-14 h-14 rounded-[16px] bg-slate-100 border border-slate-200 flex items-center justify-center mb-6 group-hover:border-[#F5A800]/30 transition-colors">
- <Zap size={22} className="text-slate-600 group-hover:text-[#F5A800] transition-colors" />
+ <div className="relative w-14 h-14 rounded-[16px] bg-[#030303] border border-white/10 flex items-center justify-center mb-6 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 transition-all duration-300">
+ <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+ <Zap size={22} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors" />
  </div>
  <h4 className="text-6xl font-black tracking-tighter text-slate-950 mb-2"><Counter value={35} suffix="%" /></h4>
  <p className="text-slate-500 text-[11px] font-bold uppercase tracking-widest">Route Efficiency</p>
@@ -107,8 +108,9 @@ const HomeContent = () => {
  className="group bg-white rounded-[32px] border border-slate-200 p-8 flex flex-col justify-between hover:border-[#F5A800]/40 transition-all duration-500"
  >
  <div>
- <div className="w-14 h-14 rounded-[16px] bg-slate-100 border border-slate-200 flex items-center justify-center mb-6 group-hover:border-[#F5A800]/30 transition-colors">
- <Globe size={22} className="text-slate-600 group-hover:text-[#F5A800] transition-colors" />
+ <div className="relative w-14 h-14 rounded-[16px] bg-[#030303] border border-white/10 flex items-center justify-center mb-6 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 transition-all duration-300">
+ <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+ <Globe size={22} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors" />
  </div>
  <h4 className="text-2xl font-black text-slate-950 mb-2">Addis Ababa</h4>
  <p className="text-slate-500 text-sm font-medium">Global Engineering Operations</p>

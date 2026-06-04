@@ -20,7 +20,7 @@ const industries = [
     icon: DollarSign,
     title: 'FinTech',
     subtitle: 'Financial Technology',
-    desc: 'Payment systems, digital banking platforms, and financial analytics with security & compliance at the core.',
+    desc: 'Core banking systems, payments, fraud detection.',
     accent: '#10b981',
     metrics: [
       { value: 'PCI-DSS', label: 'Compliance' },
@@ -35,7 +35,7 @@ const industries = [
     icon: HeartPulse,
     title: 'HealthTech',
     subtitle: 'Healthcare Technology',
-    desc: 'HIPAA-compliant data pipelines, secure telemedicine platforms, and predictive patient analytics systems.',
+    desc: 'Telemedicine, EHR systems, patient platforms.',
     accent: '#ef4444',
     metrics: [
       { value: 'HIPAA', label: 'Compliant' },
@@ -50,7 +50,7 @@ const industries = [
     icon: Truck,
     title: 'Logistics',
     subtitle: 'Supply Chain & Logistics',
-    desc: 'Real-time supply chain visibility, predictive routing algorithms, and IoT fleet tracking at enterprise scale.',
+    desc: 'Real-time supply chain visibility, predictive routing, IoT fleet tracking.',
     accent: '#f59e0b',
     metrics: [
       { value: '50K/s', label: 'Events' },
@@ -65,7 +65,7 @@ const industries = [
     icon: Building2,
     title: 'Government',
     subtitle: 'Public Sector',
-    desc: 'Secure, sovereign digital infrastructure for public institutions with highest-grade compliance and auditability.',
+    desc: 'Digital identity, citizen portals.',
     accent: '#F5A800',
     metrics: [
       { value: 'Air-Gap', label: 'Capable' },
@@ -80,7 +80,7 @@ const industries = [
     icon: GraduationCap,
     title: 'Education',
     subtitle: 'EdTech Platforms',
-    desc: 'Intelligent learning management systems, AI tutoring engines, and scalable campus digital infrastructure.',
+    desc: 'Learning management systems, AI tutoring engines, campus digital infrastructure.',
     accent: '#8b5cf6',
     metrics: [
       { value: '100K+', label: 'Users Served' },
@@ -95,7 +95,7 @@ const industries = [
     icon: Factory,
     title: 'Manufacturing',
     subtitle: 'Industrial Automation',
-    desc: 'Smart factory automation, predictive maintenance, and IIoT data platforms for modern industrial operations.',
+    desc: 'Smart factory automation, predictive maintenance, IIoT data platforms.',
     accent: '#06b6d4',
     metrics: [
       { value: 'IIoT', label: 'Integration' },
@@ -110,7 +110,7 @@ const industries = [
     icon: ShoppingCart,
     title: 'Retail',
     subtitle: 'Commerce Technology',
-    desc: 'Omnichannel commerce platforms, AI-driven personalization, and real-time inventory intelligence systems.',
+    desc: 'Omnichannel commerce platforms, AI-driven personalization, real-time inventory intelligence.',
     accent: '#ec4899',
     metrics: [
       { value: 'Omni', label: 'Channel' },
@@ -125,7 +125,7 @@ const industries = [
     icon: Zap,
     title: 'Energy',
     subtitle: 'Energy & Utilities',
-    desc: 'Smart grid management, renewable energy optimization, and critical infrastructure monitoring platforms.',
+    desc: 'Smart grid management, renewable energy optimization, critical infrastructure monitoring.',
     accent: '#F5A800',
     metrics: [
       { value: 'Smart', label: 'Grid' },
@@ -141,7 +141,7 @@ const IndustriesSection = () => {
   const [active, setActive] = useState(0);
 
   return (
-    <section className="relative bg-slate-50 py-32 section-divider-light overflow-hidden">
+    <section className="relative bg-[#FCFBF8] py-32 section-divider-light overflow-hidden">
       {/* Background Atmosphere */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.015]"
         style={{
@@ -251,22 +251,22 @@ const IndustriesSection = () => {
                             </div>
 
                             {/* Right: Metrics & CTA */}
-                            <div className="flex flex-col sm:flex-row lg:flex-col gap-2.5 w-full lg:w-44 shrink-0">
-                              <div className="grid grid-cols-2 lg:grid-cols-1 gap-2 w-full">
+                            <div className="flex flex-col sm:flex-row lg:flex-col gap-2 w-full lg:w-40 shrink-0">
+                              <div className="grid grid-cols-2 lg:grid-cols-1 gap-1.5 w-full">
                                 {ind.metrics.map(m => (
-                                  <div key={m.label} className="bg-[#F8F5EB] border border-slate-200/60 rounded-xl p-2.5 flex flex-col justify-center">
-                                    <div className="text-base font-bold text-slate-900 tracking-tight">{m.value}</div>
-                                    <div className="text-[9px] font-bold uppercase tracking-[0.1em] text-slate-500 mt-0.5">{m.label}</div>
+                                  <div key={m.label} className="bg-[#F8F5EB] border border-slate-200/60 rounded-lg p-1.5 md:p-2 flex flex-col justify-center">
+                                    <div className="text-sm font-bold text-slate-900 tracking-tight">{m.value}</div>
+                                    <div className="text-[8px] font-bold uppercase tracking-[0.1em] text-slate-500 mt-0.5">{m.label}</div>
                                   </div>
                                 ))}
                               </div>
 
                               <Link
                                 to="/industries"
-                                className="mt-1 w-full lg:w-auto px-5 py-3 rounded-xl bg-[#F5A800] text-black font-bold text-xs flex items-center justify-between hover:scale-105 transition-all group/btn shadow-md shadow-[#F5A800]/20"
+                                className="mt-1 w-full lg:w-auto px-3 py-2 rounded-lg bg-[#F5A800] text-black font-bold text-[10px] flex items-center justify-between hover:scale-105 transition-all group/btn shadow-md shadow-[#F5A800]/20"
                               >
                                 {ind.cta}
-                                <ArrowRight size={14} className="text-black/60 group-hover/btn:text-black group-hover/btn:translate-x-1 transition-all" />
+                                <ArrowRight size={12} className="text-black/60 group-hover/btn:text-black group-hover/btn:translate-x-1 transition-all" />
                               </Link>
                             </div>
 

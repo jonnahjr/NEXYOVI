@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link as LinkIcon, Bold, Italic, Underline, Strikethrough, AtSign, Highlighter, Plus } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const KnowledgeDocs = () => {
  const containerRef = useRef(null);
@@ -34,9 +35,9 @@ const KnowledgeDocs = () => {
  Architecting a central intelligence hub for your engineering team. Nexyovi's documentation layer is designed for speed, clarity, and deep integration.
  </p>
  <div className="flex flex-col gap-6">
- <button className="w-fit px-12 py-6 bg-white text-black text-sm font-black uppercase tracking-widest rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.08)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(245,168,0,0.15)] ">
+ <Link to="/contact" className="w-fit px-12 py-6 bg-white text-black text-sm font-black uppercase tracking-widest rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.08)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(245,168,0,0.15)] ">
  Access Library
- </button>
+ </Link>
  <div className="flex items-center gap-4 px-6 text-white/50 text-sm font-bold uppercase tracking-[0.2em]">
  <div className="h-px flex-1 bg-white/10" />
  Verified Documentation

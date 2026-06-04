@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, Zap, Building2, User } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Pricing = () => {
  const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('yearly');
@@ -87,9 +88,9 @@ const Pricing = () => {
  </ul>
  </div>
 
- <button className={`w-full py-4 text-[15px] font-bold rounded-xl transition-all ${plan.highlighted ? 'border-button-light' : 'border-button-grey'}`}>
+ <Link to="/contact" className={`block text-center w-full py-4 text-[15px] font-bold rounded-xl transition-all ${plan.highlighted ? 'border-button-light' : 'border-button-grey'}`}>
  {plan.cta}
- </button>
+ </Link>
  </motion.div>
  ))}
  </div>

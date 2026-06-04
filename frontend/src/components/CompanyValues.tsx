@@ -71,7 +71,7 @@ const CompanyValues = () => {
  Built on What{' '}
  <span className="text-slate-500">Matters</span>
  </h2>
- <p className="text-slate-600 text-lg leading-relaxed mb-12">
+ <p className="text-slate-600 text-lg leading-relaxed mb-12 max-w-2xl">
  Five principles that shape every engagement, every architecture, and every line of code we write.
  </p>
  </motion.div>
@@ -118,8 +118,9 @@ const CompanyValues = () => {
  className="relative pl-16 group"
  >
  {/* Icon Node */}
- <div className="absolute left-0 top-0 w-12 h-12 rounded-2xl bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:text-[#F5A800] group-hover:border-[#F5A800]/30 transition-colors z-10">
- <Icon size={20} />
+ <div className="absolute left-0 top-0 w-12 h-12 rounded-2xl bg-[#030303] border border-white/10 flex items-center justify-center overflow-hidden shadow-sm transition-all duration-300 group-hover:border-[#F5A800]/40 z-10">
+ <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+ <Icon size={20} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors" />
  </div>
 
  <div className="pt-2">

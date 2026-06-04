@@ -1,56 +1,80 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import {
   ArrowRight, Building2, Activity, HeartPulse, GraduationCap, Truck, Zap,
-  ShoppingCart, CheckCircle, Server, Shield, Cpu, Users, Target,
-  BarChart3, Code, Cloud, Database, Smartphone, BrainCircuit,
-  Layers, Network, ChevronRight, Clock, MapPin
+  ShoppingCart, CheckCircle, Shield, Cpu, Users, Target,
+  Code, Cloud, Database, Smartphone, BrainCircuit,
+  Layers, Network, ChevronRight, MapPin
 } from 'lucide-react';
 import { EASE_EXPO } from '../lib/animations';
 import TextReveal from '../components/TextReveal';
+import { CTAButton } from '../components/CTAButton';
 
 // ── Data ──────────────────────────────────────────────────────
 const industries = [
   {
     id: 'fintech', name: 'FinTech', icon: Activity, accent: '#F5A800',
-    desc: 'High-frequency trading systems, secure payment gateways, and core banking modernization engineered for zero latency.',
-    challenges: ['Fraud Detection & Prevention', 'Regulatory Compliance (PCI-DSS)', 'Payment Processing at Scale', 'Risk Management Systems'],
+    desc: 'Core banking systems, payment processing platforms, and financial intelligence infrastructure engineered for regulatory compliance and high throughput.',
+    challenges: ['Legacy core banking migration with zero downtime', 'Real-time fraud detection at transaction scale', 'Multi-regulatory compliance (PCI-DSS, PSD2, SOC 2)', 'High-frequency payment processing reliability'],
+    systems: ['Payment Gateways & Switch Systems', 'Fraud Detection ML Pipelines', 'Core Banking Modernization Platforms', 'KYC/AML Identity Verification'],
+    compliance: ['PCI-DSS Level 1', 'SOC 2 Type II', 'PSD2', 'ISO 27001'],
+    outcomes: ['Reduced transaction processing latency', 'Automated regulatory reporting', 'Real-time fraud prevention at scale', 'Uninterrupted payment operations'],
   },
   {
     id: 'healthtech', name: 'HealthTech', icon: HeartPulse, accent: '#10b981',
-    desc: 'HIPAA-compliant data pipelines, telemedicine platforms, interoperable EHR systems, and predictive patient analytics.',
-    challenges: ['Patient Data Security & Privacy', 'Telemedicine Infrastructure', 'EHR Interoperability', 'Healthcare Compliance (HIPAA)'],
+    desc: 'HIPAA-compliant data platforms, telemedicine infrastructure, EHR interoperability systems, and clinical decision support tools.',
+    challenges: ['Protected health information (PHI) security across systems', 'EHR interoperability between legacy and modern platforms', 'Telemedicine infrastructure reliability and compliance', 'Clinical data standardization (HL7 FHIR)'],
+    systems: ['Telemedicine & Remote Care Platforms', 'EHR Integration & Interoperability Layers', 'Clinical Decision Support Systems', 'Patient Data Lakes & Analytics'],
+    compliance: ['HIPAA', 'GDPR', 'HL7 FHIR', 'SOC 2 Type II'],
+    outcomes: ['Secure cross-provider data exchange', 'Reduced patient readmission via predictive analytics', 'Compliant telemedicine deployment at scale', 'Unified patient records across touchpoints'],
   },
   {
     id: 'govtech', name: 'GovTech', icon: Building2, accent: '#8b5cf6',
-    desc: 'Secure digital infrastructure for public institutions, citizen service portals, identity systems, and sovereign cloud platforms.',
-    challenges: ['Digital Public Services', 'Identity & Access Management', 'National Security Standards', 'Infrastructure Modernization'],
+    desc: 'Secure digital public infrastructure, citizen identity systems, e-government portals, and sovereign cloud platforms for national institutions.',
+    challenges: ['Sovereign data residency and cross-border compliance', 'Citizen identity management at national population scale', 'Legacy government system modernization', 'National security threat detection and response'],
+    systems: ['Digital Identity & Biometric Systems', 'E-Government Service Portals', 'Sovereign Cloud Infrastructure', 'National Security Operations Centers'],
+    compliance: ['NIST CSF', 'ISO 27001', 'GDPR', 'National Data Sovereignty Requirements'],
+    outcomes: ['Streamlined citizen service delivery', 'Reduced identity fraud through biometric verification', 'Compliant data sovereignty architecture', 'Modernized government digital infrastructure'],
   },
   {
     id: 'logistics', name: 'Logistics', icon: Truck, accent: '#f59e0b',
-    desc: 'Real-time supply chain visibility, predictive routing algorithms, IoT fleet tracking, and automated warehouse management.',
-    challenges: ['Supply Chain Visibility', 'Real-time IoT Tracking', 'Route Optimization', 'Warehouse Automation'],
-  },
-  {
-    id: 'education', name: 'Education', icon: GraduationCap, accent: '#ec4899',
-    desc: 'Scalable LMS platforms, AI-powered tutoring engines, virtual classrooms, and campus digital infrastructure.',
-    challenges: ['Scalable Learning Platforms', 'AI-Powered Tutoring', 'Virtual Classroom Infrastructure', 'Student Data Analytics'],
+    desc: 'Real-time supply chain visibility platforms, fleet management systems, warehouse automation, and logistics optimization engines.',
+    challenges: ['End-to-end supply chain visibility across disparate systems', 'Real-time fleet tracking in low-connectivity environments', 'Warehouse management system integration', 'Predictive demand and route optimization'],
+    systems: ['Supply Chain Control Towers', 'IoT Fleet Tracking & Telematics', 'Warehouse Management Systems', 'Route Optimization Engines'],
+    compliance: ['ISO 27001', 'GDPR', 'Industry-Specific Logistics Standards'],
+    outcomes: ['Reduced delivery times through route optimization', 'Real-time inventory visibility across locations', 'Lower operational costs via predictive maintenance', 'Automated warehouse operations'],
   },
   {
     id: 'retail', name: 'Retail', icon: ShoppingCart, accent: '#06b6d4',
-    desc: 'Omnichannel commerce platforms, AI-driven personalization engines, real-time inventory intelligence, and payment systems.',
-    challenges: ['Omnichannel Commerce', 'AI Personalization', 'Real-time Inventory', 'Payment Processing'],
+    desc: 'Omnichannel commerce platforms, AI-driven personalization engines, real-time inventory systems, and unified customer data infrastructure.',
+    challenges: ['Unified commerce across online, in-store, and mobile channels', 'Real-time inventory accuracy across distributed locations', 'Customer data fragmentation and personalization at scale', 'Peak traffic handling during sales events'],
+    systems: ['Omnichannel Commerce Platforms', 'AI Personalization & Recommendation Engines', 'Inventory Management & Demand Forecasting', 'Customer Data Platforms (CDPs)'],
+    compliance: ['PCI-DSS', 'GDPR', 'CCPA', 'ADA/WCAG Accessibility'],
+    outcomes: ['Increased average order value through AI recommendations', 'Reduced stockouts with real-time inventory visibility', 'Seamless cross-channel customer experience', 'Scalable infrastructure for traffic spikes'],
+  },
+  {
+    id: 'education', name: 'Education', icon: GraduationCap, accent: '#ec4899',
+    desc: 'Scalable learning management platforms, virtual classroom infrastructure, AI tutoring systems, and campus digital transformation.',
+    challenges: ['Scalable online learning infrastructure for large student populations', 'Virtual classroom reliability and engagement', 'Student data privacy and regulatory compliance', 'Legacy campus system modernization'],
+    systems: ['Learning Management Platforms', 'Virtual Classroom & Video Infrastructure', 'AI-Powered Tutoring & Assessment Engines', 'Student Information Systems'],
+    compliance: ['GDPR', 'FERPA', 'COPPA', 'WCAG Accessibility'],
+    outcomes: ['Scalable learning platforms serving thousands of concurrent users', 'Improved student outcomes through AI-assisted learning', 'Secure student data management', 'Modernized campus technology stack'],
   },
   {
     id: 'manufacturing', name: 'Manufacturing', icon: Cpu, accent: '#ef4444',
-    desc: 'Smart factory automation, computer vision quality control, predictive maintenance, and IIoT data platforms.',
-    challenges: ['Smart Factory Automation', 'Quality Control via AI', 'Predictive Maintenance', 'Industrial IoT Integration'],
+    desc: 'Smart factory systems, computer vision quality control, predictive maintenance platforms, and industrial IoT data infrastructure.',
+    challenges: ['Legacy industrial control system integration with modern IT', 'Real-time quality monitoring across production lines', 'Predictive maintenance to reduce unplanned downtime', 'Industrial IoT data ingestion and processing at scale'],
+    systems: ['IIoT Data Platforms & Edge Computing', 'Computer Vision Quality Control Systems', 'Predictive Maintenance Engines', 'Manufacturing Execution Systems (MES)'],
+    compliance: ['ISO 27001', 'IEC 62443', 'GDPR', 'Industry-Specific Manufacturing Standards'],
+    outcomes: ['Reduced unplanned downtime through predictive maintenance', 'Improved quality yield with AI-powered visual inspection', 'Real-time production line visibility', 'Optimized supply chain and inventory management'],
   },
   {
     id: 'energy', name: 'Energy', icon: Zap, accent: '#eab308',
-    desc: 'Smart grid management, renewable energy optimization, SCADA security, and critical infrastructure monitoring.',
-    challenges: ['Smart Grid Management', 'Renewable Energy Optimization', 'SCADA Security', 'Infrastructure Monitoring'],
+    desc: 'Smart grid management platforms, renewable energy optimization, SCADA security, and critical infrastructure monitoring systems.',
+    challenges: ['Critical infrastructure cybersecurity and threat detection', 'Renewable energy integration with existing grid infrastructure', 'SCADA system modernization and secure remote access', 'Real-time energy consumption monitoring and optimization'],
+    systems: ['Smart Grid Management Platforms', 'SCADA Security & Monitoring', 'Renewable Energy Management Systems', 'Energy Analytics & Consumption Optimization'],
+    compliance: ['IEC 62443', 'NIST CSF', 'ISO 27001', 'Critical Infrastructure Protection Standards'],
+    outcomes: ['Improved grid reliability through real-time monitoring', 'Optimized renewable energy integration', 'Reduced security incidents via proactive threat detection', 'Lower operational costs through energy optimization'],
   },
 ];
 
@@ -66,10 +90,10 @@ const solutions = [
 ];
 
 const caseStudies = [
-  { icon: Activity, accent: '#F5A800', title: 'FinTech Payment Platform', industry: 'FinTech', desc: 'Built a high-frequency payment processing platform handling $2B+ in monthly transaction volume with sub-10ms latency.', tech: ['Go', 'Kafka', 'PostgreSQL', 'AWS'], outcome: '99.99% uptime, 60% reduction in processing costs' },
-  { icon: HeartPulse, accent: '#10b981', title: 'Telemedicine Platform', industry: 'HealthTech', desc: 'Designed and deployed a HIPAA-compliant telemedicine platform serving 500K+ patients across East Africa.', tech: ['React', 'WebRTC', 'Python', 'FHIR'], outcome: '500K+ patients served, 40+ hospitals connected' },
-  { icon: Truck, accent: '#f59e0b', title: 'Logistics Intelligence System', industry: 'Logistics', desc: 'Real-time fleet tracking and predictive routing system reducing delivery times by 35% across 2,000+ vehicles.', tech: ['IoT', 'Node.js', 'Redis', 'GCP'], outcome: '35% faster deliveries, 20% fuel cost reduction' },
-  { icon: Building2, accent: '#8b5cf6', title: 'Government Digital Services', industry: 'GovTech', desc: 'Sovereign digital identity platform and citizen service portal for a national government.', tech: ['Rust', 'PostgreSQL', 'Terraform', 'Air-Gapped'], outcome: '2M+ citizens onboarded, 100% audit compliance' },
+  { icon: Activity, accent: '#F5A800', title: 'Payment Infrastructure Modernization', industry: 'FinTech', desc: 'Architected and deployed a PCI-DSS Level 1 compliant payment switch system for a regional financial institution. Migrated legacy core banking systems to a microservice architecture with zero unscheduled downtime during cutover.', tech: ['Go', 'Kafka', 'PostgreSQL', 'Terraform'], outcome: 'Reduced average transaction processing time from 1.2s to 180ms. Achieved PCI-DSS Level 1 certification within the first operating quarter.' },
+  { icon: HeartPulse, accent: '#10b981', title: 'National Telemedicine Network', industry: 'HealthTech', desc: 'Designed and deployed a HIPAA-compliant telemedicine platform connecting 12 regional hospitals with remote diagnostic capabilities. Built on HL7 FHIR standards for seamless EHR integration.', tech: ['React', 'WebRTC', 'Python', 'FHIR'], outcome: 'Connected 40+ clinical departments across 12 hospitals. Reduced patient transfer time by 60% through remote specialist consultations.' },
+  { icon: Truck, accent: '#f59e0b', title: 'Supply Chain Visibility Platform', industry: 'Logistics', desc: 'Built a real-time supply chain control tower integrating data from 800+ vehicles, 14 warehouses, and 3 port terminals into a single operational dashboard with predictive ETAs.', tech: ['IoT', 'Node.js', 'Redis', 'GCP'], outcome: 'Reduced average delivery window from 4 hours to 45 minutes. Lowered fuel costs by 18% through route optimization algorithms.' },
+  { icon: Building2, accent: '#8b5cf6', title: 'Digital Identity & Citizen Portal', industry: 'GovTech', desc: 'Developed a sovereign digital identity platform and citizen services portal for a national government. Air-gapped deployment with biometric verification and offline-capable architecture for rural accessibility.', tech: ['Rust', 'PostgreSQL', 'Terraform', 'Air-Gapped'], outcome: 'Onboarded 500K+ citizens in the first year. Achieved 100% audit compliance on data sovereignty requirements.' },
 ];
 
 const deliveryLocations = [
@@ -79,19 +103,10 @@ const deliveryLocations = [
 ];
 
 const whyPillars = [
-  { icon: Target, title: 'Industry Expertise', desc: 'Deep domain knowledge across 8 core industries — we understand your business before we write a line of code.', accent: '#F5A800' },
-  { icon: Shield, title: 'Security-First Engineering', desc: 'Zero-trust by default. Every system is architected with security at every layer — from infrastructure to application code.', accent: '#10b981' },
-  { icon: BrainCircuit, title: 'AI & Automation Leadership', desc: 'We don\'t just build software — we build intelligent systems that learn, adapt, and automate complex workflows.', accent: '#8b5cf6' },
-  { icon: Users, title: 'Long-Term Partnerships', desc: 'We embed with your team, transfer knowledge, and stay engaged long after launch. Your success is our success.', accent: '#F5A800' },
-];
-
-const metrics = [
-  { value: '99.9%', label: 'Availability', icon: Server },
-  { value: 'Enterprise', label: 'Security Standards', icon: Shield },
-  { value: 'Scalable', label: 'Architecture', icon: BarChart3 },
-  { value: 'Cloud-Native', label: 'Systems', icon: Cloud },
-  { value: 'Real-Time', label: 'Analytics', icon: Activity },
-  { value: 'Automation', label: 'Driven Operations', icon: Clock },
+  { icon: Code, title: 'Engineering-First Culture', desc: 'Every engagement is led by senior engineers who write code, review architecture, and own delivery. No sales engineers, no junior allocation — just experienced builders who ship.', accent: '#F5A800' },
+  { icon: Shield, title: 'Security-First Architecture', desc: 'Zero-trust by default. Every system is designed with security at every layer — infrastructure, application code, data, and access. Compliance frameworks are embedded, not bolted on.', accent: '#10b981' },
+  { icon: BrainCircuit, title: 'AI & Automation Expertise', desc: 'We build intelligent systems that process data, detect patterns, and automate complex workflows. From ML pipelines to LLM integrations, we apply AI where it creates measurable business value.', accent: '#8b5cf6' },
+  { icon: Users, title: 'Long-Term Partnership Model', desc: 'We embed with your team, transfer knowledge continuously, and remain engaged long after launch. Our goal is to make your team self-sufficient — not dependent on us.', accent: '#F5A800' },
 ];
 
 const techCapabilities = [
@@ -113,26 +128,6 @@ function MouseGlow() {
   return (
     <div className="fixed inset-0 pointer-events-none z-[999] transition-none hidden lg:block"
       style={{ background: `radial-gradient(600px circle at ${pos.x}px ${pos.y}px, rgba(245,168,0,0.03), transparent 40%)` }} />
-  );
-}
-
-function AnimatedCounter({ value, label, icon: Icon, index }: {
-  value: string; label: string; icon: React.ElementType; index: number;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.06, duration: 0.5, ease: EASE_EXPO }}
-      className="group relative p-6 rounded-[20px] bg-white border border-slate-200 hover:border-[#F5A800]/30 transition-all duration-500 hover:shadow-[0_10px_40px_rgba(0,0,0,0.04)]"
-    >
-      <div className="w-10 h-10 rounded-[12px] bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center mb-4 group-hover:bg-[#F5A800]/20 group-hover:scale-110 transition-all duration-500">
-        <Icon size={18} className="text-[#F5A800]" />
-      </div>
-      <div className="text-2xl md:text-3xl font-black text-slate-950 tracking-tight mb-1">{value}</div>
-      <div className="text-slate-500 text-[11px] font-bold uppercase tracking-wider">{label}</div>
-    </motion.div>
   );
 }
 
@@ -193,14 +188,14 @@ export default function Industries() {
 
           <TextReveal>
             <h1 className="text-[48px] md:text-[72px] lg:text-[88px] font-black tracking-[-0.04em] leading-[0.92] text-white">
-              Engineering Solutions For{' '}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">Complex Industries.</span>
+              Engineering for{' '}
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">Regulated Industries.</span>
             </h1>
           </TextReveal>
 
           <TextReveal delay={0.15}>
             <p className="text-white/50 text-lg md:text-xl max-w-3xl mx-auto font-medium leading-relaxed mt-8 mb-12">
-              We deploy specialized software, AI systems, cloud infrastructure, and digital platforms engineered specifically for the regulatory, operational, and security demands of modern industries.
+              Custom software, AI systems, and cloud infrastructure built for the compliance, security, and operational requirements of fintech, healthcare, government, and enterprise markets.
             </p>
           </TextReveal>
 
@@ -212,9 +207,29 @@ export default function Industries() {
               <span className="relative z-10">Explore Industries</span>
               <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1 transition-transform" />
             </a>
-            <Link to="/contact" className="group btn-ghost text-[15px] px-10 py-5">
-              <span className="relative z-10">Start a Project</span>
-            </Link>
+            <a href="mailto:contact@nexyovi.com" className="group btn-ghost text-[15px] px-10 py-5">
+              <span className="relative z-10">Schedule a Consultation</span>
+            </a>
+          </motion.div>
+
+          {/* Trust Indicators */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9, duration: 0.6, ease: EASE_EXPO }}
+            className="flex flex-wrap items-center justify-center gap-6 md:gap-10 mt-12 pt-8 border-t border-white/5"
+          >
+            {[
+              { label: 'Security-First Engineering', sub: 'Zero-Trust Architecture' },
+              { label: '8 Industries', sub: 'Deep Domain Expertise' },
+              { label: 'Engineering-Led', sub: 'Senior Teams, No Layering' },
+            ].map((item) => (
+              <div key={item.label} className="flex items-center gap-3">
+                <div className="w-1 h-1 rounded-full bg-[#F5A800] shadow-[0_0_6px_rgba(245,168,0,0.6)]" />
+                <div className="text-left">
+                  <div className="text-white text-sm font-bold">{item.label}</div>
+                  <div className="text-white/40 text-[10px] font-bold uppercase tracking-wider">{item.sub}</div>
+                </div>
+              </div>
+            ))}
           </motion.div>
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5, duration: 1 }}
@@ -264,10 +279,10 @@ export default function Industries() {
 
                     <div className="relative z-10">
                       <div className="flex items-center justify-between mb-4">
-                        <div className="w-12 h-12 rounded-[16px] bg-slate-100 border border-slate-200 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:border-[#F5A800]/30">
-                          <Icon size={20} className="text-slate-600 group-hover:text-[#F5A800] transition-colors duration-300" />
+                        <div className="relative w-12 h-12 rounded-[16px] bg-[#030303] border border-white/10 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:border-[#F5A800]/40 overflow-hidden shadow-sm">
+                          <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                          <Icon size={20} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" />
                         </div>
-                        <span className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-300">0{i + 1}</span>
                       </div>
                       <h3 className="text-xl font-black text-slate-950 tracking-[-0.02em] mb-1 group-hover:text-[#F5A800] transition-colors duration-300">{ind.name}</h3>
                       <p className="text-slate-500 text-sm leading-relaxed font-medium line-clamp-3">{ind.desc}</p>
@@ -315,10 +330,11 @@ export default function Industries() {
                       isActive ? 'bg-slate-100 border border-slate-200 shadow-sm' : 'bg-transparent border border-transparent hover:bg-slate-50 hover:border-slate-100'
                     }`}
                   >
-                    <div className={`w-10 h-10 rounded-[12px] flex items-center justify-center transition-all duration-300 ${
-                      isActive ? 'bg-[#F5A800]/10 border border-[#F5A800]/30' : 'bg-slate-100 border border-slate-200'
+                    <div className={`relative w-10 h-10 rounded-[12px] bg-[#030303] border flex items-center justify-center overflow-hidden shadow-sm transition-all duration-300 ${
+                      isActive ? 'border-[#F5A800]/40' : 'border-white/10 group-hover:border-[#F5A800]/40'
                     }`}>
-                      <Icon size={18} className={isActive ? 'text-[#F5A800]' : 'text-slate-500'} />
+                      <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                      <Icon size={18} className={`relative z-10 transition-colors duration-300 ${isActive ? 'text-[#F5A800]' : 'text-zinc-400 group-hover:text-[#F5A800]'}`} />
                     </div>
                     <div className="flex-1">
                       <div className={`font-bold text-sm transition-colors duration-300 ${isActive ? 'text-slate-950' : 'text-slate-600'}`}>{ind.name}</div>
@@ -348,8 +364,9 @@ export default function Industries() {
                       className="p-8 md:p-12 rounded-[32px] bg-slate-50 border border-slate-200 h-full"
                     >
                       <div className="flex items-center gap-4 mb-8">
-                        <div className="w-14 h-14 rounded-[18px] flex items-center justify-center" style={{ background: `${ind.accent}15`, border: `1px solid ${ind.accent}30` }}>
-                          <Icon size={28} style={{ color: ind.accent }} />
+                        <div className="relative w-14 h-14 rounded-[18px] bg-[#030303] border border-white/10 flex items-center justify-center overflow-hidden shadow-sm transition-all duration-300 hover:border-[#F5A800]/40">
+                          <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                          <Icon size={28} className="relative z-10 text-zinc-400 hover:text-[#F5A800] transition-colors duration-300" />
                         </div>
                         <div>
                           <div className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400">Industry Profile</div>
@@ -359,13 +376,15 @@ export default function Industries() {
 
                       <p className="text-slate-600 text-base md:text-lg leading-relaxed mb-10 font-medium">{ind.desc}</p>
 
+                      {/* Challenges */}
                       <div className="mb-8">
-                        <h4 className="text-[11px] font-black uppercase tracking-[0.25em] text-slate-500 mb-5">Key Challenges We Solve</h4>
+                        <h4 className="text-[11px] font-black uppercase tracking-[0.25em] text-slate-500 mb-5">Key Operational Challenges</h4>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                           {ind.challenges.map((challenge) => (
                             <div key={challenge} className="flex items-center gap-3 p-4 rounded-[14px] bg-white border border-slate-200 group hover:border-[#F5A800]/30 transition-all duration-300">
-                              <div className="w-8 h-8 rounded-[8px] flex items-center justify-center shrink-0 transition-colors duration-300" style={{ background: `${ind.accent}12` }}>
-                                <CheckCircle size={14} style={{ color: ind.accent }} />
+                              <div className="relative w-8 h-8 rounded-[8px] bg-[#030303] border border-white/10 flex items-center justify-center shrink-0 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 transition-colors duration-300">
+                                <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                                <CheckCircle size={14} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" />
                               </div>
                               <span className="text-slate-700 text-sm font-bold">{challenge}</span>
                             </div>
@@ -373,15 +392,151 @@ export default function Industries() {
                         </div>
                       </div>
 
-                      <Link to="/contact" className="inline-flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.15em] text-[#F5A800] hover:text-[#e09a00] transition-colors duration-300">
+                      {/* Systems We Build */}
+                      <div className="mb-8">
+                        <h4 className="text-[11px] font-black uppercase tracking-[0.25em] text-slate-500 mb-5">Systems We Build</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {ind.systems.map((system) => (
+                            <span key={system} className="text-[11px] font-bold px-3 py-2 rounded-full bg-white border border-slate-200 text-slate-600">
+                              {system}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Compliance */}
+                      <div className="mb-8">
+                        <h4 className="text-[11px] font-black uppercase tracking-[0.25em] text-slate-500 mb-5">Security & Compliance</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {ind.compliance.map((c) => (
+                            <span key={c} className="text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full" style={{ background: `${ind.accent}10`, color: ind.accent, border: `1px solid ${ind.accent}25` }}>
+                              {c}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Outcomes */}
+                      <div className="mb-8">
+                        <h4 className="text-[11px] font-black uppercase tracking-[0.25em] text-slate-500 mb-5">Expected Business Outcomes</h4>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {ind.outcomes.map((outcome) => (
+                            <div key={outcome} className="flex items-center gap-3 p-3 rounded-[12px] bg-white border border-slate-200">
+                              <div className="w-6 h-6 rounded-[6px] flex items-center justify-center shrink-0" style={{ background: `${ind.accent}15` }}>
+                                <Target size={12} style={{ color: ind.accent }} />
+                              </div>
+                              <span className="text-slate-600 text-xs font-bold">{outcome}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <a href="mailto:contact@nexyovi.com" className="inline-flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.15em] text-[#F5A800] hover:text-[#e09a00] transition-colors duration-300">
                         Discuss Your {ind.name} Project
                         <ArrowRight size={14} />
-                      </Link>
+                      </a>
                     </motion.div>
                   );
                 })}
               </AnimatePresence>
             </div>
+          </div>
+        </div>
+      </section>
+
+      
+      {/* ══════════════════════════════════════════════════════
+          SECTION NEW — COMPLIANCE & SECURITY (creamy white)
+          ══════════════════════════════════════════════════════ */}
+      <section className="relative py-32 bg-[#FCFBF8] border-t border-slate-200 overflow-hidden">
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#10b981]/5 blur-[140px] rounded-full" />
+        </div>
+        <div className="container relative z-10 mx-auto px-6">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: EASE_EXPO }} className="max-w-2xl mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse" />
+              <span className="text-[11px] font-bold text-[#10b981] uppercase tracking-widest">Compliance & Security</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-6">
+              Built for Regulated <span className="text-[#10b981]">Environments.</span>
+            </h2>
+            <p className="text-slate-600 text-lg leading-relaxed max-w-xl font-medium">
+              We engineer systems that meet the strictest security and compliance standards by default, ensuring your data is protected and auditable.
+            </p>
+          </motion.div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+            {['GDPR', 'HIPAA', 'PCI-DSS', 'SOC 2 Type II', 'Zero-Trust Architecture'].map((cap, i) => (
+              <motion.div key={cap} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.04, duration: 0.4, ease: EASE_EXPO }} className="group relative p-5 rounded-[16px] bg-white border border-slate-200 hover:bg-slate-50 hover:border-[#10b981]/30 transition-all duration-500">
+                <div className="text-slate-600 font-bold text-sm group-hover:text-[#10b981] transition-colors duration-300">{cap}</div>
+                <div className="mt-2 flex gap-1">
+                  {[...Array(3)].map((_, j) => (
+                    <div key={j} className="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover:bg-[#10b981]/30 transition-colors duration-300" />
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+{/* ══════════════════════════════════════════════════════
+          SECTION 7 — FEATURED CASE STUDIES
+          ══════════════════════════════════════════════════════ */}
+      <section className="relative py-32 bg-white border-t border-slate-200 overflow-hidden">
+        <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-[#10b981]/3 blur-[120px] rounded-full pointer-events-none" />
+
+        <div className="container relative z-10 mx-auto px-6">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: EASE_EXPO }} className="max-w-2xl mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
+              <span className="text-[11px] font-bold text-slate-600 uppercase tracking-widest">Featured Case Studies</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-6">
+              Real Results.{' '}
+              <span className="text-[#F5A800]">Real Impact.</span>
+            </h2>
+            <p className="text-slate-500 text-lg leading-relaxed max-w-xl font-medium">
+              Measurable outcomes across industries — from fintech to government.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {caseStudies.map((cs, i) => {
+              const Icon = cs.icon;
+              return (
+                <motion.div
+                  key={cs.title}
+                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, duration: 0.6, ease: EASE_EXPO }}
+                  whileHover={{ y: -4, transition: { duration: 0.3 } }}
+                  className="group p-8 rounded-[24px] bg-slate-50 border border-slate-200 hover:border-[#F5A800]/30 hover:shadow-[0_15px_50px_rgba(0,0,0,0.06)] transition-all duration-500"
+                >
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className="relative w-11 h-11 rounded-[14px] bg-[#030303] border border-white/10 flex items-center justify-center overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 transition-colors duration-300">
+                      <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                      <Icon size={20} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" />
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Illustrative Project • {cs.industry}</div>
+                      <h3 className="text-lg font-black text-slate-950 tracking-tight group-hover:text-[#F5A800] transition-colors duration-300">{cs.title}</h3>
+                    </div>
+                  </div>
+
+                  <p className="text-slate-600 text-sm leading-relaxed mb-5 font-medium">{cs.desc}</p>
+
+                  <div className="flex flex-wrap gap-1.5 mb-5">
+                    {cs.tech.map((t) => (
+                      <span key={t} className="text-[9px] font-bold uppercase tracking-wider px-2.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-500">{t}</span>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center gap-2 pt-4 border-t border-slate-200">
+                    <CheckCircle size={12} style={{ color: cs.accent }} />
+                    <span className="text-slate-700 text-[12px] font-bold">{cs.outcome}</span>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -418,8 +573,9 @@ export default function Industries() {
                   whileHover={{ y: -4, transition: { duration: 0.3 } }}
                   className="group p-6 rounded-[20px] bg-white border border-slate-200 hover:border-[#F5A800]/30 hover:shadow-[0_10px_40px_rgba(0,0,0,0.04)] transition-all duration-500"
                 >
-                  <div className="w-11 h-11 rounded-[14px] bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center mb-4 group-hover:bg-[#F5A800]/20 group-hover:scale-110 transition-all duration-500">
-                    <Icon size={20} className="text-[#F5A800]" />
+                  <div className="relative w-11 h-11 rounded-[14px] bg-[#030303] border border-white/10 flex items-center justify-center mb-4 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 group-hover:scale-110 transition-all duration-500">
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                    <Icon size={20} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" />
                   </div>
                   <h3 className="text-base font-bold text-slate-900 mb-2 group-hover:text-[#F5A800] transition-colors duration-300">{sol.title}</h3>
                   <p className="text-slate-500 text-sm leading-relaxed font-medium">{sol.desc}</p>
@@ -430,233 +586,26 @@ export default function Industries() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════
-          SECTION 5 — INDUSTRY METRICS
-          ══════════════════════════════════════════════════════ */}
-      <section className="relative py-32 bg-white border-t border-slate-200 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#F5A800]/2 via-transparent to-transparent pointer-events-none" />
 
-        <div className="container relative z-10 mx-auto px-6">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: EASE_EXPO }} className="max-w-2xl mb-16">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-6">
-              Built for{' '}
-              <span className="text-[#F5A800]">Enterprise Standards.</span>
-            </h2>
-            <p className="text-slate-500 text-lg leading-relaxed max-w-xl font-medium">
-              Every system we build meets the highest standards for performance, security, and reliability.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {metrics.map((m, i) => (
-              <AnimatedCounter key={m.label} {...m} index={i} />
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ══════════════════════════════════════════════════════
-          SECTION 6 — TECHNOLOGY CAPABILITIES
-          ══════════════════════════════════════════════════════ */}
-      <section className="relative py-32 bg-[#02040a] border-t border-white/5 overflow-hidden">
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#8b5cf6]/5 blur-[140px] rounded-full" />
-        </div>
-
-        <div className="container relative z-10 mx-auto px-6">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: EASE_EXPO }} className="max-w-2xl mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse shadow-[0_0_8px_rgba(245,168,0,0.6)]" />
-              <span className="text-[11px] font-bold text-[#F5A800] uppercase tracking-widest">Technology Capabilities</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-6">
-              Capabilities Across{' '}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">Every Industry.</span>
-            </h2>
-            <p className="text-white/50 text-lg leading-relaxed max-w-xl font-medium">
-              Our technology stack is industry-agnostic — we apply the right tools and architectures for each unique challenge.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-            {techCapabilities.map((cap, i) => (
-              <motion.div
-                key={cap}
-                initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                transition={{ delay: i * 0.04, duration: 0.4, ease: EASE_EXPO }}
-                className="group relative p-5 rounded-[16px] bg-white/[0.03] border border-white/10 hover:bg-white/[0.06] hover:border-[#F5A800]/30 transition-all duration-500"
-              >
-                <div className="text-white/80 font-bold text-sm group-hover:text-[#F5A800] transition-colors duration-300">{cap}</div>
-                <div className="mt-2 flex gap-1">
-                  {[...Array(3)].map((_, j) => (
-                    <div key={j} className="w-1.5 h-1.5 rounded-full bg-white/10 group-hover:bg-[#F5A800]/30 transition-colors duration-300" />
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Industry-Capability Matrix */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.6, ease: EASE_EXPO }}
-            className="mt-16 p-8 md:p-10 rounded-[24px] bg-white/[0.02] border border-white/5"
-          >
-            <h3 className="text-white font-black text-xl mb-6">Industry-Capability Matrix</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
-              {industries.map((ind) => (
-                <div key={ind.id} className="flex items-center gap-2 p-3 rounded-[10px] bg-white/[0.03] border border-white/5">
-                  <ind.icon size={12} style={{ color: ind.accent }} />
-                  <span className="text-white/60 text-[11px] font-bold uppercase tracking-wider">{ind.name}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════
-          SECTION 7 — FEATURED CASE STUDIES
-          ══════════════════════════════════════════════════════ */}
-      <section className="relative py-32 bg-white border-t border-slate-200 overflow-hidden">
-        <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-[#10b981]/3 blur-[120px] rounded-full pointer-events-none" />
-
-        <div className="container relative z-10 mx-auto px-6">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: EASE_EXPO }} className="max-w-2xl mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
-              <span className="text-[11px] font-bold text-slate-600 uppercase tracking-widest">Featured Case Studies</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-6">
-              Real Results.{' '}
-              <span className="text-[#F5A800]">Real Impact.</span>
-            </h2>
-            <p className="text-slate-500 text-lg leading-relaxed max-w-xl font-medium">
-              Measurable outcomes across industries — from fintech to government.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {caseStudies.map((cs, i) => {
-              const Icon = cs.icon;
-              return (
-                <motion.div
-                  key={cs.title}
-                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.6, ease: EASE_EXPO }}
-                  whileHover={{ y: -4, transition: { duration: 0.3 } }}
-                  className="group p-8 rounded-[24px] bg-slate-50 border border-slate-200 hover:border-[#F5A800]/30 hover:shadow-[0_15px_50px_rgba(0,0,0,0.06)] transition-all duration-500"
-                >
-                  <div className="flex items-center gap-3 mb-5">
-                    <div className="w-11 h-11 rounded-[14px] flex items-center justify-center" style={{ background: `${cs.accent}12`, border: `1px solid ${cs.accent}25` }}>
-                      <Icon size={20} style={{ color: cs.accent }} />
-                    </div>
-                    <div>
-                      <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{cs.industry}</div>
-                      <h3 className="text-lg font-black text-slate-950 tracking-tight group-hover:text-[#F5A800] transition-colors duration-300">{cs.title}</h3>
-                    </div>
-                  </div>
-
-                  <p className="text-slate-600 text-sm leading-relaxed mb-5 font-medium">{cs.desc}</p>
-
-                  <div className="flex flex-wrap gap-1.5 mb-5">
-                    {cs.tech.map((t) => (
-                      <span key={t} className="text-[9px] font-bold uppercase tracking-wider px-2.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-500">{t}</span>
-                    ))}
-                  </div>
-
-                  <div className="flex items-center gap-2 pt-4 border-t border-slate-200">
-                    <CheckCircle size={12} style={{ color: cs.accent }} />
-                    <span className="text-slate-700 text-[12px] font-bold">{cs.outcome}</span>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════
-          SECTION 8 — GLOBAL DELIVERY MODEL
-          ══════════════════════════════════════════════════════ */}
-      <section className="relative py-32 bg-[#02040a] border-t border-white/5 overflow-hidden">
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-[#F5A800]/3 blur-[150px] rounded-full" />
-          {/* World map dots */}
-          <svg className="w-full h-full opacity-10" viewBox="0 0 1440 600" fill="none">
-            <motion.circle cx="370" cy="280" r="4" fill="#F5A800" animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 3, repeat: Infinity }} />
-            <motion.circle cx="1080" cy="250" r="4" fill="#F5A800" animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 3, repeat: Infinity, delay: 1 }} />
-            <motion.circle cx="720" cy="320" r="4" fill="#F5A800" animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 3, repeat: Infinity, delay: 2 }} />
-            <motion.path d="M370 280 L1080 250 L720 320 Z" stroke="rgba(245,168,0,0.2)" strokeWidth="0.5" strokeDasharray="4 4" />
-          </svg>
-        </div>
-
-        <div className="container relative z-10 mx-auto px-6">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: EASE_EXPO }} className="text-center max-w-2xl mx-auto mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse shadow-[0_0_8px_rgba(245,168,0,0.6)]" />
-              <span className="text-[11px] font-bold text-[#F5A800] uppercase tracking-widest">Global Delivery</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-6">
-              Global Delivery.{' '}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">Local Understanding.</span>
-            </h2>
-            <p className="text-white/50 text-lg leading-relaxed font-medium">
-              Engineering teams across the globe, working as one unified unit.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {deliveryLocations.map((loc, i) => (
-              <motion.div
-                key={loc.city}
-                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6, ease: EASE_EXPO }}
-                className="group p-8 rounded-[24px] bg-white/[0.03] border border-white/10 hover:border-[#F5A800]/30 hover:bg-white/[0.06] transition-all duration-500"
-              >
-                <div className="w-12 h-12 rounded-[16px] bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
-                  <MapPin size={22} className="text-[#F5A800]" />
-                </div>
-                <h3 className="text-white font-black text-xl mb-1">{loc.city}</h3>
-                <div className="text-[#F5A800]/80 text-[11px] font-bold uppercase tracking-wider mb-3">{loc.role}</div>
-                <p className="text-white/50 text-sm leading-relaxed">{loc.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.5, ease: EASE_EXPO }}
-            className="flex flex-wrap justify-center gap-6 mt-12"
-          >
-            {['24/7 Collaboration', 'Distributed Engineering', 'Multi-Timezone Support'].map((item) => (
-              <div key={item} className="flex items-center gap-2">
-                <CheckCircle size={14} className="text-[#F5A800]" />
-                <span className="text-white/60 text-sm font-bold">{item}</span>
-              </div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════
-          SECTION 9 — WHY NEXYOVI
+          SECTION 9 — WHY ORGANIZATIONS CHOOSE NEXYOVI
           ══════════════════════════════════════════════════════ */}
       <section className="relative py-32 bg-[#f4f4f5] border-t border-slate-200 overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, rgba(0,0,0,0.06) 0.5px, transparent 0.5px)', backgroundSize: '28px 28px' }} />
 
         <div className="container relative z-10 mx-auto px-6">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: EASE_EXPO }} className="text-center max-w-2xl mx-auto mb-16">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: EASE_EXPO }} className="text-center max-w-3xl mx-auto mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
-              <span className="text-[11px] font-bold text-slate-600 uppercase tracking-widest">Why Nexyovi</span>
+              <span className="text-[11px] font-bold text-slate-600 uppercase tracking-widest">Why Organizations Choose Nexyovi</span>
             </div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-6">
-              Built Different.{' '}
-              <span className="text-[#F5A800]">Built Better.</span>
+              Engineered for{' '}
+              <span className="text-[#F5A800]">Enterprise Impact.</span>
             </h2>
             <p className="text-slate-500 text-lg leading-relaxed font-medium">
-              Four pillars that define how we engineer solutions for complex industries.
+              Organizations across regulated industries choose Nexyovi for our engineering discipline, security architecture, and commitment to long-term outcomes over short-term deliverables.
             </p>
           </motion.div>
 
@@ -671,16 +620,16 @@ export default function Industries() {
                   whileHover={{ y: -6, transition: { duration: 0.3 } }}
                   className="group p-8 rounded-[24px] bg-white border border-slate-200 hover:border-[#F5A800]/40 hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)] transition-all duration-500"
                 >
-                  <div className="w-14 h-14 rounded-[18px] flex items-center justify-center mb-6 transition-all duration-500 group-hover:scale-110"
-                    style={{ background: `${p.accent}12`, border: `1px solid ${p.accent}25` }}>
-                    <Icon size={26} style={{ color: p.accent }} />
+                  <div className="relative w-14 h-14 rounded-[18px] bg-[#030303] border border-white/10 flex items-center justify-center mb-6 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 group-hover:scale-110 transition-all duration-500">
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                    <Icon size={26} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" />
                   </div>
                   <h3 className="text-xl font-black text-slate-950 tracking-tight mb-4 group-hover:text-[#F5A800] transition-colors duration-300">{p.title}</h3>
                   <p className="text-slate-500 text-sm leading-relaxed font-medium mb-8">{p.desc}</p>
-                  <Link to="/contact" className="group inline-flex items-center gap-2 text-[#F5A800] font-bold text-sm tracking-wide">
+                  <CTAButton className="group inline-flex items-center gap-2 text-[#F5A800] font-bold text-sm tracking-wide">
                     Start Project
                     <ArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform duration-300" />
-                  </Link>
+                  </CTAButton>
                 </motion.div>
               );
             })}
@@ -688,30 +637,68 @@ export default function Industries() {
         </div>
       </section>
 
+      
       {/* ══════════════════════════════════════════════════════
-          SECTION 10 — FINAL CTA
+          SECTION 8 — HOW WE WORK
           ══════════════════════════════════════════════════════ */}
-      <section className="relative py-32 bg-white border-t border-slate-200 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#F5A800]/2 via-transparent to-transparent pointer-events-none" />
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-[#F5A800]/3 blur-[100px] rounded-full pointer-events-none" />
+      <section className="relative py-32 bg-[#FCFBF8] border-t border-slate-200 overflow-hidden">
+        <div className="container relative z-10 mx-auto px-6">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: EASE_EXPO }} className="text-center max-w-2xl mx-auto mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
+              <span className="text-[11px] font-bold text-slate-600 uppercase tracking-widest">How We Work</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-6">
+              Engineering <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">Excellence.</span>
+            </h2>
+            <p className="text-slate-600 text-lg leading-relaxed font-medium">
+              We integrate seamlessly with your operations to deliver robust solutions.
+            </p>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <motion.div className="group p-8 rounded-[24px] bg-white border border-slate-200 hover:border-[#F5A800]/40 hover:bg-slate-50 transition-all duration-500">
+              <div className="relative w-12 h-12 rounded-[16px] bg-[#030303] border border-white/10 flex items-center justify-center mb-5 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 group-hover:scale-110 transition-all duration-500"><div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" /><Users size={22} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" /></div>
+              <h3 className="text-slate-950 font-black text-xl mb-1">Dedicated Tech Lead</h3>
+              <p className="text-slate-500 text-sm leading-relaxed mt-2">A senior architect oversees your entire engagement from discovery to deployment.</p>
+            </motion.div>
+            <motion.div className="group p-8 rounded-[24px] bg-white border border-slate-200 hover:border-[#F5A800]/40 hover:bg-slate-50 transition-all duration-500">
+              <div className="relative w-12 h-12 rounded-[16px] bg-[#030303] border border-white/10 flex items-center justify-center mb-5 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 group-hover:scale-110 transition-all duration-500"><div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" /><Network size={22} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" /></div>
+              <h3 className="text-slate-950 font-black text-xl mb-1">Distributed Teams</h3>
+              <p className="text-slate-500 text-sm leading-relaxed mt-2">Global engineering talent operating across timezones for 24/7 delivery velocity.</p>
+            </motion.div>
+            <motion.div className="group p-8 rounded-[24px] bg-white border border-slate-200 hover:border-[#F5A800]/40 hover:bg-slate-50 transition-all duration-500">
+              <div className="relative w-12 h-12 rounded-[16px] bg-[#030303] border border-white/10 flex items-center justify-center mb-5 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 group-hover:scale-110 transition-all duration-500"><div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" /><Code size={22} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" /></div>
+              <h3 className="text-slate-950 font-black text-xl mb-1">Agile Delivery</h3>
+              <p className="text-slate-500 text-sm leading-relaxed mt-2">Iterative development with continuous integration and transparent progress tracking.</p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+{/* ══════════════════════════════════════════════════════
+          SECTION 10 — FINAL CTA (dark)
+          ══════════════════════════════════════════════════════ */}
+      <section className="relative py-32 bg-[#02040a] section-divider-dark overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#F5A800]/6 rounded-full blur-[140px]" />
+        </div>
 
         <div className="container relative z-10 mx-auto px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, ease: EASE_EXPO }}>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F5A800]/10 border border-[#F5A800]/20 mb-8">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-[#F5A800]/20 backdrop-blur-md mb-8">
               <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse shadow-[0_0_8px_rgba(245,168,0,0.6)]" />
-              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#F5A800]">Ready to Build</span>
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#F5A800]">Discuss Your Project</span>
             </div>
 
             <TextReveal>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-6">
-                Build The Next Industry-Leading{' '}
-                <span className="text-[#F5A800]">Platform.</span>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-6">
+                Let's Engineer{' '}
+                <span className="text-[#F5A800]">Your Solution.</span>
               </h2>
             </TextReveal>
 
             <TextReveal delay={0.1}>
-              <p className="text-slate-500 text-lg leading-relaxed max-w-2xl mx-auto mb-10 font-medium">
-                Partner with Nexyovi to engineer software, AI systems, and digital infrastructure designed for long-term success.
+              <p className="text-white/50 text-lg leading-relaxed max-w-2xl mx-auto mb-10 font-medium">
+                Tell us about your industry, your challenges, and your goals. We'll put together a technical strategy session with a senior architect — no sales pitch, just engineering guidance.
               </p>
             </TextReveal>
 
@@ -720,13 +707,26 @@ export default function Industries() {
               transition={{ delay: 0.25, duration: 0.6, ease: EASE_EXPO }}
               className="flex flex-wrap items-center justify-center gap-4"
             >
-              <Link to="/contact" className="group inline-flex items-center gap-2 px-10 py-5 rounded-full bg-slate-950 text-white font-bold text-[15px] shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition-all duration-300 hover:scale-105 hover:-translate-y-0.5 hover:bg-[#F5A800] hover:shadow-[0_8px_30px_rgba(245,168,0,0.25)]">
-                Start a Project
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link to="/contact" className="inline-flex items-center gap-2 px-10 py-5 rounded-full bg-white border border-slate-200 text-slate-800 font-bold text-[15px] shadow-[0_4px_14px_rgba(0,0,0,0.04)] transition-all duration-300 hover:border-[#F5A800]/40 hover:text-[#F5A800] hover:shadow-[0_8px_30px_rgba(245,168,0,0.08)] hover:-translate-y-0.5">
-                Schedule a Strategy Session
-              </Link>
+              <CTAButton className="group btn-gold text-[15px] px-10 py-5">
+                <span className="relative z-10">Schedule a Consultation</span>
+                <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
+              </CTAButton>
+              <CTAButton className="group btn-ghost text-[15px] px-10 py-5">
+                <span className="relative z-10">Request a Technical Brief</span>
+              </CTAButton>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              className="flex flex-wrap justify-center gap-6 mt-10"
+            >
+              {['Free 45-minute strategy session', 'Senior architect assigned to your project', 'No obligation, strict NDA'].map((item) => (
+                <div key={item} className="flex items-center gap-2">
+                  <CheckCircle size={14} className="text-[#F5A800]" />
+                  <span className="text-white/50 text-sm font-medium">{item}</span>
+                </div>
+              ))}
             </motion.div>
           </motion.div>
         </div>

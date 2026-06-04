@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Check, Globe, Home } from 'lucide-react';
+import { Check, Globe, Home } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import CompanyLeadership from '../components/CompanyLeadership';
 import CompanyValues from '../components/CompanyValues';
@@ -7,7 +7,7 @@ import { useSite } from '../context/SiteContext';
 import { fadeUp, revealUp, staggerContainer } from '../lib/animations';
 
 export default function About() {
- const { team, settings, jobs } = useSite();
+ const { team, settings } = useSite();
 
  return (
  <div className="bg-slate-50 min-h-screen overflow-hidden selection:bg-[#F5A800]/30"><section className="relative min-h-screen flex flex-col justify-center pt-32 pb-24 overflow-hidden border-b border-slate-200">
@@ -90,8 +90,9 @@ export default function About() {
               const Icon = item.icon;
               return (
                 <div key={item.title} className="rounded-3xl border border-slate-200 bg-white p-8 hover:border-[#F5A800]/30 transition-all">
-                  <div className="w-12 h-12 rounded-2xl bg-[#F5A800]/10 text-[#F5A800] flex items-center justify-center mb-5">
-                    <Icon size={20} />
+                  <div className="relative w-12 h-12 rounded-2xl bg-[#030303] border border-white/10 flex items-center justify-center mb-5 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 transition-colors duration-300">
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                    <Icon size={20} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" />
                   </div>
                   <h3 className="text-2xl font-black text-slate-950 mb-3">{item.title}</h3>
                   <p className="text-slate-500 leading-relaxed">{item.description}</p>
@@ -118,64 +119,7 @@ export default function About() {
  </div>
  </section>
 
- <section className="container max-w-6xl mx-auto py-24">
- <div className="text-center mb-12">
- <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.04] border border-white/[0.08] mb-6 text-[11px] uppercase tracking-[0.2em] text-white/60">
- Careers
- </div>
- <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">Open positions at Nexyovi.</h2>
- <p className="text-[#9CA3AF] text-lg leading-relaxed max-w-2xl mx-auto">
- Explore the roles that keep our teams moving fast, secure, and world-class.
- </p>
- </div>
 
- <div className="grid gap-4 lg:grid-cols-2">
- {jobs.slice(0, 5).map((job) => (
- <Link
- key={job.id}
- to="/careers"
- className="block rounded-[28px] border border-white/[0.08] bg-[#0b1020] p-8 transition-all hover:border-white/20 hover:bg-[#101823]"
- >
- <div className="flex flex-wrap items-start justify-between gap-4">
- <div>
- <h3 className="text-2xl font-black text-white tracking-tight mb-2">{job.title}</h3>
- <div className="text-sm uppercase tracking-[0.18em] text-[#FFD166] font-black mb-3">{job.dept}</div>
- </div>
- <div className="text-right text-xs uppercase tracking-[0.18em] text-white/50 font-bold">
- <div>{job.location}</div>
- <div>{job.type}</div>
- </div>
- </div>
- <p className="text-white/60 mt-5 text-sm leading-relaxed">{job.desc}</p>
- <div className="mt-6 inline-flex items-center gap-2 text-sm font-black uppercase tracking-[0.18em] text-[#FFD166]">
- View role
- <ArrowRight size={16} />
- </div>
- </Link>
- ))}
- </div>
-
- <div className="text-center mt-12">
- <p className="text-[#9CA3AF] text-lg leading-relaxed max-w-2xl mx-auto mb-8">
- Didn\'t find your role? We\'re always hungry for great talent. Drop us a line at <span className="text-white font-bold">{settings.email}</span>.
- </p>
- <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
- <Link
- to="/careers"
- className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#F5A800] text-white font-black uppercase tracking-[0.18em] text-sm shadow-[0_4px_14px_rgba(245,168,0,0.25)] transition-all duration-300 hover:bg-[#1d4ed8] hover:shadow-[0_8px_30px_rgba(245,168,0,0.35)] hover:-translate-y-0.5"
- >
- Explore All Roles
- <ArrowRight size={18} />
- </Link>
- <a
- href={`mailto:${settings.email}`}
- className="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-white/[0.08] text-white font-bold uppercase tracking-[0.18em] text-sm transition-all duration-300 hover:bg-white/[0.05] hover:shadow-[0_8px_30px_rgba(245,168,0,0.08)] hover:-translate-y-0.5"
- >
- Contact Recruiting
- </a>
- </div>
- </div>
- </section>
  </div>
  );
 }

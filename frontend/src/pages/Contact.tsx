@@ -1,339 +1,323 @@
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Briefcase, Building2, CalendarCheck, Check, Copy, Loader2, Mail, MapPin, MessageSquare, Phone, Send, User, Crosshair } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Briefcase, Building2, CalendarCheck, Check, Copy, Loader2, Mail, MapPin, MessageSquare, Phone, Send, User } from "lucide-react";
 import React from "react";
 import WorldMap from "../components/WorldMap";
 import { useSite } from "../context/SiteContext";
 import { staggerContainer, EASE_EXPO, revealUp } from "../lib/animations";
 
 export default function Contact() {
- const { settings, addMessage } = useSite();
+  const { settings, addMessage } = useSite();
 
- const [isSubmitting, setIsSubmitting] = React.useState(false);
- const [isSuccess, setIsSuccess] = React.useState(false);
- const [copiedContact, setCopiedContact] = React.useState<string | null>(null);
- const formSectionRef = React.useRef<HTMLDivElement | null>(null);
- const nameInputRef = React.useRef<HTMLInputElement | null>(null);
- const [formData, setFormData] = React.useState({
- name: '',
- email: '',
- company: '',
- service: '',
- message: ''
- });
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
+  const [copiedContact, setCopiedContact] = React.useState<string | null>(null);
+  const formSectionRef = React.useRef<HTMLDivElement | null>(null);
+  const nameInputRef = React.useRef<HTMLInputElement | null>(null);
+  const [formData, setFormData] = React.useState({
+    name: '',
+    email: '',
+    company: '',
+    service: '',
+    message: ''
+  });
 
- const handleSubmit = (e: React.FormEvent) => {
- e.preventDefault();
- setIsSubmitting(true);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
 
- // Create intelligence report
- const report = {
- ...formData,
- status: 'unread'
- };
+    const report = {
+      ...formData,
+      status: 'unread'
+    };
 
- setTimeout(() => {
- addMessage(report);
- setIsSubmitting(false);
- setIsSuccess(true);
- setFormData({ name: '', email: '', company: '', service: '', message: '' });
- setTimeout(() => setIsSuccess(false), 5000);
- }, 1500);
- };
+    setTimeout(() => {
+      addMessage(report);
+      setIsSubmitting(false);
+      setIsSuccess(true);
+      setFormData({ name: '', email: '', company: '', service: '', message: '' });
+      setTimeout(() => setIsSuccess(false), 5000);
+    }, 1500);
+  };
 
- const copyContact = async (value: string) => {
- try {
- await navigator.clipboard.writeText(value);
- setCopiedContact(value);
- setTimeout(() => setCopiedContact(null), 1600);
- } catch {
- setCopiedContact(null);
- }
- };
+  const copyContact = async (value: string) => {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopiedContact(value);
+      setTimeout(() => setCopiedContact(null), 1600);
+    } catch {
+      setCopiedContact(null);
+    }
+  };
 
- const openInquiry = (type: "project" | "consultation") => {
- setFormData((current) => ({
- ...current,
- service: type === "project" ? (current.service || "software") : "consulting",
- message: current.message || (
- type === "project"
- ? "I'd like to start a new project with Nexyovi. Please help me scope the technical requirements, timeline, and next steps."
- : "I'd like to book a strategy call with Nexyovi to discuss our technical goals, challenges, and recommended roadmap."
- )
- }));
+  const openInquiry = (type: "project" | "consultation") => {
+    setFormData((current) => ({
+      ...current,
+      service: type === "project" ? (current.service || "software") : "consulting",
+      message: current.message || (
+        type === "project"
+          ? "I'd like to start a new project with Nexyovi. Please help me scope the technical requirements, timeline, and next steps."
+          : "I'd like to book a strategy call with Nexyovi to discuss our technical goals, challenges, and recommended roadmap."
+      )
+    }));
 
- formSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
- window.setTimeout(() => nameInputRef.current?.focus(), 550);
- };
+    formSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.setTimeout(() => nameInputRef.current?.focus(), 550);
+  };
 
- return (
- <div className="bg-slate-50 min-h-screen overflow-hidden selection:bg-[#F5A800]/30">
- 
- {/* HERO SECTION */}<section className="relative min-h-screen flex flex-col justify-center pt-32 pb-24 overflow-hidden border-b border-slate-200">
-        {/* Background elements */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-[#F5A800]/5 blur-[120px] rounded-full" />
-          <div className="absolute inset-0 opacity-[0.015]"
-               style={{
-                 backgroundImage: `linear-gradient(rgba(245,168,0,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(245,168,0,0.3) 1px, transparent 1px)`,
-                 backgroundSize: '80px 80px',
-               }} />
-        </div>
+  return (
+    <div className="bg-[#02040a] min-h-screen overflow-hidden selection:bg-[#F5A800]/30 text-white">
 
-        <div className="container relative z-10">
+      {/* HERO SECTION */}
+      <section className="relative min-h-[90vh] flex flex-col justify-center pt-32 pb-24 border-b border-white/[0.05]">
+        <div className="container max-w-5xl mx-auto px-6">
           <motion.div
             variants={staggerContainer}
             initial="hidden"
             animate="visible"
-            className="flex flex-col items-center text-center max-w-4xl mx-auto"
+            className="flex flex-col items-center text-center"
           >
             <motion.div variants={revealUp} className="mb-8">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 text-[11px] uppercase tracking-[0.2em] text-slate-600">
-                <Crosshair size={12} />
-                Secure Communications Channel
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/[0.03] text-[11px] uppercase tracking-[0.2em] text-white/50">
+                <span className="w-2 h-2 rounded-full bg-[#F5A800] animate-pulse" />
+                Engineering Partnership
               </div>
             </motion.div>
 
-            <motion.h1 variants={revealUp} className="text-5xl md:text-7xl lg:text-[80px] font-black leading-[0.95] tracking-tight mb-8 text-slate-950">
-              Initiate <span className="text-gradient-aurora">Protocol.</span>
+            <motion.h1 variants={revealUp} className="text-5xl md:text-7xl lg:text-[80px] font-black leading-[0.95] tracking-[-0.03em] mb-8 text-white">
+              Let's Build Something <br />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">Exceptional.</span>
             </motion.h1>
 
-            <motion.p variants={revealUp} className="text-slate-500 text-lg md:text-xl max-w-2xl font-medium leading-relaxed mb-12">
-              Engage our elite engineering team to build, secure, or scale your mission-critical enterprise systems. 
+            <motion.p variants={revealUp} className="text-white/60 text-lg md:text-xl max-w-2xl font-medium leading-relaxed mb-12">
+              Engage our elite engineering team to build, secure, or scale your mission-critical enterprise systems.
             </motion.p>
 
             <motion.div variants={revealUp} className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
               <button
                 type="button"
                 onClick={() => openInquiry("project")}
-                className="group btn-dark w-full sm:w-auto text-[14px] px-8 py-4"
+                className="group btn-gold w-full sm:w-auto text-[15px] font-bold px-10 py-5"
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   Submit Project Brief
-                  <ArrowRight size={15} className="group-hover:translate-x-1.5 transition-transform duration-300" />
+                  <ArrowRight size={16} className="group-hover:translate-x-1.5 transition-transform duration-300" />
                 </span>
               </button>
               <button
                 type="button"
                 onClick={() => openInquiry("consultation")}
-                className="group btn-outline w-full sm:w-auto text-[14px] px-8 py-4 bg-white/50 backdrop-blur-sm"
+                className="group inline-flex items-center justify-center gap-2 px-10 py-5 rounded-full border border-white/20 bg-white/5 text-white text-[15px] font-bold hover:bg-white/10 transition-all duration-300 w-full sm:w-auto"
               >
-                <span className="relative z-10 flex items-center justify-center gap-2">
-                  Book Strategy Call
-                  <CalendarCheck size={15} className="text-[#F5A800] group-hover:scale-110 transition-transform duration-300" />
-                </span>
+                <CalendarCheck size={16} className="text-[#F5A800]" />
+                Book Strategy Call
               </button>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
- {/* CONTACT INFO CARDS */}
- <section className="relative z-10 -mt-12 container max-w-5xl mx-auto mb-20">
- <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
- {[
- { icon: Mail, title: "Secure comms", text: "info@nexyovi.com", href: "mailto:info@nexyovi.com", action: "Email" },
- { icon: Phone, title: "Global Command", text: settings.phone, href: `tel:${settings.phone}`, action: "Call" },
- { icon: MapPin, title: "HQ Coordinates", text: settings.address, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.address || "Addis Ababa, Ethiopia")}`, action: "Map" }].map((item, i) => (
- <motion.div
- key={i}
- initial={{ opacity: 0, y: 20 }}
- animate={{ opacity: 1, y: 0 }}
- transition={{ delay: 0.5 + i * 0.1, duration: 0.6, ease: EASE_EXPO }}
- className="card-hud p-6 group"
- >
- <div className="w-10 h-10 rounded-xl bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center text-[#FFD166] mb-4 group-hover:bg-[#F5A800]/20 transition-colors">
- <item.icon size={18} />
- </div>
- <div className="text-[10px] font-black uppercase tracking-[0.2em] text-[#F5A800] mb-1">{item.title}</div>
- <div className="text-[15px] font-bold text-white mb-4 truncate">{item.text}</div>
- <div className="flex items-center gap-4">
- <a
- href={item.href}
- target={item.title === "HQ Coordinates" ? "_blank" : undefined}
- rel={item.title === "HQ Coordinates" ? "noreferrer" : undefined}
- className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-white/50 hover:text-white transition-colors"
- >
- {item.action}
- <ArrowUpRight size={12} />
- </a>
- <button
- type="button"
- onClick={() => copyContact(item.text)}
- className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-white/50 hover:text-white transition-colors"
- >
- {copiedContact === item.text ? <Check size={12} className="text-[#10b981]" /> : <Copy size={12} />}
- {copiedContact === item.text ? "Copied" : "Copy"}
- </button>
- </div>
- </motion.div>
- ))}
- </div>
- </section>
-
- {/* FORM SECTION */}
- <section ref={formSectionRef} className="section-cinematic scroll-mt-20">
- <div className="container max-w-3xl mx-auto">
- 
- <motion.div
- initial={{ opacity: 0, y: 40 }}
- whileInView={{ opacity: 1, y: 0 }}
- viewport={{ once: true }}
- transition={{ duration: 0.8, ease: EASE_EXPO }}
- className="card-hud p-8 md:p-12"
- >
- <div className="mb-10 text-center">
- <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-4">Transmission Interface</h2>
- <p className="text-[#9CA3AF] text-sm font-medium leading-relaxed">
- Submit your project specifications. Our engineering leadership will evaluate and respond within 24 hours.
- </p>
- </div>
-
- <form onSubmit={handleSubmit} className="space-y-6">
- <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
- <div className="space-y-2">
- <label className="text-[11px] font-black uppercase tracking-widest text-white/70">Operative Name</label>
- <div className="relative">
- <User size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" />
- <input
- ref={nameInputRef}
- required
- value={formData.name}
- onChange={(e) => setFormData({ ...formData, name: e.target.value })}
- className="input pl-11"
- placeholder="Your full name"
- />
- </div>
- </div>
-
- <div className="space-y-2">
- <label className="text-[11px] font-black uppercase tracking-widest text-white/70">Secure Comms (Email)</label>
- <div className="relative">
- <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" />
- <input
- required
- type="email"
- value={formData.email}
- onChange={(e) => setFormData({ ...formData, email: e.target.value })}
- className="input pl-11"
- placeholder="you@company.com"
- />
- </div>
- </div>
- </div>
-
- <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
- <div className="space-y-2">
- <label className="text-[11px] font-black uppercase tracking-widest text-white/70">Organization</label>
- <div className="relative">
- <Building2 size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" />
- <input
- value={formData.company}
- onChange={(e) => setFormData({ ...formData, company: e.target.value })}
- className="input pl-11"
- placeholder="Optional"
- />
- </div>
- </div>
-
- <div className="space-y-2">
- <label className="text-[11px] font-black uppercase tracking-widest text-white/70">Mission Type</label>
- <div className="relative">
- <Briefcase size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
- <select
- value={formData.service}
- onChange={(e) => setFormData({ ...formData, service: e.target.value })}
- className="input pl-11 appearance-none cursor-pointer text-white/80"
- style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.3)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 16px center' }}
- >
- <option value="" className="bg-[#0b1020] text-[#6B7280]">Select capability required</option>
- <option value="cybersecurity" className="bg-[#0b1020] text-white">Cyber Defense Systems</option>
- <option value="software" className="bg-[#0b1020] text-white">Enterprise Software Engineering</option>
- <option value="ai" className="bg-[#0b1020] text-white">AI & Predictive Analytics</option>
- <option value="networking" className="bg-[#0b1020] text-white">Networking & Infrastructure</option>
- <option value="app-dev" className="bg-[#0b1020] text-white">Mobile Application Dev</option>
- <option value="consulting" className="bg-[#0b1020] text-white">Strategic Consulting</option>
- <option value="cloud" className="bg-[#0b1020] text-white">Cloud Architecture</option>
- </select>
- </div>
- </div>
- </div>
-
- <div className="space-y-2">
- <label className="text-[11px] font-black uppercase tracking-widest text-white/70">Mission Details</label>
- <div className="relative">
- <MessageSquare size={16} className="absolute left-4 top-4 text-white/30" />
- <textarea
- required
- value={formData.message}
- onChange={(e) => setFormData({ ...formData, message: e.target.value })}
- className="input pl-11 h-40 resize-none"
- placeholder="Describe your technical requirements, goals, and constraints."
- />
- </div>
-            <motion.button
-              type="submit"
-              disabled={isSubmitting}
-              whileHover={{ y: isSubmitting ? 0 : -2 }}
-              whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-              className="group btn-gold w-full h-14 flex items-center justify-center"
+      {/* CONTACT INFO — Compact, no boxes */}
+      <section className="relative z-10 -mt-12 container max-w-4xl mx-auto mb-24 px-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+          {[
+            { icon: Mail, title: "Email", text: "info@nexyovi.com", href: "mailto:info@nexyovi.com", action: "Email" },
+            { icon: Phone, title: "Phone", text: settings.phone, href: `tel:${settings.phone}`, action: "Call" },
+            { icon: MapPin, title: "Headquarters", text: settings.address, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.address || "Addis Ababa, Ethiopia")}`, action: "Map" }
+          ].map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 + i * 0.1, duration: 0.6, ease: EASE_EXPO }}
             >
-              <span className="relative z-10 flex items-center justify-center gap-2">
-                {isSubmitting ? (
-                  <Loader2 size={18} className="animate-spin" />
-                ) : isSuccess ? (
-                  <Check size={18} />
-                ) : (
-                  <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                )}
-                <span>
-                  {isSubmitting ? 'Encrypting & Transmitting...' : isSuccess ? 'Transmission Confirmed' : 'Transmit Brief'}
+              <div className="flex items-center gap-3 mb-2">
+                <item.icon size={14} className="text-[#F5A800] shrink-0" />
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">{item.title}</span>
+              </div>
+              <div className="text-[15px] font-bold text-white mb-3 truncate">{item.text}</div>
+              <div className="flex items-center gap-5">
+                <a
+                  href={item.href}
+                  target={item.title === "Headquarters" ? "_blank" : undefined}
+                  rel={item.title === "Headquarters" ? "noreferrer" : undefined}
+                  className="inline-flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-widest text-white/50 hover:text-[#F5A800] transition-colors"
+                >
+                  {item.action}
+                  <ArrowUpRight size={10} />
+                </a>
+                <button
+                  type="button"
+                  onClick={() => copyContact(item.text)}
+                  className="inline-flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-widest text-white/50 hover:text-[#F5A800] transition-colors"
+                >
+                  {copiedContact === item.text ? <Check size={10} className="text-[#10b981]" /> : <Copy size={10} />}
+                  {copiedContact === item.text ? "Copied" : "Copy"}
+                </button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* FORM SECTION — Creamy White */}
+      <section ref={formSectionRef} className="scroll-mt-24 pb-32 bg-[#FCFBF8]">
+        <div className="container max-w-3xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: EASE_EXPO }}
+            className="bg-white border border-slate-200 rounded-[32px] p-8 md:p-14 relative overflow-hidden"
+          >
+            <div className="mb-12 text-center">
+              <h2 className="text-3xl md:text-4xl font-black text-slate-950 tracking-[-0.03em] mb-4">Project Inquiry</h2>
+              <p className="text-slate-500 text-[15px] font-medium leading-relaxed max-w-lg mx-auto">
+                Submit your project specifications. Our engineering leadership will evaluate and respond within 24 hours.
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Full Name</label>
+                  <div className="relative">
+                    <User size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300" />
+                    <input
+                      ref={nameInputRef}
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-2xl py-4 pl-14 pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400"
+                      placeholder="Jane Doe"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Work Email</label>
+                  <div className="relative">
+                    <Mail size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300" />
+                    <input
+                      required
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-2xl py-4 pl-14 pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400"
+                      placeholder="jane@company.com"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Organization</label>
+                  <div className="relative">
+                    <Building2 size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300" />
+                    <input
+                      value={formData.company}
+                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                      className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-2xl py-4 pl-14 pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400"
+                      placeholder="Company Name (Optional)"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Service Required</label>
+                  <div className="relative">
+                    <Briefcase size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none" />
+                    <select
+                      value={formData.service}
+                      onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                      className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-2xl py-4 pl-14 pr-10 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium appearance-none cursor-pointer"
+                      style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 20px center' }}
+                    >
+                      <option value="" className="bg-white text-slate-400">Select capability</option>
+                      <option value="software" className="bg-white text-slate-900">Enterprise Software Engineering</option>
+                      <option value="ai" className="bg-white text-slate-900">AI & Predictive Analytics</option>
+                      <option value="cybersecurity" className="bg-white text-slate-900">Cyber Defense Systems</option>
+                      <option value="cloud" className="bg-white text-slate-900">Cloud Architecture</option>
+                      <option value="networking" className="bg-white text-slate-900">Networking & Infrastructure</option>
+                      <option value="app-dev" className="bg-white text-slate-900">Mobile Application Dev</option>
+                      <option value="consulting" className="bg-white text-slate-900">Strategic Consulting</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Project Details</label>
+                <div className="relative">
+                  <MessageSquare size={18} className="absolute left-5 top-5 text-slate-300" />
+                  <textarea
+                    required
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-2xl py-5 pl-14 pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400 h-40 resize-none"
+                    placeholder="Describe your technical requirements, goals, and constraints."
+                  />
+                </div>
+              </div>
+
+              <motion.button
+                type="submit"
+                disabled={isSubmitting}
+                whileHover={{ y: isSubmitting ? 0 : -2 }}
+                whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+                className="group btn-gold w-full h-[60px] flex items-center justify-center rounded-2xl mt-4"
+              >
+                <span className="relative z-10 flex items-center justify-center gap-2 text-[15px] font-bold">
+                  {isSubmitting ? (
+                    <Loader2 size={20} className="animate-spin" />
+                  ) : isSuccess ? (
+                    <Check size={20} />
+                  ) : (
+                    <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  )}
+                  <span>
+                    {isSubmitting ? 'Submitting...' : isSuccess ? 'Inquiry Sent' : 'Submit Inquiry'}
+                  </span>
                 </span>
-              </span>
-            </motion.button>
- </div>
- </form>
- </motion.div>
+              </motion.button>
+            </form>
+          </motion.div>
+        </div>
+      </section>
 
- </div>
- </section>
+      {/* MAP SECTION */}
+      <section className="border-t border-white/[0.05] bg-[#02040a] py-32">
+        <div className="container max-w-[1400px] mx-auto px-6">
+          <div className="mb-20 text-center">
+            <h2 className="text-4xl md:text-5xl font-black tracking-[-0.03em] text-white">Global <span className="text-[#F5A800]">Operations.</span></h2>
+          </div>
 
- {/* MAP SECTION */}
- <section className="section-cinematic border-t border-white/[0.04] bg-[#02040a]">
- <div className="container max-w-[1400px]">
- <div className="mb-16 text-center">
- <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white">Global <span className="text-gradient">Operations.</span></h2>
- </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="lg:col-span-3 bg-[#0a0a0e] border border-white/10 p-10 rounded-3xl"
+            >
+              <div className="inline-block px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-white/50 text-[10px] font-black uppercase tracking-widest mb-6">Headquarters</div>
+              <h3 className="text-3xl font-black text-white tracking-tight mb-4">Addis Ababa.</h3>
+              <p className="text-white/50 text-[15px] font-medium leading-relaxed mb-10">
+                The core center of company leadership, engineering operations, and technical innovation.
+              </p>
+              <div className="pt-6 border-t border-white/10">
+                <div className="flex items-center gap-3 text-white/60 text-xs font-bold font-mono tracking-widest">
+                  <div className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+                  ACTIVE / GMT+3
+                </div>
+              </div>
+            </motion.div>
 
- <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
- 
- <motion.div
- initial={{ opacity: 0, x: -20 }}
- whileInView={{ opacity: 1, x: 0 }}
- viewport={{ once: true }}
- className="lg:col-span-3 card-hud p-8"
- >
- <div className="badge mb-6">HQ</div>
- <h3 className="text-2xl font-black text-white mb-4">Addis Ababa.</h3>
- <p className="text-[#9CA3AF] text-sm leading-relaxed mb-8">
- The core center of company leadership, mission-critical operations, and technical innovation.
- </p>
- <div className="space-y-3 pt-6 border-t border-white/10">
- <div className="flex items-center gap-3 text-white/60 text-xs font-bold font-mono">
- <div className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse " />
- ACTIVE / GMT+3
- </div>
- </div>
- </motion.div>
-
- <div className="lg:col-span-9 filter sepia-[0.3] hue-rotate-[190deg] saturate-[1.5] contrast-[1.2] opacity-80 mx-auto">
- <WorldMap />
- </div>
-
-
-
- </div>
- </div>
- </section>
- </div>
- );
+            <div className="lg:col-span-9 opacity-80 mx-auto w-full">
+              <WorldMap />
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
 }

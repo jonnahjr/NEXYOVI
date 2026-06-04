@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, ExternalLink } from 'lucide-react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import bankCase from '../assets/bank_security_case_study_1777103333442.png';
@@ -104,70 +105,95 @@ export default function FeaturedProjects() {
                     viewport={{ once: true, margin: '-60px' }}
                     className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4"
                 >
-                    {projects.map((project, i) => (
-                        <motion.div
-                            key={i}
-                            variants={cardVariants}
-                            className="group relative overflow-hidden rounded-[20px] border border-white/[0.08] bg-white/[0.03] transition-all duration-500 hover:border-white/[0.15] hover:bg-white/[0.05]"
-                        >
-                            {/* Screenshot row */}
-                            <div className="relative h-48 overflow-hidden">
-                                <div className="absolute inset-0 flex items-center justify-center gap-2 px-3">
-                                    {project.screenshots.map((img, j) => (
-                                        <div
-                                            key={j}
-                                            className="relative overflow-hidden rounded-lg border border-white/[0.08] bg-white/5 shadow-lg"
-                                            style={{
-                                                width: j === 1 ? '55%' : '40%',
-                                                aspectRatio: '9 / 19',
-                                                marginTop: j === 0 ? '12%' : j === 2 ? '12%' : 0,
-                                            }}
-                                        >
-                                            <img
-                                                src={img}
-                                                alt={`${project.name} screen ${j + 1}`}
-                                                className="w-full h-full object-cover"
-                                            />
+                    {projects.map((project, i) => {
+                        const [mousePos, setMousePos] = useState({ x: -1000, y: -1000 });
+
+                        const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+                            const rect = e.currentTarget.getBoundingClientRect();
+                            setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+                        };
+
+                        const handleMouseLeave = () => {
+                            setMousePos({ x: -1000, y: -1000 });
+                        };
+
+                        return (
+                            <motion.div
+                                key={i}
+                                variants={cardVariants}
+                                onMouseMove={handleMouseMove}
+                                onMouseLeave={handleMouseLeave}
+                                className="group relative overflow-hidden rounded-[20px] border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm transition-all duration-500 hover:border-white/[0.15] hover:bg-white/[0.05]"
+                            >
+                                {/* Hover Spotlight */}
+                                <div 
+                                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"
+                                    style={{
+                                        background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, rgba(245, 168, 0, 0.08), transparent 40%)`
+                                    }}
+                                />
+
+                                <div className="relative z-10 flex flex-col h-full">
+                                    {/* Screenshot row */}
+                                    <div className="relative h-48 overflow-hidden">
+                                        <div className="absolute inset-0 flex items-center justify-center gap-2 px-3">
+                                            {project.screenshots.map((img, j) => (
+                                                <div
+                                                    key={j}
+                                                    className="relative overflow-hidden rounded-lg border border-white/[0.08] bg-white/5 shadow-lg"
+                                                    style={{
+                                                        width: j === 1 ? '55%' : '40%',
+                                                        aspectRatio: '9 / 19',
+                                                        marginTop: j === 0 ? '12%' : j === 2 ? '12%' : 0,
+                                                    }}
+                                                >
+                                                    <img
+                                                        src={img}
+                                                        alt={`${project.name} screen ${j + 1}`}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                </div>
+                                            ))}
                                         </div>
-                                    ))}
-                                </div>
-                                {/* Bottom fade */}
-                                <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#02040a] to-transparent pointer-events-none" />
-                            </div>
+                                        {/* Bottom fade */}
+                                        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#02040a] to-transparent pointer-events-none" />
+                                    </div>
 
-                            {/* Info */}
-                            <div className="p-5 pt-3">
-                                <h3 className="text-white font-bold text-[15px] tracking-tight mb-1 group-hover:text-[#F5A800] transition-colors">
-                                    {project.name}
-                                </h3>
-                                <p className="text-white/40 text-xs leading-relaxed mb-2 line-clamp-2">
-                                    {project.desc}
-                                </p>
-                                {project.outcome && (
-                                    <p className="text-[#F5A800] text-[11px] font-medium mb-4 leading-relaxed">
-                                        {project.outcome}
-                                    </p>
-                                )}
-                                <div className="flex flex-wrap gap-1.5">
-                                    {project.tags.map((tag) => (
-                                        <span
-                                            key={tag}
-                                            className="text-[9px] font-bold px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] text-white/30 uppercase tracking-wider"
-                                        >
-                                            {tag}
-                                        </span>
-                                    ))}
+                                    {/* Info */}
+                                    <div className="p-5 pt-3 flex flex-col flex-grow">
+                                        <h3 className="text-white font-bold text-[15px] tracking-tight mb-1 group-hover:text-[#F5A800] transition-colors">
+                                            {project.name}
+                                        </h3>
+                                        <p className="text-white/40 text-xs leading-relaxed mb-2 line-clamp-2">
+                                            {project.desc}
+                                        </p>
+                                        {project.outcome && (
+                                            <p className="text-[#F5A800] text-[11px] font-medium mb-4 leading-relaxed">
+                                                {project.outcome}
+                                            </p>
+                                        )}
+                                        <div className="flex flex-wrap gap-1.5 mt-auto pt-4">
+                                            {project.tags.map((tag) => (
+                                                <span
+                                                    key={tag}
+                                                    className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] text-white/30 uppercase tracking-wider group-hover:border-white/[0.15] group-hover:text-white/60 transition-colors duration-300"
+                                                >
+                                                    {tag}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            {/* Hover overlay link */}
-                            <Link to={project.href} className="absolute inset-0 z-10" aria-label={`View ${project.name}`}>
-                                <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20">
-                                    <ExternalLink size={12} className="text-white/60" />
-                                </div>
-                            </Link>
-                        </motion.div>
-                    ))}
+                                {/* Hover overlay link */}
+                                <Link to={project.href} className="absolute inset-0 z-20" aria-label={`View ${project.name}`}>
+                                    <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <ExternalLink size={12} className="text-[#F5A800]" />
+                                    </div>
+                                </Link>
+                            </motion.div>
+                        );
+                    })}
                 </motion.div>
 
                 {/* Mobile view all link */}

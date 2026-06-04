@@ -71,19 +71,22 @@ const OfficesPage = () => {
 
  <div className="space-y-8">
  <div className="flex gap-6 items-start">
- <div className="shrink-0 w-10 h-10 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center">
- <MapPin size={16} className="text-slate-500" />
+ <div className="relative shrink-0 w-10 h-10 rounded-xl bg-[#030303] border border-white/10 flex items-center justify-center overflow-hidden shadow-sm">
+ <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+ <MapPin size={16} className="relative z-10 text-zinc-400" />
  </div>
  <p className="text-lg text-slate-600">{hub.address}</p>
  </div>          <div className="flex gap-6 items-start">
-              <div className="shrink-0 w-10 h-10 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center">
-                <Mail size={16} className="text-slate-500" />
+              <div className="relative shrink-0 w-10 h-10 rounded-xl bg-[#030303] border border-white/10 flex items-center justify-center overflow-hidden shadow-sm">
+                <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                <Mail size={16} className="relative z-10 text-zinc-400" />
               </div>
               <p className="text-lg text-slate-600">{hub.email}</p>
             </div>
  <div className="flex gap-6 items-start">
- <div className="shrink-0 w-10 h-10 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center">
- <Clock size={16} className="text-slate-500" />
+ <div className="relative shrink-0 w-10 h-10 rounded-xl bg-[#030303] border border-white/10 flex items-center justify-center overflow-hidden shadow-sm">
+ <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+ <Clock size={16} className="relative z-10 text-zinc-400" />
  </div>
  <p className="text-lg text-slate-600">Current Time: {hub.time}</p>
  </div>
