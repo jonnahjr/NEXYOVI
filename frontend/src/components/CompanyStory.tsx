@@ -6,7 +6,7 @@ const CompanyStory = () => {
  return (
  <section className="bg-[#02040a] py-24 relative overflow-hidden text-white">
  {/* Decorative gradients */}
- <div className="absolute inset-0 opacity-10 bg-gradient-to-br from-[#F5A800] to-[#FFD166] pointer-events-none" />
+ <div className="absolute inset-0 opacity-5 bg-gradient-to-br from-[#F5A800] to-[#FFD166] pointer-events-none" />
  <div className="container mx-auto px-6 lg:px-12 relative z-10">
  {/* Header */}
  <motion.div
@@ -30,10 +30,10 @@ const CompanyStory = () => {
 
  <div className="space-y-12">
  {[
- { year: '2018', title: 'Founded', desc: 'Bootstrapped the first prototype in a co‑working space, focusing on AI‑driven automation.' },
- { year: '2020', title: 'Series A', desc: 'Secured $10M to expand globally and launch the first SaaS product.' },
-  { year: '2022', title: 'Global Hubs', desc: 'Expanded operations with remote teams across time zones, bridging African talent with global markets.' },
- { year: '2024', title: 'Enterprise Suite', desc: 'Released a full‑stack platform for finance, health, and government sectors.' }].map((item, i) => (
+  { year: '2018', title: 'Founded', desc: 'Bootstrapped the first prototype in Addis Ababa, focusing on AI-driven automation for Ethiopian enterprises.' },
+  { year: '2020', title: 'First Enterprise Clients', desc: 'Shipped production systems for government and financial sector clients, establishing our engineering reputation.' },
+  { year: '2022', title: 'Expanding Horizons', desc: 'Grew our engineering team and expanded service offerings across cloud infrastructure, AI, and cybersecurity.' },
+  { year: '2024', title: 'Enterprise Suite', desc: 'Released a full-stack platform serving finance, health, and government sectors across the region.' }].map((item, i) => (
  <motion.div
  key={i}
  initial={{ opacity: 0, x: -20 }}
