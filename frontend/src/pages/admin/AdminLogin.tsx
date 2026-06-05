@@ -25,10 +25,10 @@ const AdminLogin = () => {
  });
 
  if (authError) {
- setError(authError.message || 'Invalid email or password');
- setLoading(false);
+  setError(authError.message || 'Invalid email or password');
+  setLoading(false);
  } else {
- navigate('/admin');
+  setTimeout(() => navigate('/admin', { replace: true }), 300);
  }
  };
 

@@ -70,6 +70,7 @@ interface SiteContextType {
     updateAdmin: (admin: any) => void;
     deleteAdmin: (id: string) => void;
     addMessage: (msg: any) => void;
+    updateMessage: (id: string, updates: any) => void;
     deleteMessage: (id: string) => void;
     updateSettings: (settings: any) => void;
     session: any;
@@ -215,6 +216,10 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const { error } = await supabase.from('messages').delete().eq('id', id);
         if (!error) setMessages(prev => prev.filter(m => m.id !== id));
     };
+    const updateMessage = async (id: string, updates: any) => {
+        const { data, error } = await supabase.from('messages').update(updates).eq('id', id).select();
+        if (!error && data) setMessages(prev => prev.map(m => m.id === id ? data[0] : m));
+    };
 
     const updateSettings = async (newSettings: any) => {
         setSettings(newSettings);
@@ -246,7 +251,7 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
             addTeamMember, updateTeamMember, deleteTeamMember,
             addTestimonial, updateTestimonial, deleteTestimonial,
             addAdmin, updateAdmin, deleteAdmin,
-            addMessage, deleteMessage,
+            addMessage, updateMessage, deleteMessage,
             updateSettings, updateSiteContent,
             session, loadingAuth
         }}>
