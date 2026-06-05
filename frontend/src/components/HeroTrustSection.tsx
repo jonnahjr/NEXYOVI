@@ -163,9 +163,6 @@ const HeroTrustSection = () => {
 
       {/* ─── DARK CTA SECTION ─── */}
       <section className="relative bg-[#02040a] py-28 md:py-36 overflow-hidden border-t border-white/5">
-        {/* Atmosphere */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#F5A800]/5 rounded-full blur-[120px] pointer-events-none" />
-
         <div className="container relative z-10 max-w-[1400px] mx-auto px-6">
           <div className="max-w-3xl mx-auto text-center">
             {/* Badge */}

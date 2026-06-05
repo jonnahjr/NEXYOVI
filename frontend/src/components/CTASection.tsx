@@ -7,27 +7,9 @@ const CTASection = () => {
  return (
  <section className="relative bg-[#050816] py-40 overflow-hidden border-t border-white/[0.05]">
 
- {/* Animated gradient core */}
- <motion.div
- animate={{ scale: [1, 1.1, 1], opacity: [0.08, 0.14, 0.08] }}
- transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
- className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] rounded-full blur-[180px] pointer-events-none"
- style={{ background: 'radial-gradient(ellipse, #F5A800, transparent)' }}
- />
-
- {/* Horizontal line accents */}
- <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#F5A800]/20 to-transparent" />
- <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
-
- {/* Grid */}
- <div
- className="absolute inset-0 opacity-[0.02] pointer-events-none"
- style={{
- backgroundImage: `linear-gradient(rgba(37,99,235,0.8) 1px, transparent 1px),
- linear-gradient(90deg, rgba(37,99,235,0.8) 1px, transparent 1px)`,
- backgroundSize: '80px 80px',
- }}
- />
+  {/* Clean border accents */}
+  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
+  <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
 
  <div className="container relative z-10 text-center">
  <motion.div
