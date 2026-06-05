@@ -95,6 +95,9 @@ DROP POLICY IF EXISTS "Public manage testimonials" ON public.testimonials;
 CREATE POLICY "Public read testimonials"   ON public.testimonials FOR SELECT USING (true);
 CREATE POLICY "Public manage testimonials" ON public.testimonials FOR ALL    USING (true);
 
+-- Add linkedin column if it doesn't exist yet (safe migration)
+ALTER TABLE public.testimonials ADD COLUMN IF NOT EXISTS linkedin text;
+
 INSERT INTO public.testimonials (author, role, content, linkedin) VALUES
 (
   'Yonas Bogale',
@@ -141,6 +144,11 @@ DROP POLICY IF EXISTS "Public read team"   ON public.team;
 DROP POLICY IF EXISTS "Public manage team" ON public.team;
 CREATE POLICY "Public read team"   ON public.team FOR SELECT USING (true);
 CREATE POLICY "Public manage team" ON public.team FOR ALL    USING (true);
+
+-- Add columns if they don't exist yet (safe migration)
+ALTER TABLE public.team ADD COLUMN IF NOT EXISTS linkedin  text;
+ALTER TABLE public.team ADD COLUMN IF NOT EXISTS initials  text;
+ALTER TABLE public.team ADD COLUMN IF NOT EXISTS color     text;
 
 INSERT INTO public.team (name, role, bio, linkedin, initials, color) VALUES
 ('Amanuel Tesfaye', 'Chief Technology Officer', 'Software architect and engineer with deep expertise in distributed systems, cloud infrastructure, and AI/ML deployment.', 'https://linkedin.com/in/amanuel-tesfaye/', 'AT', '#8b5cf6'),
