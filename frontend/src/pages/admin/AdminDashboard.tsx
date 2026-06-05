@@ -13,7 +13,7 @@ const StatCard = ({ label, value, icon: Icon, color, to, trend }: any) => (
  <Link to={to}>
  <motion.div
  whileHover={{ y: -2 }}
- className="bg-[#0D1220] border border-white/[0.08] rounded-2xl p-5 hover:border-white/20 transition-all group cursor-pointer"
+ className="bg-[#0a0a0e]/90 backdrop-blur-sm border border-white/[0.05] rounded-2xl p-5 hover:border-white/[0.15] hover:bg-white/[0.02] transition-all group cursor-pointer"
  >
  <div className="flex items-start justify-between mb-4">
  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${color}`}>
@@ -54,9 +54,8 @@ const AdminDashboard = () => {
  <div className="space-y-6">
  
  {/* Welcome Banner */}
- <div className="relative bg-[#0D1220] border border-white/[0.08] rounded-2xl p-6 overflow-hidden">
- <div className="absolute inset-0 bg-gradient-to-r from-[#F5A800]/10 to-transparent pointer-events-none" />
- <div className="absolute top-0 right-0 w-[300px] h-full bg-[#F5A800]/5 blur-[80px] pointer-events-none" />
+ <div className="relative bg-[#0a0a0e]/90 backdrop-blur-sm border border-white/[0.05] rounded-2xl p-6 overflow-hidden">
+ <div className="absolute inset-0 bg-gradient-to-r from-white/[0.02] to-transparent pointer-events-none" />
  <div className="relative flex items-center justify-between gap-4">
  <div>
  <p className="text-xs font-bold text-[#F5A800] uppercase tracking-widest mb-2">Welcome back</p>
@@ -82,8 +81,8 @@ const AdminDashboard = () => {
  <div className="grid grid-cols-1 xl:grid-cols-5 gap-6">
  
  {/* Quick Actions */}
- <div className="xl:col-span-3 bg-[#0D1220] border border-white/[0.08] rounded-2xl overflow-hidden">
- <div className="px-5 py-4 border-b border-white/[0.06]">
+ <div className="xl:col-span-3 bg-[#0a0a0e]/90 backdrop-blur-sm border border-white/[0.05] rounded-2xl overflow-hidden">
+ <div className="px-5 py-4 border-b border-white/[0.05]">
  <h2 className="text-sm font-bold text-white">Quick Actions</h2>
  <p className="text-xs text-white/30 mt-0.5">Manage all areas of the website</p>
  </div>
@@ -106,8 +105,8 @@ const AdminDashboard = () => {
  </div>
 
  {/* System Health */}
- <div className="xl:col-span-2 bg-[#0D1220] border border-white/[0.08] rounded-2xl overflow-hidden">
- <div className="px-5 py-4 border-b border-white/[0.06] flex items-center justify-between">
+ <div className="xl:col-span-2 bg-[#0a0a0e]/90 backdrop-blur-sm border border-white/[0.05] rounded-2xl overflow-hidden">
+ <div className="px-5 py-4 border-b border-white/[0.05] flex items-center justify-between">
  <h2 className="text-sm font-bold text-white">System Health</h2>
  <span className="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-lg border border-emerald-500/20 uppercase tracking-widest">Live</span>
  </div>
@@ -138,8 +137,8 @@ const AdminDashboard = () => {
  </div>
 
  {/* Recent Messages */}
- <div className="bg-[#0D1220] border border-white/[0.08] rounded-2xl overflow-hidden">
- <div className="px-5 py-4 border-b border-white/[0.06] flex items-center justify-between">
+ <div className="bg-[#0a0a0e]/90 backdrop-blur-sm border border-white/[0.05] rounded-2xl overflow-hidden">
+ <div className="px-5 py-4 border-b border-white/[0.05] flex items-center justify-between">
  <div>
  <h2 className="text-sm font-bold text-white">Recent Messages</h2>
  <p className="text-xs text-white/30 mt-0.5">Inquiries from your website</p>

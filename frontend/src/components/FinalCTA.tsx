@@ -4,7 +4,18 @@ import { Link } from 'react-router-dom';
 import { useSite } from '../context/SiteContext';
 
 export default function FinalCTA() {
-  const { settings } = useSite();
+  const { settings, siteContent } = useSite();
+  const ctas = siteContent?.ctas || {
+    title: "Let's Build Together",
+    subtitle: "Let's talk.",
+    description: "Book your strategy session today. We take on a limited number of new clients each quarter to ensure maximum quality and dedicated attention.",
+    buttonText: "Book a strategy session",
+    benefits: [
+      "AI audit + 2–3 ROI ideas",
+      "Prioritized roadmap outline, zero cost",
+      "Strict NDA, fully confidential",
+    ]
+  };
   const viewport = { once: true, margin: '-100px' };
 
   return (
@@ -20,7 +31,7 @@ export default function FinalCTA() {
           >
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             <span className="text-[11px] font-bold tracking-[0.2em] text-white/60 uppercase">
-              Let's Build Together
+              {ctas.title}
             </span>
           </motion.div>
 
@@ -32,9 +43,9 @@ export default function FinalCTA() {
             transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-[-0.03em] leading-[0.95] mb-8"
           >
-            Ready to scale?{' '}
+            {ctas.subtitle.replace("Let's talk.", '')}{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">
-              Let's talk.
+              {ctas.subtitle.includes("Let's talk.") ? "Let's talk." : ""}
             </span>
           </motion.h2>
 
@@ -46,7 +57,7 @@ export default function FinalCTA() {
             transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="text-white/50 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-10 font-medium"
           >
-            Book your 45-minute strategy session today. We take on a limited number of new clients each quarter to ensure maximum quality and dedicated attention.
+            {ctas.description}
           </motion.p>
 
           {/* CTA Buttons */}
@@ -61,7 +72,7 @@ export default function FinalCTA() {
               href="mailto:contact@nexyovi.com"
               className="group btn-gold text-[15px] px-9 py-[14px]"
             >
-              <span className="relative z-10">Book a strategy session</span>
+              <span className="relative z-10">{ctas.buttonText}</span>
               <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
             </a>
 
@@ -82,11 +93,7 @@ export default function FinalCTA() {
             transition={{ duration: 0.5, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-wrap items-center justify-center gap-3"
           >
-            {[
-              "AI audit + 2–3 ROI ideas in 45 min",
-              "Prioritized roadmap outline, zero cost",
-              "Strict NDA, fully confidential",
-            ].map((benefit, i) => (
+            {ctas.benefits.map((benefit: string, i: number) => (
               <div
                 key={i}
                 className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-[13px] font-medium"

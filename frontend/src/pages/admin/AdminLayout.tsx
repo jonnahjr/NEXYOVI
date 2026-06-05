@@ -105,7 +105,7 @@ const AdminLayout = () => {
  );
 
  return (
- <div className="h-screen w-screen bg-[#070B14] text-white flex overflow-hidden" style={{ fontFamily: "'Inter', sans-serif" }}>
+ <div className="h-screen w-screen bg-[#02040a] text-white flex overflow-hidden" style={{ fontFamily: "'Inter', sans-serif" }}>
  
  {/* ── MOBILE OVERLAY ── */}
  <AnimatePresence>
@@ -115,7 +115,7 @@ const AdminLayout = () => {
  <motion.aside
  initial={{ x: -280 }} animate={{ x: 0 }} exit={{ x: -280 }}
  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
- className="fixed left-0 top-0 h-full w-[260px] bg-[#0D1220] border-r border-white/[0.08] flex flex-col z-50 lg:hidden"
+ className="fixed left-0 top-0 h-full w-[260px] bg-[#0a0a0e] border-r border-white/[0.05] flex flex-col z-50 lg:hidden"
  >
  <SidebarContent />
  </motion.aside>
@@ -127,7 +127,7 @@ const AdminLayout = () => {
  <motion.aside
  animate={{ width: collapsed ? 68 : 240 }}
  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
- className="h-full bg-[#0D1220] border-r border-white/[0.08] flex-col shrink-0 overflow-hidden hidden lg:flex"
+ className="h-full bg-[#0a0a0e]/90 backdrop-blur-sm border-r border-white/[0.05] flex-col shrink-0 overflow-hidden hidden lg:flex"
  >
  <SidebarContent />
  </motion.aside>
@@ -136,7 +136,7 @@ const AdminLayout = () => {
  <div className="flex-1 flex flex-col h-full overflow-hidden min-w-0">
  
  {/* Topbar */}
- <header className="h-[72px] bg-[#0D1220] border-b border-white/[0.08] px-6 flex items-center justify-between shrink-0">
+ <header className="h-[72px] bg-[#0a0a0e]/90 backdrop-blur-sm border-b border-white/[0.05] px-6 flex items-center justify-between shrink-0">
  <div className="flex items-center gap-4">
  {/* Mobile menu button */}
  <button onClick={() => setMobileOpen(true)} className="lg:hidden w-9 h-9 rounded-lg border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/5 transition-all">
@@ -173,7 +173,7 @@ const AdminLayout = () => {
  initial={{ opacity: 0, y: 8, scale: 0.96 }}
  animate={{ opacity: 1, y: 0, scale: 1 }}
  exit={{ opacity: 0, y: 8, scale: 0.96 }}
- className="absolute right-0 mt-2 w-80 bg-[#0D1220] border border-white/[0.1] rounded-2xl z-50 overflow-hidden"
+ className="absolute right-0 mt-2 w-80 bg-[#0a0a0e] border border-white/[0.05] rounded-2xl z-50 overflow-hidden shadow-2xl"
  >
  <div className="p-4 border-b border-white/[0.06] flex items-center justify-between">
  <h3 className="text-sm font-bold text-white">Notifications</h3>
@@ -233,7 +233,7 @@ const AdminLayout = () => {
  </header>
 
  {/* Page Content */}
- <main className="flex-1 overflow-y-auto bg-[#070B14]">
+ <main className="flex-1 overflow-y-auto bg-[#02040a]">
  <div className="w-full max-w-7xl mx-auto px-6 py-8">
  <Outlet />
  </div>

@@ -44,6 +44,7 @@ import {
   SiVuedotjs
 } from 'react-icons/si';
 import { Link } from 'react-router-dom';
+import { useSite } from '../context/SiteContext';
 
 import { CTAButton } from '../components/CTAButton';
 import TextReveal from '../components/TextReveal';
@@ -458,6 +459,18 @@ function ServiceCard({ service, index }: { service: any; index: number }) {
 //  PAGE
 // ══════════════════════════════════════════════════════════════
 export default function Services() {
+  const { siteContent } = useSite();
+
+  const displayServices = services.map(s => {
+    if (siteContent?.services) {
+      const match = siteContent.services.find((ms: any) => ms.id === s.id);
+      if (match) {
+        return { ...s, title: match.title, desc: match.desc, longDesc: match.longDesc || s.longDesc };
+      }
+    }
+    return s;
+  });
+
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   // ── Hero parallax ──
@@ -605,8 +618,8 @@ export default function Services() {
 
           {/* ── Services Grid — Equal-width 3-column card grid ── */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {services.map((s, i) => (
-              <ServiceCard key={s.id} service={s} index={i} />
+            {displayServices.map((service, i) => (
+              <ServiceCard key={service.id} service={service} index={i} />
             ))}
           </div>
 

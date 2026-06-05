@@ -76,22 +76,216 @@ const HeroEditor = () => {
  );
 };
 
-// ── METRICS NOTE ──
-const MetricsNote = () => (
- <div className="space-y-5">
- <div className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-6">
- <div className="flex items-center gap-3 mb-4">
- <BarChart3 size={20} className="text-[#F5A800]" />
- <h4 className="text-sm font-bold text-white uppercase tracking-widest">Trust Metrics</h4>
- </div>
- <p className="text-sm text-white/60 leading-relaxed mb-4">
- Trust metrics (the four stat cards below the hero) are hardcoded directly in the
- <code className="text-[#F5A800] bg-white/[0.04] px-1.5 py-0.5 rounded mx-1">CompanyMetrics.tsx</code>
- component. To update them, edit that component's source code.
- </p>
- </div>
- </div>
-);
+// ── METRICS EDITOR ──
+const MetricsEditor = () => {
+  const { siteContent, updateSiteContent } = useSite();
+  const [saved, setSaved] = useState(false);
+  const [metrics, setMetrics] = useState([
+    { number: '12+', label: 'Years Experience' },
+    { number: '150+', label: 'Projects Delivered' },
+    { number: '99.9%', label: 'Uptime SLA' },
+    { number: '24/7', label: 'Support & Monitoring' }
+  ]);
+
+  useEffect(() => {
+    if (siteContent?.metrics) setMetrics(siteContent.metrics);
+  }, [siteContent]);
+
+  const handleSave = async (e: any) => {
+    e.preventDefault();
+    await updateSiteContent('metrics', metrics);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 3000);
+  };
+
+  const updateMetric = (index: number, field: string, value: string) => {
+    const newMetrics = [...metrics];
+    newMetrics[index] = { ...newMetrics[index], [field]: value };
+    setMetrics(newMetrics);
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {metrics.map((metric, i) => (
+          <div key={i} className="p-5 bg-white/[0.02] border border-white/[0.05] rounded-xl space-y-4">
+            <div>
+              <label className={labelClass}>Metric Number (e.g., 12+)</label>
+              <input type="text" value={metric.number} onChange={e => updateMetric(i, 'number', e.target.value)} className={inputClass + " text-xl font-bold text-[#F5A800]"} />
+            </div>
+            <div>
+              <label className={labelClass}>Metric Label</label>
+              <input type="text" value={metric.label} onChange={e => updateMetric(i, 'label', e.target.value)} className={inputClass} />
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-end">
+        <SaveButton onSave={handleSave} saved={saved} />
+      </div>
+    </div>
+  );
+};
+
+// ── CTA GLOBALS EDITOR ──
+const CTAEditor = () => {
+  const { siteContent, updateSiteContent } = useSite();
+  const [saved, setSaved] = useState(false);
+  const [form, setForm] = useState({
+    title: "Let's Build Together",
+    subtitle: "Ready to scale? Let's talk.",
+    description: "Book your 45-minute strategy session today. We take on a limited number of new clients each quarter to ensure maximum quality and dedicated attention.",
+    buttonText: "Book a strategy session",
+    benefits: [
+      "AI audit + 2–3 ROI ideas in 45 min",
+      "Prioritized roadmap outline, zero cost",
+      "Strict NDA, fully confidential"
+    ]
+  });
+
+  useEffect(() => {
+    if (siteContent?.ctas) setForm({ ...form, ...siteContent.ctas });
+  }, [siteContent]);
+
+  const handleSave = async (e: any) => {
+    e.preventDefault();
+    await updateSiteContent('ctas', form);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 3000);
+  };
+
+  const updateBenefit = (index: number, value: string) => {
+    const newBenefits = [...form.benefits];
+    newBenefits[index] = value;
+    setForm({ ...form, benefits: newBenefits });
+  };
+
+  return (
+    <div className="space-y-5">
+      <div>
+        <label className={labelClass}>CTA Headline</label>
+        <input type="text" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className={inputClass + " font-bold text-lg"} />
+      </div>
+      <div>
+        <label className={labelClass}>CTA Subheadline</label>
+        <input type="text" value={form.subtitle} onChange={e => setForm({ ...form, subtitle: e.target.value })} className={inputClass} />
+      </div>
+      <div>
+        <label className={labelClass}>CTA Description</label>
+        <textarea rows={3} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className={textareaClass} />
+      </div>
+      <div>
+        <label className={labelClass}>Button Text</label>
+        <input type="text" value={form.buttonText} onChange={e => setForm({ ...form, buttonText: e.target.value })} className={inputClass} />
+      </div>
+      <div className="pt-4 border-t border-white/[0.05]">
+        <label className={labelClass + " mb-4"}>CTA Benefits List</label>
+        <div className="space-y-3">
+          {form.benefits.map((benefit, i) => (
+            <input key={i} type="text" value={benefit} onChange={e => updateBenefit(i, e.target.value)} className={inputClass} />
+          ))}
+        </div>
+      </div>
+      <div className="flex justify-end pt-4">
+        <SaveButton onSave={handleSave} saved={saved} />
+      </div>
+    </div>
+  );
+};
+
+// ── PORTFOLIO EDITOR ──
+const PortfolioEditor = () => {
+  const { siteContent, updateSiteContent } = useSite();
+  const [saved, setSaved] = useState(false);
+  const [portfolio, setPortfolio] = useState([
+    { title: 'Aura Intelligence Platform', category: 'AI & Data Science', desc: 'Distributed ML pipeline for predictive maintenance in industrial manufacturing clusters.', metrics: '70% Reduced Downtime, Sub-10ms Latency' },
+    { title: 'SEC-Net Global Firewall', category: 'Cybersecurity', desc: 'Advanced zero-trust network infrastructure for secure cross-continental data transmission.', metrics: 'Enterprise-grade Threat Mitigation, AI-Driven Auditing' }
+  ]);
+
+  useEffect(() => {
+    if (siteContent?.portfolio) setPortfolio(siteContent.portfolio);
+  }, [siteContent]);
+
+  const handleSave = async (e: any) => {
+    e.preventDefault();
+    await updateSiteContent('portfolio', portfolio);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 3000);
+  };
+
+  const updateItem = (index: number, field: string, value: string) => {
+    const newItems = [...portfolio];
+    newItems[index] = { ...newItems[index], [field]: value };
+    setPortfolio(newItems);
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="space-y-6">
+        {portfolio.map((item, i) => (
+          <div key={i} className="p-5 bg-white/[0.02] border border-white/[0.05] rounded-xl space-y-4">
+            <h4 className="text-[#F5A800] font-bold text-sm">Case Study {i + 1}</h4>
+            <div className="grid grid-cols-2 gap-4">
+              <div><label className={labelClass}>Title</label><input type="text" value={item.title} onChange={e => updateItem(i, 'title', e.target.value)} className={inputClass} /></div>
+              <div><label className={labelClass}>Category</label><input type="text" value={item.category} onChange={e => updateItem(i, 'category', e.target.value)} className={inputClass} /></div>
+            </div>
+            <div><label className={labelClass}>Description</label><textarea rows={2} value={item.desc} onChange={e => updateItem(i, 'desc', e.target.value)} className={textareaClass} /></div>
+            <div><label className={labelClass}>Metrics (comma separated)</label><input type="text" value={item.metrics} onChange={e => updateItem(i, 'metrics', e.target.value)} className={inputClass} /></div>
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-end pt-2">
+        <SaveButton onSave={handleSave} saved={saved} />
+      </div>
+    </div>
+  );
+};
+
+// ── SERVICES EDITOR ──
+const ServicesEditor = () => {
+  const { siteContent, updateSiteContent } = useSite();
+  const [saved, setSaved] = useState(false);
+  const [services, setServices] = useState([
+    { id: 'software', title: 'Software Engineering', desc: 'Custom platforms, SaaS products, and enterprise applications engineered for massive concurrency and global scale.' },
+    { id: 'infrastructure', title: 'Infrastructure & Networking', desc: 'Cloud architecture, zero-trust networks, server deployments, and continuous reliability engineering.' },
+    { id: 'ai', title: 'Artificial Intelligence', desc: 'Predictive models, intelligent agents, and custom LLM integrations that automate complex workflows.' },
+    { id: 'security', title: 'Cybersecurity', desc: 'Security audits, infrastructure hardening, compliance, penetration testing, and continuous threat monitoring.' }
+  ]);
+
+  useEffect(() => {
+    if (siteContent?.services) setServices(siteContent.services);
+  }, [siteContent]);
+
+  const handleSave = async (e: any) => {
+    e.preventDefault();
+    await updateSiteContent('services', services);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 3000);
+  };
+
+  const updateService = (index: number, field: string, value: string) => {
+    const newItems = [...services];
+    newItems[index] = { ...newItems[index], [field]: value };
+    setServices(newItems);
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="space-y-6">
+        {services.map((item, i) => (
+          <div key={i} className="p-5 bg-white/[0.02] border border-white/[0.05] rounded-xl space-y-4">
+            <h4 className="text-[#F5A800] font-bold text-sm">{item.id.toUpperCase()}</h4>
+            <div><label className={labelClass}>Title</label><input type="text" value={item.title} onChange={e => updateService(i, 'title', e.target.value)} className={inputClass} /></div>
+            <div><label className={labelClass}>Short Description</label><textarea rows={2} value={item.desc} onChange={e => updateService(i, 'desc', e.target.value)} className={textareaClass} /></div>
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-end pt-2">
+        <SaveButton onSave={handleSave} saved={saved} />
+      </div>
+    </div>
+  );
+};
 
 // ── FOOTER CONTENT EDITOR ──
 const FooterEditor = () => {
@@ -196,12 +390,15 @@ const AboutEditor = () => {
  );
 };
 
-// ── MAIN CONTENT PAGE ──
 const tabs = [
  { id: 'hero', label: 'Hero Section', icon: LayoutTemplate, description: 'Main headline, subtitle and CTA buttons' },
- { id: 'metrics', label: 'Trust Metrics', icon: BarChart3, description: 'Hardcoded stat cards (edit in code)' },
+ { id: 'metrics', label: 'Trust Metrics', icon: BarChart3, description: 'Company performance stat cards' },
  { id: 'about', label: 'About / Company', icon: Globe, description: 'Company identity and key facts' },
- { id: 'footer', label: 'Footer Text', icon: FileText, description: 'Footer tagline and copyright text' }];
+ { id: 'services', label: 'Services', icon: CheckCircle2, description: 'Service listings' },
+ { id: 'portfolio', label: 'Portfolio', icon: Globe, description: 'Case studies & projects' },
+ { id: 'ctas', label: 'Bottom CTAs', icon: MessageSquare, description: 'Ready to scale? global texts' },
+ { id: 'footer', label: 'Footer Text', icon: FileText, description: 'Footer tagline and copyright text' }
+];
 
 const AdminContent = () => {
  const [activeTab, setActiveTab] = useState('hero');
@@ -210,8 +407,11 @@ const AdminContent = () => {
  const renderEditor = () => {
  switch (activeTab) {
  case 'hero': return <HeroEditor />;
- case 'metrics': return <MetricsNote />;
+ case 'metrics': return <MetricsEditor />;
  case 'about': return <AboutEditor />;
+ case 'services': return <ServicesEditor />;
+ case 'portfolio': return <PortfolioEditor />;
+ case 'ctas': return <CTAEditor />;
  case 'footer': return <FooterEditor />;
  default: return null;
  }
@@ -266,10 +466,10 @@ const AdminContent = () => {
  initial={{ opacity: 0, y: 10 }}
  animate={{ opacity: 1, y: 0 }}
  transition={{ duration: 0.2 }}
- className="bg-[#0D0D14] border border-white/[0.06] rounded-2xl overflow-hidden"
+ className="bg-[#0a0a0e]/90 backdrop-blur-sm border border-white/[0.05] rounded-2xl overflow-hidden"
  >
  {/* Panel Header */}
- <div className="flex items-center gap-3 px-6 py-5 border-b border-white/[0.06] bg-white/[0.01]">
+ <div className="flex items-center gap-3 px-6 py-5 border-b border-white/[0.05] bg-white/[0.01]">
  <div className="w-10 h-10 rounded-xl bg-[#F5A800]/10 flex items-center justify-center text-[#F5A800]">
  <active.icon size={20} />
  </div>

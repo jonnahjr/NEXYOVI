@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useRef } from 'react';
+import { useSite } from '../context/SiteContext';
 import { Server, Activity, ShieldCheck, Briefcase, Globe, Cpu } from 'lucide-react';
 
 const metrics = [
@@ -59,6 +60,18 @@ const cardVariants = {
 
 export default function CompanyMetrics() {
  const sectionRef = useRef<HTMLElement>(null);
+ const { siteContent } = useSite();
+
+ const displayMetrics = metrics.map((m, i) => {
+   if (siteContent?.metrics && siteContent.metrics[i]) {
+     return { 
+       ...m, 
+       headline: siteContent.metrics[i].number || m.headline,
+       sub: siteContent.metrics[i].label || m.sub
+     };
+   }
+   return m;
+ });
 
  return (
   <section ref={sectionRef} className="relative overflow-hidden bg-[#02040a] py-28 border-t border-b border-white/5">
@@ -112,7 +125,7 @@ export default function CompanyMetrics() {
       viewport={{ once: true, margin: '-60px' }}
       className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
      >
-     {metrics.map((metric, i) => {
+     {displayMetrics.map((metric, i) => {
       const Icon = metric.icon;
       return (
        <motion.div

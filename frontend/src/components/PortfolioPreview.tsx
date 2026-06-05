@@ -21,8 +21,17 @@ const projects = [
  metrics: ['Enterprise-grade Threat Mitigation', 'AI-Driven Auditing']
  }
 ];
+import { useSite } from '../context/SiteContext';
 
 const PortfolioPreview = () => {
+  const { siteContent } = useSite();
+  const displayProjects = siteContent?.portfolio && siteContent.portfolio.length > 0 
+    ? siteContent.portfolio.map((p: any, i: number) => ({
+        ...p,
+        image: projects[i]?.image || c1, // Keep local images for now
+        metrics: p.metrics.split(',').map((m: string) => m.trim())
+      }))
+    : projects;
  return (
  <section id="portfolio" className="py-40 bg-[#060709] overflow-hidden">
  <div className="container-wide">
@@ -49,7 +58,7 @@ const PortfolioPreview = () => {
  </div>
 
  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
- {projects.map((project, i) => (
+ {displayProjects.map((project: any, i: number) => (
  <motion.div
  key={i}
  initial={{ opacity: 0, y: 30 }}
