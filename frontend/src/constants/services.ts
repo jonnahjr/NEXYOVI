@@ -97,6 +97,23 @@ export const SERVICES: Record<string, ServiceDetailConfig> = {
       { title: 'Data Lake Migration', outcome: 'Enabled 10x faster query execution.' }
     ]
   },
+  managed: {
+    id: 'managed',
+    title: 'Managed Technology',
+    description: 'SLA-backed support, reliability engineering, and technical advisory for production systems that need steady operational oversight.',
+    icon: Cloud,
+    capabilities: [
+      { title: '24/7 Monitoring', desc: 'Continuous alerting, triage, and operational visibility for critical systems.' },
+      { title: 'Incident Response', desc: 'Structured escalation, recovery coordination, and post-incident reviews.' },
+      { title: 'Preventive Maintenance', desc: 'Patch management, performance tuning, and infrastructure hygiene.' },
+      { title: 'Technical Advisory', desc: 'Roadmapping, capacity planning, and architecture guidance for internal teams.' }
+    ],
+    techStack: ['Grafana', 'Prometheus', 'Docker', 'Terraform', 'PostgreSQL'],
+    caseStudies: [
+      { title: 'Platform Operations Retainer', outcome: 'Reduced Sev-1 incident response time by 55%.' },
+      { title: 'Reliability Improvement Program', outcome: 'Improved service availability to 99.95% across core workloads.' }
+    ]
+  },
   networking: {
     id: 'networking',
     title: 'Infrastructure & Networking',

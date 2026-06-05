@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
-import { BrainCircuit, Globe, MonitorSmartphone, Shield } from 'lucide-react';
-import { CTAButton } from './CTAButton';
+import { BrainCircuit, Globe, MonitorSmartphone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { EASE_EXPO, staggerContainer } from '../lib/animations';
+import { CTAButton } from './CTAButton';
 
 const VIDEO_URL =
   'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260508_215831_c6a8989c-d716-4d8d-8745-e972a2eec711.mp4';

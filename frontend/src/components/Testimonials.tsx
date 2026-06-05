@@ -2,8 +2,6 @@ import { motion, useAnimationFrame, useMotionValue } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Linkedin } from 'lucide-react';
 import { useCallback, useRef, useState } from 'react';
 
-import avatar1 from '../assets/avatar_exec1.png';
-
 import { useSite } from '../context/SiteContext';
 
 const Testimonials = () => {
@@ -18,7 +16,7 @@ const Testimonials = () => {
     role: t.role,
     org: t.role.split(',')[1]?.trim() || t.role,
     content: t.content,
-    avatar: t.image_url || t.img || avatar1,
+    avatar: t.image_url || t.img || null,
     linkedin: t.linkedin || null,
   }));
 
@@ -105,7 +103,13 @@ const Testimonials = () => {
               >
                 <div className="flex items-center gap-3 mb-5">
                   <div className="w-10 h-10 rounded-full overflow-hidden border border-white/10 shrink-0">
-                    <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
+                    {t.avatar ? (
+                      <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-white/10 text-white/40 text-xs font-bold">
+                        {t.name?.charAt(0) || '?'}
+                      </div>
+                    )}
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-1.5">

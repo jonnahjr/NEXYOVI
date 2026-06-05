@@ -1,14 +1,30 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import {
-  ArrowRight, Building2, Activity, HeartPulse, GraduationCap, Truck, Zap,
-  ShoppingCart, CheckCircle, Shield, Cpu, Users, Target,
-  Code, Cloud, Database, Smartphone, BrainCircuit,
-  Layers, Network, ChevronRight, MapPin
+  Activity,
+  ArrowRight,
+  BrainCircuit,
+  Building2,
+  CheckCircle,
+  ChevronRight,
+  Cloud,
+  Code,
+  Cpu,
+  Database,
+  GraduationCap,
+  HeartPulse,
+  Layers, Network,
+  Shield,
+  ShoppingCart,
+  Smartphone,
+  Target,
+  Truck,
+  Users,
+  Zap
 } from 'lucide-react';
-import { EASE_EXPO } from '../lib/animations';
-import TextReveal from '../components/TextReveal';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { CTAButton } from '../components/CTAButton';
+import TextReveal from '../components/TextReveal';
+import { EASE_EXPO } from '../lib/animations';
 
 // ── Data ──────────────────────────────────────────────────────
 const industries = [
@@ -62,6 +78,7 @@ const industries = [
   },
   {
     id: 'manufacturing', name: 'Manufacturing', icon: Cpu, accent: '#ef4444',
+    maturity: 'Emerging Vertical',
     desc: 'Smart factory systems, computer vision quality control, predictive maintenance platforms, and industrial IoT data infrastructure.',
     challenges: ['Legacy industrial control system integration with modern IT', 'Real-time quality monitoring across production lines', 'Predictive maintenance to reduce unplanned downtime', 'Industrial IoT data ingestion and processing at scale'],
     systems: ['IIoT Data Platforms & Edge Computing', 'Computer Vision Quality Control Systems', 'Predictive Maintenance Engines', 'Manufacturing Execution Systems (MES)'],
@@ -70,6 +87,7 @@ const industries = [
   },
   {
     id: 'energy', name: 'Energy', icon: Zap, accent: '#eab308',
+    maturity: 'Emerging Vertical',
     desc: 'Smart grid management platforms, renewable energy optimization, SCADA security, and critical infrastructure monitoring systems.',
     challenges: ['Critical infrastructure cybersecurity and threat detection', 'Renewable energy integration with existing grid infrastructure', 'SCADA system modernization and secure remote access', 'Real-time energy consumption monitoring and optimization'],
     systems: ['Smart Grid Management Platforms', 'SCADA Security & Monitoring', 'Renewable Energy Management Systems', 'Energy Analytics & Consumption Optimization'],
@@ -90,10 +108,14 @@ const solutions = [
 ];
 
 const caseStudies = [
-  { icon: Activity, accent: '#F5A800', title: 'Payment Infrastructure Modernization', industry: 'FinTech', desc: 'Architected and deployed a PCI-DSS Level 1 compliant payment switch system for a regional financial institution. Migrated legacy core banking systems to a microservice architecture with zero unscheduled downtime during cutover.', tech: ['Go', 'Kafka', 'PostgreSQL', 'Terraform'], outcome: 'Reduced average transaction processing time from 1.2s to 180ms. Achieved PCI-DSS Level 1 certification within the first operating quarter.' },
-  { icon: HeartPulse, accent: '#10b981', title: 'National Telemedicine Network', industry: 'HealthTech', desc: 'Designed and deployed a HIPAA-compliant telemedicine platform connecting 12 regional hospitals with remote diagnostic capabilities. Built on HL7 FHIR standards for seamless EHR integration.', tech: ['React', 'WebRTC', 'Python', 'FHIR'], outcome: 'Connected 40+ clinical departments across 12 hospitals. Reduced patient transfer time by 60% through remote specialist consultations.' },
-  { icon: Truck, accent: '#f59e0b', title: 'Supply Chain Visibility Platform', industry: 'Logistics', desc: 'Built a real-time supply chain control tower integrating data from 800+ vehicles, 14 warehouses, and 3 port terminals into a single operational dashboard with predictive ETAs.', tech: ['IoT', 'Node.js', 'Redis', 'GCP'], outcome: 'Reduced average delivery window from 4 hours to 45 minutes. Lowered fuel costs by 18% through route optimization algorithms.' },
-  { icon: Building2, accent: '#8b5cf6', title: 'Digital Identity & Citizen Portal', industry: 'GovTech', desc: 'Developed a sovereign digital identity platform and citizen services portal for a national government. Air-gapped deployment with biometric verification and offline-capable architecture for rural accessibility.', tech: ['Rust', 'PostgreSQL', 'Terraform', 'Air-Gapped'], outcome: 'Onboarded 500K+ citizens in the first year. Achieved 100% audit compliance on data sovereignty requirements.' },
+  { icon: Activity, accent: '#F5A800', badge: 'Illustrative Project', title: 'Payment Infrastructure Modernization', industry: 'FinTech', desc: 'Architected and deployed a PCI-DSS Level 1 compliant payment switch system for a regional financial institution. Migrated legacy core banking systems to a microservice architecture with zero unscheduled downtime during cutover.', tech: ['Go', 'Kafka', 'PostgreSQL', 'Terraform'], outcome: 'Reduced average transaction processing time from 1.2s to 180ms. Achieved PCI-DSS Level 1 certification within the first operating quarter.' },
+  { icon: HeartPulse, accent: '#10b981', badge: 'Illustrative Project', title: 'National Telemedicine Network', industry: 'HealthTech', desc: 'Designed and deployed a HIPAA-compliant telemedicine platform connecting 12 regional hospitals with remote diagnostic capabilities. Built on HL7 FHIR standards for seamless EHR integration.', tech: ['React', 'WebRTC', 'Python', 'FHIR'], outcome: 'Connected 40+ clinical departments across 12 hospitals. Reduced patient transfer time by 60% through remote specialist consultations.' },
+  { icon: Truck, accent: '#f59e0b', badge: 'Illustrative Project', title: 'Supply Chain Visibility Platform', industry: 'Logistics', desc: 'Built a real-time supply chain control tower integrating data from 800+ vehicles, 14 warehouses, and 3 port terminals into a single operational dashboard with predictive ETAs.', tech: ['IoT', 'Node.js', 'Redis', 'GCP'], outcome: 'Reduced average delivery window from 4 hours to 45 minutes. Lowered fuel costs by 18% through route optimization algorithms.' },
+  { icon: Building2, accent: '#8b5cf6', badge: 'Illustrative Project', title: 'Digital Identity & Citizen Portal', industry: 'GovTech', desc: 'Developed a sovereign digital identity platform and citizen services portal for a national government. Air-gapped deployment with biometric verification and offline-capable architecture for rural accessibility.', tech: ['Rust', 'PostgreSQL', 'Terraform', 'Air-Gapped'], outcome: 'Onboarded 500K+ citizens in the first year. Achieved 100% audit compliance on data sovereignty requirements.' },
+  { icon: ShoppingCart, accent: '#06b6d4', badge: 'Illustrative Project', title: 'Omnichannel Commerce Core', industry: 'Retail', desc: 'Designed a unified commerce platform connecting e-commerce, point-of-sale, and inventory systems with real-time stock visibility and AI-driven merchandising workflows.', tech: ['Next.js', 'Node.js', 'PostgreSQL', 'Stripe'], outcome: 'Reduced stockout incidents by 35% and cut checkout abandonment during peak traffic by 22% across connected commerce channels.' },
+  { icon: GraduationCap, accent: '#ec4899', badge: 'Illustrative Project', title: 'Digital Learning Operations Platform', industry: 'Education', desc: 'Created a scalable student learning platform with virtual classroom delivery, progress analytics, and secure student record integrations for multi-campus institutions.', tech: ['React', 'Python', 'WebRTC', 'PostgreSQL'], outcome: 'Cut faculty reporting time by 40% and improved on-time learner progress tracking by 28% across participating programs.' },
+  { icon: Cpu, accent: '#ef4444', badge: 'Illustrative Project', title: 'Factory Visibility & Quality Monitoring', industry: 'Manufacturing', desc: 'Mapped an industrial operations architecture combining machine telemetry, edge ingestion, and computer vision inspection to improve production visibility and reduce defects.', tech: ['Python', 'MQTT', 'OpenCV', 'Azure IoT'], outcome: 'Outlined a path to lower defect rates, faster root-cause detection, and stronger production-line visibility for pilot deployments.' },
+  { icon: Zap, accent: '#eab308', badge: 'Illustrative Project', title: 'Grid Monitoring & SCADA Security Layer', industry: 'Energy', desc: 'Defined a secure monitoring architecture for distributed energy assets with SCADA observability, anomaly detection, and role-based remote access for critical systems.', tech: ['Kafka', 'TimescaleDB', 'Grafana', 'Terraform'], outcome: 'Established a blueprint for stronger infrastructure monitoring, faster incident detection, and safer remote operations.' },
 ];
 
 const deliveryLocations = [
@@ -180,12 +202,6 @@ export default function Industries() {
         <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#02040a] to-transparent z-[2] pointer-events-none" />
 
         <motion.div style={{ opacity: heroOpacity, scale: heroScale }} className="relative z-10 container max-w-5xl mx-auto px-6 text-center pt-32 pb-24">
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: EASE_EXPO }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-[#F5A800]/20 backdrop-blur-md mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse shadow-[0_0_8px_rgba(245,168,0,0.6)]" />
-            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#F5A800]">Global Industry Expertise</span>
-          </motion.div>
-
           <TextReveal>
             <h1 className="text-[48px] md:text-[72px] lg:text-[88px] font-black tracking-[-0.04em] leading-[0.92] text-white">
               Engineering for{' '}
@@ -256,7 +272,7 @@ export default function Industries() {
               <span className="text-[#F5A800]">Expertise.</span>
             </h2>
             <p className="text-slate-600 text-lg md:text-xl leading-relaxed max-w-xl font-medium">
-              Eight core industries. Decades of combined experience. We understand the unique challenges, regulations, and opportunities of each sector.
+              Eight core industries. Deep domain expertise across regulated and operationally complex sectors. We understand the unique challenges, regulations, and opportunities of each vertical.
             </p>
           </motion.div>
 
@@ -284,7 +300,14 @@ export default function Industries() {
                           <Icon size={20} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" />
                         </div>
                       </div>
-                      <h3 className="text-xl font-black text-slate-950 tracking-[-0.02em] mb-1 group-hover:text-[#F5A800] transition-colors duration-300">{ind.name}</h3>
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="text-xl font-black text-slate-950 tracking-[-0.02em] group-hover:text-[#F5A800] transition-colors duration-300">{ind.name}</h3>
+                        {ind.maturity && (
+                          <span className="inline-flex items-center rounded-full bg-slate-100 px-2 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-slate-500">
+                            {ind.maturity}
+                          </span>
+                        )}
+                      </div>
                       <p className="text-slate-500 text-sm leading-relaxed font-medium line-clamp-3">{ind.desc}</p>
                     </div>
                   </div>
@@ -312,27 +335,31 @@ export default function Industries() {
               <span className="text-[#F5A800]">Unique Challenges.</span>
             </h2>
             <p className="text-slate-500 text-lg leading-relaxed max-w-xl font-medium">
-              Select an industry to see the specific challenges we solve and the technical depth we bring.
+              Select an industry to explore the specific challenges, systems, compliance needs, and business outcomes we design for.
             </p>
           </motion.div>
 
           <div className="grid lg:grid-cols-5 gap-8">
             {/* Industry Selector */}
-            <div className="lg:col-span-2 flex flex-col gap-2">
+            <div className="lg:col-span-2 flex flex-col gap-2" role="tablist" aria-label="Industry selector">
               {industries.map((ind) => {
                 const Icon = ind.icon;
                 const isActive = activeIndustry === ind.id;
                 return (
                   <button
+                    type="button"
                     key={ind.id}
                     onClick={() => setActiveIndustry(ind.id)}
-                    className={`group flex items-center gap-4 px-5 py-4 rounded-[16px] text-left transition-all duration-300 ${
-                      isActive ? 'bg-slate-100 border border-slate-200 shadow-sm' : 'bg-transparent border border-transparent hover:bg-slate-50 hover:border-slate-100'
-                    }`}
+                    onFocus={() => setActiveIndustry(ind.id)}
+                    id={`industry-tab-${ind.id}`}
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-controls={`industry-panel-${ind.id}`}
+                    className={`group flex items-center gap-4 px-5 py-4 rounded-[16px] text-left transition-all duration-300 ${isActive ? 'bg-slate-100 border border-slate-200 shadow-sm' : 'bg-transparent border border-transparent hover:bg-slate-50 hover:border-slate-100'
+                      }`}
                   >
-                    <div className={`relative w-10 h-10 rounded-[12px] bg-[#030303] border flex items-center justify-center overflow-hidden shadow-sm transition-all duration-300 ${
-                      isActive ? 'border-[#F5A800]/40' : 'border-white/10 group-hover:border-[#F5A800]/40'
-                    }`}>
+                    <div className={`relative w-10 h-10 rounded-[12px] bg-[#030303] border flex items-center justify-center overflow-hidden shadow-sm transition-all duration-300 ${isActive ? 'border-[#F5A800]/40' : 'border-white/10 group-hover:border-[#F5A800]/40'
+                      }`}>
                       <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
                       <Icon size={18} className={`relative z-10 transition-colors duration-300 ${isActive ? 'text-[#F5A800]' : 'text-zinc-400 group-hover:text-[#F5A800]'}`} />
                     </div>
@@ -362,6 +389,9 @@ export default function Industries() {
                       initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4, ease: EASE_EXPO }}
                       className="p-8 md:p-12 rounded-[32px] bg-slate-50 border border-slate-200 h-full"
+                      role="tabpanel"
+                      id={`industry-panel-${ind.id}`}
+                      aria-labelledby={`industry-tab-${ind.id}`}
                     >
                       <div className="flex items-center gap-4 mb-8">
                         <div className="relative w-14 h-14 rounded-[18px] bg-[#030303] border border-white/10 flex items-center justify-center overflow-hidden shadow-sm transition-all duration-300 hover:border-[#F5A800]/40">
@@ -370,7 +400,14 @@ export default function Industries() {
                         </div>
                         <div>
                           <div className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400">Industry Profile</div>
-                          <h3 className="text-2xl md:text-3xl font-black text-slate-950 tracking-tight">{ind.name}</h3>
+                          <div className="flex flex-wrap items-center gap-2">
+                            <h3 className="text-2xl md:text-3xl font-black text-slate-950 tracking-tight">{ind.name}</h3>
+                            {ind.maturity && (
+                              <span className="inline-flex items-center rounded-full bg-slate-200 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-slate-500">
+                                {ind.maturity}
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </div>
 
@@ -444,34 +481,35 @@ export default function Industries() {
         </div>
       </section>
 
-      
+
       {/* ══════════════════════════════════════════════════════
-          SECTION NEW — COMPLIANCE & SECURITY (creamy white)
+          SECTION NEW — COMPLIANCE & SECURITY (dark)
           ══════════════════════════════════════════════════════ */}
-      <section className="relative py-32 bg-[#FCFBF8] border-t border-slate-200 overflow-hidden">
+      <section className="relative py-32 bg-[#02040a] border-t border-white/[0.05] overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#10b981]/5 blur-[140px] rounded-full" />
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#10b981]/8 blur-[140px] rounded-full" />
+          <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-[#10b981]/5 blur-[100px] rounded-full" />
         </div>
         <div className="container relative z-10 mx-auto px-6">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: EASE_EXPO }} className="max-w-2xl mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-[#10b981]/20 backdrop-blur-md mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
               <span className="text-[11px] font-bold text-[#10b981] uppercase tracking-widest">Compliance & Security</span>
             </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-6">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-6">
               Built for Regulated <span className="text-[#10b981]">Environments.</span>
             </h2>
-            <p className="text-slate-600 text-lg leading-relaxed max-w-xl font-medium">
+            <p className="text-white/50 text-lg leading-relaxed max-w-xl font-medium">
               We engineer systems that meet the strictest security and compliance standards by default, ensuring your data is protected and auditable.
             </p>
           </motion.div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
             {['GDPR', 'HIPAA', 'PCI-DSS', 'SOC 2 Type II', 'Zero-Trust Architecture'].map((cap, i) => (
-              <motion.div key={cap} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.04, duration: 0.4, ease: EASE_EXPO }} className="group relative p-5 rounded-[16px] bg-white border border-slate-200 hover:bg-slate-50 hover:border-[#10b981]/30 transition-all duration-500">
-                <div className="text-slate-600 font-bold text-sm group-hover:text-[#10b981] transition-colors duration-300">{cap}</div>
+              <motion.div key={cap} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.04, duration: 0.4, ease: EASE_EXPO }} className="group relative p-5 rounded-[16px] bg-[#111827] border border-white/5 hover:bg-[#1a2332] hover:border-[#10b981]/40 transition-all duration-500">
+                <div className="text-white font-bold text-sm group-hover:text-[#10b981] transition-colors duration-300">{cap}</div>
                 <div className="mt-2 flex gap-1">
                   {[...Array(3)].map((_, j) => (
-                    <div key={j} className="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover:bg-[#10b981]/30 transition-colors duration-300" />
+                    <div key={j} className="w-1.5 h-1.5 rounded-full bg-white/10 group-hover:bg-[#10b981]/40 transition-colors duration-300" />
                   ))}
                 </div>
               </motion.div>
@@ -479,7 +517,7 @@ export default function Industries() {
           </div>
         </div>
       </section>
-{/* ══════════════════════════════════════════════════════
+      {/* ══════════════════════════════════════════════════════
           SECTION 7 — FEATURED CASE STUDIES
           ══════════════════════════════════════════════════════ */}
       <section className="relative py-32 bg-white border-t border-slate-200 overflow-hidden">
@@ -496,7 +534,7 @@ export default function Industries() {
               <span className="text-[#F5A800]">Real Impact.</span>
             </h2>
             <p className="text-slate-500 text-lg leading-relaxed max-w-xl font-medium">
-              Measurable outcomes across industries — from fintech to government.
+              Measurable outcomes across all eight industries. Illustrative projects are clearly marked to show they are representative of the work we do.
             </p>
           </motion.div>
 
@@ -517,7 +555,12 @@ export default function Industries() {
                       <Icon size={20} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" />
                     </div>
                     <div>
-                      <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Illustrative Project • {cs.industry}</div>
+                      <div className="flex flex-wrap items-center gap-2 mb-2">
+                        <span className="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-amber-700">
+                          {cs.badge}
+                        </span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{cs.industry}</span>
+                      </div>
                       <h3 className="text-lg font-black text-slate-950 tracking-tight group-hover:text-[#F5A800] transition-colors duration-300">{cs.title}</h3>
                     </div>
                   </div>
@@ -627,7 +670,10 @@ export default function Industries() {
                   <h3 className="text-xl font-black text-slate-950 tracking-tight mb-4 group-hover:text-[#F5A800] transition-colors duration-300">{p.title}</h3>
                   <p className="text-slate-500 text-sm leading-relaxed font-medium mb-8">{p.desc}</p>
                   <CTAButton className="group inline-flex items-center gap-2 text-[#F5A800] font-bold text-sm tracking-wide">
-                    Start Project
+                    {p.title === 'Engineering-First Culture' && 'Meet Our Team'}
+                    {p.title === 'Security-First Architecture' && 'View Security Practices'}
+                    {p.title === 'AI & Automation Expertise' && 'Explore AI Services'}
+                    {p.title === 'Long-Term Partnership Model' && 'Start a Project'}
                     <ArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform duration-300" />
                   </CTAButton>
                 </motion.div>
@@ -637,7 +683,7 @@ export default function Industries() {
         </div>
       </section>
 
-      
+
       {/* ══════════════════════════════════════════════════════
           SECTION 8 — HOW WE WORK
           ══════════════════════════════════════════════════════ */}
@@ -664,7 +710,7 @@ export default function Industries() {
             <motion.div className="group p-8 rounded-[24px] bg-white border border-slate-200 hover:border-[#F5A800]/40 hover:bg-slate-50 transition-all duration-500">
               <div className="relative w-12 h-12 rounded-[16px] bg-[#030303] border border-white/10 flex items-center justify-center mb-5 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 group-hover:scale-110 transition-all duration-500"><div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" /><Network size={22} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" /></div>
               <h3 className="text-slate-950 font-black text-xl mb-1">Distributed Teams</h3>
-              <p className="text-slate-500 text-sm leading-relaxed mt-2">Global engineering talent operating across timezones for 24/7 delivery velocity.</p>
+              <p className="text-slate-500 text-sm leading-relaxed mt-2">Delivery coverage across East Africa, Europe, and North America for extended overlap windows, faster responses, and smoother handoffs.</p>
             </motion.div>
             <motion.div className="group p-8 rounded-[24px] bg-white border border-slate-200 hover:border-[#F5A800]/40 hover:bg-slate-50 transition-all duration-500">
               <div className="relative w-12 h-12 rounded-[16px] bg-[#030303] border border-white/10 flex items-center justify-center mb-5 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 group-hover:scale-110 transition-all duration-500"><div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" /><Code size={22} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" /></div>
@@ -674,7 +720,7 @@ export default function Industries() {
           </div>
         </div>
       </section>
-{/* ══════════════════════════════════════════════════════
+      {/* ══════════════════════════════════════════════════════
           SECTION 10 — FINAL CTA (dark)
           ══════════════════════════════════════════════════════ */}
       <section className="relative py-32 bg-[#02040a] section-divider-dark overflow-hidden">
@@ -715,7 +761,7 @@ export default function Industries() {
                 <span className="relative z-10">Request a Technical Brief</span>
               </CTAButton>
             </motion.div>
-            
+
             <motion.div
               initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
               transition={{ delay: 0.5, duration: 0.6 }}

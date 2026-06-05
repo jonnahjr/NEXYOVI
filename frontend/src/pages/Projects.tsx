@@ -305,7 +305,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
         hidden: { opacity: 0, y: 40, scale: 0.96 },
         visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: EASE_EXPO, delay: index * 0.06 } },
       }}
-      className="group relative rounded-[28px] overflow-hidden border border-white/10 bg-[#0a0a0e] transition-all duration-500 cursor-pointer"
+      className="group relative rounded-[28px] overflow-hidden border border-slate-200 bg-white transition-all duration-500 cursor-pointer"
       style={{
         perspective: 1000,
         transformStyle: 'preserve-3d',
@@ -325,11 +325,11 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
         {/* Header row */}
         <div className="flex items-start justify-between mb-6">
           <motion.div
-            whileHover={{ scale: 1.15, rotate: -5 }}
-            className="relative w-12 h-12 rounded-2xl bg-[#030303] border border-white/10 flex items-center justify-center transition-transform duration-300 overflow-hidden shadow-md group-hover:border-[#F5A800]/40"
+            whileHover={{ scale: 1.1 }}
+            className="relative w-11 h-11 rounded-[14px] bg-[#030303] border border-white/10 flex items-center justify-center overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 transition-all duration-300"
           >
             <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
-            <Icon size={22} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" />
+            <Icon size={18} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" />
           </motion.div>
         </div>
 
@@ -338,17 +338,17 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
           <span className="text-[10px] font-black uppercase tracking-[0.3em]" style={{ color: project.color }}>
             {project.category}
           </span>
-          <span className="text-[10px] text-white/30 font-mono">{project.year}</span>
+          <span className="text-[10px] text-slate-400 font-mono">{project.year}</span>
         </div>
 
         {/* Title */}
-        <h3 className="text-xl md:text-2xl font-black text-white tracking-tight mb-1 leading-tight">
+        <h3 className="text-xl md:text-2xl font-black text-slate-950 tracking-tight mb-1 leading-tight">
           {project.title}
         </h3>
-        <p className="text-sm text-white/50 font-medium mb-4">{project.subtitle}</p>
+        <p className="text-sm text-slate-500 font-medium mb-4">{project.subtitle}</p>
 
         {/* Description */}
-        <p className="text-white/50 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
+        <p className="text-slate-500 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
           {project.description}
         </p>
 
@@ -357,7 +357,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-white/[0.03] border border-white/10 text-white/40"
+              className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-slate-50 border border-slate-200 text-slate-500"
             >
               {tag}
             </span>
@@ -365,20 +365,20 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
         </div>
 
         {/* Metrics strip */}
-        <div className="grid grid-cols-3 gap-2 mb-6 p-4 rounded-2xl bg-[#030303] border border-white/10">
+        <div className="grid grid-cols-3 gap-2 mb-6 p-4 rounded-2xl bg-slate-50 border border-slate-200">
           {project.metrics.map((m) => (
             <div key={m.label} className="text-center">
-              <div className="text-base md:text-lg font-black text-white mb-0.5">{m.value}</div>
-              <div className="text-[9px] font-bold uppercase tracking-widest text-white/40">{m.label}</div>
+              <div className="text-base md:text-lg font-black text-slate-950 mb-0.5">{m.value}</div>
+              <div className="text-[9px] font-bold uppercase tracking-widest text-slate-400">{m.label}</div>
             </div>
           ))}
         </div>
 
         {/* Impact + CTA */}
-        <div className="flex items-center justify-between pt-2 border-t border-white/5">
+        <div className="flex items-center justify-between pt-2 border-t border-slate-200">
           <motion.div className="flex items-center gap-2" whileHover={{ x: 3 }}>
             <TrendingUp size={12} style={{ color: project.color }} />
-            <span className="text-[11px] font-bold text-white/40">{project.impact}</span>
+            <span className="text-[11px] font-bold text-slate-500">{project.impact}</span>
           </motion.div>
           <Link
             to={`/projects/${project.id}`}
@@ -531,10 +531,10 @@ export default function Projects() {
 
   // ── Stats ──
   const stats = [
-    { icon: Layers, label: 'Enterprise Projects', value: 50, suffix: '+' },
-    { icon: Users, label: 'Clients Served', value: 20, suffix: '+' },
-    { icon: Globe, label: 'Countries Deployed', value: 4, suffix: '' },
-    { icon: Clock, label: 'Avg Time to Ship', value: 12, suffix: ' wks' },
+    { icon: Layers, label: 'Enterprise Projects', value: 50, suffix: '+', color: '#F5A800' },
+    { icon: Users, label: 'Clients Served', value: 20, suffix: '+', color: '#8b5cf6' },
+    { icon: Globe, label: 'Countries Deployed', value: 4, suffix: '', color: '#06b6d4' },
+    { icon: Clock, label: 'Avg Time to Ship', value: 12, suffix: ' wks', color: '#10b981' },
   ];
 
   return (
@@ -564,17 +564,6 @@ export default function Projects() {
           style={{ opacity: heroOpacity, scale: heroScale, filter: heroBlur }}
           className="relative z-10 container max-w-5xl mx-auto px-6 text-center pt-32 pb-24"
         >
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: EASE_EXPO }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-[#F5A800]/20 backdrop-blur-md mb-8"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse shadow-[0_0_8px_rgba(245,168,0,0.6)]" />
-            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#F5A800]">Our Work</span>
-          </motion.div>
-
           {/* Headline — TextReveal split into two lines (matching Services) */}
           <TextReveal className="mb-2">
             <h1 className="text-[48px] md:text-[72px] lg:text-[96px] font-black tracking-[-0.04em] leading-[0.9] text-white">
@@ -607,10 +596,10 @@ export default function Projects() {
             transition={{ delay: 0.5, duration: 0.6, ease: EASE_EXPO }}
             className="flex flex-wrap items-center justify-center gap-4 mb-20"
           >
-            <a href="mailto:contact@nexyovi.com" className="group btn-gold text-[14px] px-8 py-4">
+            <Link to="/contact#inquiry" className="group btn-gold text-[14px] px-8 py-4">
               <span className="relative z-10">Start a Project</span>
               <ChevronRight size={14} className="relative z-10 group-hover:translate-x-1 transition-transform" />
-            </a>
+            </Link>
             <Link to="/projects" className="group btn-ghost text-[14px] px-8 py-4">
               <span className="relative z-10">Case Studies</span>
               <ArrowUpRight size={14} className="relative z-10" />
@@ -690,9 +679,9 @@ export default function Projects() {
                   }}
                   className="flex flex-col items-center justify-center text-center"
                 >
-                  <div className="relative w-11 h-11 rounded-[14px] bg-[#030303] border border-white/10 flex items-center justify-center mb-4 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 transition-colors duration-300">
+                  <div className="relative w-11 h-11 rounded-[14px] bg-[#030303] border border-white/10 flex items-center justify-center mb-4 overflow-hidden shadow-sm transition-colors duration-300">
                     <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
-                    <Icon size={20} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" />
+                    <Icon size={20} style={{ color: stat.color }} className="relative z-10" />
                   </div>
                   <div className="text-2xl md:text-3xl font-black text-white mb-1">
                     <Counter value={stat.value} duration={2.5} suffix={stat.suffix} />
@@ -709,7 +698,7 @@ export default function Projects() {
       {/* ═══════════════════════════════════════════════════════════
           PROJECT GRID — All Projects
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-28 bg-[#02040a] border-t border-white/[0.05]">
+      <section className="relative py-28 bg-[#FCFBF8] border-t border-slate-200">
         <div className="container relative z-10 mx-auto px-6">
           {/* Section header */}
           <motion.div
@@ -725,17 +714,17 @@ export default function Projects() {
                   hidden: { opacity: 0, y: 20 },
                   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_EXPO } },
                 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 mb-4"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-4"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
-                <span className="text-[11px] font-bold text-white/50 uppercase tracking-widest">All Projects</span>
+                <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">All Projects</span>
               </motion.div>
               <motion.h2
                 variants={{
                   hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
                   visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: EASE_EXPO } },
                 }}
-                className="text-4xl md:text-5xl font-black text-white tracking-tight"
+                className="text-4xl md:text-5xl font-black text-slate-950 tracking-tight"
               >
                 Explore the Full{' '}
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Portfolio</span>
@@ -1149,10 +1138,10 @@ export default function Projects() {
               transition={{ delay: 0.25, duration: 0.6, ease: EASE_EXPO }}
               className="flex flex-wrap items-center justify-center gap-4"
             >
-              <a href="mailto:contact@nexyovi.com" className="group btn-gold text-[14px] px-8 py-4">
+              <Link to="/contact#inquiry" className="group btn-gold text-[14px] px-8 py-4">
                 <span className="relative z-10">Start a Project</span>
                 <ChevronRight size={14} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
-              </a>
+              </Link>
               <Link to="/services" className="group btn-ghost text-[14px] px-8 py-4">
                 <span className="relative z-10">Explore Services</span>
               </Link>

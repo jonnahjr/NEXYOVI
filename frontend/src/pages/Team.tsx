@@ -65,11 +65,11 @@ const TeamPage = () => {
  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
  {[
  { name: 'Yonas Bogale', role: 'Founder & CEO', tag: 'Strategic Vision' },
- { name: 'Senior Architect', role: 'Head of AI', tag: 'Machine Learning' },
- { name: 'Platform Lead', role: 'Software Engineering', tag: 'Full Stack' },
- { name: 'Security Director', role: 'Cyber Security', tag: 'White Hat' },
- { name: 'Ops Manager', role: 'Infrastructure', tag: 'Networking' },
- { name: 'Design Head', role: 'UX/UI Strategy', tag: 'Aesthetics' }
+ { name: 'Amanuel Tesfaye', role: 'Chief Technology Officer', tag: 'AI & Cloud Infrastructure' },
+ { name: 'Selamawit Hailu', role: 'Head of Engineering', tag: 'Scalable Systems' },
+ { name: 'Dawit Eshetu', role: 'Senior Full-Stack Developer', tag: 'Web Architecture' },
+ { name: 'Meron Tadesse', role: 'UI/UX Designer', tag: 'Design Systems' },
+ { name: 'Henok Alemu', role: 'DevOps Engineer', tag: 'CI/CD & Cloud' }
  ].map((member, i) => (
  <motion.div 
  key={i}

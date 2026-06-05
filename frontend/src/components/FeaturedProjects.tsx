@@ -3,7 +3,6 @@ import { ArrowRight, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import bankCase from '../assets/bank_security_case_study_1777103333442.png';
 import locate1 from '../assets/location/1.png';
 import locate2 from '../assets/location/2.png';
 import locate3 from '../assets/location/3.png';
@@ -45,7 +44,7 @@ const projects = [
         name: 'Banking Security Platform',
         desc: 'Enterprise security and fraud detection for leading banks.',
         outcome: 'Reduced fraud detection time by 40%, processed 2M secure transactions/day',
-        screenshots: [bankCase, logisticsCase, workspaceCase],
+        screenshots: [logisticsCase, workspaceCase],
         tags: ['FinTech', 'AI', 'Security'],
         href: '/projects',
     },

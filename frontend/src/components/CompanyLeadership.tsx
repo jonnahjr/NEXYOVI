@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Award, ChevronRight, Linkedin } from 'lucide-react';
+import { Linkedin } from 'lucide-react';
 import { useSite } from '../context/SiteContext';
 import { cardReveal, fadeUp, staggerContainerSlow, viewport } from '../lib/animations';
 
@@ -114,123 +114,132 @@ const expandedProfiles = [
    linkedin: 'https://linkedin.com',
   }];
 
+const LEADERSHIP_IDS = new Set(['1', '2', '3', '16']);
+
 const CompanyLeadership = () => {
- const { team } = useSite();
+  const { team } = useSite();
 
- return (
- <section id="leadership" className="py-32 bg-[#02040a] border-t border-white/[0.05] relative overflow-hidden">
+  const leaders = team.filter(m => LEADERSHIP_IDS.has(m.id));
+  const engineers = team.filter(m => !LEADERSHIP_IDS.has(m.id));
 
- {/* Glow */}
- <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#F5A800]/5 blur-[140px] rounded-full pointer-events-none" />
- <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#8b5cf6]/5 blur-[120px] rounded-full pointer-events-none" />
+  const MemberCard = ({ member, i, profile }: { member: any; i: number; profile: any }) => {
+    const hasPhoto = !!member.img;
+    return (
+      <motion.div
+        key={i}
+        variants={cardReveal}
+        className="group flex flex-col bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-500 rounded-2xl overflow-hidden flex-1 min-w-0"
+      >
+        {/* Avatar */}
+        <div className="relative aspect-[4/3] overflow-hidden mx-3 mt-3 rounded-xl">
+          {hasPhoto ? (
+            <img
+              src={member.img}
+              alt={member.name}
+              className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 scale-100 group-hover:scale-[1.04] transition-all duration-700"
+            />
+          ) : (
+            <div
+              className="w-full h-full flex items-center justify-center"
+              style={{ background: `linear-gradient(135deg, ${member.color || '#F5A800'}22, ${member.color || '#F5A800'}44)` }}
+            >
+              <span
+                className="text-4xl font-black tracking-tight"
+                style={{ color: member.color || '#F5A800' }}
+              >
+                {member.initials || member.name?.slice(0, 2).toUpperCase()}
+              </span>
+            </div>
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/80 via-transparent to-transparent" />
+          <a
+            href={profile.linkedin !== '#' ? profile.linkedin : member.linkedin || '#'}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={e => e.stopPropagation()}
+            className="absolute top-2.5 right-2.5 w-7 h-7 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-all duration-300"
+          >
+            <Linkedin size={12} />
+          </a>
+        </div>
+        {/* Info */}
+        <div className="px-4 pt-3 pb-4 flex flex-col flex-1">
+          <h3 className="text-[14px] font-black text-white tracking-tight leading-tight mb-0.5">{member.name}</h3>
+          <div
+            className="text-[9px] font-black uppercase tracking-[0.18em] mb-2"
+            style={{ color: member.color || '#F5A800' }}
+          >
+            {member.role}
+          </div>
+          <p className="text-white/40 text-[11px] leading-relaxed font-medium flex-1">{member.bio}</p>
+        </div>
+      </motion.div>
+    );
+  };
 
- <div className="container relative z-10">
+  return (
+    <section id="leadership" className="py-32 bg-[#02040a] border-t border-white/[0.05] relative overflow-hidden">
 
- {/* Header */}
- <motion.div
- variants={fadeUp}
- initial="hidden"
- whileInView="visible"
- viewport={viewport}
- className="mb-20 flex flex-col items-center text-center"
- >
- <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] mb-6">
- <span className="text-[11px] font-bold text-white/60 uppercase tracking-[0.2em]">The People</span>
- </div>
- <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-[-0.04em] leading-none text-white mb-5">
- Meet Our <span className="text-white/40">Team</span>
- </h2>
- <p className="text-white/50 text-lg max-w-xl font-medium">
- Seasoned experts who've built, scaled, and secured systems across two continents.
- </p>
- </motion.div>
+      {/* Glow */}
+      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#F5A800]/5 blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#8b5cf6]/5 blur-[120px] rounded-full pointer-events-none" />
 
- {/* Grid */}
- <motion.div
- variants={staggerContainerSlow}
- initial="hidden"
- whileInView="visible"
- viewport={viewport}
- className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
- >
- {team.map((member, i) => {
- const profile = expandedProfiles.find(p => p.id === member.id) || expandedProfiles[i % expandedProfiles.length];
- return (
- <motion.div
- key={i}
- variants={cardReveal}
- className="group relative card-hud p-0 overflow-hidden flex flex-col hover:border-white/20 transition-all duration-500"
- >
- {/* Photo */}
- <div className="relative aspect-[4/3] overflow-hidden m-2 rounded-[16px]">
- <img
- src={member.img}
- alt={member.name}
- className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 scale-100 group-hover:scale-[1.04] transition-all duration-700"
- />
- <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-transparent to-transparent opacity-80" />
+      <div className="container relative z-10">
+        {/* Header */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+          className="mb-16 flex flex-col items-center text-center"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] mb-6">
+            <span className="text-[11px] font-bold text-white/60 uppercase tracking-[0.2em]">The People</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-[-0.04em] leading-none text-white mb-5">
+            Meet Our <span className="text-white/40">Team</span>
+          </h2>
+          <p className="text-white/50 text-lg max-w-xl font-medium">
+            Seasoned experts who've built, scaled, and secured systems across two continents.
+          </p>
+        </motion.div>
 
- {/* LinkedIn */}
- <a
- href={profile.linkedin}
- target="_blank"
- rel="noopener noreferrer"
- onClick={e => e.stopPropagation()}
- className="absolute top-3 right-3 w-8 h-8 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-all duration-300"
- >
- <Linkedin size={13} />
- </a>
- </div>
+        {/* Leadership — 4-col grid */}
+        {leaders.length > 0 && (
+          <motion.div
+            variants={staggerContainerSlow}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewport}
+            className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6"
+          >
+            {leaders.map((member, i) => {
+              const profile = expandedProfiles.find(p => p.id === member.id) || expandedProfiles[i % expandedProfiles.length];
+              return <MemberCard key={member.id} member={member} i={i} profile={profile} />;
+            })}
+          </motion.div>
+        )}
+      </div>
 
- {/* Info */}
- <div className="p-6 flex flex-col flex-1 relative z-10">
- <div className="mb-4">
- <h3 className="text-xl font-black text-white tracking-tight mb-1">{member.name}</h3>
- <div className="text-white/50 text-[10px] font-black uppercase tracking-[0.2em]">{member.role}</div>
- </div>
-
- <p className="text-white/40 text-xs leading-relaxed mb-6 flex-1 font-medium">{member.bio}</p>
-
- {/* Experience */}
- <div className="flex items-center gap-2 mb-6">
- <div className="w-1.5 h-1.5 rounded-full bg-[#10b981] " />
- <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">{profile.experience} experience</span>
- </div>
-
- {/* Specializations */}
- <div className="mb-6">
- <div className="text-[9px] font-black text-white/30 uppercase tracking-widest mb-3">Specializations</div>
- <div className="flex flex-wrap gap-1.5">
- {profile.specializations.map((s, j) => (
- <span key={j} className="px-2 py-1 bg-white/[0.03] text-white/60 text-[9px] font-bold rounded-full border border-white/10">
- {s}
- </span>
- ))}
- </div>
- </div>
-
- {/* Certs */}
- <div className="pt-4 border-t border-white/[0.05]">
- <div className="text-[9px] font-black text-white/30 uppercase tracking-widest mb-3 flex items-center gap-1.5">
- <Award size={10} className="text-white/50" /> Certifications
- </div>
- <div className="space-y-2">
- {profile.certs.map((c, j) => (
- <div key={j} className="flex items-start gap-2">
- <ChevronRight size={10} className="text-white/40 shrink-0 mt-0.5" />
- <span className="text-white/40 text-[10px] font-medium leading-snug">{c}</span>
- </div>
- ))}
- </div>
- </div>
- </div>
- </motion.div>
- );
- })}
- </motion.div>
- </div>
- </section>
- );
+      {/* Engineers — full-bleed, fills entire viewport width */}
+      {engineers.length > 0 && (
+        <div className="w-full px-4 lg:px-8">
+          <motion.div
+            variants={staggerContainerSlow}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewport}
+            className="flex gap-3"
+          >
+            {engineers.map((member, i) => {
+              const profile = expandedProfiles.find(p => p.id === member.id) || expandedProfiles[(i + 4) % expandedProfiles.length];
+              return <MemberCard key={member.id} member={member} i={i} profile={profile} />;
+            })}
+          </motion.div>
+        </div>
+      )}
+    </section>
+  );
 };
 
 export default CompanyLeadership;

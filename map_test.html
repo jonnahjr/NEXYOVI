@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { margin: 0; overflow: hidden; background: #02040a; }
+  .container {
+    position: relative;
+    width: 100vw;
+    height: 50vw;
+    max-width: 1600px;
+    aspect-ratio: 2/1;
+    margin: auto;
+  }
+  img { width: 100%; height: 100%; object-fit: fill; opacity: 0.6; filter: grayscale(100%) invert(100%) brightness(100%); }
+  .dot {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: red;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .hq {
+    background: gold;
+    width: 14px;
+    height: 14px;
+  }
+  .label {
+    position: absolute;
+    color: white;
+    font-size: 10px;
+    font-family: monospace;
+    transform: translate(-50%, 8px);
+    white-space: nowrap;
+  }
+  #coords {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    color: lime;
+    font-size: 14px;
+    font-family: monospace;
+    background: rgba(0,0,0,0.7);
+    padding: 6px 10px;
+    border-radius: 6px;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<div id="coords">Move mouse over map</div>
+<div class="container" id="map">
+  <img src="map.svg" id="mapimg" />
+
+  <!-- HQ: Addis Ababa -->
+  <div class="dot hq" style="left: 60.75%; top: 45.00%;"></div>
+  <div class="label" style="left: 60.75%; top: 45.00%;">Addis Ababa</div>
+
+  <!-- Cape Town -->
+  <div class="dot" style="left: 55.11%; top: 68.83%;"></div>
+  <div class="label" style="left: 55.11%; top: 68.83%;">Cape Town</div>
+
+  <!-- Cairo -->
+  <div class="dot" style="left: 58.67%; top: 33.33%;"></div>
+  <div class="label" style="left: 58.67%; top: 33.33%;">Cairo</div>
+
+  <!-- Lagos -->
+  <div class="dot" style="left: 50.94%; top: 46.39%;"></div>
+  <div class="label" style="left: 50.94%; top: 46.39%;">Lagos</div>
+
+  <!-- Nairobi -->
+  <div class="dot" style="left: 60.22%; top: 50.72%;"></div>
+  <div class="label" style="left: 60.22%; top: 50.72%;">Nairobi</div>
+
+  <!-- Dakar -->
+  <div class="dot" style="left: 45.17%; top: 41.83%;"></div>
+  <div class="label" style="left: 45.17%; top: 41.83%;">Dakar</div>
+
+  <!-- Casablanca -->
+  <div class="dot" style="left: 47.89%; top: 31.39%;"></div>
+  <div class="label" style="left: 47.89%; top: 31.39%;">Casablanca</div>
+
+  <!-- Luanda -->
+  <div class="dot" style="left: 53.67%; top: 54.89%;"></div>
+  <div class="label" style="left: 53.67%; top: 54.89%;">Luanda</div>
+</div>
+<script>
+  const map = document.getElementById('map');
+  const coords = document.getElementById('coords');
+  map.addEventListener('mousemove', e => {
+    const rect = map.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width * 100).toFixed(2);
+    const y = ((e.clientY - rect.top) / rect.height * 100).toFixed(2);
+    coords.textContent = 'X: ' + x + '%, Y: ' + y + '%';
+  });
+</script>
+</body>
+</html>

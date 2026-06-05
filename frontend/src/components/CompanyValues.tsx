@@ -15,7 +15,7 @@ const values = [
  id: 'velocity',
  icon: Zap,
  title: 'Relentless Velocity',
- desc: 'Speed is a feature. We ship enterprise-grade solutions faster than anyone in the market.',
+ desc: 'Speed is a feature. We ship enterprise-grade solutions with typical enterprise MVPs delivered in 8–12 weeks.',
  accent: '#f59e0b',
  },
  {
@@ -29,14 +29,14 @@ const values = [
  id: 'partnership',
  icon: Users,
  title: 'Deep Partnership',
- desc: 'We embed with your team — not as vendors, but as technical co-founders of your mission.',
+ desc: 'We embed with your team — not vendors, but technical co-founders of your mission.',
  accent: '#8b5cf6',
  },
  {
  id: 'craft',
  icon: Code2,
  title: 'Technical Excellence',
- desc: 'Mastery is non-negotiable. We obsess over architecture, performance, and reliability.',
+ desc: 'Mastery is non-negotiable. We focus deeply on architecture, performance, and reliability.',
  accent: '#06b6d4',
  }];
 

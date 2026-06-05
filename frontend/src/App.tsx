@@ -40,6 +40,7 @@ const AdminTestimonials = lazy(() => import('./pages/admin/AdminTestimonials'));
 const AdminMessages = lazy(() => import('./pages/admin/AdminMessages'));
 const AdminUsers = lazy(() => import('./pages/admin/AdminUsers'));
 const AdminContent = lazy(() => import('./pages/admin/AdminContent'));
+const MapCalibrate = lazy(() => import('./pages/MapCalibrate'));
 
 // ── Loading Spinner ───────────────────────────────────────────
 const PageLoader = () => (
@@ -162,6 +163,7 @@ function App() {
  <Route path="settings" element={<AdminSettings />} />
  </Route>
 
+ <Route path="/map-calibrate" element={<MapCalibrate />} />
  <Route path="*" element={<Home />} />
  </Routes>
  </Suspense>

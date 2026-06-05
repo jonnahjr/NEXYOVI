@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { ArrowRight, Calendar, CheckCircle2, ShieldCheck, TrendingUp, Zap } from 'lucide-react';
 import { useSite } from '../context/SiteContext';
 import { viewport } from '../lib/animations';
@@ -99,14 +100,14 @@ const HeroTrustSection = () => {
             transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col sm:flex-row gap-4 mb-16"
           >
-            <a
-              href="mailto:contact@nexyovi.com"
+            <Link
+              to="/contact#inquiry"
               id="cta-start-project"
               className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-slate-950 text-white font-bold text-[14px] shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition-all duration-300 hover:bg-[#F5A800] hover:scale-105 hover:shadow-[0_8px_30px_rgba(245,168,0,0.25)] hover:-translate-y-0.5"
             >
               <span className="relative z-10">Start a Project</span>
               <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1 transition-transform" />
-            </a>
+            </Link>
 
             <a
               href={`mailto:${settings.email}`}

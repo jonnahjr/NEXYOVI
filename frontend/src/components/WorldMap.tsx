@@ -1,85 +1,175 @@
-import React from "react";
 import { motion } from "framer-motion";
 
-// HQ coordinates based on a standard 2:1 equirectangular SVG map projection
-const hq = { name: "Addis Ababa", type: "MAIN HEADQUARTERS", x: 57, y: 50 };
+// Visually calibrated coordinates (SVG viewBox 0 0 950 620)
+const hq = {
+  name: "Addis Ababa",
+  type: "MAIN HEADQUARTERS",
+  x: 564.06,
+  y: 311.45,
+};
 
-// African distribution nodes
 const africanNodes = [
-  { x: 55, y: 68 }, // South Africa
-  { x: 55, y: 38 }, // Egypt
-  { x: 48, y: 48 }, // Nigeria
-  { x: 58, y: 53 }, // Kenya
-  { x: 40, y: 43 }, // Senegal
-  { x: 45, y: 35 }, // Morocco
-  { x: 52, y: 56 }, // Angola
+  { name: "Cape Town", x: 518.94, y: 425.45 },
+  { name: "Cairo", x: 459.56, y: 256.82 },
+  { name: "Lagos", x: 419.98, y: 282.95 },
+  { name: "Nairobi", x: 533.98, y: 261.57 },
+  { name: "Dakar", x: 536.35, y: 290.86 },
+  { name: "Casablanca", x: 482.52, y: 286.11 },
+  { name: "Luanda", x: 477.77, y: 308.28 },
 ];
 
 export default function WorldMap() {
   return (
-    <div className="relative w-full max-w-4xl mx-auto aspect-[2/1] overflow-hidden">
+    <div className="absolute inset-0 w-full h-full overflow-hidden flex items-center justify-center">
+      {/* Container locked to the SVG's native 950:620 aspect ratio */}
+      <div className="relative w-full" style={{ aspectRatio: "950 / 620" }}>
 
-      {/* Static world map background */}
-      <img
-        src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg"
-        alt="World Map"
-        className="absolute inset-0 w-full h-full object-fill opacity-15"
-        style={{ filter: 'grayscale(100%) invert(100%) brightness(100%)' }}
-      />
+        {/* World map background image */}
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg"
+          alt="World Map"
+          className="absolute inset-0 w-full h-full"
+          style={{
+            objectFit: "fill",
+            opacity: 0.14,
+            filter: "grayscale(100%) invert(100%) brightness(100%)",
+          }}
+        />
 
-      {/* SVG layer for distribution lines */}
-      <svg className="absolute inset-0 w-full h-full z-10 overflow-visible" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#F5A800" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#F5A800" stopOpacity="0.1" />
-          </linearGradient>
-        </defs>
+        {/* Unified SVG overlay — same viewBox as the map image */}
+        <svg
+          className="absolute inset-0 w-full h-full z-10"
+          viewBox="0 0 950 620"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#F5A800" stopOpacity="0.9" />
+              <stop offset="100%" stopColor="#F5A800" stopOpacity="0.05" />
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="1.5" result="coloredBlur" />
+              <feMerge>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+            <filter id="hq-glow">
+              <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+              <feMerge>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
 
-        {africanNodes.map((node, i) => (
-          <motion.path
-            key={i}
-            d={`M ${hq.x} ${hq.y} Q ${(hq.x + node.x) / 2} ${(hq.y + node.y) / 2 - 4} ${node.x} ${node.y}`}
+          {/* Animated arcing lines from Addis Ababa to each African node */}
+          {africanNodes.map((node, i) => {
+            const mx = (hq.x + node.x) / 2;
+            const my = Math.min(hq.y, node.y) - 40;
+            return (
+              <motion.path
+                key={node.name}
+                d={`M ${hq.x} ${hq.y} Q ${mx} ${my} ${node.x} ${node.y}`}
+                fill="none"
+                stroke="url(#line-grad)"
+                strokeWidth="1"
+                strokeDasharray="4 4"
+                strokeLinecap="round"
+                filter="url(#glow)"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{
+                  pathLength: 1,
+                  opacity: 0.7,
+                  pathOffset: [0, 1],
+                }}
+                transition={{
+                  pathLength: { duration: 2, ease: "easeOut", delay: i * 0.3 },
+                  opacity: { duration: 1.5, ease: "easeOut", delay: i * 0.3 },
+                  pathOffset: {
+                    duration: 5,
+                    ease: "linear",
+                    repeat: Infinity,
+                    delay: i * 0.3 + 2,
+                  },
+                }}
+              />
+            );
+          })}
+
+          {/* African node dots */}
+          {africanNodes.map((node, i) => (
+            <motion.circle
+              key={`dot-${node.name}`}
+              cx={node.x}
+              cy={node.y}
+              r={3}
+              fill="#F5A800"
+              filter="url(#glow)"
+              initial={{ opacity: 0, r: 0 }}
+              animate={{ opacity: [0.4, 0.9, 0.4], r: [3, 4, 3] }}
+              transition={{
+                duration: 2.5,
+                ease: "easeInOut",
+                repeat: Infinity,
+                delay: i * 0.3,
+              }}
+            />
+          ))}
+
+          {/* HQ pulse rings */}
+          <motion.circle
+            cx={hq.x}
+            cy={hq.y}
+            r={6}
             fill="none"
             stroke="#F5A800"
-            strokeWidth="0.25"
-            strokeDasharray="1.5 1.5"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{ pathLength: 1, opacity: 0.5 }}
-            transition={{ duration: 2, ease: "easeOut", delay: i * 0.3 }}
+            strokeWidth="1"
+            animate={{ r: [6, 20, 26], opacity: [0.7, 0.3, 0] }}
+            transition={{ repeat: Infinity, duration: 3, ease: "easeOut" }}
           />
-        ))}
-      </svg>
+          <motion.circle
+            cx={hq.x}
+            cy={hq.y}
+            r={5}
+            fill="none"
+            stroke="#FFD166"
+            strokeWidth="0.8"
+            animate={{ r: [5, 15], opacity: [0.6, 0] }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeOut", delay: 0.5 }}
+          />
 
-      {/* African node dots */}
-      {africanNodes.map((node, i) => (
-        <div
-          key={`node-${i}`}
-          className="absolute z-20 w-1 h-1 bg-[#F5A800] rounded-full -translate-x-0.5 -translate-y-0.5 opacity-40"
-          style={{ left: `${node.x}%`, top: `${node.y}%` }}
-        />
-      ))}
+          {/* HQ core dot */}
+          <motion.circle
+            cx={hq.x}
+            cy={hq.y}
+            r={5}
+            fill="#F5A800"
+            stroke="#FFD166"
+            strokeWidth="1"
+            filter="url(#hq-glow)"
+            animate={{ r: [5, 5.8, 5] }}
+            transition={{ duration: 2.5, ease: "easeInOut", repeat: Infinity }}
+          />
 
-      {/* Headquarters Pin */}
-      <div
-        className="absolute z-30 -translate-x-1/2 -translate-y-1/2"
-        style={{ left: `${hq.x}%`, top: `${hq.y}%` }}
-      >
-        {/* Pulse ring */}
-        <motion.div
-          className="absolute inset-0 w-4 h-4 rounded-full border border-[#F5A800] -translate-x-1/2 -translate-y-1/2"
-          animate={{ scale: [1, 2.5], opacity: [0.6, 0] }}
-          transition={{ repeat: Infinity, duration: 2.5, ease: "easeOut" }}
-        />
-
-        {/* Core dot */}
-        <div className="w-2.5 h-2.5 rounded-full bg-[#F5A800] border border-[#FFD166] -translate-x-1/2 -translate-y-1/2" />
-
-        {/* Label */}
-        <div className="absolute bottom-4 left-2 w-max bg-black/80 border border-[#F5A800]/40 px-3 py-2 rounded-lg z-50">
-          <p className="text-[9px] font-mono text-[#F5A800] tracking-[0.2em] leading-none mb-1">{hq.type}</p>
-          <p className="text-[11px] font-bold text-white tracking-wide leading-none">{hq.name}</p>
-        </div>
+          {/* HQ label */}
+          <g transform={`translate(${hq.x + 8}, ${hq.y - 12})`}>
+            <rect
+              x="-4" y="-14"
+              width="82" height="30"
+              rx="4"
+              fill="rgba(0,0,0,0.75)"
+              stroke="rgba(245,168,0,0.35)"
+              strokeWidth="0.6"
+            />
+            <text x="0" y="-3" fontSize="5" fill="#F5A800" fontFamily="monospace" letterSpacing="1">
+              {hq.type}
+            </text>
+            <text x="0" y="9" fontSize="7" fill="white" fontFamily="sans-serif" fontWeight="bold">
+              {hq.name}
+            </text>
+          </g>
+        </svg>
       </div>
     </div>
   );

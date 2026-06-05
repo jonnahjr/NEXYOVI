@@ -3,7 +3,7 @@ import { ArrowRight, ArrowUpRight, Briefcase, Building2, CalendarCheck, Check, C
 import React from "react";
 import WorldMap from "../components/WorldMap";
 import { useSite } from "../context/SiteContext";
-import { staggerContainer, EASE_EXPO, revealUp } from "../lib/animations";
+import { EASE_EXPO, revealUp, staggerContainer } from "../lib/animations";
 
 export default function Contact() {
   const { settings, addMessage } = useSite();
@@ -49,6 +49,16 @@ export default function Contact() {
     }
   };
 
+  // Auto-scroll to form if URL has #inquiry hash
+  React.useEffect(() => {
+    if (window.location.hash === '#inquiry') {
+      setTimeout(() => {
+        formSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => nameInputRef.current?.focus(), 550);
+      }, 300);
+    }
+  }, []);
+
   const openInquiry = (type: "project" | "consultation") => {
     setFormData((current) => ({
       ...current,
@@ -76,13 +86,6 @@ export default function Contact() {
             animate="visible"
             className="flex flex-col items-center text-center"
           >
-            <motion.div variants={revealUp} className="mb-8">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/[0.03] text-[11px] uppercase tracking-[0.2em] text-white/50">
-                <span className="w-2 h-2 rounded-full bg-[#F5A800] animate-pulse" />
-                Engineering Partnership
-              </div>
-            </motion.div>
-
             <motion.h1 variants={revealUp} className="text-5xl md:text-7xl lg:text-[80px] font-black leading-[0.95] tracking-[-0.03em] mb-8 text-white">
               Let's Build Something <br />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">Exceptional.</span>
@@ -179,7 +182,7 @@ export default function Contact() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Full Name</label>
+                  <label className="text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Full Name *</label>
                   <div className="relative">
                     <User size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300" />
                     <input
@@ -188,13 +191,13 @@ export default function Contact() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-2xl py-4 pl-14 pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400"
-                      placeholder="Jane Doe"
+                      placeholder="Solomon Dereje"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Work Email</label>
+                  <label className="text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Work Email *</label>
                   <div className="relative">
                     <Mail size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300" />
                     <input
@@ -203,7 +206,7 @@ export default function Contact() {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-2xl py-4 pl-14 pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400"
-                      placeholder="jane@company.com"
+                      placeholder="nexyovi@company.com"
                     />
                   </div>
                 </div>
@@ -218,7 +221,7 @@ export default function Contact() {
                       value={formData.company}
                       onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                       className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-2xl py-4 pl-14 pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400"
-                      placeholder="Company Name (Optional)"
+                      placeholder="Company Name"
                     />
                   </div>
                 </div>
@@ -285,37 +288,66 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* MAP SECTION */}
-      <section className="border-t border-white/[0.05] bg-[#02040a] py-32">
-        <div className="container max-w-[1400px] mx-auto px-6">
-          <div className="mb-20 text-center">
-            <h2 className="text-4xl md:text-5xl font-black tracking-[-0.03em] text-white">Global <span className="text-[#F5A800]">Operations.</span></h2>
-          </div>
+      {/* MAP SECTION — Full-bleed map with overlaid HQ info */}
+      <section className="relative min-h-[65vh] bg-[#02040a] border-t border-white/[0.05] overflow-hidden">
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="lg:col-span-3 bg-[#0a0a0e] border border-white/10 p-10 rounded-3xl"
-            >
-              <div className="inline-block px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-white/50 text-[10px] font-black uppercase tracking-widest mb-6">Headquarters</div>
-              <h3 className="text-3xl font-black text-white tracking-tight mb-4">Addis Ababa.</h3>
-              <p className="text-white/50 text-[15px] font-medium leading-relaxed mb-10">
+        {/* Full-bleed map background */}
+        <div className="absolute inset-0 z-[1]">
+          <WorldMap />
+        </div>
+
+        {/* Gradient vignette for readability */}
+        <div className="absolute inset-0 z-[2] bg-gradient-to-r from-[#02040a]/95 via-[#02040a]/70 to-[#02040a]/30 pointer-events-none" />
+        <div className="absolute inset-0 z-[2] bg-gradient-to-t from-[#02040a]/60 via-transparent to-[#02040a]/30 pointer-events-none" />
+
+        {/* Content overlay */}
+        <div className="relative z-10 container max-w-[1000px] mx-auto px-6 min-h-[55vh] flex flex-col justify-center">
+
+          {/* Title */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: EASE_EXPO }}
+            className="mb-8"
+          >
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-black tracking-[-0.03em] text-white leading-[1.05]">
+              Global <span className="text-[#F5A800]">Operations.</span>
+            </h2>
+          </motion.div>
+
+          {/* HQ info card — floating on the left */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.15, ease: EASE_EXPO }}
+            className="max-w-sm"
+          >
+            <div className="bg-[#0a0a0e]/80 backdrop-blur-xl border border-white/[0.08] p-7 md:p-8 rounded-2xl shadow-2xl">
+              <div className="inline-block px-2.5 py-0.5 rounded-full bg-[#F5A800]/10 border border-[#F5A800]/20 text-[#F5A800] text-[9px] font-black uppercase tracking-widest mb-4">
+                Headquarters
+              </div>
+              <h3 className="text-2xl md:text-3xl font-black text-white tracking-tight mb-3">
+                Addis Ababa.
+              </h3>
+              <p className="text-white/50 text-[13px] font-medium leading-relaxed mb-6">
                 The core center of company leadership, engineering operations, and technical innovation.
               </p>
-              <div className="pt-6 border-t border-white/10">
-                <div className="flex items-center gap-3 text-white/60 text-xs font-bold font-mono tracking-widest">
-                  <div className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-                  ACTIVE / GMT+3
+              <div className="pt-5 border-t border-white/[0.06]">
+                <div className="flex items-center gap-2.5">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10b981] opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10b981] shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
+                  </span>
+                  <span className="text-white/60 text-[10px] font-bold font-mono tracking-[0.22em]">
+                    ACTIVE / GMT+3
+                  </span>
                 </div>
               </div>
-            </motion.div>
-
-            <div className="lg:col-span-9 opacity-80 mx-auto w-full">
-              <WorldMap />
             </div>
-          </div>
+          </motion.div>
+
         </div>
       </section>
     </div>

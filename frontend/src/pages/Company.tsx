@@ -20,10 +20,10 @@ import {
 } from 'lucide-react';
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import TestimonialSection from '../components/TestimonialSection';
+import TextReveal from '../components/TextReveal';
 import { useSite } from '../context/SiteContext';
 import { EASE_EXPO, fadeUp, staggerContainer } from '../lib/animations';
-import TextReveal from '../components/TextReveal';
-
 
 /* ═══════════════════════════════════════════
    Data
@@ -39,11 +39,11 @@ const featuredProjects = [
 
 const values = [
   { icon: Shield, title: 'Engineering Integrity', desc: 'Every line of code, every architecture decision holds to the highest standard of quality and security.', accent: '#F5A800' },
-  { icon: Zap, title: 'Relentless Velocity', desc: 'Speed is a feature. We ship enterprise-grade solutions faster than anyone in the market, without sacrificing quality.', accent: '#f59e0b' },
+  { icon: Zap, title: 'Relentless Velocity', desc: 'Speed is a feature. We ship enterprise-grade solutions fast, delivering typical enterprise MVPs in 8–12 weeks without sacrificing quality.', accent: '#f59e0b' },
   { icon: Globe, title: 'Global Ambition', desc: 'African innovation engineered to compete and win on the world stage. Great technology knows no borders.', accent: '#10b981' },
-  { icon: Users, title: 'Deep Partnership', desc: 'Not vendors but technical co-founders committed to your mission and outcomes.', accent: '#8b5cf6' },
-  { icon: Code2, title: 'Technical Excellence', desc: 'Mastery is non-negotiable. We obsess over architecture, performance, and scalability in everything we ship.', accent: '#06b6d4' },
-  { icon: Heart, title: 'Client Obsession', desc: 'Your success is our success. We measure our performance entirely by the quantifiable improvements we deliver.', accent: '#ec4899' },
+  { icon: Users, title: 'Deep Partnership', desc: 'Not vendors, but technical co-founders committed to your mission and outcomes.', accent: '#8b5cf6' },
+  { icon: Code2, title: 'Technical Excellence', desc: 'Mastery is non-negotiable. We focus deeply on architecture, performance, and scalability in everything we ship.', accent: '#06b6d4' },
+  { icon: Heart, title: 'Client Focus', desc: 'Your success is our success. We measure our performance entirely by the quantifiable improvements we deliver.', accent: '#ec4899' },
 ];
 
 /* ═══════════════════════════════════════════
@@ -171,16 +171,6 @@ export default function Company() {
           style={{ opacity: heroOpacity, scale: heroScale }}
           className="relative z-10 container max-w-5xl mx-auto px-6 text-center pt-32 pb-24"
         >
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: EASE_EXPO }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-[#F5A800]/20 backdrop-blur-md mb-8"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse shadow-[0_0_8px_rgba(245,168,0,0.6)]" />
-            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#F5A800]">About Nexyovi</span>
-          </motion.div>
-
           <TextReveal className="mb-10">
             <h1 className="text-[42px] md:text-[60px] lg:text-[76px] font-black tracking-[-0.03em] leading-[1.05] text-white max-w-5xl mx-auto">
               We build{' '}
@@ -201,10 +191,10 @@ export default function Company() {
             transition={{ delay: 0.5, duration: 0.6, ease: EASE_EXPO }}
             className="flex flex-wrap items-center justify-center gap-4"
           >
-            <a href="mailto:contact@nexyovi.com" className="group btn-gold text-[15px] px-10 py-5">
+            <Link to="/contact#inquiry" className="group btn-gold text-[15px] px-10 py-5">
               <span className="relative z-10">Start a Project</span>
               <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
-            </a>
+            </Link>
             <Link to="/services" className="group btn-ghost text-[15px] px-10 py-5">
               <span className="relative z-10">Explore Services</span>
             </Link>
@@ -232,7 +222,7 @@ export default function Company() {
         <div className="container max-w-5xl mx-auto px-6 relative z-10">
           <div className="grid md:grid-cols-[1fr_1.6fr] gap-12 md:gap-16 items-center">
 
-            {/* Left: Year anchor + origin stat */}
+            {/* Left: Results anchor */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -245,16 +235,33 @@ export default function Company() {
                 whileInView={{ scale: 1, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className="inline-flex"
+                className="inline-flex flex-col gap-6"
               >
-                <span className="text-[100px] md:text-[130px] lg:text-[150px] font-black text-white tracking-[-0.05em] leading-[0.85]">
-                  2024
-                </span>
+                <div>
+                  <span className="text-[80px] md:text-[100px] lg:text-[120px] font-black text-white tracking-[-0.05em] leading-[0.85]">
+                    10+
+                  </span>
+                  <span className="text-[16px] font-bold text-white/40 uppercase tracking-[0.2em] mt-1 block">
+                    Enterprise Platforms
+                  </span>
+                </div>
+                <div>
+                  <span className="text-[80px] md:text-[100px] lg:text-[120px] font-black text-[#F5A800] tracking-[-0.05em] leading-[0.85]">
+                    20+
+                  </span>
+                  <span className="text-[16px] font-bold text-white/40 uppercase tracking-[0.2em] mt-1 block">
+                    Elite Engineers
+                  </span>
+                </div>
+                <div>
+                  <span className="text-[80px] md:text-[100px] lg:text-[120px] font-black text-white tracking-[-0.05em] leading-[0.85]">
+                    4
+                  </span>
+                  <span className="text-[16px] font-bold text-white/40 uppercase tracking-[0.2em] mt-1 block">
+                    Countries Served
+                  </span>
+                </div>
               </motion.div>
-              <div className="mt-3 h-px w-16 bg-gradient-to-r from-[#F5A800] to-transparent mx-auto md:mx-0" />
-              <p className="text-white/40 text-[13px] font-bold uppercase tracking-[0.25em] mt-4">
-                Founded · Year One
-              </p>
             </motion.div>
 
             {/* Right: Story text */}
@@ -269,10 +276,19 @@ export default function Company() {
                 <SectionBadge label="Our Story" dark />
               </motion.div>
               <p className="text-white/60 text-base md:text-lg leading-[1.8] font-medium">
-                Founded in 2024, Nexyovi was built to help businesses access high-quality software engineering, AI development, cloud infrastructure, and digital transformation services without the complexity of large consulting firms.
+                Founded in Addis Ababa in 2024 by Yonas Bogale, Nexyovi was built with a simple mission: help organizations leverage technology to solve complex challenges, operate more efficiently, and grow with confidence.
               </p>
               <p className="text-white/60 text-base md:text-lg leading-[1.8] font-medium">
-                Today we help startups, enterprises, public institutions, and mission-driven organizations design, build, and scale modern digital systems.
+                What began as a focused software studio quickly evolved into a multidisciplinary engineering company specializing in custom software, artificial intelligence, cloud infrastructure, cybersecurity, and digital transformation.
+              </p>
+              <p className="text-white/60 text-base md:text-lg leading-[1.8] font-medium">
+                Today, Nexyovi partners with startups, enterprises, government organizations, and mission-driven businesses across Africa and beyond — designing, building, and maintaining secure, scalable, production-ready digital systems that deliver measurable outcomes.
+              </p>
+              <p className="text-white/60 text-base md:text-lg leading-[1.8] font-medium">
+                From enterprise applications and AI-powered platforms to cloud-native infrastructure and mission-critical systems, we combine deep engineering expertise with a long-term commitment to client success.
+              </p>
+              <p className="text-white/60 text-base md:text-lg leading-[1.8] font-medium">
+                Our vision is to build technology that creates lasting impact — starting in Africa, built for the world.
               </p>
             </motion.div>
 
@@ -308,10 +324,10 @@ export default function Company() {
         <div className="container max-w-6xl mx-auto px-6 relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-16">
             <motion.div variants={fadeUp}>
-              <SectionBadge label="Featured Projects" />
+              <SectionBadge label="Featured Work" />
             </motion.div>
             <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-4">
-              Products We{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Built.</span>
+              Featured{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Projects.</span>
             </motion.h2>
           </motion.div>
 
@@ -323,7 +339,7 @@ export default function Company() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08, duration: 0.5 }}
-                className="group bg-white rounded-[24px] border border-slate-200 p-8 transition-all duration-500 hover:-translate-y-1 hover:border-[#F5A800]/40 text-left"
+                className="group bg-white rounded-[24px] border border-slate-200 p-8 transition-all duration-500 hover:-translate-y-1 hover:border-[#F5A800]/40 text-left relative flex flex-col h-full"
               >
                 <div className="relative w-12 h-12 rounded-2xl bg-[#030303] border border-white/10 flex items-center justify-center mb-5 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 transition-all duration-300">
                   <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
@@ -331,12 +347,17 @@ export default function Company() {
                 </div>
                 <span className="text-[10px] font-black text-[#F5A800] uppercase tracking-widest mb-2 block">{project.tag}</span>
                 <h3 className="text-xl font-black text-slate-950 mb-2 group-hover:text-[#F5A800] transition-colors">{project.title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed font-medium">{project.desc}</p>
-                {project.outcome && (
-                  <p className="text-[#F5A800]/80 text-[12px] font-semibold mt-4 leading-relaxed">
-                    {project.outcome}
-                  </p>
-                )}
+                <p className="text-slate-500 text-sm leading-relaxed font-medium mb-6">{project.desc}</p>
+                <div className="mt-auto">
+                  {project.outcome && (
+                    <p className="text-[#F5A800]/80 text-[12px] font-semibold leading-relaxed mb-4">
+                      {project.outcome}
+                    </p>
+                  )}
+                  <Link to="/projects" className="inline-flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest text-slate-400 hover:text-[#F5A800] transition-colors mt-2">
+                    View Case Study <ArrowRight size={12} />
+                  </Link>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -344,7 +365,12 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          5. MISSION & VISION — Dark
+          5. TESTIMONIALS
+         ═══════════════════════════════════════ */}
+      <TestimonialSection />
+
+      {/* ═══════════════════════════════════════
+          6. MISSION & VISION — Dark
          ═══════════════════════════════════════ */}
       <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
@@ -379,22 +405,22 @@ export default function Company() {
             {/* ── Mission ── */}
             <div className="p-10 md:p-12 lg:p-14">
               <h3 className="text-2xl md:text-3xl font-black text-white tracking-[-0.03em] leading-[1.1] mb-5">
-                Building the future of digital infrastructure.
+                Our Mission
               </h3>
 
               <p className="text-white/50 text-base leading-relaxed">
-                To build software systems, AI platforms, and cloud infrastructure that power modern organizations — delivering enterprise-grade engineering that moves businesses forward across Africa and beyond.
+                To deliver enterprise-grade software engineering, AI development, and cloud infrastructure services that help modern organizations build secure, scalable digital systems and achieve measurable business outcomes today.
               </p>
             </div>
 
             {/* ── Vision ── */}
             <div className="p-10 md:p-12 lg:p-14">
               <h3 className="text-2xl md:text-3xl font-black text-white tracking-[-0.03em] leading-[1.1] mb-5">
-                Africa's most trusted engineering partner.
+                Our Vision
               </h3>
 
               <p className="text-white/50 text-base leading-relaxed">
-                To be Africa's most trusted engineering partner — known for shipping enterprise-grade systems that are secure, scalable, and built to last. No hype, just measurable results.
+                To be Africa's leading engineering partner — powering the next generation of global technology companies and institutions with world-class infrastructure and innovation.
               </p>
             </div>
           </motion.div>
@@ -520,14 +546,23 @@ export default function Company() {
             </div>
             <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-1">Yonas Bogale</h2>
             <p className="text-[#F5A800] text-[12px] font-black uppercase tracking-[0.2em] mb-4">Founder & CEO</p>
-            <p className="text-white/50 text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white/50 text-lg leading-relaxed max-w-2xl mx-auto mb-6">
               Leading Nexyovi's mission to build practical software, AI solutions, and digital infrastructure for modern businesses.
             </p>
+            <a
+              href="https://www.linkedin.com/in/yonas-bogale/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#0a66c2]/10 border border-[#0a66c2]/20 text-[#0a66c2] text-[13px] font-bold hover:bg-[#0a66c2]/20 transition-all mx-auto"
+            >
+              <Linkedin size={14} />
+              LinkedIn Profile
+            </a>
           </motion.div>
 
           {/* Leadership grid — CTO, Head of Engineering, Head of Product */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={staggerContainer} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {[2, 3].map((id) => {
+            {[2, 3, 16].map((id) => {
               const member = team.find((m: any) => m.id === String(id));
               if (!member) return null;
               return (
@@ -568,31 +603,31 @@ export default function Company() {
           </motion.div>
 
           {/* Core Team Grid */}
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={staggerContainer} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 max-w-6xl mx-auto mt-12">
-            {team.filter((m: any) => !['1', '2', '3'].includes(m.id)).map((member: any) => (
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={staggerContainer} className="grid grid-cols-8 gap-2 max-w-full mx-auto mt-12 px-2">
+            {team.filter((m: any) => !['1', '2', '3', '16'].includes(m.id)).map((member: any) => (
               <motion.div
                 key={member.id}
                 variants={fadeUp}
-                className="group bg-white/[0.02] rounded-[20px] border border-white/[0.05] p-5 text-center transition-all duration-500 hover:-translate-y-1 hover:border-[#F5A800]/20 hover:bg-white/[0.04]"
+                className="group min-w-0 bg-white/[0.02] rounded-[20px] px-5 py-3 text-center transition-all duration-500 hover:-translate-y-1 hover:bg-white/[0.04]"
               >
-                <div className="w-16 h-16 rounded-full mx-auto mb-4 overflow-hidden border border-transparent group-hover:border-[#F5A800]/30 transition-all duration-500">
+                <div className="w-12 h-12 rounded-full mx-auto mb-2 overflow-hidden transition-all duration-500">
                   {member.img ? (
                     <img src={member.img} alt={member.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-white font-black text-sm" style={{ backgroundColor: member.color || '#8b5cf6' }}>
+                    <div className="w-full h-full flex items-center justify-center text-white font-black text-xs" style={{ backgroundColor: member.color || '#8b5cf6' }}>
                       {member.initials || member.name.split(' ').map((n: string) => n[0]).join('')}
                     </div>
                   )}
                 </div>
                 <h4 className="text-sm font-black text-white mb-1 group-hover:text-[#F5A800] transition-colors">{member.name}</h4>
-                <p className="text-[9px] font-black uppercase tracking-[0.1em] text-[#F5A800] mb-2">{member.role}</p>
-                <p className="text-white/40 text-[10px] leading-relaxed font-medium line-clamp-3 mb-3">{member.bio}</p>
+                <p className="text-[9px] font-black uppercase tracking-[0.08em] text-[#F5A800] mb-1">{member.role}</p>
+                <p className="text-white/40 text-[10px] leading-relaxed font-medium line-clamp-2 mb-2">{member.bio}</p>
                 {member.linkedin && (
                   <a
                     href={member.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white/5 border border-white/10 text-white/50 text-[9px] font-bold hover:bg-[#0a66c2]/20 hover:text-[#0a66c2] hover:border-[#0a66c2]/30 transition-all mx-auto"
+                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white/5 text-white/50 text-[9px] font-bold hover:bg-[#0a66c2]/20 hover:text-[#0a66c2] transition-all mx-auto"
                     onClick={(e: React.MouseEvent) => e.stopPropagation()}
                   >
                     <Linkedin size={10} />
@@ -747,10 +782,10 @@ export default function Company() {
               transition={{ delay: 0.25, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-wrap items-center justify-center gap-4"
             >
-              <a href="mailto:contact@nexyovi.com" className="group btn-gold text-[15px] px-10 py-5">
+              <Link to="/contact#inquiry" className="group btn-gold text-[15px] px-10 py-5">
                 <span className="relative z-10">Start a Project</span>
                 <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
-              </a>
+              </Link>
               <a href="mailto:contact@nexyovi.com" className="group btn-ghost text-[15px] px-10 py-5">
                 <Calendar size={16} className="relative z-10 opacity-60 group-hover:opacity-100 transition-opacity" />
                 <span className="relative z-10">Or email us directly</span>

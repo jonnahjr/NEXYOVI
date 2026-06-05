@@ -7,6 +7,7 @@ import Hero from '../components/Hero';
 import HowWeWork from '../components/HowWeWork';
 import IndustriesSection from '../components/IndustriesSection';
 import ServicesSection from '../components/ServicesSection';
+import TestimonialSection from '../components/TestimonialSection';
 import WhyNexyoviSection from '../components/WhyNexyoviSection';
 
 const Home = () => {
@@ -19,6 +20,7 @@ const Home = () => {
             <IndustriesSection />
             <HowWeWork />
             <FeaturedProjects />
+            <TestimonialSection />
             <EngagementModels />
             <FounderStory />
             <FinalCTA />

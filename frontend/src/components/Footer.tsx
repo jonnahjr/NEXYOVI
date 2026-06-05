@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Linkedin, Github, Mail, Phone, MapPin, ArrowUpRight, X } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ArrowUpRight, Github, Linkedin, Mail, MapPin, Phone, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import myLogo from '../assets/logo 1.png';
 import { useSite } from '../context/SiteContext';
@@ -59,6 +59,14 @@ const Footer = () => {
 
   return (
     <footer className="relative bg-[#000000] pt-20 pb-8 overflow-hidden border-t border-white/[0.06]">
+      {/* Watermark Background Content */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none pointer-events-none z-0">
+        <h2 className="text-[18vw] font-bold text-white/[0.02] tracking-tighter leading-none uppercase">
+          {companyName}
+        </h2>
+      </div>
+
+
       <div className="container max-w-6xl mx-auto px-6 relative z-10">
 
         {/* Top Section: Logo + Links Grid */}
@@ -68,10 +76,10 @@ const Footer = () => {
           <div>
             <Link to="/" className="inline-block mb-6">
               {settings?.logo_url ? (
-                <img src={settings.logo_url} alt="Logo" className="h-[60px] w-auto object-contain" />
+                <img src={settings.logo_url} alt="Logo" className="h-[100px] w-auto object-contain" />
               ) : (
                 <div
-                  className="h-[60px] w-[180px]"
+                  className="h-[100px] w-[300px]"
                   style={{
                     WebkitMask: `url('${myLogo}') left center / contain no-repeat`,
                     mask: `url('${myLogo}') left center / contain no-repeat`,
@@ -91,10 +99,18 @@ const Footer = () => {
                 contact@nexyovi.com
               </a>
               {settings.phone && (
-                <a href={`tel:${settings.phone}`} className="flex items-center gap-3 text-white/50 text-[13px] hover:text-[#F5A800] transition-colors">
-                  <Phone size={14} className="shrink-0" />
-                  {settings.phone}
-                </a>
+                <>
+                  <a href={`tel:${settings.phone}`} className="flex items-center gap-3 text-white/50 text-[13px] hover:text-[#F5A800] transition-colors">
+                    <Phone size={14} className="shrink-0" />
+                    {settings.phone.replace(/(\+\d{3})(\d{2})(\d{3})(\d{4})/, '$1 $2 $3 $4')}
+                  </a>
+                  <a href={`https://wa.me/${settings.phone.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/50 text-[13px] hover:text-[#25D366] transition-colors">
+                    <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+                      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                    WhatsApp
+                  </a>
+                </>
               )}
               <div className="flex items-center gap-3 text-white/50 text-[13px]">
                 <MapPin size={14} className="shrink-0" />
@@ -160,7 +176,7 @@ const Footer = () => {
 
             {/* CTA */}
             <Link
-              to="/contact"
+              to="/contact#inquiry"
               className="group inline-flex items-center gap-2 text-[13px] font-bold text-[#F5A800] hover:text-[#FFD166] transition-colors"
             >
               Start a Project
@@ -172,7 +188,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-[12px] text-white/30">
-            &copy; {new Date().getFullYear()} {companyName}. All Rights Reserved.
+            &copy; 2024–{new Date().getFullYear()} {companyName}. All Rights Reserved.
           </p>
           <div className="flex items-center gap-6">
             {(['Terms', 'Privacy', 'Legal'] as const).map(item => (

@@ -1,22 +1,38 @@
 import { motion, useMotionValueEvent, useScroll, useSpring } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { useLayoutEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const cards = [
   {
     title: 'Engineering First',
     desc: 'Senior engineers lead every project, ensuring robust architecture and high-quality code from day one.',
     accent: '#0ea5e9',
+    link: '/services/software',
   },
   {
     title: 'Security Built-In',
     desc: 'Security is integrated at every layer, protecting your data and maintaining compliance seamlessly.',
     accent: '#f97316',
+    link: '/services/security',
   },
   {
     title: 'Long-Term Partnership',
     desc: 'We stay involved after launch with dedicated support, maintenance, and continuous feature growth.',
     accent: '#3b82f6',
+    link: '/company',
+  },
+  {
+    title: 'Elite Talent Network',
+    desc: 'Access top-tier engineers from Ethiopia and beyond, rigorously vetted for technical excellence and reliability.',
+    accent: '#a855f7',
+    link: '/company#culture',
+  },
+  {
+    title: 'Rapid Execution',
+    desc: 'Iterative development cycles with continuous delivery — from concept to production in weeks, not months.',
+    accent: '#14b8a6',
+    link: '/services/cloud',
   },
 ];
 
@@ -125,9 +141,16 @@ export default function WhyNexyoviSection() {
       className="relative bg-[#02040a] section-divider-dark"
       style={{ height: `${Math.ceil(scrollMetrics.viewportHeight + scrollMetrics.scrollDistance)}px` }}
     >
-      <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#0a0a0e] via-[#02040a] to-[#0a0a0e]/40" />
+      <div className="absolute inset-0 z-0 bg-[#02040a]" />
+      {/* Two diagonal // lines in creamy white */}
+      <div
+        className="absolute inset-0 z-[1] opacity-40 pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(135deg, transparent 0%, transparent 30%, #FCFBF8 30%, #FCFBF8 36%, transparent 36%, transparent 66%, #FCFBF8 66%, #FCFBF8 72%, transparent 72%, transparent 100%)`,
+        }}
+      />
 
-      <div className="sticky top-0 h-[76vh] min-h-[620px] overflow-hidden">
+      <div className="sticky top-0 z-10 h-[76vh] min-h-[620px] overflow-hidden">
         <div className="container max-w-7xl mx-auto relative z-10 px-6 h-full flex items-center">
           <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-8 lg:gap-12 items-center w-full min-h-0">
 
@@ -194,12 +217,12 @@ export default function WhyNexyoviSection() {
                           </p>
                         </div>
 
-                        <div className="flex items-center gap-2 pt-1">
+                        <Link to={card.link} className="flex items-center gap-2 pt-1 group/link">
                           <div className="h-[2px] flex-1 max-w-[44px] rounded-full transition-all duration-500 group-hover:max-w-[80px]" style={{ backgroundColor: card.accent }} />
-                          <span className="text-[9px] font-bold uppercase tracking-[0.18em] opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-white/60">
+                          <span className="text-[9px] font-bold uppercase tracking-[0.18em] opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-white/60 group-hover:text-[#F5A800]">
                             Learn more
                           </span>
-                        </div>
+                        </Link>
                       </div>
                     </div>
                   );
@@ -208,8 +231,7 @@ export default function WhyNexyoviSection() {
             </div>
           </div>
 
-          {/* Bottom fade */}
-          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#02040a] to-transparent pointer-events-none z-20" />
+
         </div>
       </div>
     </section>

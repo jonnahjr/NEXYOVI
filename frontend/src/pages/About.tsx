@@ -63,10 +63,19 @@ export default function About() {
             <p className="text-slate-500 text-lg leading-relaxed">
               We started after watching teams drown in tools that created more noise than clarity. Our approach is straightforward: understand the problem, design a practical solution, and ship working software — fast.
             </p>
-            <div className="rounded-3xl border border-slate-200 bg-white p-8">
-              <div className="text-sm uppercase tracking-[0.22em] text-[#F5A800] font-black mb-3">Founder</div>
-              <div className="text-2xl font-black text-slate-950">Marcus Chen</div>
-              <div className="text-sm uppercase tracking-[0.2em] text-slate-500 mt-2">CEO and co-founder</div>
+            <div className="grid sm:grid-cols-3 gap-4">
+              <div className="rounded-3xl border border-slate-200 bg-white p-6">
+                <div className="text-xs uppercase tracking-[0.2em] text-[#F5A800] font-black mb-2">Founder & CEO</div>
+                <div className="text-lg font-black text-slate-950">Yonas Bogale</div>
+              </div>
+              <div className="rounded-3xl border border-slate-200 bg-white p-6">
+                <div className="text-xs uppercase tracking-[0.2em] text-[#F5A800] font-black mb-2">CTO</div>
+                <div className="text-lg font-black text-slate-950">Amanuel Tesfaye</div>
+              </div>
+              <div className="rounded-3xl border border-slate-200 bg-white p-6">
+                <div className="text-xs uppercase tracking-[0.2em] text-[#F5A800] font-black mb-2">Head of Engineering</div>
+                <div className="text-lg font-black text-slate-950">Selamawit Hailu</div>
+              </div>
             </div>
           </motion.div>
 

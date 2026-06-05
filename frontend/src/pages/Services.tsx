@@ -1,21 +1,53 @@
-import { useRef, useEffect, useState, useCallback } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import {
-  ArrowRight, Code, Network, Lightbulb, ShieldAlert, Database, Cloud,
-  Layers, Target, Zap, BarChart3, Award, Users, CheckCircle,
-  Monitor, Terminal, BrainCircuit, GitBranch
+  ArrowRight,
+  Award,
+  BarChart3,
+  BrainCircuit,
+  CheckCircle,
+  Cloud,
+  Code,
+  Database,
+  GitBranch,
+  Layers,
+  Lightbulb,
+  Monitor,
+  Network,
+  ShieldAlert,
+  Target,
+  Terminal,
+  Users,
+  Zap
 } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  SiReact, SiNextdotjs, SiTypescript, SiNodedotjs, SiPython, SiGo,
-  SiKubernetes, SiOpenai, SiPostgresql, SiOpenjdk,
-  SiVuedotjs, SiTailwindcss, SiSvelte, SiRust, SiGraphql,
-  SiDocker, SiTerraform, SiGooglecloud, SiTensorflow, SiPytorch, SiMongodb
+  SiDocker,
+  SiGo,
+  SiGooglecloud,
+  SiGraphql,
+  SiKubernetes,
+  SiMongodb,
+  SiNextdotjs,
+  SiNodedotjs,
+  SiOpenai,
+  SiOpenjdk,
+  SiPostgresql,
+  SiPython,
+  SiPytorch,
+  SiReact,
+  SiRust,
+  SiSvelte,
+  SiTailwindcss,
+  SiTensorflow,
+  SiTerraform,
+  SiTypescript,
+  SiVuedotjs
 } from 'react-icons/si';
+import { Link } from 'react-router-dom';
 
-import { EASE_EXPO, EASE_CINEMA, viewport } from '../lib/animations';
-import TextReveal from '../components/TextReveal';
 import { CTAButton } from '../components/CTAButton';
+import TextReveal from '../components/TextReveal';
+import { EASE_EXPO, viewport } from '../lib/animations';
 
 // ── Service Data ──────────────────────────────────────────────
 const services = [
@@ -71,7 +103,7 @@ const services = [
     id: 'data',
     title: 'Data Systems',
     desc: 'Real-time data lakes, streaming pipelines, business intelligence, and executive analytics dashboards.',
-    longDesc: 'End-to-end data engineering — from Kafka streaming pipelines to data lakes and BI dashboards — turning raw data into actionable executive intelligence.',
+    longDesc: 'End-to-end data engineering — from Kafka streaming pipelines to data lakes and BI dashboards — turning raw data into operational insight and decision-ready reporting.',
     icon: Database,
     accent: '#0ea5e9',
     glow: 'rgba(14,165,233,0.08)',
@@ -89,7 +121,7 @@ const services = [
     glow: 'rgba(245,158,11,0.08)',
     tags: ['24/7 Support', 'Maintenance', 'Reliability', 'Advisory'],
     highlights: ['24/7 Operations', 'SLA Backed'],
-    href: '/contact',
+    href: '/services/managed',
   },
 ];
 
@@ -97,15 +129,15 @@ const services = [
 const processSteps = [
   { step: '01', title: 'Discovery & Audit', desc: 'Deep-dive audit of your current infrastructure, workflows, and business goals. We identify quick wins and long-term strategic opportunities.', icon: Target },
   { step: '02', title: 'Architecture Design', desc: 'We design a tailored solution architecture — selecting the right stack, patterns, and deployment strategy for your specific requirements.', icon: Layers },
-  { step: '03', title: 'Build & Deploy', desc: 'Agile development with continuous delivery. Your team shadows every sprint. Production deployment with zero-downtime cutover.', icon: Zap },
+  { step: '03', title: 'Build & Deploy', desc: 'Agile development with continuous delivery. Your team stays aligned through every sprint review. Production deployment with zero-downtime cutover.', icon: Zap },
   { step: '04', title: 'Monitor & Scale', desc: 'Post-launch observability, performance tuning, and iterative improvements. We build, transfer knowledge, and transition ownership with full documentation and training.', icon: BarChart3 },
 ];
 
 // ── Metrics ───────────────────────────────────────────────────
 const metrics = [
-  { value: 247, suffix: '', label: 'Monitoring & Support' },
-  { value: 6, suffix: '', label: 'Core Engineering Practices' },
-  { value: 4, suffix: '', label: 'Technology Domains' },
+  { value: 24, suffix: '/7', label: 'Monitoring & Support' },
+  { value: 12, suffix: '+', label: 'Core Engineering Practices' },
+  { value: 6, suffix: '', label: 'Technology Domains' },
   { value: 0, suffix: '', label: 'Engineering-Led Delivery Teams', hideNumber: true },
 ];
 
@@ -128,51 +160,51 @@ const techEcosystem: {
   icon: React.ElementType;
   items: TechItem[];
 }[] = [
-  {
-    category: 'Frontend', icon: Monitor,
-    items: [
-      { name: 'React', icon: SiReact, color: '#61DAFB' },
-      { name: 'Next.js', icon: SiNextdotjs, color: '#000000' },
-      { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
-      { name: 'Vue', icon: SiVuedotjs, color: '#4FC08D' },
-      { name: 'Tailwind', icon: SiTailwindcss, color: '#06B6D4' },
-      { name: 'Svelte', icon: SiSvelte, color: '#FF3E00' },
-    ],
-  },
-  {
-    category: 'Backend', icon: Terminal,
-    items: [
-      { name: 'Node.js', icon: SiNodedotjs, color: '#339933' },
-      { name: 'Python', icon: SiPython, color: '#3776AB' },
-      { name: 'Go', icon: SiGo, color: '#00ADD8' },
-      { name: 'Rust', icon: SiRust, color: '#000000' },
-      { name: 'GraphQL', icon: SiGraphql, color: '#E10098' },
-      { name: 'Java', icon: SiOpenjdk, color: '#ED8B00' },
-    ],
-  },
-  {
-    category: 'Cloud & DevOps', icon: Cloud,
-    items: [
-      { name: 'AWS', icon: AwsIcon, color: '#FF9900' },
-      { name: 'Azure', icon: AzureIcon, color: '#0078D4' },
-      { name: 'Kubernetes', icon: SiKubernetes, color: '#326CE5' },
-      { name: 'Docker', icon: SiDocker, color: '#2496ED' },
-      { name: 'Terraform', icon: SiTerraform, color: '#7B42BC' },
-      { name: 'GCP', icon: SiGooglecloud, color: '#4285F4' },
-    ],
-  },
-  {
-    category: 'AI & Data', icon: BrainCircuit,
-    items: [
-      { name: 'OpenAI', icon: SiOpenai, color: '#412991' },
-      { name: 'LangChain', icon: GitBranch, color: '#1C3C3C' },
-      { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1' },
-      { name: 'TensorFlow', icon: SiTensorflow, color: '#FF6F00' },
-      { name: 'PyTorch', icon: SiPytorch, color: '#EE4C2C' },
-      { name: 'MongoDB', icon: SiMongodb, color: '#47A248' },
-    ],
-  },
-];
+    {
+      category: 'Frontend', icon: Monitor,
+      items: [
+        { name: 'React', icon: SiReact, color: '#61DAFB' },
+        { name: 'Next.js', icon: SiNextdotjs, color: '#000000' },
+        { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
+        { name: 'Vue', icon: SiVuedotjs, color: '#4FC08D' },
+        { name: 'Tailwind', icon: SiTailwindcss, color: '#06B6D4' },
+        { name: 'Svelte', icon: SiSvelte, color: '#FF3E00' },
+      ],
+    },
+    {
+      category: 'Backend', icon: Terminal,
+      items: [
+        { name: 'Node.js', icon: SiNodedotjs, color: '#339933' },
+        { name: 'Python', icon: SiPython, color: '#3776AB' },
+        { name: 'Go', icon: SiGo, color: '#00ADD8' },
+        { name: 'Rust', icon: SiRust, color: '#000000' },
+        { name: 'GraphQL', icon: SiGraphql, color: '#E10098' },
+        { name: 'Java', icon: SiOpenjdk, color: '#ED8B00' },
+      ],
+    },
+    {
+      category: 'Cloud & DevOps', icon: Cloud,
+      items: [
+        { name: 'AWS', icon: AwsIcon, color: '#FF9900' },
+        { name: 'Azure', icon: AzureIcon, color: '#0078D4' },
+        { name: 'Kubernetes', icon: SiKubernetes, color: '#326CE5' },
+        { name: 'Docker', icon: SiDocker, color: '#2496ED' },
+        { name: 'Terraform', icon: SiTerraform, color: '#7B42BC' },
+        { name: 'GCP', icon: SiGooglecloud, color: '#4285F4' },
+      ],
+    },
+    {
+      category: 'AI & Data', icon: BrainCircuit,
+      items: [
+        { name: 'OpenAI', icon: SiOpenai, color: '#412991' },
+        { name: 'LangChain', icon: GitBranch, color: '#1C3C3C' },
+        { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1' },
+        { name: 'TensorFlow', icon: SiTensorflow, color: '#FF6F00' },
+        { name: 'PyTorch', icon: SiPytorch, color: '#EE4C2C' },
+        { name: 'MongoDB', icon: SiMongodb, color: '#47A248' },
+      ],
+    },
+  ];
 
 
 
@@ -208,10 +240,6 @@ function AnimatedCounter({ value, suffix, label, subtitle, index, light = false,
   }, [isInView, value]);
 
   const formatDisplay = (num: number): string => {
-    if (value === 247) {
-      const whole = Math.floor(num);
-      return `24/${whole > 6 ? '7' : whole}`;
-    }
     if (Number.isInteger(value) && num >= value - 1) return `${value}${suffix}`;
     return `${Math.floor(num)}${suffix}`;
   };
@@ -228,7 +256,7 @@ function AnimatedCounter({ value, suffix, label, subtitle, index, light = false,
       {!hideNumber && (
         <div className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-2">
           <span className={`tabular-nums ${light ? 'text-slate-950' : 'text-white'} bg-clip-text ${light ? '' : 'text-transparent bg-gradient-to-r from-[#F5A800] to-[#FFD166]'}`}>
-            {light ? (value === 247 ? '24/7' : `${value}${suffix}`) : formatDisplay(display)}
+            {light ? `${value}${suffix}` : formatDisplay(display)}
           </span>
         </div>
       )}
@@ -288,7 +316,7 @@ function ProcessStep({ step, title, desc, icon: Icon, index }: {
 function AwsIcon({ size = 24, className = '' }: { size?: number; className?: string }) {
   return (
     <svg viewBox="0 0 24 24" width={size} height={size} className={className} fill="currentColor">
-      <path d="M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.063.056.127.056.183 0 .08-.048.16-.152.24l-.503.335a.383.383 0 0 1-.208.072c-.08 0-.16-.04-.239-.112a2.47 2.47 0 0 1-.287-.375 6.18 6.18 0 0 1-.248-.471c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.59-.894-.59-1.533 0-.678.239-1.23.726-1.644.487-.415 1.133-.623 1.955-.623.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.03-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.031-.863.103-.295.072-.583.16-.862.272a2.287 2.287 0 0 1-.28.104.488.488 0 0 1-.127.023c-.112 0-.168-.08-.168-.247v-.391c0-.128.016-.224.056-.28a.597.597 0 0 1 .224-.167c.279-.144.614-.264 1.005-.36a4.84 4.84 0 0 1 1.246-.151c.95 0 1.644.216 2.091.647.439.43.662 1.085.662 1.963v2.586zm-3.24 1.214c.263 0 .534-.048.822-.144.287-.096.543-.271.758-.51.128-.152.224-.32.272-.512.047-.191.08-.423.08-.694v-.335a6.66 6.66 0 0 0-.735-.136 6.02 6.02 0 0 0-.75-.048c-.535 0-.926.104-1.19.32-.263.215-.39.518-.39.917 0 .375.095.655.295.846.191.2.47.296.838.296zm6.41.862c-.144 0-.24-.024-.304-.08-.064-.048-.12-.16-.168-.311L7.586 5.55a1.398 1.398 0 0 1-.072-.32c0-.128.064-.2.191-.2h.783c.151 0 .255.025.31.08.065.048.113.16.16.312l1.342 5.284 1.245-5.284c.04-.16.088-.264.151-.312a.549.549 0 0 1 .32-.08h.638c.152 0 .256.025.32.08.063.048.12.16.151.312l1.261 5.348 1.381-5.348c.048-.16.104-.264.16-.312a.52.52 0 0 1 .311-.08h.743c.127 0 .2.065.2.2 0 .04-.009.08-.017.128a1.137 1.137 0 0 1-.056.2l-1.923 6.17c-.048.16-.104.263-.168.311a.51.51 0 0 1-.303.08h-.687c-.151 0-.255-.024-.32-.08-.063-.056-.119-.16-.15-.32l-1.238-5.148-1.23 5.14c-.04.16-.087.264-.15.32-.065.056-.177.08-.32.08zm10.256.215c-.415 0-.83-.048-1.229-.143-.399-.096-.71-.2-.918-.32-.128-.071-.215-.151-.247-.223a.563.563 0 0 1-.048-.224v-.407c0-.167.064-.247.183-.247.048 0 .096.008.144.024.048.016.12.048.2.08.271.12.566.215.878.279.319.064.63.096.95.096.502 0 .894-.088 1.165-.264a.86.86 0 0 0 .415-.758.777.777 0 0 0-.215-.559c-.144-.151-.416-.287-.807-.415l-1.157-.36c-.583-.183-1.014-.454-1.277-.813a1.902 1.902 0 0 1-.4-1.158c0-.335.073-.63.216-.886.144-.255.335-.479.575-.654.24-.184.51-.32.83-.415.32-.096.655-.136 1.006-.136.175 0 .359.008.535.032.183.024.35.056.518.088.16.04.312.08.455.127.144.048.256.096.336.144a.69.69 0 0 1 .24.2.43.43 0 0 1 .071.263v.375c0 .168-.064.256-.184.256a.83.83 0 0 1-.303-.096 3.652 3.652 0 0 0-1.532-.311c-.455 0-.815.071-1.062.223-.248.152-.375.383-.375.71 0 .224.08.416.24.567.159.152.454.304.877.44l1.134.358c.574.184.99.44 1.237.767.247.327.367.702.367 1.117 0 .343-.072.655-.207.926-.144.272-.336.511-.583.703-.248.2-.543.343-.886.447-.36.111-.734.167-1.142.167zM21.698 16.207c-2.626 1.94-6.442 2.969-9.722 2.969-4.598 0-8.74-1.7-11.87-4.526-.247-.223-.024-.527.272-.351 3.384 1.963 7.559 3.153 11.877 3.153 2.914 0 6.114-.607 9.06-1.852.439-.2.814.287.383.607zM22.792 14.961c-.336-.43-2.22-.207-3.074-.103-.255.032-.295-.192-.063-.36 1.5-1.053 3.967-.75 4.254-.399.287.36-.08 2.826-1.485 4.007-.215.184-.423.088-.327-.151.32-.79 1.03-2.57.695-2.994z"/>
+      <path d="M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.063.056.127.056.183 0 .08-.048.16-.152.24l-.503.335a.383.383 0 0 1-.208.072c-.08 0-.16-.04-.239-.112a2.47 2.47 0 0 1-.287-.375 6.18 6.18 0 0 1-.248-.471c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.59-.894-.59-1.533 0-.678.239-1.23.726-1.644.487-.415 1.133-.623 1.955-.623.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.03-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.031-.863.103-.295.072-.583.16-.862.272a2.287 2.287 0 0 1-.28.104.488.488 0 0 1-.127.023c-.112 0-.168-.08-.168-.247v-.391c0-.128.016-.224.056-.28a.597.597 0 0 1 .224-.167c.279-.144.614-.264 1.005-.36a4.84 4.84 0 0 1 1.246-.151c.95 0 1.644.216 2.091.647.439.43.662 1.085.662 1.963v2.586zm-3.24 1.214c.263 0 .534-.048.822-.144.287-.096.543-.271.758-.51.128-.152.224-.32.272-.512.047-.191.08-.423.08-.694v-.335a6.66 6.66 0 0 0-.735-.136 6.02 6.02 0 0 0-.75-.048c-.535 0-.926.104-1.19.32-.263.215-.39.518-.39.917 0 .375.095.655.295.846.191.2.47.296.838.296zm6.41.862c-.144 0-.24-.024-.304-.08-.064-.048-.12-.16-.168-.311L7.586 5.55a1.398 1.398 0 0 1-.072-.32c0-.128.064-.2.191-.2h.783c.151 0 .255.025.31.08.065.048.113.16.16.312l1.342 5.284 1.245-5.284c.04-.16.088-.264.151-.312a.549.549 0 0 1 .32-.08h.638c.152 0 .256.025.32.08.063.048.12.16.151.312l1.261 5.348 1.381-5.348c.048-.16.104-.264.16-.312a.52.52 0 0 1 .311-.08h.743c.127 0 .2.065.2.2 0 .04-.009.08-.017.128a1.137 1.137 0 0 1-.056.2l-1.923 6.17c-.048.16-.104.263-.168.311a.51.51 0 0 1-.303.08h-.687c-.151 0-.255-.024-.32-.08-.063-.056-.119-.16-.15-.32l-1.238-5.148-1.23 5.14c-.04.16-.087.264-.15.32-.065.056-.177.08-.32.08zm10.256.215c-.415 0-.83-.048-1.229-.143-.399-.096-.71-.2-.918-.32-.128-.071-.215-.151-.247-.223a.563.563 0 0 1-.048-.224v-.407c0-.167.064-.247.183-.247.048 0 .096.008.144.024.048.016.12.048.2.08.271.12.566.215.878.279.319.064.63.096.95.096.502 0 .894-.088 1.165-.264a.86.86 0 0 0 .415-.758.777.777 0 0 0-.215-.559c-.144-.151-.416-.287-.807-.415l-1.157-.36c-.583-.183-1.014-.454-1.277-.813a1.902 1.902 0 0 1-.4-1.158c0-.335.073-.63.216-.886.144-.255.335-.479.575-.654.24-.184.51-.32.83-.415.32-.096.655-.136 1.006-.136.175 0 .359.008.535.032.183.024.35.056.518.088.16.04.312.08.455.127.144.048.256.096.336.144a.69.69 0 0 1 .24.2.43.43 0 0 1 .071.263v.375c0 .168-.064.256-.184.256a.83.83 0 0 1-.303-.096 3.652 3.652 0 0 0-1.532-.311c-.455 0-.815.071-1.062.223-.248.152-.375.383-.375.71 0 .224.08.416.24.567.159.152.454.304.877.44l1.134.358c.574.184.99.44 1.237.767.247.327.367.702.367 1.117 0 .343-.072.655-.207.926-.144.272-.336.511-.583.703-.248.2-.543.343-.886.447-.36.111-.734.167-1.142.167zM21.698 16.207c-2.626 1.94-6.442 2.969-9.722 2.969-4.598 0-8.74-1.7-11.87-4.526-.247-.223-.024-.527.272-.351 3.384 1.963 7.559 3.153 11.877 3.153 2.914 0 6.114-.607 9.06-1.852.439-.2.814.287.383.607zM22.792 14.961c-.336-.43-2.22-.207-3.074-.103-.255.032-.295-.192-.063-.36 1.5-1.053 3.967-.75 4.254-.399.287.36-.08 2.826-1.485 4.007-.215.184-.423.088-.327-.151.32-.79 1.03-2.57.695-2.994z" />
     </svg>
   );
 }
@@ -296,7 +324,7 @@ function AwsIcon({ size = 24, className = '' }: { size?: number; className?: str
 function AzureIcon({ size = 24, className = '' }: { size?: number; className?: string }) {
   return (
     <svg viewBox="0 0 24 24" width={size} height={size} className={className} fill="currentColor">
-      <path d="M22.379 23.343a1.62 1.62 0 0 0 1.536-2.14v.002L17.35 1.76A1.62 1.62 0 0 0 15.816.657H8.184A1.62 1.62 0 0 0 6.65 1.76L.086 21.204a1.62 1.62 0 0 0 1.536 2.139h4.741a1.62 1.62 0 0 0 1.535-1.103l.977-2.892 4.947 3.675c.28.208.618.32.966.32m-3.084-12.531 3.624 10.739a.54.54 0 0 1-.51.713v-.001h-.03a.54.54 0 0 1-.322-.106l-9.287-6.9h4.853m6.313 7.006c.116-.326.13-.694.007-1.058L9.79 1.76a1.722 1.722 0 0 0-.007-.02h6.034a.54.54 0 0 1 .512.366l6.562 19.445a.54.54 0 0 1-.338.684z"/>
+      <path d="M22.379 23.343a1.62 1.62 0 0 0 1.536-2.14v.002L17.35 1.76A1.62 1.62 0 0 0 15.816.657H8.184A1.62 1.62 0 0 0 6.65 1.76L.086 21.204a1.62 1.62 0 0 0 1.536 2.139h4.741a1.62 1.62 0 0 0 1.535-1.103l.977-2.892 4.947 3.675c.28.208.618.32.966.32m-3.084-12.531 3.624 10.739a.54.54 0 0 1-.51.713v-.001h-.03a.54.54 0 0 1-.322-.106l-9.287-6.9h4.853m6.313 7.006c.116-.326.13-.694.007-1.058L9.79 1.76a1.722 1.722 0 0 0-.007-.02h6.034a.54.54 0 0 1 .512.366l6.562 19.445a.54.54 0 0 1-.338.684z" />
     </svg>
   );
 }
@@ -313,15 +341,17 @@ function TechCategory({ category, icon: Icon, items }: {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={viewport}
       transition={{ duration: 0.6, ease: EASE_EXPO }}
-      className="p-5 rounded-[16px] bg-white border border-slate-200 hover:border-[#F5A800]/40 transition-all duration-300 shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+      className="p-8 rounded-[24px] bg-white border border-slate-200 hover:border-[#F5A800]/40 transition-colors duration-300"
     >
-      <div className="flex items-center gap-2.5 mb-4">
-        <div className="w-8 h-8 rounded-[10px] bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center shrink-0">
-          <Icon size={14} className="text-[#F5A800]" />
+      <div className="flex items-center gap-2.5 mb-5">
+        <div className="relative w-12 h-12 rounded-[16px] bg-[#030303] border border-white/10 flex items-center justify-center overflow-hidden shadow-sm">
+          <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+          <Icon size={20} className="relative z-10 text-zinc-400" />
         </div>
-        <h3 className="text-[11px] font-bold text-slate-600 uppercase tracking-wider">{category}</h3>
+        <h3 className="text-lg font-bold text-slate-900">{category}</h3>
       </div>
-      <div className="grid grid-cols-3 gap-1.5">
+
+      <div className="grid grid-cols-2 gap-x-4 gap-y-3">
         {items.map((item, i) => {
           const BrandIcon = item.icon;
           return (
@@ -331,30 +361,12 @@ function TechCategory({ category, icon: Icon, items }: {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={viewport}
               transition={{ delay: i * 0.1, duration: 0.4, ease: EASE_EXPO }}
-              className="flex flex-col items-center gap-1.5 p-2.5 rounded-[10px] bg-slate-50 border border-slate-200 group/icon hover:border-[#F5A800]/30 transition-all duration-300"
+              className="flex items-center gap-2.5 text-sm font-medium text-slate-500"
             >
-              {/* Animated Brand Icon */}
-              <motion.div
-                className="relative w-8 h-8 flex items-center justify-center"
-                animate={{
-                  y: [0, -3, 0, 3, 0],
-                  rotate: [0, 4, 0, -4, 0],
-                }}
-                transition={{
-                  duration: 3 + i * 0.4,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                  delay: i * 0.3,
-                }}
-              >
-                <BrandIcon
-                  size={20}
-                  style={{ color: item.color }}
-                  className="transition-all duration-300 group-hover/icon:scale-110"
-                />
-              </motion.div>
-              {/* Label below icon */}
-              <span className="text-[9px] font-semibold text-slate-400 text-center leading-tight group-hover/icon:text-slate-700 transition-colors duration-200">
+              <div className="w-8 h-8 rounded-[10px] bg-slate-50 border border-slate-200 flex items-center justify-center shrink-0">
+                <BrandIcon size={16} style={{ color: item.color }} />
+              </div>
+              <span className="leading-snug">
                 {item.name}
               </span>
             </motion.div>
@@ -405,9 +417,9 @@ function ServiceCard({ service, index }: { service: any; index: number }) {
       <div className="relative flex flex-col bg-white/[0.02] border border-white/[0.06] rounded-[28px] p-7 md:p-8 overflow-hidden transition-all duration-500 hover:bg-white/[0.04] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] hover:border-white/[0.12] h-full">
         {/* Grain texture */}
         <div className="absolute inset-0 bg-noise opacity-[0.06] pointer-events-none" />
-        
+
         {/* Accent border glow on hover */}
-        <div 
+        <div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-[28px]"
           style={{
             boxShadow: `inset 0 0 0 1px ${service.accent}25, 0 0 20px ${service.accent}08`
@@ -434,7 +446,7 @@ function ServiceCard({ service, index }: { service: any; index: number }) {
               ))}
             </div>
           )}
-          
+
           {/* Description */}
           <p className="text-white/40 text-sm leading-relaxed mb-5 flex-grow group-hover:text-white/60 transition-colors duration-300">
             {service.longDesc}
@@ -510,16 +522,6 @@ export default function Services() {
           style={{ opacity: heroOpacity, scale: heroScale, filter: heroBlur }}
           className="relative z-10 container max-w-5xl mx-auto px-6 text-center pt-32 pb-24"
         >
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: EASE_EXPO }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-[#F5A800]/20 backdrop-blur-md mb-8"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse shadow-[0_0_8px_rgba(245,168,0,0.6)]" />
-            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#F5A800]">Our Capabilities</span>
-          </motion.div>
-
           <TextReveal className="mb-2">
             <h1 className="text-[48px] md:text-[72px] lg:text-[96px] font-black tracking-[-0.04em] leading-[0.9] text-white">
               Enterprise Technology.
@@ -588,7 +590,7 @@ export default function Services() {
             }}
           />
         </div>
-        
+
         <div className="container max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           {/* ── Section Header ── */}
           <div className="flex flex-col lg:flex-row items-end justify-between mb-20 gap-8">
@@ -618,19 +620,20 @@ export default function Services() {
                 </p>
               </TextReveal>
             </div>
-            
-            <motion.div 
+
+            <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={viewport}
               className="pb-2 hidden lg:block"
             >
-              <CTAButton
+              <Link
+                to="/contact#inquiry"
                 className="group inline-flex items-center gap-3 px-8 py-4 rounded-full border border-white/10 bg-white/[0.03] text-white/80 font-bold text-[13px] uppercase tracking-wider transition-all duration-300 hover:bg-white/[0.08] hover:border-[#F5A800]/30 hover:text-white"
               >
                 Need a custom solution?
                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-              </CTAButton>
+              </Link>
             </motion.div>
           </div>
 
@@ -641,23 +644,24 @@ export default function Services() {
             ))}
           </div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={viewport}
             className="mt-12 text-center lg:hidden"
           >
-            <CTAButton
+            <Link
+              to="/contact#inquiry"
               className="group inline-flex items-center justify-center w-full gap-3 px-8 py-4 rounded-full border border-white/10 bg-white/[0.03] text-white/80 font-bold text-[13px] uppercase tracking-wider transition-all duration-300 hover:bg-white/[0.08] hover:border-[#F5A800]/30 hover:text-white"
             >
               Need a custom solution?
               <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-            </CTAButton>
+            </Link>
           </motion.div>
         </div>
       </section>
 
-      
+
       {/* ══════════════════════════════════════════════════════
           SERVICE DETAILS — Dark
           ══════════════════════════════════════════════════════ */}
@@ -679,43 +683,61 @@ export default function Services() {
             <div className="p-8 rounded-[24px] bg-white/[0.03] border border-white/[0.08]">
               <h3 className="text-xl font-bold text-white mb-4">Software Engineering</h3>
               <ul className="space-y-3">
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]"/> <span className="text-sm font-medium text-white/50">Custom Web Applications</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]"/> <span className="text-sm font-medium text-white/50">SaaS Platform Development</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]"/> <span className="text-sm font-medium text-white/50">Legacy System Modernization</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]"/> <span className="text-sm font-medium text-white/50">Enterprise API Architecture</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Custom Web Applications</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">SaaS Platform Development</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Legacy System Modernization</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Enterprise API Architecture</span></li>
               </ul>
             </div>
             <div className="p-8 rounded-[24px] bg-white/[0.03] border border-white/[0.08]">
               <h3 className="text-xl font-bold text-white mb-4">Artificial Intelligence</h3>
               <ul className="space-y-3">
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]"/> <span className="text-sm font-medium text-white/50">Custom LLM Integrations</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]"/> <span className="text-sm font-medium text-white/50">AI Agents & Workflow Automation</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]"/> <span className="text-sm font-medium text-white/50">Predictive Machine Learning Models</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]"/> <span className="text-sm font-medium text-white/50">Computer Vision Systems</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Custom LLM Integrations</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">AI Agents & Workflow Automation</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Predictive Machine Learning Models</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Computer Vision Systems</span></li>
               </ul>
             </div>
             <div className="p-8 rounded-[24px] bg-white/[0.03] border border-white/[0.08]">
               <h3 className="text-xl font-bold text-white mb-4">Cloud & DevOps</h3>
               <ul className="space-y-3">
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]"/> <span className="text-sm font-medium text-white/50">Infrastructure as Code (IaC)</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]"/> <span className="text-sm font-medium text-white/50">CI/CD Pipeline Design</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]"/> <span className="text-sm font-medium text-white/50">Cloud Migration Strategy</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]"/> <span className="text-sm font-medium text-white/50">Kubernetes & Container Orchestration</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Infrastructure as Code (IaC)</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">CI/CD Pipeline Design</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Cloud Migration Strategy</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Kubernetes & Container Orchestration</span></li>
               </ul>
             </div>
             <div className="p-8 rounded-[24px] bg-white/[0.03] border border-white/[0.08]">
               <h3 className="text-xl font-bold text-white mb-4">Cybersecurity</h3>
               <ul className="space-y-3">
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]"/> <span className="text-sm font-medium text-white/50">Zero-Trust Architecture</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]"/> <span className="text-sm font-medium text-white/50">Penetration Testing</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]"/> <span className="text-sm font-medium text-white/50">Compliance Audits (ISO, SOC 2, HIPAA)</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]"/> <span className="text-sm font-medium text-white/50">Threat Monitoring & Response</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Zero-Trust Architecture</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Penetration Testing</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Compliance Audits (ISO, SOC 2, HIPAA)</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Threat Monitoring & Response</span></li>
+              </ul>
+            </div>
+            <div className="p-8 rounded-[24px] bg-white/[0.03] border border-white/[0.08]">
+              <h3 className="text-xl font-bold text-white mb-4">Data Systems</h3>
+              <ul className="space-y-3">
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Streaming Data Pipelines</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Real-Time Analytics & BI</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Modern Data Lakes & Warehouses</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Data Governance & Access Controls</span></li>
+              </ul>
+            </div>
+            <div className="p-8 rounded-[24px] bg-white/[0.03] border border-white/[0.08]">
+              <h3 className="text-xl font-bold text-white mb-4">Managed Technology</h3>
+              <ul className="space-y-3">
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">24/7 Monitoring & Support</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">SLA-Backed Maintenance</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Reliability Engineering</span></li>
+                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Technical Advisory & Roadmapping</span></li>
               </ul>
             </div>
           </div>
         </div>
       </section>
-{/* ══════════════════════════════════════════════════════
+      {/* ══════════════════════════════════════════════════════
           HOW WE DELIVER — Process (white bg)
           ══════════════════════════════════════════════════════ */}
       <section className="relative py-32 bg-[#f9f6f0] border-t border-[#e8e2d8]">
@@ -782,13 +804,13 @@ export default function Services() {
             </TextReveal>
             <TextReveal delay={0.1}>
               <p className="text-slate-500 text-lg leading-relaxed max-w-xl font-medium">
-                We select the right tools for each project — from battle-tested frameworks to cutting-edge platforms.
+                We select the right tools for each project based on reliability, maintainability, and fit for your operating environment.
               </p>
             </TextReveal>
           </motion.div>
         </div>
 
-        
+
         <div className="container max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {techEcosystem.map((cat, i) => (
@@ -797,7 +819,7 @@ export default function Services() {
           </div>
         </div>
       </section>
-{/* ══════════════════════════════════════════════════════
+      {/* ══════════════════════════════════════════════════════
           BY THE NUMBERS (dark)
           ══════════════════════════════════════════════════════ */}
       <section className="relative py-32 bg-[#02040a] section-divider-dark overflow-hidden">
@@ -892,7 +914,7 @@ export default function Services() {
 
 
 
-      
+
       {/* ══════════════════════════════════════════════════════
           ENGAGEMENT MODELS
           ══════════════════════════════════════════════════════ */}
@@ -931,7 +953,7 @@ export default function Services() {
           </div>
         </div>
       </section>
-{/* ══════════════════════════════════════════════════════
+      {/* ══════════════════════════════════════════════════════
           CTA SECTION — dark
           ══════════════════════════════════════════════════════ */}
       <section className="relative py-32 bg-[#02040a] section-divider-dark overflow-hidden">

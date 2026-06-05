@@ -11,47 +11,51 @@ const navLinks = [
  { name: 'Projects', href: '/projects' },
  { name: 'Contact', href: '/contact' }];
 
-function MagneticLink({ children, href, isActive, onClick }: { children: React.ReactNode, href: string, isActive: boolean, onClick: (e: React.MouseEvent) => void }) {
- const x = useMotionValue(0);
- const y = useMotionValue(0);
-
- const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
-   const rect = e.currentTarget.getBoundingClientRect();
-   x.set(e.clientX - (rect.left + rect.width / 2));
-   y.set(e.clientY - (rect.top + rect.height / 2));
- };
-
+function NavLink({ children, href, isActive, isHovered, onMouseEnter, onClick }: { children: React.ReactNode, href: string, isActive: boolean, isHovered?: boolean, onMouseEnter?: () => void, onClick: (e: React.MouseEvent) => void }) {
  return (
-   <motion.div
-     style={{ perspective: 400 }}
-     onMouseMove={handleMouse}
-     onMouseLeave={() => { x.set(0); y.set(0); }}
+   <div
+     onMouseEnter={onMouseEnter}
      className="relative z-10"
    >
-     <motion.div
-       style={{
-         x: useTransform(x, [-50, 50], [-4, 4]),
-         y: useTransform(y, [-50, 50], [-4, 4]),
-       }}
-       transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+     <Link
+       to={href}
+       onClick={onClick}
+       className={`relative flex items-center justify-center px-5 py-2 text-[13px] font-medium tracking-wide transition-colors duration-300 ${isHovered ? 'text-black' : isActive ? 'text-white' : 'text-white/60 hover:text-white/90'}`}
      >
-       <Link
-         to={href}
-         onClick={onClick}
-         className={`relative block px-4 py-1.5 text-[12px] font-semibold tracking-wide transition-colors duration-300 ${isActive ? 'text-[#F5A800]' : 'text-white/80 hover:text-white'}`}
-       >
-         {isActive && (
-           <motion.div
-             layoutId="nav-indicator"
-             className="absolute inset-0 bg-[#F5A800]/10 border border-[#F5A800]/20 rounded-full -z-10"
-             initial={false}
-             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-           />
-         )}
-         <span className="relative z-10">{children}</span>
-       </Link>
-     </motion.div>
-   </motion.div>
+       {/* Sliding Background Pill */}
+       {isHovered && (
+         <motion.div
+           layoutId="nav-hover-pill"
+           className="absolute inset-0 bg-white rounded-full -z-10"
+           initial={false}
+           transition={{ type: "spring", stiffness: 450, damping: 35 }}
+         />
+       )}
+       
+       {/* Active Indicator (Hidden when hovered) */}
+       {isActive && !isHovered && (
+         <motion.div
+           layoutId="nav-indicator"
+           className="absolute inset-0 bg-white/10 rounded-full -z-20"
+           initial={false}
+           transition={{ type: "spring", stiffness: 450, damping: 35 }}
+         />
+       )}
+
+       {/* Text Roll-over Animation */}
+       <div className="relative overflow-hidden leading-none block">
+         <motion.div
+           initial={false}
+           animate={{ y: isHovered ? '-100%' : '0%' }}
+           transition={{ ease: [0.76, 0, 0.24, 1], duration: 0.4 }}
+           className="flex flex-col items-center"
+         >
+           <span className="block">{children}</span>
+           <span className="block absolute top-full left-0 right-0 text-center">{children}</span>
+         </motion.div>
+       </div>
+     </Link>
+   </div>
  );
 }
 
@@ -59,6 +63,7 @@ const Navbar = () => {
  const { settings } = useSite();
  const [mobileOpen, setMobileOpen] = useState(false);
  const [scrolled, setScrolled] = useState(false);
+ const [hoveredLink, setHoveredLink] = useState<string | null>(null);
  const location = useLocation();
 
  useEffect(() => {
@@ -91,12 +96,10 @@ const Navbar = () => {
            className="block relative"
          >
            <div className="relative">
-             {/* Glow behind logo */}
-             <div className="absolute inset-0 bg-[#F5A800]/20 blur-xl rounded-full scale-75 pointer-events-none" />
              <div
                role="img"
                aria-label="Nexyovi"
-               className="relative h-[56px] md:h-[62px] w-[160px] md:w-[180px] drop-shadow-[0_4px_12px_rgba(245,168,0,0.3)]"
+               className="relative h-[56px] md:h-[62px] w-[160px] md:w-[180px]"
                style={{
                  mask: `url(${settings?.logo_url || myLogo}) center/contain no-repeat`,
                  WebkitMask: `url(${settings?.logo_url || myLogo}) center/contain no-repeat`,
@@ -115,24 +118,29 @@ const Navbar = () => {
          }`}
        >
          {/* Desktop Nav Links — centered */}
-         <nav className="hidden lg:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2 ml-10">
+         <nav 
+           className="hidden lg:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2 ml-10"
+           onMouseLeave={() => setHoveredLink(null)}
+         >
            {navLinks.map((link) => (
-             <MagneticLink
+             <NavLink
                key={link.name}
                href={link.href}
                isActive={location.pathname === link.href || (link.href !== '/' && location.pathname.startsWith(link.href))}
+               isHovered={hoveredLink === link.name}
+               onMouseEnter={() => setHoveredLink(link.name)}
                onClick={handleNavClick(link.href)}
              >
                {link.name}
-             </MagneticLink>
+             </NavLink>
            ))}
          </nav>
 
          {/* CTA Button */}
          <div className="hidden lg:flex z-20">
            <Link
-             to="/contact"
-             onClick={handleNavClick('/contact')}
+             to="/contact#inquiry"
+             onClick={handleNavClick('/contact#inquiry')}
              className="group inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-[#F5A800] text-black text-[12px] font-bold hover:bg-[#FFD166] transition-all duration-300"
            >
              <span>Start a project</span>
@@ -174,7 +182,7 @@ const Navbar = () => {
                  </motion.div>
                ))}
                <div className="pt-4 mt-1 border-t border-white/10">
-                 <Link to="/contact" onClick={handleNavClick('/contact')} className="inline-flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl bg-[#F5A800] text-black text-[13px] font-bold hover:bg-[#FFD166] transition-all">
+                 <Link to="/contact#inquiry" onClick={handleNavClick('/contact#inquiry')} className="inline-flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl bg-[#F5A800] text-black text-[13px] font-bold hover:bg-[#FFD166] transition-all">
                    Start a Project
                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>
                  </Link>
