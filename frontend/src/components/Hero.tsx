@@ -41,9 +41,9 @@ const Hero = () => {
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.2, ease: EASE_EXPO as any } } }}
                 className="text-[56px] md:text-[76px] lg:text-[88px] font-black text-white tracking-[-0.04em] leading-[0.95] mb-10"
               >
-                Ship production <br />
-                grade software <br />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">faster.</span>
+                We ship <br />
+                production-grade <br />
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">software faster.</span>
               </motion.h1>
 
               <motion.p

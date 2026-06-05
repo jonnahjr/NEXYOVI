@@ -26,7 +26,7 @@ const cards = [
     title: 'Elite Talent Network',
     desc: 'Access top-tier engineers from Ethiopia and beyond — every engineer on our network has shipped production systems at scale.',
     accent: '#a855f7',
-    link: '/company#culture',
+    link: '/company',
   },
   {
     title: 'Rapid Execution',

@@ -83,35 +83,35 @@ const expandedProfiles = [
    certs: ['React Native Certified', 'Flutter Developer'],
    specializations: ['Cross-Platform Dev', 'Mobile UI/UX', 'App Performance'],
    experience: '4+ years',
-   linkedin: 'https://linkedin.com',
+   linkedin: 'https://www.linkedin.com/company/nexyovi',
   },
   {
    id: '12',
    certs: ['Python for Data Science', 'Tableau Desktop Specialist', 'SQL Advanced'],
    specializations: ['Data Visualization', 'Business Intelligence', 'ETL Pipelines'],
    experience: '3+ years',
-   linkedin: 'https://linkedin.com',
+   linkedin: 'https://www.linkedin.com/company/nexyovi',
   },
   {
    id: '13',
    certs: ['OSCP – Pen Testing', 'CEH – Ethical Hacker', 'CompTIA Security+'],
    specializations: ['Vulnerability Assessment', 'Cloud Security', 'Incident Response'],
    experience: '5+ years',
-   linkedin: 'https://linkedin.com',
+   linkedin: 'https://www.linkedin.com/company/nexyovi',
   },
   {
    id: '14',
    certs: ['AWS Developer Associate', 'Node.js Certified Developer'],
    specializations: ['API Design', 'Serverless Architecture', 'Database Optimization'],
    experience: '4+ years',
-   linkedin: 'https://linkedin.com',
+   linkedin: 'https://www.linkedin.com/company/nexyovi',
   },
   {
    id: '15',
    certs: ['ISTQB Certified Tester', 'Selenium WebDriver', 'JMeter'],
    specializations: ['Test Automation', 'Performance Testing', 'CI/CD Quality Gates'],
    experience: '3+ years',
-   linkedin: 'https://linkedin.com',
+   linkedin: 'https://www.linkedin.com/company/nexyovi',
   }];
 
 const LEADERSHIP_IDS = new Set(['1', '2', '3', '16']);

@@ -153,36 +153,12 @@ export default function Industries() {
   return (
     <div className="bg-slate-50 min-h-screen overflow-x-clip">
 
-
       {/* ══════════════════════════════════════════════════════
           SECTION 1 — HERO
           ══════════════════════════════════════════════════════ */}
       <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#02040a]">
-        {/* Animated grid lines */}
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
-          <svg className="w-full h-full" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <motion.path d="M0 200 L1440 200 M0 400 L1440 400 M0 600 L1440 600 M0 800 L1440 800" stroke="rgba(245,168,0,0.15)" strokeWidth="0.5" animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 4, repeat: Infinity, ease: 'linear' }} />
-            <motion.path d="M200 0 L200 900 M500 0 L500 900 M800 0 L800 900 M1100 0 L1100 900 M1400 0 L1400 900" stroke="rgba(245,168,0,0.1)" strokeWidth="0.5" animate={{ opacity: [0.2, 0.8, 0.2] }} transition={{ duration: 5, repeat: Infinity, ease: 'linear' }} />
-            {/* Data flow dots — wrapped in motion.g to avoid framer-motion SVG attribute issues */}
-            <motion.g animate={{ x: [0, 300, 600, 900], opacity: [0, 1, 1, 0] }} transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}>
-              <circle cx="300" cy="300" r="3" fill="#F5A800" />
-            </motion.g>
-            <motion.g animate={{ x: [0, -300, -600, -900], opacity: [0, 1, 1, 0] }} transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}>
-              <circle cx="1200" cy="600" r="3" fill="#F5A800" />
-            </motion.g>
-            <motion.g animate={{ x: [0, 200, 400, 600], y: [0, -200, -400, -500], opacity: [0, 1, 1, 0] }} transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}>
-              <circle cx="600" cy="700" r="2" fill="#8b5cf6" />
-            </motion.g>
-          </svg>
-        </div>
-
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-[#F5A800]/10 rounded-full blur-[160px]" />
-          <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#8b5cf6]/8 rounded-full blur-[140px]" />
-        </div>
-        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-[#02040a]/30 via-transparent to-[#02040a]/85 pointer-events-none" />
-        <div className="absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,_transparent_20%,_#02040a_80%)] pointer-events-none" />
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#02040a] to-transparent z-[2] pointer-events-none" />
+        {/* Clean bottom fade to next section */}
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#02040a] to-transparent z-[2] pointer-events-none" />
 
         <motion.div style={{ opacity: heroOpacity, scale: heroScale }} className="relative z-10 container max-w-5xl mx-auto px-6 text-center pt-32 pb-24">
           <TextReveal>
@@ -222,7 +198,7 @@ export default function Industries() {
               { label: 'Engineering-Led', sub: 'Senior Teams, No Layering' },
             ].map((item) => (
               <div key={item.label} className="flex items-center gap-3">
-                <div className="w-1 h-1 rounded-full bg-[#F5A800] shadow-[0_0_6px_rgba(245,168,0,0.6)]" />
+                <div className="w-1 h-1 rounded-full bg-[#F5A800]" />
                 <div className="text-left">
                   <div className="text-white text-sm font-bold">{item.label}</div>
                   <div className="text-white/40 text-[10px] font-bold uppercase tracking-wider">{item.sub}</div>
