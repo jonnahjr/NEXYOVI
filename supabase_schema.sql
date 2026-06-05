@@ -4,56 +4,19 @@
 -- IDEMPOTENT: Safe to run multiple times in Supabase SQL Editor
 -- ============================================================
 
--- ── STEP 1: CREATE THE ADMIN USER IN SUPABASE AUTH ──────────
--- Run this ONCE to create your admin login.
--- After running, you can log in with:
---   Email:    admin@nexyovi.com
---   Password: (set yours below — change before running!)
--- NOTE: Change 'YourSecurePassword123!' to your real password.
-DO $$
-DECLARE
-  uid uuid;
-BEGIN
-  -- Only create if the user doesn't already exist
-  IF NOT EXISTS (
-    SELECT 1 FROM auth.users WHERE email = 'admin@nexyovi.com'
-  ) THEN
-    uid := gen_random_uuid();
-    INSERT INTO auth.users (
-      id, instance_id, email, encrypted_password, email_confirmed_at,
-      role, aud, created_at, updated_at,
-      raw_app_meta_data, raw_user_meta_data, is_super_admin,
-      confirmation_token, recovery_token, email_change_token_new, email_change
-    ) VALUES (
-      uid,
-      '00000000-0000-0000-0000-000000000000',
-      'admin@nexyovi.com',
-      crypt('Jonnahjnr@0945628075!', gen_salt('bf')),
-      now(),
-      'authenticated',
-      'authenticated',
-      now(),
-      now(),
-      '{"provider":"email","providers":["email"]}',
-      '{"role":"admin"}',
-      false,
-      '', '', '', ''
-    );
-
-    INSERT INTO auth.identities (
-      id, user_id, identity_data, provider, provider_id, created_at, updated_at, last_sign_in_at
-    ) VALUES (
-      gen_random_uuid(),
-      uid,
-      jsonb_build_object('sub', uid::text, 'email', 'admin@nexyovi.com'),
-      'email',
-      uid::text,
-      now(),
-      now(),
-      now()
-    ) ON CONFLICT DO NOTHING;
-  END IF;
-END $$;
+-- ── STEP 1: CREATE YOUR ADMIN USER ──────────────────────────
+-- DO NOT use SQL to create the admin user — it is unreliable on hosted Supabase.
+--
+-- Instead, create the user in the Supabase Dashboard:
+--   1. Go to Authentication → Users
+--   2. Click "Add user" → "Create new user"
+--   3. Email:    admin@nexyovi.com
+--   4. Password: (your password)
+--   5. ✅ Check "Auto Confirm User"
+--   6. Click "Create User"
+--
+-- After creating the user there, your /admin login will work immediately.
+-- ─────────────────────────────────────────────────────────────
 
 
 -- ============================================================
