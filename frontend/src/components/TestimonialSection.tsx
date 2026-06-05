@@ -11,7 +11,6 @@ const testimonials = [
         quote: "Nexyovi didn't just write code; they architected a platform that could actually handle our scale. Their engineering team operates like a true extension of our own—delivering enterprise-grade security and performance without the usual agency friction.",
         role: "Chief Technology Officer",
         company: "Commercial Bank of Ethiopia",
-        logo: "https://logo.clearbit.com/combanketh.et",
         avatar: c1,
         linkedin: "https://linkedin.com",
         highlight: "enterprise-grade security"
@@ -20,7 +19,6 @@ const testimonials = [
         quote: "The speed and precision with which they delivered our core infrastructure was unmatched. They navigated complex compliance requirements seamlessly and helped us launch months ahead of schedule.",
         role: "VP of Engineering",
         company: "Ministry of Health",
-        logo: "https://logo.clearbit.com/moh.gov.et",
         avatar: c2,
         linkedin: "https://linkedin.com",
         highlight: "months ahead of schedule"
@@ -29,7 +27,6 @@ const testimonials = [
         quote: "Working with Nexyovi transformed our product roadmap. Their deep expertise in AI and predictive analytics allowed us to build features we thought were years away. A truly elite engineering partner.",
         role: "Head of Digital Innovation",
         company: "Ethio Telecom",
-        logo: "https://logo.clearbit.com/ethiotelecom.et",
         avatar: c3,
         linkedin: "https://linkedin.com",
         highlight: "elite engineering partner"
@@ -38,7 +35,6 @@ const testimonials = [
         quote: "Finding a team that balances flawless technical execution with stunning user experience is rare. Nexyovi delivered a platform that our users love and our engineers respect.",
         role: "Director of Infrastructure",
         company: "INSA",
-        logo: "https://logo.clearbit.com/insa.gov.et",
         avatar: yonasImg,
         linkedin: "https://linkedin.com",
         highlight: "flawless technical execution"
@@ -67,18 +63,7 @@ export default function TestimonialSection() {
                         >
                             <Quote className="absolute top-3 left-3 text-[#F5A800]/20 w-6 h-6" />
 
-                            <div className="relative z-10 flex-grow">
-                                <div className="mb-4 flex items-center justify-between">
-                                    <img 
-                                        src={testimonial.logo} 
-                                        alt={`${testimonial.company} logo`} 
-                                        className="h-6 w-auto object-contain opacity-80 mix-blend-luminosity hover:mix-blend-normal hover:opacity-100 transition-all bg-white/10 rounded px-2 py-1"
-                                        onError={(e) => { 
-                                            e.currentTarget.onerror = null; // Prevent infinite loop if fallback also fails
-                                            e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.company)}&background=1e293b&color=ffffff&bold=true&rounded=true`;
-                                        }}
-                                    />
-                                </div>
+                            <div className="relative z-10 flex-grow pt-4">
                                 <p className="text-[13px] font-medium text-white/80 leading-relaxed mb-5">
                                     {testimonial.quote.split(testimonial.highlight).map((part, index, array) => (
                                         <React.Fragment key={index}>
