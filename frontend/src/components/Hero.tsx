@@ -41,16 +41,16 @@ const Hero = () => {
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.2, ease: EASE_EXPO as any } } }}
                 className="text-[56px] md:text-[76px] lg:text-[88px] font-black text-white tracking-[-0.04em] leading-[0.95] mb-10"
               >
-                Enterprise <br />
-                Technology <br />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">Partner.</span>
+                Ship production <br />
+                grade software <br />
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">faster.</span>
               </motion.h1>
 
               <motion.p
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.75, delay: 0.3, ease: EASE_EXPO as any } } }}
                 className="text-[18px] md:text-[20px] text-white/80 font-medium leading-[1.8] mb-16 max-w-[560px]"
               >
-                We design, build, and operate enterprise software, AI systems, and cloud infrastructure for organizations that need secure, scalable technology.
+                We build secure, scalable enterprise software, AI systems, and cloud infrastructure for organizations that can't afford to get it wrong.
               </motion.p>
 
               <motion.div
@@ -67,7 +67,7 @@ const Hero = () => {
                     animate={{ x: ['-150%', '340%'] }}
                     transition={{ duration: 3.2, repeat: Infinity, repeatDelay: 1.6, ease: 'easeInOut' }}
                   />
-                  <span className="relative z-10 font-bold">Start a Project</span>
+                  <span className="relative z-10 font-bold">Book a 45-min strategy session</span>
                 </CTAButton>
 
                 {/* ── Secondary CTA ── */}

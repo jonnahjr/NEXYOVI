@@ -50,7 +50,29 @@ const caseStudies = {
  'Improved on-time delivery rates from 84% to 98.5%.',
  'Automated dispatching reduced manual planning hours by 70%.'
  ]
- }
+ },
+ 'tele-psychiatry': {
+  title: 'Tele-Psychiatry Platform',
+  client: 'National Health Ministry',
+  category: 'HealthTech & Cloud',
+  heroImage: aiAbstract,
+  color: '#8b5cf6',
+  bg: 'from-[#8b5cf6]/20 to-transparent',
+  overview: 'The National Health Ministry needed a secure, HIPAA-compliant telehealth platform to connect patients with psychiatric specialists across the country, especially in remote areas with limited access to mental health care.',
+  challenge: 'Existing solutions lacked the necessary security protocols for sensitive psychiatric data, suffered from poor video quality in low-bandwidth regions, and had no integrated scheduling or prescription management, leading to fragmented care and high no-show rates.',
+  solution: 'Nexyovi engineered a custom, end-to-end encrypted telehealth platform optimized for low-bandwidth environments. We integrated automated scheduling, secure e-prescribing, and an AI-assisted triage system to prioritize urgent cases.',
+  telemetry: [
+   { label: 'Uptime', value: '99.99%', icon: Activity },
+  { label: 'Patients', value: '50k+', icon: Activity },
+  { label: 'Satisfaction', value: '95%', icon: CheckCircle2 }
+  ],
+  results: [
+  'Facilitated over 50,000 secure, HIPAA-compliant consultations.',
+  'Achieved a 95% patient satisfaction rating.',
+  'Reduced appointment no-show rates by 40% through automated SMS reminders.',
+  'Expanded specialist access to 12 previously underserved rural regions.'
+  ]
+  }
 };
 
 const CaseStudyDetail = () => {

@@ -21,7 +21,7 @@ const projects = [
         desc: 'Multi-vendor e-commerce platform with millions of products.',
         outcome: 'Processed 2.1M transactions/year, reduced checkout time by 35%',
         screenshots: [market1, market2, market3],
-        tags: ['iOS', 'Android', 'E-Commerce'],
+        tags: ['Nexyovi Labs', 'E-Commerce', 'Mobile'],
         href: '/projects',
     },
     {
@@ -29,7 +29,7 @@ const projects = [
         desc: 'Location discovery app for restaurants, cafes, and more.',
         outcome: '200K+ active users, 4.8-star rating on app stores',
         screenshots: [locate1, locate2, locate3],
-        tags: ['iOS', 'Android', 'Maps'],
+        tags: ['Nexyovi Labs', 'Maps', 'Mobile'],
         href: '/projects',
     },
     {
@@ -38,7 +38,7 @@ const projects = [
         outcome: 'HIPAA-compliant, facilitated 50K+ consultations, 95% patient satisfaction',
         screenshots: [tele1, tele2, tele3],
         tags: ['iOS', 'Android', 'Health'],
-        href: '/projects',
+        href: '/projects/tele-psychiatry',
     },
     {
         name: 'Banking Security Platform',
@@ -46,7 +46,7 @@ const projects = [
         outcome: 'Reduced fraud detection time by 40%, processed 2M secure transactions/day',
         screenshots: [logisticsCase, workspaceCase],
         tags: ['FinTech', 'AI', 'Security'],
-        href: '/projects',
+        href: '/projects/global-bank-security',
     },
 ];
 
@@ -181,6 +181,13 @@ export default function FeaturedProjects() {
                                                 </span>
                                             ))}
                                         </div>
+                                        
+                                        {project.href !== '/projects' && (
+                                            <div className="mt-4 pt-4 border-t border-white/[0.04] flex items-center justify-between opacity-60 group-hover:opacity-100 transition-opacity duration-300">
+                                                <span className="text-[11px] font-bold uppercase tracking-widest text-white">Read Case Study</span>
+                                                <ArrowRight size={14} className="text-[#F5A800]" />
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
 

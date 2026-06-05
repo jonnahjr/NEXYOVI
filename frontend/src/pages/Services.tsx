@@ -67,7 +67,7 @@ const services = [
     id: 'infrastructure',
     title: 'Infrastructure & Networking',
     desc: 'Cloud architecture, zero-trust networks, server deployments, and continuous reliability engineering.',
-    longDesc: 'Multi-cloud deployments, SD-WAN, edge computing, and IaC — engineered for high availability and sub-millisecond latency across global operations.',
+    longDesc: 'Multi-cloud deployments, SD-WAN, edge computing, and IaC — engineered for high availability and low-latency performance across global operations.',
     icon: Network,
     accent: '#6366f1',
     glow: 'rgba(99,102,241,0.08)',
@@ -214,12 +214,11 @@ const techEcosystem: {
 function AnimatedCounter({ value, suffix, label, subtitle, index, light = false, hideNumber = false }: {
   value: number; suffix: string; label: string; subtitle?: string; index: number; light?: boolean; hideNumber?: boolean;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
   const [display, setDisplay] = useState(0);
+  const [hasTriggered, setHasTriggered] = useState(false);
 
   useEffect(() => {
-    if (!isInView) return;
+    if (!hasTriggered) return;
     let start = 0;
     const duration = 2000;
     const step = 16;
@@ -237,7 +236,7 @@ function AnimatedCounter({ value, suffix, label, subtitle, index, light = false,
     }, step);
 
     return () => clearInterval(timer);
-  }, [isInView, value]);
+  }, [hasTriggered, value]);
 
   const formatDisplay = (num: number): string => {
     if (Number.isInteger(value) && num >= value - 1) return `${value}${suffix}`;
@@ -246,7 +245,7 @@ function AnimatedCounter({ value, suffix, label, subtitle, index, light = false,
 
   return (
     <motion.div
-      ref={ref}
+      onViewportEnter={() => setHasTriggered(true)}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={viewport}
@@ -982,7 +981,7 @@ export default function Services() {
 
             <TextReveal delay={0.1}>
               <p className="text-white/50 text-lg leading-relaxed max-w-xl mx-auto mb-8 font-medium">
-                Tell us about your project. We'll put together a free strategy session with a senior architect — No sales process — just technical guidance.
+                Tell us about your project. We'll put together a free strategy session with a senior architect — no sales process — just technical guidance.
               </p>
             </TextReveal>
 

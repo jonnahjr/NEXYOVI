@@ -23,7 +23,6 @@ const partners = [
  { name: 'Commercial Bank of Ethiopia', logo: cbe },
  { name: 'Zemen Bank', logo: zemen },
  { name: 'INSA', logo: insa },
- { name: 'Global Bank', logo: global },
  { name: 'Addis Ababa University', logo: aau },
  { name: 'AASTU', logo: aastu },
  { name: 'Bahir Dar University', logo: bdu },

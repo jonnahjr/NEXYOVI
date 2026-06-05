@@ -11,7 +11,7 @@ const tags = [
 ];
 
 const row1 = [
- 'Commercial Bank of Ethiopia', 'Zemen Bank', 'INSA', 'Global Bank',
+ 'Commercial Bank of Ethiopia', 'Zemen Bank', 'INSA',
  'Addis Ababa University', 'AASTU', 'Bahir Dar University', 'Hawassa University',
  'Ethio Telecom', 'HP', 'IBM', 'Oracle', 'AWS', 'TCS',
 ];

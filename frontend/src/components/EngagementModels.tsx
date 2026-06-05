@@ -24,7 +24,7 @@ const models: EngagementModel[] = [
     bestFor: 'MVPs, feature builds, platform migrations, and defined-scope initiatives',
     clientType: 'Startups to enterprises with well-defined requirements',
     duration: '8–24 weeks',
-    pricing: 'Custom pricing based on scope',
+    pricing: 'Custom pricing (Typically $15k - $50k)',
     accent: '#0ea5e9',
     icon: Layers,
   },
@@ -35,7 +35,7 @@ const models: EngagementModel[] = [
     bestFor: 'Ongoing product development, platform maintenance, and long-term roadmaps',
     clientType: 'Scale-ups and enterprises needing sustained engineering capacity',
     duration: '3–24+ months',
-    pricing: 'Custom pricing based on scope',
+    pricing: 'Custom pricing (Typically $10k - $40k/mo)',
     accent: '#f97316',
     icon: Users,
   },
@@ -46,7 +46,7 @@ const models: EngagementModel[] = [
     bestFor: 'Organizations that need senior technical direction without a full-time executive hire',
     clientType: 'Early-stage startups, SMBs, and teams in transition',
     duration: 'Ongoing — 2–20 hrs/week',
-    pricing: 'Custom pricing based on scope',
+    pricing: 'Custom pricing (Typically $3k - $12k/mo)',
     accent: '#3b82f6',
     icon: Brain,
   },
@@ -57,7 +57,7 @@ const models: EngagementModel[] = [
     bestFor: 'Organizations building complex platforms requiring sustained, deep technical investment',
     clientType: 'Enterprises, government institutions, and high-growth technology companies',
     duration: '12–48+ months',
-    pricing: 'Custom pricing based on scope',
+    pricing: 'Custom pricing (Typically $25k+ /mo)',
     accent: '#a855f7',
     icon: Handshake,
   },
@@ -307,7 +307,7 @@ export default function EngagementModels() {
                         to="/contact#inquiry"
                         className="group inline-flex items-center gap-2.5 px-7 py-3 rounded-full bg-[#F5A800] text-black text-[13px] font-bold hover:bg-[#FFD166] transition-all duration-300 hover:scale-105"
                       >
-                        <span>Discuss this engagement</span>
+                        <span>Book a 45-min strategy session</span>
                         <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
                       </Link>
                     </motion.div>

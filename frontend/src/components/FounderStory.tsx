@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Linkedin } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import yonasImg from '../assets/yonas_bogale_ceo_1777102914641.jpg';
 
 export default function FounderStory() {
@@ -57,11 +58,11 @@ export default function FounderStory() {
 
             <div className="space-y-6 text-white/80 leading-relaxed font-medium mb-10 max-w-lg">
               <p>
-                Nexyovi was founded on a singular vision: to bring world-class engineering rigor to digital transformation. Too often, organizations are sold bloated software that lacks security, scalability, and long-term viability. We exist to change that narrative.
+                Nexyovi was founded on a singular vision: to bring world-class engineering rigor to digital transformation. We believe that robust systems are built from the ground up, not patched together as an afterthought.
               </p>
-              <p>
-                Our engineering philosophy is deeply rooted in security-first architecture. Whether we are building a fintech payment gateway or deploying sovereign cloud infrastructure for public institutions, we believe that robust systems are built from the ground up, not patched together as an afterthought.
-              </p>
+              <Link to="/company#story" className="inline-block mt-4 text-[#F5A800] font-bold text-sm hover:text-white transition-colors">
+                Read our full story →
+              </Link>
             </div>
 
             <a

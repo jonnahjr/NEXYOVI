@@ -35,11 +35,10 @@ export default function FinalCTA() {
             transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-[-0.03em] leading-[0.95] mb-8"
           >
-            From vision to{' '}
+            Ready to scale?{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">
-              production
+              Let's talk.
             </span>
-            .
           </motion.h2>
 
           {/* Description */}
@@ -48,18 +47,43 @@ export default function FinalCTA() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={viewport}
             transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-white/50 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-12 font-medium"
+            className="text-white/50 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-10 font-medium"
           >
-            Book a no-pressure 45-minute strategy session. We'll review your current setup, identify 2–3 high-impact opportunities, and give you a clear next-step plan — at zero cost or obligation.
+            Book your 45-minute strategy session today. We take on a limited number of new clients each quarter to ensure maximum quality and dedicated attention.
           </motion.p>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewport}
+            transition={{ duration: 0.5, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10"
+          >
+            <a
+              href="mailto:contact@nexyovi.com"
+              className="group btn-gold btn-gold-pulse text-[15px] px-9 py-[14px]"
+            >
+              <span className="relative z-10">Book a 45-min strategy session</span>
+              <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
+            </a>
+
+            <a
+              href={`mailto:${settings.email}`}
+              className="group btn-ghost text-[14px] px-8 py-[13px]"
+            >
+              <Calendar size={16} className="relative z-10 opacity-60 group-hover:opacity-100 transition-opacity" />
+              <span className="relative z-10">Or email us directly</span>
+            </a>
+          </motion.div>
 
           {/* Benefit bullets */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={viewport}
-            transition={{ duration: 0.5, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-wrap items-center justify-center gap-3 mb-10"
+            transition={{ duration: 0.5, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-wrap items-center justify-center gap-3"
           >
             {[
               "AI audit + 2–3 ROI ideas in 45 min",
@@ -74,31 +98,6 @@ export default function FinalCTA() {
                 {benefit}
               </div>
             ))}
-          </motion.div>
-
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={viewport}
-            transition={{ duration: 0.5, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
-            <a
-              href="mailto:contact@nexyovi.com"
-              className="group btn-gold btn-gold-pulse text-[15px] px-9 py-[14px]"
-            >
-              <span className="relative z-10">Secure Your Strategy Session</span>
-              <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
-            </a>
-
-            <a
-              href={`mailto:${settings.email}`}
-              className="group btn-ghost text-[14px] px-8 py-[13px]"
-            >
-              <Calendar size={16} className="relative z-10 opacity-60 group-hover:opacity-100 transition-opacity" />
-              <span className="relative z-10">Or email us directly</span>
-            </a>
           </motion.div>
         </div>
       </div>

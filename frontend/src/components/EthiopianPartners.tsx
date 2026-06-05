@@ -32,7 +32,6 @@ interface Partner {
 
 const partners: Partner[] = [
   { name: 'Ethio Telecom', desc: '', abbr: '', logo: ethioLogo },
-  { name: 'Global Bank', desc: '', abbr: '', logo: globalLogo },
   { name: 'AWS', desc: '', abbr: '', logo: awsLogo },
   { name: 'HP', desc: '', abbr: '', logo: hpLogo },
   { name: 'IBM', desc: '', abbr: '', logo: ibmLogo },
@@ -80,7 +79,7 @@ export default function EthiopianPartners() {
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 bg-slate-100 mb-4">
             <span className="w-2 h-2 rounded-full bg-[#F5A800] animate-pulse" />
-            <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-slate-500">Partnership Network</span>
+            <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-slate-500">Technologies We Work With</span>
           </div>
         </motion.div>
 
