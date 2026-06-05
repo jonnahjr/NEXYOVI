@@ -183,7 +183,7 @@ export default function Company() {
             className="flex flex-wrap items-center justify-center gap-4"
           >
             <Link to="/contact#inquiry" className="group btn-gold text-[15px] px-10 py-5">
-              <span className="relative z-10">Book a 45-min strategy session</span>
+              <span className="relative z-10">Book a strategy session</span>
               <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
             </Link>
             <Link to="/services" className="group btn-ghost text-[15px] px-10 py-5">

@@ -105,7 +105,7 @@ const HeroTrustSection = () => {
               id="cta-start-project"
               className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-slate-950 text-white font-bold text-[14px] shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition-all duration-300 hover:bg-[#F5A800] hover:scale-105 hover:shadow-[0_8px_30px_rgba(245,168,0,0.25)] hover:-translate-y-0.5"
             >
-              <span className="relative z-10">Book a 45-min strategy session</span>
+              <span className="relative z-10">Book a strategy session</span>
               <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1 transition-transform" />
             </Link>
 

@@ -67,7 +67,7 @@ const Hero = () => {
                     animate={{ x: ['-150%', '340%'] }}
                     transition={{ duration: 3.2, repeat: Infinity, repeatDelay: 1.6, ease: 'easeInOut' }}
                   />
-                  <span className="relative z-10 font-bold">Book a 45-min strategy session</span>
+                  <span className="relative z-10 font-bold">Book a strategy session</span>
                 </CTAButton>
 
                 {/* ── Secondary CTA ── */}

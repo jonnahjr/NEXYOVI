@@ -960,7 +960,7 @@ export default function Services() {
               className="flex flex-wrap justify-center gap-6 mb-10"
             >
               {[
-                'Free 45-min strategy session',
+                'Free strategy session',
                 'Prioritized roadmap outline',
                 'Strict NDA, fully confidential',
               ].map((benefit, i) => (

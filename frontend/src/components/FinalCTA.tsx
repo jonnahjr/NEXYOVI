@@ -61,7 +61,7 @@ export default function FinalCTA() {
               href="mailto:contact@nexyovi.com"
               className="group btn-gold text-[15px] px-9 py-[14px]"
             >
-              <span className="relative z-10">Book a 45-min strategy session</span>
+              <span className="relative z-10">Book a strategy session</span>
               <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
             </a>
 

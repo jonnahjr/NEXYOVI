@@ -307,7 +307,7 @@ export default function EngagementModels() {
                         to="/contact#inquiry"
                         className="group inline-flex items-center gap-2.5 px-7 py-3 rounded-full bg-[#F5A800] text-black text-[13px] font-bold hover:bg-[#FFD166] transition-all duration-300 hover:scale-105"
                       >
-                        <span>Book a 45-min strategy session</span>
+                        <span>Book a strategy session</span>
                         <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
                       </Link>
                     </motion.div>
