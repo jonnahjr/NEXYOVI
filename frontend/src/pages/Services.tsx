@@ -525,7 +525,7 @@ export default function Services() {
             <CTAButton
               className="group btn-ghost text-[14px] px-8 py-4"
             >
-              <span className="relative z-10">Start a Project</span>
+              <span className="relative z-10">Book a strategy session</span>
             </CTAButton>
           </motion.div>
 
@@ -981,7 +981,7 @@ export default function Services() {
               <CTAButton
                 className="group btn-gold text-[15px] px-10 py-4"
               >
-                <span className="relative z-10">Start a Project</span>
+                <span className="relative z-10">Book a strategy session</span>
                 <ArrowRight size={18} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
               </CTAButton>
               <CTAButton

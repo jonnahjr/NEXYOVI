@@ -575,7 +575,7 @@ export default function Projects() {
             className="flex flex-wrap items-center justify-center gap-4 mb-20"
           >
             <Link to="/contact#inquiry" className="group btn-gold text-[14px] px-8 py-4">
-              <span className="relative z-10">Start a Project</span>
+              <span className="relative z-10">Book a strategy session</span>
               <ChevronRight size={14} className="relative z-10 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link to="/projects" className="group btn-ghost text-[14px] px-8 py-4">
@@ -1117,7 +1117,7 @@ export default function Projects() {
               className="flex flex-wrap items-center justify-center gap-4"
             >
               <Link to="/contact#inquiry" className="group btn-gold text-[14px] px-8 py-4">
-                <span className="relative z-10">Start a Project</span>
+                <span className="relative z-10">Book a strategy session</span>
                 <ChevronRight size={14} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
               </Link>
               <Link to="/services" className="group btn-ghost text-[14px] px-8 py-4">

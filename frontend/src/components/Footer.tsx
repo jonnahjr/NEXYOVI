@@ -179,7 +179,7 @@ const Footer = () => {
               to="/contact#inquiry"
               className="group inline-flex items-center gap-2 text-[13px] font-bold text-[#F5A800] hover:text-[#FFD166] transition-colors"
             >
-              Start a Project
+              Book a strategy session
               <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </Link>
           </div>

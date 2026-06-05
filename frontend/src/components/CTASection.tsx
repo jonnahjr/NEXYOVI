@@ -54,7 +54,7 @@ const CTASection = () => {
                 id="cta-section-start"
                 className="group btn-gold text-[14px] px-9 py-4 w-full md:w-auto"
               >
-                <span className="relative z-10">Start a Project</span>
+                <span className="relative z-10">Book a 45-min strategy session</span>
                 <ArrowRight size={15} className="relative z-10 group-hover:translate-x-1.5 transition-transform duration-300" />
               </Link>
 
