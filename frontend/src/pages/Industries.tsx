@@ -136,23 +136,6 @@ const techCapabilities = [
   'Cybersecurity', 'DevOps & SRE', 'Mobile Applications', 'Enterprise Integrations', 'Automation'
 ];
 
-
-
-function MouseGlow() {
-  const [pos, setPos] = useState({ x: -200, y: -200 });
-  const handleMouse = useCallback((e: MouseEvent) => {
-    setPos({ x: e.clientX, y: e.clientY });
-  }, []);
-  useEffect(() => {
-    window.addEventListener('mousemove', handleMouse);
-    return () => window.removeEventListener('mousemove', handleMouse);
-  }, [handleMouse]);
-  return (
-    <div className="fixed inset-0 pointer-events-none z-[999] transition-none hidden lg:block"
-      style={{ background: `radial-gradient(600px circle at ${pos.x}px ${pos.y}px, rgba(245,168,0,0.03), transparent 40%)` }} />
-  );
-}
-
 // ══════════════════════════════════════════════════════════════
 //  PAGE
 // ══════════════════════════════════════════════════════════════
@@ -169,7 +152,7 @@ export default function Industries() {
 
   return (
     <div className="bg-slate-50 min-h-screen overflow-x-clip">
-      <MouseGlow />
+
 
       {/* ══════════════════════════════════════════════════════
           SECTION 1 — HERO

@@ -73,7 +73,10 @@ export default function TestimonialSection() {
                                         src={testimonial.logo} 
                                         alt={`${testimonial.company} logo`} 
                                         className="h-6 w-auto object-contain opacity-80 mix-blend-luminosity hover:mix-blend-normal hover:opacity-100 transition-all bg-white/10 rounded px-2 py-1"
-                                        onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                                        onError={(e) => { 
+                                            e.currentTarget.onerror = null; // Prevent infinite loop if fallback also fails
+                                            e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.company)}&background=1e293b&color=ffffff&bold=true&rounded=true`;
+                                        }}
                                     />
                                 </div>
                                 <p className="text-[13px] font-medium text-white/80 leading-relaxed mb-5">

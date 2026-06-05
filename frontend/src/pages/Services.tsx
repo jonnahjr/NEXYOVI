@@ -377,30 +377,6 @@ function TechCategory({ category, icon: Icon, items }: {
 }
 
 // ══════════════════════════════════════════════════════════════
-//  MOUSE GLOW
-// ══════════════════════════════════════════════════════════════
-function MouseGlow() {
-  const [pos, setPos] = useState({ x: -200, y: -200 });
-
-  const handleMouse = useCallback((e: MouseEvent) => {
-    setPos({ x: e.clientX, y: e.clientY });
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener('mousemove', handleMouse);
-    return () => window.removeEventListener('mousemove', handleMouse);
-  }, [handleMouse]);
-
-  return (
-    <div
-      className="fixed inset-0 pointer-events-none z-[999] transition-none hidden lg:block"
-      style={{
-        background: `radial-gradient(600px circle at ${pos.x}px ${pos.y}px, rgba(245,168,0,0.03), transparent 40%)`,
-      }}
-    />
-  );
-}
-
 // ══════════════════════════════════════════════════════════════
 //  SERVICE CARD — Clean Minimal Design
 // ══════════════════════════════════════════════════════════════
@@ -496,7 +472,7 @@ export default function Services() {
   return (
     <div ref={containerRef} className="bg-slate-50 min-h-screen overflow-x-clip">
       {/* Mouse-following glow */}
-      <MouseGlow />
+
 
       {/* ══════════════════════════════════════════════════════
           HERO — dark with atmosphere glows

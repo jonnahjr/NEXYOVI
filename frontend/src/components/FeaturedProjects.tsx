@@ -105,32 +105,14 @@ export default function FeaturedProjects() {
                     className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4"
                 >
                     {projects.map((project, i) => {
-                        const [mousePos, setMousePos] = useState({ x: -1000, y: -1000 });
 
-                        const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-                            const rect = e.currentTarget.getBoundingClientRect();
-                            setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-                        };
-
-                        const handleMouseLeave = () => {
-                            setMousePos({ x: -1000, y: -1000 });
-                        };
 
                         return (
                             <motion.div
                                 key={i}
                                 variants={cardVariants}
-                                onMouseMove={handleMouseMove}
-                                onMouseLeave={handleMouseLeave}
                                 className="group relative overflow-hidden rounded-[20px] border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm transition-all duration-500 hover:border-white/[0.15] hover:bg-white/[0.05]"
                             >
-                                {/* Hover Spotlight */}
-                                <div 
-                                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"
-                                    style={{
-                                        background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, rgba(245, 168, 0, 0.08), transparent 40%)`
-                                    }}
-                                />
 
                                 <div className="relative z-10 flex flex-col h-full">
                                     {/* Screenshot row */}

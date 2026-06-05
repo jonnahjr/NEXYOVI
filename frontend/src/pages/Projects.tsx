@@ -496,21 +496,7 @@ const StoreButton = ({ dark = false, platform = 'app-store' }: { dark?: boolean;
 //  MAIN PAGE
 // ══════════════════════════════════════════════════════════════
 
-// ── MouseGlow (from Services) ────────────────────────────────
-function MouseGlow() {
-  const [pos, setPos] = useState({ x: -200, y: -200 });
-  const handleMouse = useCallback((e: MouseEvent) => {
-    setPos({ x: e.clientX, y: e.clientY });
-  }, []);
-  useEffect(() => {
-    window.addEventListener('mousemove', handleMouse);
-    return () => window.removeEventListener('mousemove', handleMouse);
-  }, [handleMouse]);
-  return (
-    <div className="fixed inset-0 pointer-events-none z-[999] transition-none hidden lg:block"
-      style={{ background: `radial-gradient(600px circle at ${pos.x}px ${pos.y}px, rgba(245,168,0,0.03), transparent 40%)` }} />
-  );
-}
+
 
 // ══════════════════════════════════════════════════════════════
 //  MAIN PAGE
@@ -539,7 +525,7 @@ export default function Projects() {
 
   return (
     <div className="bg-[#02040a] min-h-screen text-white font-sans selection:bg-[#F5A800]/30 overflow-x-clip">
-      <MouseGlow />
+
 
       {/* ═══════════════════════════════════════════════════════════
           HERO — Matching Services Page Style
