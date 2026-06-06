@@ -7,7 +7,8 @@ import {
   Globe,
   LayoutTemplate,
   MessageSquare,
-  Save
+  Save,
+  Users
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useSite } from '../../context/SiteContext';
@@ -476,10 +477,149 @@ const ByTheNumbersEditor = () => {
   );
 };
 
+// ── COMPANY TEAM SECTION EDITOR ──
+const CompanyTeamEditor = () => {
+  const { siteContent, updateSiteContent } = useSite();
+  const [saved, setSaved] = useState(false);
+  const [form, setForm] = useState({
+    badge: 'Our Team',
+    title: 'Meet the Team.',
+    highlight: 'Team.',
+    description: 'Leadership team overseeing software engineering, AI innovation, and cloud infrastructure delivery across global markets.',
+    founder_name: 'Yonas Bogale',
+    founder_role: 'Founder & CEO',
+    founder_bio: "Leading Nexyovi's mission to build practical software, AI solutions, and digital infrastructure for modern businesses.",
+    founder_button: 'LinkedIn Profile'
+  });
+
+  useEffect(() => {
+    if (siteContent?.companyTeam) setForm({ ...form, ...siteContent.companyTeam });
+  }, [siteContent]);
+
+  const handleSave = async (e: any) => {
+    e.preventDefault();
+    await updateSiteContent('companyTeam', form);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 3000);
+  };
+
+  return (
+    <div className="space-y-5">
+      <div>
+        <label className={labelClass}>Section Badge</label>
+        <input type="text" value={form.badge} onChange={e => setForm({ ...form, badge: e.target.value })} className={inputClass} />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className={labelClass}>Section Title</label>
+          <input type="text" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className={inputClass} />
+        </div>
+        <div>
+          <label className={labelClass}>Highlighted Word</label>
+          <input type="text" value={form.highlight} onChange={e => setForm({ ...form, highlight: e.target.value })} className={inputClass} placeholder="Team." />
+        </div>
+      </div>
+      <div>
+        <label className={labelClass}>Section Description</label>
+        <textarea rows={3} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className={textareaClass} />
+      </div>
+      <div className="pt-4 border-t border-white/[0.05] space-y-5">
+        <div>
+          <label className={labelClass}>Founder Name</label>
+          <input type="text" value={form.founder_name} onChange={e => setForm({ ...form, founder_name: e.target.value })} className={inputClass} />
+        </div>
+        <div>
+          <label className={labelClass}>Founder Role</label>
+          <input type="text" value={form.founder_role} onChange={e => setForm({ ...form, founder_role: e.target.value })} className={inputClass} />
+        </div>
+        <div>
+          <label className={labelClass}>Founder Bio</label>
+          <textarea rows={4} value={form.founder_bio} onChange={e => setForm({ ...form, founder_bio: e.target.value })} className={textareaClass} />
+        </div>
+        <div>
+          <label className={labelClass}>Founder Button Label</label>
+          <input type="text" value={form.founder_button} onChange={e => setForm({ ...form, founder_button: e.target.value })} className={inputClass} />
+        </div>
+      </div>
+      <div className="flex justify-end">
+        <SaveButton onSave={handleSave} saved={saved} />
+      </div>
+    </div>
+  );
+};
+
+// ── HOME FOUNDER SECTION EDITOR ──
+const HomeFounderEditor = () => {
+  const { siteContent, updateSiteContent } = useSite();
+  const [saved, setSaved] = useState(false);
+  const [form, setForm] = useState({
+    badge: 'Leadership',
+    name: 'Yonas Bogale',
+    role: 'Founder & CEO',
+    bio: "Nexyovi was founded on a singular vision: to bring world-class engineering rigor to digital transformation. We believe that robust systems are built from the ground up, not patched together as an afterthought.",
+    story_button: 'Read our full story ->',
+    linkedin_button: 'Connect on LinkedIn'
+  });
+
+  useEffect(() => {
+    if (siteContent?.homeFounder) setForm({ ...form, ...siteContent.homeFounder });
+  }, [siteContent]);
+
+  const handleSave = async (e: any) => {
+    e.preventDefault();
+    await updateSiteContent('homeFounder', form);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 3000);
+  };
+
+  return (
+    <div className="space-y-5">
+      <div>
+        <label className={labelClass}>Section Badge</label>
+        <input type="text" value={form.badge} onChange={e => setForm({ ...form, badge: e.target.value })} className={inputClass} />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className={labelClass}>Founder Name</label>
+          <input type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} className={inputClass} />
+        </div>
+        <div>
+          <label className={labelClass}>Founder Role</label>
+          <input type="text" value={form.role} onChange={e => setForm({ ...form, role: e.target.value })} className={inputClass} />
+        </div>
+      </div>
+      <div>
+        <label className={labelClass}>Founder Bio</label>
+        <textarea rows={5} value={form.bio} onChange={e => setForm({ ...form, bio: e.target.value })} className={textareaClass} />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className={labelClass}>Story Button Label</label>
+          <input type="text" value={form.story_button} onChange={e => setForm({ ...form, story_button: e.target.value })} className={inputClass} />
+        </div>
+        <div>
+          <label className={labelClass}>LinkedIn Button Label</label>
+          <input type="text" value={form.linkedin_button} onChange={e => setForm({ ...form, linkedin_button: e.target.value })} className={inputClass} />
+        </div>
+      </div>
+      <div className="rounded-xl border border-[#F5A800]/20 bg-[#F5A800]/5 p-4">
+        <p className="text-xs leading-relaxed text-white/40">
+          Founder image and LinkedIn URL come from Team Management for the founder profile. This editor controls the home section text and button labels.
+        </p>
+      </div>
+      <div className="flex justify-end">
+        <SaveButton onSave={handleSave} saved={saved} />
+      </div>
+    </div>
+  );
+};
+
 const tabs = [
   { id: 'hero', label: 'Hero Section', icon: LayoutTemplate, description: 'Main headline, subtitle and CTA buttons' },
   { id: 'metrics', label: 'Trust Metrics', icon: BarChart3, description: 'Company performance stat cards' },
   { id: 'byTheNumbers', label: 'By The Numbers', icon: BarChart3, description: '24/7 support, engineering practices, etc.' },
+  { id: 'homeFounder', label: 'Home Leadership', icon: Users, description: 'Home founder section text and actions' },
+  { id: 'companyTeam', label: 'Company Team', icon: Users, description: 'Team section heading and founder spotlight' },
   { id: 'about', label: 'About / Company', icon: Globe, description: 'Company identity and key facts' },
   { id: 'services', label: 'Services', icon: CheckCircle2, description: 'Service listings' },
   { id: 'portfolio', label: 'Portfolio', icon: Globe, description: 'Case studies & projects' },
@@ -496,6 +636,8 @@ const AdminContent = () => {
       case 'hero': return <HeroEditor />;
       case 'metrics': return <MetricsEditor />;
       case 'byTheNumbers': return <ByTheNumbersEditor />;
+      case 'homeFounder': return <HomeFounderEditor />;
+      case 'companyTeam': return <CompanyTeamEditor />;
       case 'about': return <AboutEditor />;
       case 'services': return <ServicesEditor />;
       case 'portfolio': return <PortfolioEditor />;
@@ -521,8 +663,8 @@ const AdminContent = () => {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-left transition-all group ${activeTab === tab.id
-                  ? 'bg-[#F5A800] text-white /20'
-                  : 'bg-white/[0.03] border border-white/[0.06] text-white/60 hover:bg-white/[0.06] hover:text-white'
+                ? 'bg-[#F5A800] text-white /20'
+                : 'bg-white/[0.03] border border-white/[0.06] text-white/60 hover:bg-white/[0.06] hover:text-white'
                 }`}
             >
               <tab.icon size={18} className="shrink-0" />

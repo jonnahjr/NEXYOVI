@@ -138,11 +138,25 @@ function OrganizationsAccordion() {
 export default function Company() {
   const { team, settings, siteContent } = useSite();
   const about = siteContent?.about || {};
+  const companyTeam = siteContent?.companyTeam || {};
   const aboutTagline = about.tagline || 'We build the backbone of the digital economy.';
   const aboutDescription = about.description || 'Nexyovi is an elite software engineering firm headquartered in Addis Ababa, Ethiopia, with a global delivery footprint.';
   const founded = about.founded || '2012';
   const headquarters = about.headquarters || 'Addis Ababa, Ethiopia';
   const clients = about.clients || '50+';
+  const founder = team.find((m: any) => m.id === '1');
+  const companyTeamBadge = companyTeam.badge || 'Our Team';
+  const companyTeamTitle = companyTeam.title || 'Meet the Team.';
+  const companyTeamHighlight = companyTeam.highlight || 'Team.';
+  const companyTeamTitlePrefix = companyTeamTitle.includes(companyTeamHighlight)
+    ? companyTeamTitle.replace(companyTeamHighlight, '').trim()
+    : companyTeamTitle.trim();
+  const companyTeamDescription = companyTeam.description || 'Leadership team overseeing software engineering, AI innovation, and cloud infrastructure delivery across global markets.';
+  const founderName = companyTeam.founder_name || founder?.name || 'Yonas Bogale';
+  const founderRole = companyTeam.founder_role || founder?.role || 'Founder & CEO';
+  const founderBio = companyTeam.founder_bio || founder?.bio || "Leading Nexyovi's mission to build practical software, AI solutions, and digital infrastructure for modern businesses.";
+  const founderButton = companyTeam.founder_button || 'LinkedIn Profile';
+  const founderLinkedin = founder?.linkedin || 'https://www.linkedin.com/in/yonas-bogale/';
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -514,13 +528,20 @@ export default function Company() {
         <div className="container max-w-5xl mx-auto px-6 relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-16">
             <motion.div variants={fadeUp}>
-              <SectionBadge label="Our Team" dark />
+              <SectionBadge label={companyTeamBadge} dark />
             </motion.div>
             <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-4">
-              Meet the{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Team.</span>
+              {companyTeamTitle.includes(companyTeamHighlight) ? (
+                <>
+                  {companyTeamTitlePrefix}{' '}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">{companyTeamHighlight}</span>
+                </>
+              ) : (
+                companyTeamTitle
+              )}
             </motion.h2>
             <motion.p variants={fadeUp} className="text-white/50 text-lg font-medium max-w-xl mx-auto">
-              Leadership team overseeing software engineering, AI innovation, and cloud infrastructure delivery across global markets.
+              {companyTeamDescription}
             </motion.p>
           </motion.div>
 
@@ -533,27 +554,27 @@ export default function Company() {
             className="max-w-3xl mx-auto text-center mb-20"
           >
             <div className="w-28 h-28 rounded-full mx-auto mb-6 overflow-hidden border-2 border-[#F5A800]/20">
-              {team.find((m: any) => m.id === '1')?.img ? (
-                <img src={team.find((m: any) => m.id === '1')?.img} alt="Yonas Bogale" className="w-full h-full object-cover" />
+              {founder?.img ? (
+                <img src={founder.img} alt={founderName} className="w-full h-full object-cover" />
               ) : (
                 <div className="w-full h-full bg-[#F5A800]/10 flex items-center justify-center">
                   <span className="text-3xl font-black text-[#F5A800]">YB</span>
                 </div>
               )}
             </div>
-            <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-1">Yonas Bogale</h2>
-            <p className="text-[#F5A800] text-[12px] font-black uppercase tracking-[0.2em] mb-4">Founder & CEO</p>
+            <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-1">{founderName}</h2>
+            <p className="text-[#F5A800] text-[12px] font-black uppercase tracking-[0.2em] mb-4">{founderRole}</p>
             <p className="text-white/50 text-lg leading-relaxed max-w-2xl mx-auto mb-6">
-              Leading Nexyovi's mission to build practical software, AI solutions, and digital infrastructure for modern businesses.
+              {founderBio}
             </p>
             <a
-              href="https://www.linkedin.com/in/yonas-bogale/"
+              href={founderLinkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#0a66c2]/10 border border-[#0a66c2]/20 text-[#0a66c2] text-[13px] font-bold hover:bg-[#0a66c2]/20 transition-all mx-auto"
             >
               <Linkedin size={14} />
-              LinkedIn Profile
+              {founderButton}
             </a>
           </motion.div>
 

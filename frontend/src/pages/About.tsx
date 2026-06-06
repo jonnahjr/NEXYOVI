@@ -114,19 +114,7 @@ export default function About() {
 
  <CompanyValues />
 
- <section className="container max-w-6xl mx-auto py-24">
- <div className="grid gap-12">
- <div className="text-center">
- <p className="text-sm uppercase tracking-[0.22em] text-[#FFD166] font-black mb-3">Team</p>
- <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-4">People who make Nexyovi live and help.</h2>
- <p className="text-[#9CA3AF] text-lg leading-relaxed max-w-3xl mx-auto">
- Engineers, designers, and operators building AI that earns trust instead of demanding it.
- </p>
- </div>
-
  <CompanyLeadership />
- </div>
- </section>
 
 
  </div>

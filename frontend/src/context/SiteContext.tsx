@@ -116,7 +116,9 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
             if (testData && testData.length > 0) {
                 const merged = testData.map((td: any) => {
                     const match = initialTestimonials.find(it => it.author === td.author);
-                    return match ? { ...td, linkedin: match.linkedin, img: match.img } : td;
+                    return match
+                        ? { ...match, ...td, linkedin: td.linkedin || match.linkedin, img: td.img || td.image_url || match.img }
+                        : td;
                 });
                 setTestimonials(merged);
             }
@@ -125,7 +127,9 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
             if (teamData && teamData.length > 0) {
                 const mergedTeam = initialTeam.map(it => {
                     const match = teamData.find((td: any) => td.name === it.name);
-                    return match ? { ...it, ...match, img: it.img || match.img, linkedin: it.linkedin || match.linkedin } : it;
+                    return match
+                        ? { ...it, ...match, img: match.img || it.img, linkedin: match.linkedin || it.linkedin }
+                        : it;
                 });
                 teamData.forEach((td: any) => {
                     if (!initialTeam.find(it => it.name === td.name)) {
