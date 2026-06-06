@@ -9,6 +9,8 @@ const Footer = () => {
   const { settings, siteContent } = useSite();
   const [activePolicy, setActivePolicy] = useState<'Terms' | 'Privacy' | 'Legal' | null>(null);
   const companyName = settings.siteName || 'Nexyovi';
+  const footerTagline = siteContent?.footer?.tagline || 'Enterprise software, AI systems, and cloud infrastructure for organizations that need secure, scalable technology.';
+  const footerCopyright = siteContent?.footer?.copyright || `© 2024–${new Date().getFullYear()} ${companyName}. All Rights Reserved.`;
 
   const policyContent = {
     Terms: {
@@ -89,7 +91,7 @@ const Footer = () => {
               )}
             </Link>
             <p className="text-white/40 text-[14px] leading-relaxed mb-8 max-w-xs">
-              Enterprise software, AI systems, and cloud infrastructure for organizations that need secure, scalable technology.
+              {footerTagline}
             </p>
 
             {/* Contact Info */}
@@ -188,7 +190,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-[12px] text-white/30">
-            &copy; 2024–{new Date().getFullYear()} {companyName}. All Rights Reserved.
+            {footerCopyright}
           </p>
           <div className="flex items-center gap-6">
             {(['Terms', 'Privacy', 'Legal'] as const).map(item => (

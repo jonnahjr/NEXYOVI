@@ -2,12 +2,20 @@ import { motion } from 'framer-motion';
 import { BrainCircuit, Globe, MonitorSmartphone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { EASE_EXPO, staggerContainer } from '../lib/animations';
+import { useSite } from '../context/SiteContext';
 import { CTAButton } from './CTAButton';
 
 const VIDEO_URL =
   'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260508_215831_c6a8989c-d716-4d8d-8745-e972a2eec711.mp4';
 
 const Hero = () => {
+  const { siteContent } = useSite();
+  const hero = siteContent?.hero || {};
+  const headline = hero.title || 'We ship production-grade software faster.';
+  const subtitle = hero.subtitle || "We build secure, scalable enterprise software, AI systems, and cloud infrastructure for organizations that can't afford to get it wrong.";
+  const ctaPrimary = hero.cta_primary || 'Book a strategy session';
+  const ctaSecondary = hero.cta_secondary || 'Explore Services';
+
   return (
     <section className="relative bg-[#02040a] overflow-hidden">
       {/* ── Video background (covers full Hero) ── */}
@@ -41,16 +49,14 @@ const Hero = () => {
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.2, ease: EASE_EXPO as any } } }}
                 className="text-[56px] md:text-[76px] lg:text-[88px] font-black text-white tracking-[-0.04em] leading-[0.95] mb-10"
               >
-                We ship <br />
-                production-grade <br />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">software faster.</span>
+                {headline}
               </motion.h1>
 
               <motion.p
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.75, delay: 0.3, ease: EASE_EXPO as any } } }}
                 className="text-[18px] md:text-[20px] text-white/80 font-medium leading-[1.8] mb-16 max-w-[560px]"
               >
-                We build secure, scalable enterprise software, AI systems, and cloud infrastructure for organizations that can't afford to get it wrong.
+                {subtitle}
               </motion.p>
 
               <motion.div
@@ -67,7 +73,7 @@ const Hero = () => {
                     animate={{ x: ['-150%', '340%'] }}
                     transition={{ duration: 3.2, repeat: Infinity, repeatDelay: 1.6, ease: 'easeInOut' }}
                   />
-                  <span className="relative z-10 font-bold">Book a strategy session</span>
+                  <span className="relative z-10 font-bold">{ctaPrimary}</span>
                 </CTAButton>
 
                 {/* ── Secondary CTA ── */}
@@ -82,7 +88,7 @@ const Hero = () => {
                     animate={{ x: ['-150%', '345%'] }}
                     transition={{ duration: 3.5, repeat: Infinity, repeatDelay: 1.8, ease: 'easeInOut' }}
                   />
-                  <span className="relative z-10">Explore Services</span>
+                  <span className="relative z-10">{ctaSecondary}</span>
                 </Link>
               </motion.div>
             </div>

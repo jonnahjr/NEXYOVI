@@ -136,7 +136,13 @@ function OrganizationsAccordion() {
 }
 
 export default function Company() {
-  const { team, settings } = useSite();
+  const { team, settings, siteContent } = useSite();
+  const about = siteContent?.about || {};
+  const aboutTagline = about.tagline || 'We build the backbone of the digital economy.';
+  const aboutDescription = about.description || 'Nexyovi is an elite software engineering firm headquartered in Addis Ababa, Ethiopia, with a global delivery footprint.';
+  const founded = about.founded || '2012';
+  const headquarters = about.headquarters || 'Addis Ababa, Ethiopia';
+  const clients = about.clients || '50+';
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
