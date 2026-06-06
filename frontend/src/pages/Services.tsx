@@ -1,4 +1,4 @@
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import {
   ArrowRight,
   Award,
@@ -19,7 +19,7 @@ import {
   Users,
   Zap
 } from 'lucide-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   SiDocker,
   SiGo,
@@ -135,7 +135,7 @@ const processSteps = [
 ];
 
 // ── Metrics ───────────────────────────────────────────────────
-const metrics = [
+const defaultMetrics = [
   { value: 24, suffix: '/7', label: 'Monitoring & Support' },
   { value: 12, suffix: '+', label: 'Core Engineering Practices' },
   { value: 6, suffix: '', label: 'Technology Domains' },
@@ -470,6 +470,8 @@ export default function Services() {
     }
     return s;
   });
+
+  const displayMetrics = siteContent?.byTheNumbers || defaultMetrics;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
@@ -829,7 +831,7 @@ export default function Services() {
           </motion.div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
-            {metrics.map((metric, i) => (
+            {displayMetrics.map((metric, i) => (
               <AnimatedCounter key={metric.label} {...metric} index={i} light={false} />
             ))}
           </div>

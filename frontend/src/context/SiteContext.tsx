@@ -88,13 +88,13 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
             setSession(session);
             setLoadingAuth(false);
         });
-
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
             setSession(session);
         });
-
         return () => subscription.unsubscribe();
-    }, []); const [jobs, setJobs] = useState<any[]>([]);
+    }, []);
+
+    const [jobs, setJobs] = useState<any[]>([]);
     const [team, setTeam] = useState<any[]>(initialTeam);
     // Keep initial testimonials as the authoritative source (has linkedin, img fields)
     // Supabase is used for admin CRUD operations but initial data takes priority
@@ -160,6 +160,50 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
             }
         };
         fetchData();
+
+        // ── Realtime subscriptions ───────────────────────────
+        const msgChannel = supabase.channel('realtime-messages')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'messages' }, (payload) => {
+                if (payload.eventType === 'INSERT') {
+                    setMessages(prev => [payload.new as any, ...prev]);
+                } else if (payload.eventType === 'UPDATE') {
+                    setMessages(prev => prev.map(m => m.id === (payload.new as any).id ? payload.new as any : m));
+                } else if (payload.eventType === 'DELETE') {
+                    setMessages(prev => prev.filter(m => m.id !== (payload.old as any).id));
+                }
+            })
+            .subscribe();
+
+        const jobChannel = supabase.channel('realtime-jobs')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'jobs' }, (payload) => {
+                if (payload.eventType === 'INSERT') setJobs(prev => [payload.new as any, ...prev]);
+                else if (payload.eventType === 'UPDATE') setJobs(prev => prev.map(j => j.id === (payload.new as any).id ? payload.new as any : j));
+                else if (payload.eventType === 'DELETE') setJobs(prev => prev.filter(j => j.id !== (payload.old as any).id));
+            })
+            .subscribe();
+
+        const testimonialChannel = supabase.channel('realtime-testimonials')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'testimonials' }, (payload) => {
+                if (payload.eventType === 'INSERT') setTestimonials(prev => [payload.new as any, ...prev]);
+                else if (payload.eventType === 'UPDATE') setTestimonials(prev => prev.map(t => t.id === (payload.new as any).id ? payload.new as any : t));
+                else if (payload.eventType === 'DELETE') setTestimonials(prev => prev.filter(t => t.id !== (payload.old as any).id));
+            })
+            .subscribe();
+
+        const teamChannel = supabase.channel('realtime-team')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'team' }, (payload) => {
+                if (payload.eventType === 'INSERT') setTeam(prev => [payload.new as any, ...prev]);
+                else if (payload.eventType === 'UPDATE') setTeam(prev => prev.map(m => m.id === (payload.new as any).id ? payload.new as any : m));
+                else if (payload.eventType === 'DELETE') setTeam(prev => prev.filter(m => m.id !== (payload.old as any).id));
+            })
+            .subscribe();
+
+        return () => {
+            supabase.removeChannel(msgChannel);
+            supabase.removeChannel(jobChannel);
+            supabase.removeChannel(testimonialChannel);
+            supabase.removeChannel(teamChannel);
+        };
     }, []);
 
     // Supabase connected functions

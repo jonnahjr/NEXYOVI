@@ -96,9 +96,9 @@ const Footer = () => {
 
             {/* Contact Info */}
             <div className="space-y-3">
-              <a href="mailto:contact@nexyovi.com" className="flex items-center gap-3 text-white/50 text-[13px] hover:text-[#F5A800] transition-colors">
+              <a href={`mailto:${settings.email || 'contact@nexyovi.com'}`} className="flex items-center gap-3 text-white/50 text-[13px] hover:text-[#F5A800] transition-colors">
                 <Mail size={14} className="shrink-0" />
-                contact@nexyovi.com
+                {settings.email || 'contact@nexyovi.com'}
               </a>
               {settings.phone && (
                 <>
@@ -106,7 +106,7 @@ const Footer = () => {
                     <Phone size={14} className="shrink-0" />
                     {settings.phone.replace(/(\+\d{3})(\d{2})(\d{3})(\d{4})/, '$1 $2 $3 $4')}
                   </a>
-                  <a href={`https://wa.me/${settings.phone.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/50 text-[13px] hover:text-[#25D366] transition-colors">
+                  <a href={`https://wa.me/${(settings.socials?.whatsapp || settings.phone || '').replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/50 text-[13px] hover:text-[#25D366] transition-colors">
                     <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
                       <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
                     </svg>
@@ -116,7 +116,7 @@ const Footer = () => {
               )}
               <div className="flex items-center gap-3 text-white/50 text-[13px]">
                 <MapPin size={14} className="shrink-0" />
-                Addis Ababa, Ethiopia
+                {settings.address || 'Addis Ababa, Ethiopia'}
               </div>
             </div>
           </div>

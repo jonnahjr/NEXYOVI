@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
  Globe, Mail, Phone, MapPin, 
  Twitter, Linkedin, Github, Youtube, Instagram, 
- Slack, Send, Save, CheckCircle2, Zap, Image as ImageIcon, UploadCloud
+ Slack, Send, Save, CheckCircle2, Zap, Image as ImageIcon, UploadCloud, MessageCircle
 } from 'lucide-react';
 import { useSite } from '../../context/SiteContext';
 import { supabase } from '../../lib/supabase';
@@ -13,6 +13,9 @@ const AdminSettings = () => {
  const [formData, setFormData] = useState(settings);
  const [isSaved, setIsSaved] = useState(false);
  const [isUploading, setIsUploading] = useState(false);
+
+ // Sync form when settings load from Supabase
+ useEffect(() => { setFormData(settings); }, [settings]);
 
  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
  if (!e.target.files || e.target.files.length === 0) return;
@@ -180,6 +183,7 @@ const AdminSettings = () => {
  { key: 'github', label: 'GitHub', icon: Github },
  { key: 'youtube', label: 'YouTube', icon: Youtube },
  { key: 'instagram', label: 'Instagram', icon: Instagram },
+ { key: 'whatsapp', label: 'WhatsApp Number', icon: MessageCircle },
  { key: 'discord', label: 'Discord', icon: Send },
  { key: 'slack', label: 'Slack', icon: Slack }].map((node) => (
  <div key={node.key} className="space-y-2">

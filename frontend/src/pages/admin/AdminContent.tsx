@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
- Type, LayoutTemplate, Save, CheckCircle2, 
- Globe, BarChart3, FileText, MessageSquare, ChevronRight
+import {
+  BarChart3,
+  CheckCircle2,
+  ChevronRight,
+  FileText,
+  Globe,
+  LayoutTemplate,
+  MessageSquare,
+  Save
 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { useSite } from '../../context/SiteContext';
 
 const inputClass = "w-full h-11 px-4 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white text-sm outline-none focus:border-[#F5A800]/60 focus:ring-1 focus:ring-[#F5A800]/30 transition-all placeholder:text-white/20";
@@ -11,69 +17,69 @@ const textareaClass = "w-full px-4 py-3 bg-white/[0.03] border border-white/[0.0
 const labelClass = "block text-xs font-bold text-white/30 uppercase tracking-widest mb-2 ml-1";
 
 const SaveButton = ({ onSave, saved }: { onSave: (e: any) => void, saved: boolean }) => (
- <button
- onClick={onSave}
- className={`flex items-center gap-2 h-9 px-5 text-sm font-bold uppercase tracking-widest rounded-lg transition-all ${saved ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-[#F5A800] text-white hover:bg-blue-500 /20'}`}
- >
- {saved ? <CheckCircle2 size={15} /> : <Save size={15} />}
- {saved ? 'Saved!' : 'Save Changes'}
- </button>
+  <button
+    onClick={onSave}
+    className={`flex items-center gap-2 h-9 px-5 text-sm font-bold uppercase tracking-widest rounded-lg transition-all ${saved ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-[#F5A800] text-white hover:bg-blue-500 /20'}`}
+  >
+    {saved ? <CheckCircle2 size={15} /> : <Save size={15} />}
+    {saved ? 'Saved!' : 'Save Changes'}
+  </button>
 );
 
 // ── HERO SECTION EDITOR ──
 const HeroEditor = () => {
- const { siteContent, updateSiteContent } = useSite();
- const [saved, setSaved] = useState(false);
- const [form, setForm] = useState({ title: '', subtitle: '', cta_primary: '', cta_secondary: '' });
+  const { siteContent, updateSiteContent } = useSite();
+  const [saved, setSaved] = useState(false);
+  const [form, setForm] = useState({ title: '', subtitle: '', cta_primary: '', cta_secondary: '' });
 
- useEffect(() => {
- if (siteContent?.hero) setForm({ ...siteContent.hero });
- }, [siteContent]);
+  useEffect(() => {
+    if (siteContent?.hero) setForm({ ...siteContent.hero });
+  }, [siteContent]);
 
- const handleSave = async (e: any) => {
- e.preventDefault();
- await updateSiteContent('hero', form);
- setSaved(true);
- setTimeout(() => setSaved(false), 3000);
- };
+  const handleSave = async (e: any) => {
+    e.preventDefault();
+    await updateSiteContent('hero', form);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 3000);
+  };
 
- return (
- <div className="space-y-5">
- <div>
- <label className={labelClass}>Main Headline</label>
- <textarea
- rows={2}
- value={form.title}
- onChange={e => setForm({ ...form, title: e.target.value })}
- className={textareaClass + " text-xl font-black"}
- placeholder="Where Intelligence Meets Infrastructure."
- />
- </div>
- <div>
- <label className={labelClass}>Subtitle / Description</label>
- <textarea
- rows={4}
- value={form.subtitle}
- onChange={e => setForm({ ...form, subtitle: e.target.value })}
- className={textareaClass}
- placeholder="We engineer enterprise-grade cloud ecosystems..."
- />
- </div>
- <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
- <div>
- <label className={labelClass}>Primary Button Text</label>
- <input type="text" value={form.cta_primary} onChange={e => setForm({ ...form, cta_primary: e.target.value })} className={inputClass} placeholder="Deploy with Nexyovi" />
- </div>
- <div>
- <label className={labelClass}>Secondary Button Text</label>
- <input type="text" value={form.cta_secondary} onChange={e => setForm({ ...form, cta_secondary: e.target.value })} className={inputClass} placeholder="View Documentation" />
- </div>
- </div>
- <div className="flex justify-end">
- <SaveButton onSave={handleSave} saved={saved} />
- </div>
- </div>
- );
+  return (
+    <div className="space-y-5">
+      <div>
+        <label className={labelClass}>Main Headline</label>
+        <textarea
+          rows={2}
+          value={form.title}
+          onChange={e => setForm({ ...form, title: e.target.value })}
+          className={textareaClass + " text-xl font-black"}
+          placeholder="Where Intelligence Meets Infrastructure."
+        />
+      </div>
+      <div>
+        <label className={labelClass}>Subtitle / Description</label>
+        <textarea
+          rows={4}
+          value={form.subtitle}
+          onChange={e => setForm({ ...form, subtitle: e.target.value })}
+          className={textareaClass}
+          placeholder="We engineer enterprise-grade cloud ecosystems..."
+        />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className={labelClass}>Primary Button Text</label>
+          <input type="text" value={form.cta_primary} onChange={e => setForm({ ...form, cta_primary: e.target.value })} className={inputClass} placeholder="Deploy with Nexyovi" />
+        </div>
+        <div>
+          <label className={labelClass}>Secondary Button Text</label>
+          <input type="text" value={form.cta_secondary} onChange={e => setForm({ ...form, cta_secondary: e.target.value })} className={inputClass} placeholder="View Documentation" />
+        </div>
+      </div>
+      <div className="flex justify-end">
+        <SaveButton onSave={handleSave} saved={saved} />
+      </div>
+    </div>
+  );
 };
 
 // ── METRICS EDITOR ──
@@ -289,205 +295,286 @@ const ServicesEditor = () => {
 
 // ── FOOTER CONTENT EDITOR ──
 const FooterEditor = () => {
- const { siteContent, updateSiteContent } = useSite();
- const [saved, setSaved] = useState(false);
- const [form, setForm] = useState({
-  tagline: 'Nexyovi is a modern software and AI development company helping businesses build digital products, automate workflows, and modernize operations.',
- copyright_extra: 'Global. All Rights Reserved.'
- });
+  const { siteContent, updateSiteContent } = useSite();
+  const [saved, setSaved] = useState(false);
+  const [form, setForm] = useState({
+    tagline: 'Nexyovi is a modern software and AI development company helping businesses build digital products, automate workflows, and modernize operations.',
+    copyright_extra: 'Global. All Rights Reserved.'
+  });
 
- useEffect(() => {
- if (siteContent?.footer) setForm({ ...siteContent.footer });
- }, [siteContent]);
+  useEffect(() => {
+    if (siteContent?.footer) setForm({ ...siteContent.footer });
+  }, [siteContent]);
 
- const handleSave = async (e: any) => {
- e.preventDefault();
- await updateSiteContent('footer', form);
- setSaved(true);
- setTimeout(() => setSaved(false), 3000);
- };
+  const handleSave = async (e: any) => {
+    e.preventDefault();
+    await updateSiteContent('footer', form);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 3000);
+  };
 
- return (
- <div className="space-y-5">
- <div>
- <label className={labelClass}>Footer Company Tagline</label>
- <textarea
- rows={3}
- value={form.tagline}
- onChange={e => setForm({ ...form, tagline: e.target.value })}
- className={textareaClass}
- placeholder="The world's most advanced..."
- />
- </div>
- <div>
- <label className={labelClass}>Copyright Suffix</label>
- <input
- type="text"
- value={form.copyright_extra}
- onChange={e => setForm({ ...form, copyright_extra: e.target.value })}
- className={inputClass}
- placeholder="Global. All Rights Reserved."
- />
- </div>
- <div className="flex justify-end">
- <SaveButton onSave={handleSave} saved={saved} />
- </div>
- </div>
- );
+  return (
+    <div className="space-y-5">
+      <div>
+        <label className={labelClass}>Footer Company Tagline</label>
+        <textarea
+          rows={3}
+          value={form.tagline}
+          onChange={e => setForm({ ...form, tagline: e.target.value })}
+          className={textareaClass}
+          placeholder="The world's most advanced..."
+        />
+      </div>
+      <div>
+        <label className={labelClass}>Copyright Suffix</label>
+        <input
+          type="text"
+          value={form.copyright_extra}
+          onChange={e => setForm({ ...form, copyright_extra: e.target.value })}
+          className={inputClass}
+          placeholder="Global. All Rights Reserved."
+        />
+      </div>
+      <div className="flex justify-end">
+        <SaveButton onSave={handleSave} saved={saved} />
+      </div>
+    </div>
+  );
 };
 
 // ── ABOUT / COMPANY SECTION EDITOR ──
 const AboutEditor = () => {
- const { siteContent, updateSiteContent } = useSite();
- const [saved, setSaved] = useState(false);
- const [form, setForm] = useState({
-  tagline: 'Modern software. Smarter AI. Real results.',
-  description: 'Nexyovi is a modern software and AI development company helping businesses build digital products, automate workflows, and modernize operations.',
-  founded: '2020',
-  employees: '20+',
-  countries: '2'
- });
+  const { siteContent, updateSiteContent } = useSite();
+  const [saved, setSaved] = useState(false);
+  const [form, setForm] = useState({
+    tagline: 'Modern software. Smarter AI. Real results.',
+    description: 'Nexyovi is a modern software and AI development company helping businesses build digital products, automate workflows, and modernize operations.',
+    founded: '2020',
+    employees: '20+',
+    countries: '2'
+  });
 
- useEffect(() => {
- if (siteContent?.about) setForm({ ...siteContent.about });
- }, [siteContent]);
+  useEffect(() => {
+    if (siteContent?.about) setForm({ ...siteContent.about });
+  }, [siteContent]);
 
- const handleSave = async (e: any) => {
- e.preventDefault();
- await updateSiteContent('about', form);
- setSaved(true);
- setTimeout(() => setSaved(false), 3000);
- };
+  const handleSave = async (e: any) => {
+    e.preventDefault();
+    await updateSiteContent('about', form);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 3000);
+  };
 
- return (
- <div className="space-y-5">
- <div>
- <label className={labelClass}>Company Tagline</label>
- <input type="text" value={form.tagline} onChange={e => setForm({ ...form, tagline: e.target.value })} className={inputClass} />
- </div>
- <div>
- <label className={labelClass}>Company Description</label>
- <textarea rows={4} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className={textareaClass} />
- </div>
- <div className="grid grid-cols-3 gap-4">
- <div>
- <label className={labelClass}>Founded</label>
- <input type="text" value={form.founded} onChange={e => setForm({ ...form, founded: e.target.value })} className={inputClass} placeholder="2020" />
- </div>
- <div>
- <label className={labelClass}>Employees</label>
- <input type="text" value={form.employees} onChange={e => setForm({ ...form, employees: e.target.value })} className={inputClass} placeholder="30+" />
- </div>
- <div>
- <label className={labelClass}>Countries</label>
- <input type="text" value={form.countries} onChange={e => setForm({ ...form, countries: e.target.value })} className={inputClass} placeholder="12+" />
- </div>
- </div>
- <div className="flex justify-end">
- <SaveButton onSave={handleSave} saved={saved} />
- </div>
- </div>
- );
+  return (
+    <div className="space-y-5">
+      <div>
+        <label className={labelClass}>Company Tagline</label>
+        <input type="text" value={form.tagline} onChange={e => setForm({ ...form, tagline: e.target.value })} className={inputClass} />
+      </div>
+      <div>
+        <label className={labelClass}>Company Description</label>
+        <textarea rows={4} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className={textareaClass} />
+      </div>
+      <div className="grid grid-cols-3 gap-4">
+        <div>
+          <label className={labelClass}>Founded</label>
+          <input type="text" value={form.founded} onChange={e => setForm({ ...form, founded: e.target.value })} className={inputClass} placeholder="2020" />
+        </div>
+        <div>
+          <label className={labelClass}>Employees</label>
+          <input type="text" value={form.employees} onChange={e => setForm({ ...form, employees: e.target.value })} className={inputClass} placeholder="30+" />
+        </div>
+        <div>
+          <label className={labelClass}>Countries</label>
+          <input type="text" value={form.countries} onChange={e => setForm({ ...form, countries: e.target.value })} className={inputClass} placeholder="12+" />
+        </div>
+      </div>
+      <div className="flex justify-end">
+        <SaveButton onSave={handleSave} saved={saved} />
+      </div>
+    </div>
+  );
+};
+
+// ── BY THE NUMBERS EDITOR ──
+const ByTheNumbersEditor = () => {
+  const { siteContent, updateSiteContent } = useSite();
+  const [saved, setSaved] = useState(false);
+  const [metrics, setMetrics] = useState([
+    { value: 24, suffix: '/7', label: 'Monitoring & Support' },
+    { value: 12, suffix: '+', label: 'Core Engineering Practices' },
+    { value: 6, suffix: '', label: 'Technology Domains' },
+    { value: 0, suffix: '', label: 'Engineering-Led Delivery Teams', hideNumber: true },
+  ]);
+
+  useEffect(() => {
+    if (siteContent?.byTheNumbers) setMetrics(siteContent.byTheNumbers);
+  }, [siteContent]);
+
+  const handleSave = async (e: any) => {
+    e.preventDefault();
+    await updateSiteContent('byTheNumbers', metrics);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 3000);
+  };
+
+  const updateMetric = (index: number, field: string, value: any) => {
+    const newMetrics = [...metrics];
+    newMetrics[index] = { ...newMetrics[index], [field]: field === 'value' ? Number(value) : value };
+    setMetrics(newMetrics);
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {metrics.map((metric, i) => (
+          <div key={i} className="p-5 bg-white/[0.02] border border-white/[0.05] rounded-xl space-y-4">
+            <div>
+              <label className={labelClass}>Value</label>
+              <input
+                type="number"
+                value={metric.value}
+                onChange={e => updateMetric(i, 'value', e.target.value)}
+                className={inputClass + " text-xl font-bold text-[#F5A800]"}
+              />
+            </div>
+            <div>
+              <label className={labelClass}>Suffix</label>
+              <input
+                type="text"
+                value={metric.suffix}
+                onChange={e => updateMetric(i, 'suffix', e.target.value)}
+                className={inputClass}
+              />
+            </div>
+            <div>
+              <label className={labelClass}>Label</label>
+              <input
+                type="text"
+                value={metric.label}
+                onChange={e => updateMetric(i, 'label', e.target.value)}
+                className={inputClass}
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id={`hideNumber-${i}`}
+                checked={metric.hideNumber || false}
+                onChange={e => updateMetric(i, 'hideNumber', e.target.checked)}
+                className="w-4 h-4"
+              />
+              <label htmlFor={`hideNumber-${i}`} className="text-sm text-white/60">Hide Number</label>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-end">
+        <SaveButton onSave={handleSave} saved={saved} />
+      </div>
+    </div>
+  );
 };
 
 const tabs = [
- { id: 'hero', label: 'Hero Section', icon: LayoutTemplate, description: 'Main headline, subtitle and CTA buttons' },
- { id: 'metrics', label: 'Trust Metrics', icon: BarChart3, description: 'Company performance stat cards' },
- { id: 'about', label: 'About / Company', icon: Globe, description: 'Company identity and key facts' },
- { id: 'services', label: 'Services', icon: CheckCircle2, description: 'Service listings' },
- { id: 'portfolio', label: 'Portfolio', icon: Globe, description: 'Case studies & projects' },
- { id: 'ctas', label: 'Bottom CTAs', icon: MessageSquare, description: 'Ready to scale? global texts' },
- { id: 'footer', label: 'Footer Text', icon: FileText, description: 'Footer tagline and copyright text' }
+  { id: 'hero', label: 'Hero Section', icon: LayoutTemplate, description: 'Main headline, subtitle and CTA buttons' },
+  { id: 'metrics', label: 'Trust Metrics', icon: BarChart3, description: 'Company performance stat cards' },
+  { id: 'byTheNumbers', label: 'By The Numbers', icon: BarChart3, description: '24/7 support, engineering practices, etc.' },
+  { id: 'about', label: 'About / Company', icon: Globe, description: 'Company identity and key facts' },
+  { id: 'services', label: 'Services', icon: CheckCircle2, description: 'Service listings' },
+  { id: 'portfolio', label: 'Portfolio', icon: Globe, description: 'Case studies & projects' },
+  { id: 'ctas', label: 'Bottom CTAs', icon: MessageSquare, description: 'Ready to scale? global texts' },
+  { id: 'footer', label: 'Footer Text', icon: FileText, description: 'Footer tagline and copyright text' }
 ];
 
 const AdminContent = () => {
- const [activeTab, setActiveTab] = useState('hero');
- const active = tabs.find(t => t.id === activeTab)!;
+  const [activeTab, setActiveTab] = useState('hero');
+  const active = tabs.find(t => t.id === activeTab)!;
 
- const renderEditor = () => {
- switch (activeTab) {
- case 'hero': return <HeroEditor />;
- case 'metrics': return <MetricsEditor />;
- case 'about': return <AboutEditor />;
- case 'services': return <ServicesEditor />;
- case 'portfolio': return <PortfolioEditor />;
- case 'ctas': return <CTAEditor />;
- case 'footer': return <FooterEditor />;
- default: return null;
- }
- };
+  const renderEditor = () => {
+    switch (activeTab) {
+      case 'hero': return <HeroEditor />;
+      case 'metrics': return <MetricsEditor />;
+      case 'byTheNumbers': return <ByTheNumbersEditor />;
+      case 'about': return <AboutEditor />;
+      case 'services': return <ServicesEditor />;
+      case 'portfolio': return <PortfolioEditor />;
+      case 'ctas': return <CTAEditor />;
+      case 'footer': return <FooterEditor />;
+      default: return null;
+    }
+  };
 
- return (
- <div className="space-y-6">
- {/* Header */}
- <div>
- <h1 className="text-3xl font-bold text-white">Site Content Editor</h1>
- <p className="text-white/30 text-sm mt-1">Customize the text and content across the entire website in real-time.</p>
- </div>
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div>
+        <h1 className="text-3xl font-bold text-white">Site Content Editor</h1>
+        <p className="text-white/30 text-sm mt-1">Customize the text and content across the entire website in real-time.</p>
+      </div>
 
- <div className="flex flex-col lg:flex-row gap-6">
- {/* Sidebar Nav */}
- <div className="lg:w-64 shrink-0 space-y-1">
- {tabs.map(tab => (
- <button
- key={tab.id}
- onClick={() => setActiveTab(tab.id)}
- className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-left transition-all group ${
- activeTab === tab.id
- ? 'bg-[#F5A800] text-white /20'
- : 'bg-white/[0.03] border border-white/[0.06] text-white/60 hover:bg-white/[0.06] hover:text-white'
- }`}
- >
- <tab.icon size={18} className="shrink-0" />
- <div className="flex-1 min-w-0">
- <p className="text-sm font-bold truncate">{tab.label}</p>
- <p className={`text-xs truncate mt-0.5 ${activeTab === tab.id ? 'text-white/70' : 'text-white/30'}`}>{tab.description}</p>
- </div>
- {activeTab === tab.id && <ChevronRight size={14} className="shrink-0" />}
- </button>
- ))}
+      <div className="flex flex-col lg:flex-row gap-6">
+        {/* Sidebar Nav */}
+        <div className="lg:w-64 shrink-0 space-y-1">
+          {tabs.map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-left transition-all group ${activeTab === tab.id
+                  ? 'bg-[#F5A800] text-white /20'
+                  : 'bg-white/[0.03] border border-white/[0.06] text-white/60 hover:bg-white/[0.06] hover:text-white'
+                }`}
+            >
+              <tab.icon size={18} className="shrink-0" />
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-bold truncate">{tab.label}</p>
+                <p className={`text-xs truncate mt-0.5 ${activeTab === tab.id ? 'text-white/70' : 'text-white/30'}`}>{tab.description}</p>
+              </div>
+              {activeTab === tab.id && <ChevronRight size={14} className="shrink-0" />}
+            </button>
+          ))}
 
- {/* Tip box */}
- <div className="mt-4 p-4 bg-[#F5A800]/5 border border-[#F5A800]/20 rounded-xl">
- <div className="flex items-center gap-2 mb-2">
- <MessageSquare size={14} className="text-[#F5A800]" />
- <span className="text-xs font-bold text-[#F5A800] uppercase tracking-widest">Live Preview</span>
- </div>
- <p className="text-xs text-white/30 leading-relaxed">
- Changes are applied instantly across the main website when you save. Open the site in another tab to preview.
- </p>
- </div>
- </div>
+          {/* Tip box */}
+          <div className="mt-4 p-4 bg-[#F5A800]/5 border border-[#F5A800]/20 rounded-xl">
+            <div className="flex items-center gap-2 mb-2">
+              <MessageSquare size={14} className="text-[#F5A800]" />
+              <span className="text-xs font-bold text-[#F5A800] uppercase tracking-widest">Live Preview</span>
+            </div>
+            <p className="text-xs text-white/30 leading-relaxed">
+              Changes are applied instantly across the main website when you save. Open the site in another tab to preview.
+            </p>
+          </div>
+        </div>
 
- {/* Editor Panel */}
- <div className="flex-1">
- <motion.div
- key={activeTab}
- initial={{ opacity: 0, y: 10 }}
- animate={{ opacity: 1, y: 0 }}
- transition={{ duration: 0.2 }}
- className="bg-[#0a0a0e]/90 backdrop-blur-sm border border-white/[0.05] rounded-2xl overflow-hidden"
- >
- {/* Panel Header */}
- <div className="flex items-center gap-3 px-6 py-5 border-b border-white/[0.05] bg-white/[0.01]">
- <div className="w-10 h-10 rounded-xl bg-[#F5A800]/10 flex items-center justify-center text-[#F5A800]">
- <active.icon size={20} />
- </div>
- <div>
- <h3 className="text-base font-bold text-white">{active.label}</h3>
- <p className="text-xs text-white/40">{active.description}</p>
- </div>
- </div>
+        {/* Editor Panel */}
+        <div className="flex-1">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="bg-[#0a0a0e]/90 backdrop-blur-sm border border-white/[0.05] rounded-2xl overflow-hidden"
+          >
+            {/* Panel Header */}
+            <div className="flex items-center gap-3 px-6 py-5 border-b border-white/[0.05] bg-white/[0.01]">
+              <div className="w-10 h-10 rounded-xl bg-[#F5A800]/10 flex items-center justify-center text-[#F5A800]">
+                <active.icon size={20} />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-white">{active.label}</h3>
+                <p className="text-xs text-white/40">{active.description}</p>
+              </div>
+            </div>
 
- {/* Editor Content */}
- <div className="p-6">
- {renderEditor()}
- </div>
- </motion.div>
- </div>
- </div>
- </div>
- );
+            {/* Editor Content */}
+            <div className="p-6">
+              {renderEditor()}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default AdminContent;

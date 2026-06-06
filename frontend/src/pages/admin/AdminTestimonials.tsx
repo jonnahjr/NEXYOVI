@@ -47,6 +47,7 @@ const AdminTestimonials = () => {
  content: '',
  author: '',
  role: '',
+ linkedin: '',
  image_url: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200',
  });
 
@@ -57,6 +58,7 @@ const AdminTestimonials = () => {
  content: t.content,
  author: t.author,
  role: t.role,
+ linkedin: t.linkedin || '',
  image_url: t.image_url || t.img || '',
  });
  } else {
@@ -65,6 +67,7 @@ const AdminTestimonials = () => {
  content: '',
  author: '',
  role: '',
+ linkedin: '',
  image_url: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200',
  });
  }
@@ -121,28 +124,38 @@ const AdminTestimonials = () => {
  </div>
 
  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
- <div className="space-y-2">
- <label className="text-xs font-bold text-white/30 uppercase tracking-widest ml-1">Author Name</label>
- <input 
- required
- type="text" 
- value={form.author}
- onChange={(e) => setForm({...form, author: e.target.value})}
- className="w-full h-11 px-4 bg-white/[0.02] border border-white/[0.06] rounded-xl text-sm text-white outline-none focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20 transition-all font-semibold"
- placeholder="e.g. Jameson Blake"
- />
- </div>
- <div className="space-y-2">
- <label className="text-xs font-bold text-white/30 uppercase tracking-widest ml-1">Role & Company</label>
- <input 
- required
- type="text" 
- value={form.role}
- onChange={(e) => setForm({...form, role: e.target.value})}
- className="w-full h-11 px-4 bg-white/[0.02] border border-white/[0.06] rounded-xl text-sm text-white outline-none focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20 transition-all font-semibold"
- placeholder="e.g. CEO, Quantum Systems"
- />
- </div>
+  <div className="space-y-2">
+   <label className="text-xs font-bold text-white/30 uppercase tracking-widest ml-1">Author Name</label>
+   <input 
+    required
+    type="text" 
+    value={form.author}
+    onChange={(e) => setForm({...form, author: e.target.value})}
+    className="w-full h-11 px-4 bg-white/[0.02] border border-white/[0.06] rounded-xl text-sm text-white outline-none focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20 transition-all font-semibold"
+    placeholder="e.g. Jameson Blake"
+   />
+  </div>
+  <div className="space-y-2">
+   <label className="text-xs font-bold text-white/30 uppercase tracking-widest ml-1">Role & Company</label>
+   <input 
+    required
+    type="text" 
+    value={form.role}
+    onChange={(e) => setForm({...form, role: e.target.value})}
+    className="w-full h-11 px-4 bg-white/[0.02] border border-white/[0.06] rounded-xl text-sm text-white outline-none focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20 transition-all font-semibold"
+    placeholder="e.g. CEO, Quantum Systems"
+   />
+  </div>
+  <div className="space-y-2 md:col-span-2">
+   <label className="text-xs font-bold text-white/30 uppercase tracking-widest ml-1">LinkedIn Profile URL</label>
+   <input 
+    type="url" 
+    value={form.linkedin}
+    onChange={(e) => setForm({...form, linkedin: e.target.value})}
+    className="w-full h-11 px-4 bg-white/[0.02] border border-white/[0.06] rounded-xl text-sm text-white outline-none focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20 transition-all font-mono"
+    placeholder="https://linkedin.com/in/username"
+   />
+  </div>
  </div>
 
  <div className="space-y-2">

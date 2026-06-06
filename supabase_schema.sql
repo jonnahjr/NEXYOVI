@@ -18,6 +18,14 @@
 -- After creating the user there, your /admin login will work immediately.
 -- ─────────────────────────────────────────────────────────────
 
+-- ── STEP 1b: ENABLE REALTIME ON KEY TABLES ────────────────────
+-- Run this so the admin dashboard gets live updates instantly.
+-- (Safe to run multiple times)
+ALTER PUBLICATION supabase_realtime ADD TABLE public.messages;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.jobs;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.testimonials;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.team;
+-- ─────────────────────────────────────────────────────────────
 
 -- ============================================================
 -- STEP 2: TABLES

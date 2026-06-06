@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
  Plus, Search, Edit2, Trash2, Users, 
- Save, Image as ImageIcon, ArrowLeft
+ Save, Image as ImageIcon, ArrowLeft, UploadCloud
 } from 'lucide-react';
 import { useSite } from '../../context/SiteContext';
+import { supabase } from '../../lib/supabase';
 
 const getInitials = (name: string, fallback?: string): string => {
  if (fallback) return fallback;
@@ -57,6 +58,26 @@ const AdminTeam = () => {
  const [isEditing, setIsEditing] = useState(false);
  const [editing, setEditing] = useState<any>(null);
  const [search, setSearch] = useState('');
+ const [isUploading, setIsUploading] = useState(false);
+
+ const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  if (!e.target.files || e.target.files.length === 0) return;
+  const file = e.target.files[0];
+  setIsUploading(true);
+  try {
+   const fileExt = file.name.split('.').pop();
+   const fileName = `team_${Date.now()}.${fileExt}`;
+   const { error: uploadError } = await supabase.storage.from('nexyovi_assets').upload(`team/${fileName}`, file);
+   if (uploadError) throw uploadError;
+   const { data } = supabase.storage.from('nexyovi_assets').getPublicUrl(`team/${fileName}`);
+   setForm(prev => ({ ...prev, img: data.publicUrl }));
+  } catch (err) {
+   console.error('Upload error:', err);
+   alert('Photo upload failed. Check console for details.');
+  } finally {
+   setIsUploading(false);
+  }
+ };
 
  const [form, setForm] = useState({
   name: '',
@@ -144,11 +165,15 @@ const AdminTeam = () => {
           <ImageIcon size={24} className="text-white/40" />
          </div>
         </div>
+        <label className={`w-full h-10 flex items-center justify-center gap-2 rounded-xl border border-white/10 text-xs font-bold cursor-pointer transition-all ${isUploading ? 'bg-white/10 text-white/40' : 'bg-white/5 text-white hover:bg-white/10'}`}>
+         <UploadCloud size={14} />{isUploading ? 'Uploading...' : 'Upload Photo'}
+         <input type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} disabled={isUploading} />
+        </label>
         <input 
          value={form.img} 
          onChange={e => setForm({...form, img: e.target.value})} 
-         placeholder="Image URL (leave empty for initials)"
-         className="w-full h-10 px-3 bg-white/[0.02] border border-white/[0.06] rounded-xl text-xs text-white outline-none focus:border-[#F5A800]/50 transition-all font-mono" 
+         placeholder="Or paste image URL"
+         className="w-full h-9 px-3 bg-white/[0.02] border border-white/[0.06] rounded-xl text-xs text-white outline-none focus:border-[#F5A800]/50 transition-all font-mono" 
         />
        </div>
 
