@@ -226,12 +226,26 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (!error && data) setTeam(prev => [data[0], ...prev]);
     };
     const updateTeamMember = async (updatedMember: any) => {
-        const { data, error } = await supabase.from('team').update(updatedMember).eq('id', updatedMember.id).select();
-        if (!error && data) setTeam(prev => prev.map(m => m.id === updatedMember.id ? data[0] : m));
+        const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(updatedMember.id);
+        if (!isUUID) {
+            // Initial hardcoded member — INSERT it to DB for the first time
+            const { id, ...memberData } = updatedMember;
+            const { data, error } = await supabase.from('team').insert([memberData]).select();
+            if (!error && data) setTeam(prev => prev.map(m => m.id === updatedMember.id ? data[0] : m));
+            if (error) console.error('Team insert error:', error);
+        } else {
+            const { data, error } = await supabase.from('team').update(updatedMember).eq('id', updatedMember.id).select();
+            if (!error && data) setTeam(prev => prev.map(m => m.id === updatedMember.id ? data[0] : m));
+            if (error) console.error('Team update error:', error);
+        }
     };
     const deleteTeamMember = async (id: string) => {
-        const { error } = await supabase.from('team').delete().eq('id', id);
-        if (!error) setTeam(prev => prev.filter(m => m.id !== id));
+        const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+        if (isUUID) {
+            const { error } = await supabase.from('team').delete().eq('id', id);
+            if (error) console.error('Team delete error:', error);
+        }
+        setTeam(prev => prev.filter(m => m.id !== id));
     };
 
     const addTestimonial = async (t: any) => {
