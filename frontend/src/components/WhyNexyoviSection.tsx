@@ -150,12 +150,12 @@ export default function WhyNexyoviSection() {
         }}
       />
 
-      <div className="sticky top-0 z-10 h-[76vh] min-h-[620px] overflow-hidden">
+      <div className="sticky top-0 z-10 h-[56vh] min-h-[420px] overflow-hidden">
         <div className="container max-w-7xl mx-auto relative z-10 px-6 h-full flex items-center">
-          <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-8 lg:gap-12 items-center w-full min-h-0">
+          <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-6 lg:gap-10 items-center w-full min-h-0">
 
             {/* Left: Large Title + Arrow */}
-            <div className="flex flex-col items-center lg:flex-row gap-4">
+            <div className="flex flex-col items-center lg:flex-row gap-3">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -164,7 +164,7 @@ export default function WhyNexyoviSection() {
                 className="relative w-full"
               >
                 <div className="lg:max-w-md">
-                  <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-white tracking-[-0.04em] leading-[0.94]">
+                  <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-white tracking-[-0.04em] leading-[0.94]">
                     <span className="text-[#F5A800]">Nexyovi</span>
                   </h2>
                 </div>
@@ -176,7 +176,7 @@ export default function WhyNexyoviSection() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 animate={{
-                  x: [0, 15, 0],
+                  x: [0, 10, 0],
                 }}
                 transition={{
                   duration: 2,
@@ -187,7 +187,7 @@ export default function WhyNexyoviSection() {
                 className="hidden lg:block flex-shrink-0"
               >
                 <ChevronRight
-                  size={64}
+                  size={48}
                   strokeWidth={3}
                   className="text-[#F5A800] animate-pulse"
                 />
@@ -195,24 +195,24 @@ export default function WhyNexyoviSection() {
             </div>
 
             {/* Right: Cards container — slides up */}
-            <div ref={cardsViewportRef} className="relative h-[360px] md:h-[430px] overflow-hidden px-4 py-4">
-              <div ref={cardsContainerRef} className="absolute inset-x-4 top-4 space-y-3">
+            <div ref={cardsViewportRef} className="relative h-[260px] md:h-[320px] overflow-hidden px-3 py-3">
+              <div ref={cardsContainerRef} className="absolute inset-x-3 top-3 space-y-2">
                 {cards.map((card, i) => {
                   return (
                     <div
                       key={card.title}
                       ref={(el) => { cardRefs.current[i] = el; }}
-                      className="group relative min-h-[150px] origin-center overflow-hidden rounded-[28px] border border-white/10 bg-[#0a0a0e] p-5 md:p-6 transition-all duration-500 hover:border-[#F5A800]/40"
+                      className="group relative min-h-[110px] origin-center overflow-hidden rounded-[20px] border border-white/10 bg-[#0a0a0e] p-4 md:p-5 transition-all duration-500 hover:border-[#F5A800]/40"
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                      <div className="relative z-10 space-y-3">
+                      <div className="relative z-10 space-y-2">
                         <div>
                           <h3
-                            className="text-[18px] md:text-[20px] font-black tracking-[-0.02em] leading-[1.15] mb-2 text-white"
+                            className="text-[15px] md:text-[17px] font-black tracking-[-0.02em] leading-[1.15] mb-1 text-white"
                           >
                             {card.title}
                           </h3>
-                          <p className="text-white/50 text-[14px] md:text-[15px] leading-relaxed max-w-md font-medium">
+                          <p className="text-white/50 text-[12px] md:text-[13px] leading-relaxed max-w-md font-medium">
                             {card.desc}
                           </p>
                         </div>
