@@ -46,7 +46,7 @@ const Hero = () => {
             <div className="max-w-[640px]">
               <motion.h1
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.2, ease: EASE_EXPO as any } } }}
-                className="text-[56px] md:text-[76px] lg:text-[88px] font-black text-white tracking-[-0.04em] leading-[0.95] mb-10"
+                className="text-[48px] md:text-[64px] lg:text-[76px] font-black text-white tracking-[-0.04em] leading-[0.95] mb-10"
               >
                 {headline}
               </motion.h1>
