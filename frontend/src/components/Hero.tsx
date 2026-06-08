@@ -11,10 +11,10 @@ const VIDEO_URL =
 const Hero = () => {
   const { siteContent } = useSite();
   const hero = siteContent?.hero || {};
-  const headline = hero.title || 'We build enterprise software, AI systems, and cloud infrastructure for African businesses — fast, secure, senior-led.';
-  const subtitle = hero.subtitle || "Where Intelligence Meets Infrastructure. From Addis Ababa to the world.";
+  const headline = hero.title || 'We build enterprise software, AI, and cloud infrastructure for African businesses — senior-led, security-first, delivered in weeks.';
+  const subtitle = hero.subtitle || '';
   const ctaPrimary = hero.cta_primary || 'Book a strategy session';
-  const ctaSecondary = hero.cta_secondary || 'Explore Services';
+  const ctaSecondary = hero.cta_secondary || 'Get free AI audit';
 
   return (
     <section className="relative bg-[#02040a] overflow-hidden">
@@ -60,37 +60,37 @@ const Hero = () => {
               </motion.p>
 
               <motion.div
-                variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.4, ease: EASE_EXPO as any } } }}
-                className="flex flex-wrap items-center gap-4"
-              >
-                {/* ── Primary CTA ── */}
-                <CTAButton
-                  className="group btn-gold btn-gold-pulse text-[16px] px-10 py-5 inline-flex items-center gap-2"
-                >
-                  <motion.span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-y-[10%] left-[-30%] w-[38%] skew-x-[-18deg] rounded-full bg-gradient-to-r from-transparent via-white/50 to-transparent blur-md z-20"
-                    animate={{ x: ['-150%', '340%'] }}
-                    transition={{ duration: 3.2, repeat: Infinity, repeatDelay: 1.6, ease: 'easeInOut' }}
-                  />
-                  <span className="relative z-10 font-bold">{ctaPrimary}</span>
-                </CTAButton>
+                    initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.6, ease: EASE_EXPO }}
+                    className="flex flex-wrap items-center gap-4"
+                  >
+                    {/* ── Primary CTA ── */}
+                    <CTAButton
+                      className="group btn-gold btn-gold-pulse text-[16px] px-10 py-5 inline-flex items-center gap-2"
+                    >
+                      <motion.span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-y-[10%] left-[-30%] w-[38%] skew-x-[-18deg] rounded-full bg-gradient-to-r from-transparent via-white/50 to-transparent blur-md z-20"
+                        animate={{ x: ['-150%', '340%'] }}
+                        transition={{ duration: 3.2, repeat: Infinity, repeatDelay: 1.6, ease: 'easeInOut' }}
+                      />
+                      <span className="relative z-10 font-bold">{ctaPrimary}</span>
+                    </CTAButton>
 
-                {/* ── Secondary CTA ── */}
-                <Link
-                  to="/services"
-                  id="hero-cta-view-work"
-                  className="group btn-ghost text-[16px] px-10 py-5"
-                >
-                  <motion.span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-y-[12%] left-[-34%] w-[40%] skew-x-[-18deg] rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent blur-lg z-20"
-                    animate={{ x: ['-150%', '345%'] }}
-                    transition={{ duration: 3.5, repeat: Infinity, repeatDelay: 1.8, ease: 'easeInOut' }}
-                  />
-                  <span className="relative z-10">{ctaSecondary}</span>
-                </Link>
-              </motion.div>
+                    {/* ── Secondary CTA: Free AI Audit ── */}
+                    <Link
+                      to="/contact#inquiry"
+                      id="hero-cta-ai-audit"
+                      className="group btn-ghost text-[16px] px-10 py-5"
+                    >
+                      <motion.span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-y-[12%] left-[-34%] w-[40%] skew-x-[-18deg] rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent blur-lg z-20"
+                        animate={{ x: ['-150%', '345%'] }}
+                        transition={{ duration: 3.5, repeat: Infinity, repeatDelay: 1.8, ease: 'easeInOut' }}
+                      />
+                      <span className="relative z-10">{ctaSecondary}</span>
+                    </Link>
+                  </motion.div>
             </div>
           </motion.div>
         </div>

@@ -26,7 +26,8 @@ const defaultTestimonials = [
         author: "Amadou Daffe",
         avatar: c1,
         linkedin: "https://et.linkedin.com/in/amadoudaffe",
-        highlight: "12 months to 4 months"
+        highlight: "12 months to 4 months",
+        label: "Trusted by founders of"
     },
     {
         id: '4',
@@ -36,7 +37,8 @@ const defaultTestimonials = [
         author: "Rediet Tsigeberhan",
         avatar: c2,
         linkedin: "https://www.linkedin.com/in/rediet-tsigeberhan-97615642",
-        highlight: "fraud rate by 40%"
+        highlight: "fraud rate by 40%",
+        label: "Trusted by founders of"
     },
     {
         id: '3',
