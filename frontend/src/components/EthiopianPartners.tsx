@@ -16,15 +16,12 @@ interface Partner {
   logo: string;
 }
 
-const cloudPartners: Partner[] = [
+const allPartners: Partner[] = [
   { name: 'AWS', logo: awsLogo },
   { name: 'Microsoft Azure', logo: microsoftLogo },
   { name: 'IBM', logo: ibmLogo },
   { name: 'Oracle', logo: oracleLogo },
   { name: 'NVIDIA', logo: nvidiaLogo },
-];
-
-const clients: Partner[] = [
   { name: 'Ethio Telecom', logo: ethioLogo },
   { name: 'Complete Farmer', logo: completeFarmerLogo },
   { name: 'Contrails AI', logo: contrailsAiLogo },
@@ -53,46 +50,13 @@ export default function EthiopianPartners() {
 
       <div className="container mx-auto px-6 max-w-6xl relative z-10">
         
-        {/* Cloud Partners Section */}
-        <div className="mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-6"
-          >
-            <p className="text-sm font-bold uppercase tracking-[0.25em] text-slate-500 mb-2">Cloud & Infrastructure Partners</p>
-            <p className="text-sm text-slate-400">AWS Partner • Microsoft ISV • Verified infrastructure providers</p>
-          </motion.div>
-          
-          <div className="relative flex overflow-hidden" style={maskStyle}>
-            <motion.div
-              animate={{ x: ['0%', '-50%'] }}
-              transition={{ ease: 'linear', duration: 30, repeat: Infinity }}
-              className="flex items-center gap-10 md:gap-12 min-w-max py-2"
-            >
-              {[...cloudPartners, ...cloudPartners, ...cloudPartners].map((partner, i) => (
-                <div
-                  key={`cloud-${i}`}
-                  className="group flex items-center justify-center shrink-0 cursor-default"
-                >
-                  <div className="flex items-center justify-center shrink-0">
-                    <PartnerIcon partner={partner} />
-                  </div>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Clients Section */}
+        {/* Trusted Clients & Partners Section */}
         <div>
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.5 }}
             className="text-center mb-6"
           >
             <p className="text-sm font-bold uppercase tracking-[0.25em] text-slate-500 mb-2">Trusted Clients & Partners</p>
@@ -101,13 +65,13 @@ export default function EthiopianPartners() {
           
           <div className="relative flex overflow-hidden" style={maskStyle}>
             <motion.div
-              animate={{ x: ['-50%', '0%'] }}
-              transition={{ ease: 'linear', duration: 35, repeat: Infinity }}
+              animate={{ x: ['0%', '-50%'] }}
+              transition={{ ease: 'linear', duration: 40, repeat: Infinity }}
               className="flex items-center gap-10 md:gap-12 min-w-max py-2"
             >
-              {[...clients, ...clients, ...clients].map((partner, i) => (
+              {[...allPartners, ...allPartners, ...allPartners].map((partner, i) => (
                 <div
-                  key={`client-${i}`}
+                  key={`partner-${i}`}
                   className="group flex items-center justify-center shrink-0 cursor-default"
                 >
                   <div className="flex items-center justify-center shrink-0">
