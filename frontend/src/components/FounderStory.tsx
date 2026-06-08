@@ -13,7 +13,7 @@ export default function FounderStory() {
   const founderBio =
     homeFounder.bio ||
     founder?.bio ||
-    "Nexyovi was founded on a singular vision: to bring world-class engineering rigor to digital transformation. We believe that robust systems are built from the ground up, not patched together as an afterthought.";
+    "With 12+ years of building enterprise systems across two continents, Yonas has led engineering teams at global tech companies and built platforms that power millions of users. Prior to Nexyovi, he architected cloud infrastructure for high-growth startups and led digital transformation initiatives for government and enterprise clients. His focus on security-first design and zero-downtime deployments defines Nexyovi's approach.";
   const storyButton = homeFounder.story_button || 'Read our full story ->';
   const linkedinButton = homeFounder.linkedin_button || 'Connect on LinkedIn';
   const founderLinkedin = founder?.linkedin || 'https://www.linkedin.com/in/yonas-bogale/';
@@ -27,6 +27,13 @@ export default function FounderStory() {
       .slice(0, 2)
       .toUpperCase();
   const founderColor = founder?.color || '#F5A800';
+  
+  // Key engineers to feature
+  const keyEngineers = [
+    team.find((m: any) => m.id === '2'), // Amanuel - CTO
+    team.find((m: any) => m.id === '3'), // Selamawit - CPO
+    team.find((m: any) => m.id === '16'), // Eyerusalem - VP Ops
+  ].filter(Boolean);
 
   return (
     <section className="relative bg-[#02040a] py-24 section-divider-dark overflow-hidden">
@@ -107,6 +114,48 @@ export default function FounderStory() {
               <Linkedin size={20} className="text-[#0a66c2]" />
               {linkedinButton}
             </a>
+
+            {/* Key Engineers */}
+            {keyEngineers.length > 0 && (
+              <div className="mt-12 pt-8 border-t border-white/10">
+                <p className="text-xs font-bold uppercase tracking-[0.3em] text-white/40 mb-6">Senior Leadership Team</p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {keyEngineers.map((engineer: any) => (
+                    <div key={engineer.id} className="flex flex-col items-center text-center">
+                      <div className="relative mb-3 h-12 w-12 overflow-hidden rounded-full bg-white/[0.03]">
+                        {engineer.img ? (
+                          <img
+                            src={engineer.img}
+                            alt={engineer.name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div
+                            className="w-full h-full flex items-center justify-center text-lg font-black text-white/70"
+                            style={{ background: `linear-gradient(135deg, ${engineer.color}22, ${engineer.color}55)`, color: engineer.color }}
+                          >
+                            {engineer.initials || engineer.name.split(' ').map((p: string) => p[0]).join('')}
+                          </div>
+                        )}
+                      </div>
+                      <h4 className="text-sm font-bold text-white">{engineer.name}</h4>
+                      <p className="text-xs text-white/40 uppercase tracking-[0.15em] mt-1">{engineer.role}</p>
+                      {engineer.linkedin && (
+                        <a
+                          href={engineer.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-white/30 hover:text-[#8fc3f4] transition-all"
+                        >
+                          <Linkedin size={12} />
+                          LinkedIn
+                        </a>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </motion.div>
         </div>
       </div>
