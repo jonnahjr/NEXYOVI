@@ -10,8 +10,7 @@ const VIDEO_URL =
 
 const Hero = () => {
   // Hardcoded hero content for reliability and performance
-  const headline = 'Enterprise software for African institutions — built by senior engineers, delivered in weeks.';
-  const subtitle = 'We build enterprise software for banks, hospitals, and telecoms across Africa — delivered by senior engineers in 8–24 weeks.';
+  const headline = 'We build the software your bank, hospital, or telecom actually needs — on time, in Africa.';
   const ctaPrimary = 'Book a strategy session';
   const ctaSecondary = 'See our work →';
 
@@ -46,17 +45,10 @@ const Hero = () => {
             <div className="max-w-[640px]">
               <motion.h1
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.2, ease: EASE_EXPO as any } } }}
-                className="text-[48px] md:text-[64px] lg:text-[76px] font-black text-white tracking-[-0.04em] leading-[0.95] mb-10"
+                className="text-[48px] md:text-[64px] lg:text-[76px] font-black text-white tracking-[-0.04em] leading-[0.95] mb-12"
               >
                 {headline}
               </motion.h1>
-
-              <motion.p
-                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.75, delay: 0.3, ease: EASE_EXPO as any } } }}
-                className="text-[18px] md:text-[20px] text-white/80 font-medium leading-[1.8] mb-16 max-w-[560px]"
-              >
-                {subtitle}
-              </motion.p>
 
               <motion.div
                     initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.6, ease: EASE_EXPO }}

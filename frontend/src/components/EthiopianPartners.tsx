@@ -13,10 +13,6 @@ const PartnerIcon = ({ partner }: { partner: any }) => {
 
 export default function EthiopianPartners() {
     const { partners } = useSite();
-    const maskStyle = {
-        WebkitMaskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
-        maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
-    };
 
     return (
         <section className="relative py-12 md:py-16 bg-[#FCFBF8] border-t border-slate-200 overflow-hidden">
@@ -30,29 +26,25 @@ export default function EthiopianPartners() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5 }}
-                        className="text-center mb-6"
+                        className="text-center mb-10"
                     >
                         <p className="text-sm font-bold uppercase tracking-[0.25em] text-slate-500 mb-2">Trusted Clients & Partners</p>
                         <p className="text-sm text-slate-400">Enterprise organizations across Africa & beyond</p>
                     </motion.div>
                     
-                    <div className="relative flex overflow-hidden" style={maskStyle}>
-                        <motion.div
-                            animate={{ x: ['0%', '-50%'] }}
-                            transition={{ ease: 'linear', duration: 40, repeat: Infinity }}
-                            className="flex items-center gap-10 md:gap-12 min-w-max py-2"
-                        >
-                            {[...partners, ...partners, ...partners].map((partner, i) => (
-                                <div
-                                    key={`partner-${i}`}
-                                    className="group flex items-center justify-center shrink-0 cursor-default"
-                                >
-                                    <div className="flex items-center justify-center shrink-0">
-                                        <PartnerIcon partner={partner} />
-                                    </div>
-                                </div>
-                            ))}
-                        </motion.div>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-items-center">
+                        {partners.map((partner, i) => (
+                            <motion.div
+                                key={`partner-${i}`}
+                                initial={{ opacity: 0, y: 10 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5, delay: i * 0.1 }}
+                                className="group flex items-center justify-center cursor-default"
+                            >
+                                <PartnerIcon partner={partner} />
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
 

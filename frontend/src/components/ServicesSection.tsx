@@ -18,7 +18,7 @@ const services = [
         icon: Code,
         accent: '#F5A800',
         glow: 'rgba(245,168,0,0.12)',
-        tags: ['Web Platforms', 'SaaS', 'Custom Systems'],
+        differentiator: 'Built with senior engineers, no junior allocation',
         href: '/services/software',
     },
     {
@@ -28,7 +28,7 @@ const services = [
         icon: BrainCircuit,
         accent: '#8b5cf6',
         glow: 'rgba(139,92,246,0.12)',
-        tags: ['AI Assistants', 'Automation', 'Intelligent Tools'],
+        differentiator: 'AI that creates measurable ROI, not demos',
         href: '/services/ai',
     },
     {
@@ -38,7 +38,7 @@ const services = [
         icon: Smartphone,
         accent: '#10b981',
         glow: 'rgba(16,185,129,0.12)',
-        tags: ['iOS', 'Android', 'Internal Tools'],
+        differentiator: 'Native performance, cross-platform flexibility',
         href: '/services/apps',
     },
     {
@@ -48,7 +48,7 @@ const services = [
         icon: Cloud,
         accent: '#06b6d4',
         glow: 'rgba(6,182,212,0.12)',
-        tags: ['DevOps', 'Deployment', 'Monitoring'],
+        differentiator: '99.9% uptime SLA guaranteed',
         href: '/services/infrastructure',
     },
     {
@@ -58,7 +58,7 @@ const services = [
         icon: Database,
         accent: '#3b82f6',
         glow: 'rgba(59,130,246,0.12)',
-        tags: ['Dashboards', 'Reporting', 'Business Intelligence'],
+        differentiator: 'Real-time data pipelines you can trust',
         href: '/services/data',
     },
     {
@@ -68,7 +68,7 @@ const services = [
         icon: Lightbulb,
         accent: '#ec4899',
         glow: 'rgba(236,72,153,0.12)',
-        tags: ['Strategy', 'Architecture', 'Transformation'],
+        differentiator: 'Honest advice, no sales pressure',
         href: '/contact',
     }];
 
@@ -129,19 +129,12 @@ const ServicesSection = () => {
                                         <h3 className="text-xl md:text-2xl font-black text-slate-950 tracking-tight mb-2 group-hover:text-[#F5A800] transition-colors">
                                             {s.title}
                                         </h3>
-                                        <p className="text-slate-600 text-sm md:text-base leading-relaxed mb-4 font-medium max-w-lg">
+                                        <p className="text-slate-600 text-sm md:text-base leading-relaxed mb-3 font-medium max-w-lg">
                                             {s.desc}
                                         </p>
-                                        <div className="flex flex-wrap gap-2">
-                                            {s.tags.map((tag) => (
-                                                <span
-                                                    key={tag}
-                                                    className="text-[10px] font-bold px-3 py-1.5 md:px-4 md:py-2 rounded-full uppercase tracking-widest bg-[#F5A800] border border-[#F5A800] text-black transition-all duration-300 hover:bg-[#e69a00]"
-                                                >
-                                                    {tag}
-                                                </span>
-                                            ))}
-                                        </div>
+                                        <p className="text-xs md:text-sm font-bold text-slate-900" style={{ color: s.accent }}>
+                                            {s.differentiator}
+                                        </p>
                                     </div>
 
                                     {/* Arrow Icon */}
