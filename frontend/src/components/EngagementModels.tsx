@@ -24,7 +24,7 @@ const models: EngagementModel[] = [
     bestFor: 'MVPs, feature builds, platform migrations, and defined-scope initiatives',
     clientType: 'Startups to enterprises with well-defined requirements',
     duration: '8–24 weeks',
-    pricing: 'Custom pricing (Typically $15k - $50k)',
+    pricing: 'Custom pricing',
     accent: '#0ea5e9',
     icon: Layers,
   },
@@ -35,7 +35,7 @@ const models: EngagementModel[] = [
     bestFor: 'Ongoing product development, platform maintenance, and long-term roadmaps',
     clientType: 'Scale-ups and enterprises needing sustained engineering capacity',
     duration: '3–24+ months',
-    pricing: 'Custom pricing (Typically $10k - $40k/mo)',
+    pricing: 'Custom pricing',
     accent: '#f97316',
     icon: Users,
   },
@@ -46,7 +46,7 @@ const models: EngagementModel[] = [
     bestFor: 'Organizations that need senior technical direction without a full-time executive hire',
     clientType: 'Early-stage startups, SMBs, and teams in transition',
     duration: 'Ongoing — 2–20 hrs/week',
-    pricing: 'Custom pricing (Typically $3k - $12k/mo)',
+    pricing: 'Custom pricing',
     accent: '#3b82f6',
     icon: Brain,
   },
@@ -57,7 +57,7 @@ const models: EngagementModel[] = [
     bestFor: 'Organizations building complex platforms requiring sustained, deep technical investment',
     clientType: 'Enterprises, government institutions, and high-growth technology companies',
     duration: '12–48+ months',
-    pricing: 'Custom pricing (Typically $25k+ /mo)',
+    pricing: 'Custom pricing',
     accent: '#a855f7',
     icon: Handshake,
   },
@@ -67,7 +67,6 @@ const detailItems = (model: typeof models[0]) => [
   { label: 'Best For', value: model.bestFor },
   { label: 'Client Type', value: model.clientType },
   { label: 'Duration', value: model.duration, highlight: true },
-  { label: 'Investment', value: model.pricing },
 ];
 
 export default function EngagementModels() {
@@ -269,7 +268,7 @@ export default function EngagementModels() {
                     </motion.p>
 
                     {/* Detail items — staggered */}
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-5 mb-8">
+                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-5 mb-8">
                       {detailItems(model).map((item, di) => (
                         <motion.div
                           key={item.label}
