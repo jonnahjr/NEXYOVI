@@ -58,8 +58,8 @@ const cardVariants = {
 };
 
 export default function TestimonialSection() {
-    const { testimonials: siteTestimonials } = useSite();
-    const testimonials = siteTestimonials.length > 0 ? siteTestimonials : defaultTestimonials;
+    // Use hardcoded testimonials for reliability
+    const testimonials = defaultTestimonials;
     
     return (
         <section className="relative bg-[#02040a] py-16 section-divider-dark overflow-hidden">

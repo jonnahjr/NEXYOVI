@@ -138,7 +138,7 @@ const industries = [
 ];
 
 const IndustriesSection = () => {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(1);
 
   return (
     <section className="relative bg-[#FCFBF8] py-32 section-divider-light overflow-hidden">
