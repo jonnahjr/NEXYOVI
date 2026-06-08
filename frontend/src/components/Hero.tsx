@@ -10,7 +10,7 @@ const VIDEO_URL =
 
 const Hero = () => {
   // Hardcoded hero content for reliability and performance
-  const headline = 'We build the software your bank, hospital, or telecom actually needs — on time, in Africa.';
+  const headline = 'Engineering the Digital Infrastructure Behind Africa\'s Next Generation of Businesses.';
   const ctaPrimary = 'Book a strategy session';
   const ctaSecondary = 'See our work →';
 
