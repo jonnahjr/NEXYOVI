@@ -10,9 +10,10 @@ const VIDEO_URL =
 
 const Hero = () => {
   // Hardcoded hero content for reliability and performance
-  const headline = 'Engineering the Digital Infrastructure Behind Africa\'s Next Generation of Businesses.';
+  const differentiatorLine = 'Senior engineers. Africa-first. Shipped in weeks, not months.';
+  const mainHeadline = 'We build the platforms, AI systems, and infrastructure powering Africa\'s fastest-growing companies — from Addis Ababa to the world.';
   const ctaPrimary = 'Book a strategy session';
-  const ctaSecondary = 'See our work →';
+  const ctaSecondary = 'See our work';
 
   return (
     <section className="relative bg-[#02040a] overflow-hidden">
@@ -42,14 +43,24 @@ const Hero = () => {
             animate="visible"
             className="px-8 sm:px-16 md:px-24 lg:px-32 pt-32"
           >
-            <div className="max-w-[640px]">
+            <div className="max-w-[720px]">
+              {/* Differentiator Line */}
+              <motion.p
+                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.1, ease: EASE_EXPO as any } } }}
+                className="text-[#F5A800] font-bold text-sm md:text-base uppercase tracking-[0.2em] mb-6"
+              >
+                {differentiatorLine}
+              </motion.p>
+
+              {/* Main Headline */}
               <motion.h1
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.2, ease: EASE_EXPO as any } } }}
                 className="text-[48px] md:text-[64px] lg:text-[76px] font-black text-white tracking-[-0.04em] leading-[0.95] mb-12"
               >
-                {headline}
+                {mainHeadline}
               </motion.h1>
 
+              {/* CTAs */}
               <motion.div
                     initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.6, ease: EASE_EXPO }}
                     className="flex flex-wrap items-center gap-4"
@@ -67,7 +78,7 @@ const Hero = () => {
                       <span className="relative z-10 font-bold">{ctaPrimary}</span>
                     </CTAButton>
 
-                    {/* ── Secondary CTA: See our work → ── */}
+                    {/* ── Secondary CTA: See our work ── */}
                     <Link
                       to="/industries"
                       id="hero-cta-see-work"
