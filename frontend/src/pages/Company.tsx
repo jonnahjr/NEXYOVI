@@ -735,33 +735,33 @@ export default function Company() {
                 whileInView="visible"
                 viewport={{ once: true, margin: '-40px' }}
                 variants={staggerContainer}
-                className="flex flex-wrap justify-center gap-6"
+                className="flex flex-nowrap justify-center gap-4 overflow-x-hidden"
               >
                 {engineeringDeliveryTeam.map((member: any) => (
                   <motion.div
                     key={member.id}
                     variants={fadeUp}
-                    className="text-center"
+                    className="text-center flex-shrink-0"
                   >
-                    <div className="mx-auto mb-1 h-10 w-10 overflow-hidden rounded-full">
+                    <div className="mx-auto mb-1 h-8 w-8 overflow-hidden rounded-full">
                       {member.img ? (
                         <img src={member.img} alt={member.name} className="h-full w-full object-cover" />
                       ) : (
-                        <div className="flex h-full w-full items-center justify-center text-[11px] font-black text-white/70" style={{ backgroundColor: member.color || '#8b5cf6' }}>
+                        <div className="flex h-full w-full items-center justify-center text-[9px] font-black text-white/70" style={{ backgroundColor: member.color || '#8b5cf6' }}>
                           {member.initials || member.name.split(' ').map((n: string) => n[0]).join('')}
                         </div>
                       )}
                     </div>
-                    <h5 className="text-sm font-semibold text-white">{member.name}</h5>
-                    <p className="mt-0.5 text-[9px] font-medium uppercase tracking-[0.12em] text-white/42">{member.role}</p>
+                    <h5 className="text-[11px] font-semibold text-white">{member.name}</h5>
+                    <p className="mt-0.5 text-[7px] font-medium uppercase tracking-[0.12em] text-white/42">{member.role}</p>
                     {member.linkedin && (
                       <a
                         href={member.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-2 inline-flex items-center gap-1 text-[10px] font-medium text-white/30 transition-all duration-300 hover:text-[#8fc3f4]"
+                        className="mt-1 inline-flex items-center gap-0.5 text-[8px] font-medium text-white/30 transition-all duration-300 hover:text-[#8fc3f4]"
                       >
-                        <Linkedin size={8} />
+                        <Linkedin size={6} />
                         LinkedIn
                       </a>
                     )}
