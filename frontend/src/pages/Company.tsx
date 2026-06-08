@@ -731,19 +731,9 @@ export default function Company() {
                 </p>
               </motion.div>
 
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-40px' }}
-                variants={staggerContainer}
-                className="flex flex-nowrap justify-between gap-1 overflow-x-hidden"
-              >
+              <div className="flex flex-wrap justify-center gap-2">
                 {engineeringDeliveryTeam.map((member: any) => (
-                  <motion.div
-                    key={member.id}
-                    variants={fadeUp}
-                    className="text-center flex-shrink-0 flex-1"
-                  >
+                  <div key={member.id} className="text-center">
                     <div className="mx-auto mb-0.5 h-6 w-6 overflow-hidden rounded-full">
                       {member.img ? (
                         <img src={member.img} alt={member.name} className="h-full w-full object-cover" />
@@ -766,9 +756,9 @@ export default function Company() {
                         LinkedIn
                       </a>
                     )}
-                  </motion.div>
+                  </div>
                 ))}
-              </motion.div>
+              </div>
             </>
           )}
 
