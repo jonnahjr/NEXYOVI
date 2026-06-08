@@ -17,10 +17,10 @@ function NavLink({ children, href, isActive, isHovered, onMouseEnter, onClick }:
      onMouseEnter={onMouseEnter}
      className="relative z-10"
    >
-     <Link
+      <Link
        to={href}
        onClick={onClick}
-       className={`relative flex items-center justify-center px-5 py-2 text-[13px] font-medium tracking-wide transition-colors duration-300 ${isHovered ? 'text-black' : isActive ? 'text-white' : 'text-white/60 hover:text-white/90'}`}
+       className={`relative flex items-center justify-center px-2 py-1.5 text-[11px] md:text-[12px] font-medium tracking-wide transition-colors duration-300 ${isHovered ? 'text-black' : isActive ? 'text-white' : 'text-white/60 hover:text-white/90'}`}
      >
        {/* Sliding Background Pill */}
        {isHovered && (
@@ -80,83 +80,67 @@ const Navbar = () => {
    setMobileOpen(false);
  };
 
- return (
-   <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 pt-4">
-     <motion.div
-       initial={{ y: -100, opacity: 0 }}
-       animate={{ y: 0, opacity: 1 }}
-       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-       className="max-w-[1000px] mx-auto relative"
-     >
-       {/* Logo — big, popping out of the bar */}
-       <div className="absolute left-4 md:left-5 -top-2 z-30">
-         <Link
-           to="/"
-           onClick={handleNavClick('/')}
-           className="block relative"
-         >
-           <div className="relative">
-             <div
-               role="img"
-               aria-label="Nexyovi"
-               className="relative h-[56px] md:h-[62px] w-[160px] md:w-[180px]"
-               style={{
-                 mask: `url(${settings?.logo_url || myLogo}) center/contain no-repeat`,
-                 WebkitMask: `url(${settings?.logo_url || myLogo}) center/contain no-repeat`,
-                 background: 'linear-gradient(135deg, #F5A800, #FFD166, #F5A800)',
-               }}
-             />
-           </div>
-         </Link>
+   return (
+    <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-10 pt-2 md:pt-3">
+      <motion.div
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="max-w-[620px] mx-auto relative"
+      >
+       <div className="relative z-10">
+        {/* Navbar content */}
+        <div className={`relative flex items-center justify-center gap-0.5 min-h-[36px] md:min-h-[40px] px-1.5 md:px-2 py-0.5 md:py-1 rounded-full transition-all duration-500 ${scrolled
+          ? 'bg-[#0a0a0a]/90 backdrop-blur-2xl border border-white/[0.12] shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
+          : 'bg-[#0a0a0a]/75 backdrop-blur-2xl border border-white/[0.08]'
+        }`}>
+          <Link
+            to="/"
+            onClick={handleNavClick('/')}
+            className="block relative flex-shrink-0"
+          >
+            <div
+              role="img"
+              aria-label="Nexyovi"
+              className="relative h-[44px] md:h-[54px] w-[116px] md:w-[140px]"
+              style={{
+                mask: `url(${settings?.logo_url || myLogo}) center/contain no-repeat`,
+                WebkitMask: `url(${settings?.logo_url || myLogo}) center/contain no-repeat`,
+                background: 'linear-gradient(135deg, #F5A800, #FFD166, #F5A800)',
+              }}
+            />
+          </Link>
+
+          {/* Desktop Nav Links — centered */}
+          <nav
+            className="hidden lg:flex items-center gap-0.5"
+            onMouseLeave={() => setHoveredLink(null)}
+          >
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.name}
+                href={link.href}
+                isActive={location.pathname === link.href || (link.href !== '/' && location.pathname.startsWith(link.href))}
+                isHovered={hoveredLink === link.name}
+                onMouseEnter={() => setHoveredLink(link.name)}
+                onClick={handleNavClick(link.href)}
+              >
+                {link.name}
+              </NavLink>
+            ))}
+          </nav>
+
+          {/* Mobile Toggle */}
+          <button
+            className="lg:hidden p-3 relative z-50 text-white flex flex-col justify-center items-center w-8 h-8 flex-shrink-0"
+            onClick={() => setMobileOpen(!mobileOpen)}
+          >
+            <motion.span animate={mobileOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: -3 }} className="w-5 h-0.5 bg-white block absolute" />
+            <motion.span animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }} className="w-5 h-0.5 bg-white block absolute" />
+            <motion.span animate={mobileOpen ? { rotate: -45, y: -5 } : { rotate: 0, y: 3 }} className="w-5 h-0.5 bg-white block absolute" />
+          </button>
+        </div>
        </div>
-
-       {/* Navbar bar — compact/small */}
-       <motion.div
-         className={`relative flex items-center justify-end px-4 md:px-5 py-2 rounded-full transition-all duration-500 ${scrolled
-           ? 'bg-[#0a0a0a]/90 backdrop-blur-2xl border border-white/[0.12] shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
-           : 'bg-[#0a0a0a]/75 backdrop-blur-2xl border border-white/[0.08]'
-         }`}
-       >
-         {/* Desktop Nav Links — centered */}
-         <nav 
-           className="hidden lg:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2 ml-10"
-           onMouseLeave={() => setHoveredLink(null)}
-         >
-           {navLinks.map((link) => (
-             <NavLink
-               key={link.name}
-               href={link.href}
-               isActive={location.pathname === link.href || (link.href !== '/' && location.pathname.startsWith(link.href))}
-               isHovered={hoveredLink === link.name}
-               onMouseEnter={() => setHoveredLink(link.name)}
-               onClick={handleNavClick(link.href)}
-             >
-               {link.name}
-             </NavLink>
-           ))}
-         </nav>
-
-         {/* CTA Button */}
-         <div className="hidden lg:flex z-20">
-           <Link
-             to="/contact#inquiry"
-             onClick={handleNavClick('/contact#inquiry')}
-             className="group inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-[#F5A800] text-black text-[12px] font-bold hover:bg-[#FFD166] transition-all duration-300"
-           >
-             <span>Book Strategy Session</span>
-           </Link>
-         </div>
-
-         {/* Mobile Toggle */}
-         <button
-           className="lg:hidden p-2 relative z-50 text-white flex flex-col justify-center items-center w-9 h-9"
-           onClick={() => setMobileOpen(!mobileOpen)}
-         >
-           <motion.span animate={mobileOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: -3 }} className="w-5 h-0.5 bg-white block absolute" />
-           <motion.span animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }} className="w-5 h-0.5 bg-white block absolute" />
-           <motion.span animate={mobileOpen ? { rotate: -45, y: -5 } : { rotate: 0, y: 3 }} className="w-5 h-0.5 bg-white block absolute" />
-         </button>
-       </motion.div>
 
        {/* Mobile Menu */}
        <AnimatePresence>
@@ -166,9 +150,9 @@ const Navbar = () => {
              animate={{ opacity: 1, y: 0, scale: 1 }}
              exit={{ opacity: 0, y: -16, scale: 0.96 }}
              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-             className="absolute top-20 left-2 right-2 bg-[#0a0a0a]/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-5 lg:hidden"
-           >
-             <div className="flex flex-col gap-3">
+                className="absolute top-10 left-2 right-2 bg-[#0a0a0a]/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-4 lg:hidden"
+            >
+             <div className="flex flex-col gap-1">
                {navLinks.map((link, i) => (
                  <motion.div key={link.name} initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 + 0.08 }}>
                    <Link
@@ -180,11 +164,6 @@ const Navbar = () => {
                    </Link>
                  </motion.div>
                ))}
-               <div className="pt-4 mt-1 border-t border-white/10">
-                 <Link to="/contact#inquiry" onClick={handleNavClick('/contact#inquiry')} className="inline-flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl bg-[#F5A800] text-black text-[13px] font-bold hover:bg-[#FFD166] transition-all">
-                   Book Strategy Session
-                 </Link>
-               </div>
              </div>
            </motion.div>
          )}

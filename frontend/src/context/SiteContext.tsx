@@ -39,10 +39,22 @@ const initialTestimonials = [
 
 const initialPartners = [
     { id: '1', name: 'Ethio Telecom', logo_url: ethioLogo },
-    { id: '2', name: 'Complete Farmer', logo_url: completeFarmerLogo },
-    { id: '3', name: 'Contrails AI', logo_url: contrailsAiLogo },
-    { id: '4', name: 'Harvey AI', logo_url: harveyAiLogo },
-    { id: '5', name: 'Paladin Drones', logo_url: paladinDronesLogo },
+    { id: '2', name: 'Commercial Bank of Ethiopia', logo_url: 'https://upload.wikimedia.org/wikipedia/en/5/5e/Commercial_Bank_of_Ethiopia_logo.svg' },
+    { id: '3', name: 'Zemen Bank', logo_url: 'https://upload.wikimedia.org/wikipedia/commons/6/68/Zemen_Bank_logo.svg' },
+    { id: '4', name: 'INSA', logo_url: 'https://upload.wikimedia.org/wikipedia/en/7/70/INSA_Ethiopia_logo.svg' },
+    { id: '5', name: 'Addis Ababa University', logo_url: 'https://upload.wikimedia.org/wikipedia/en/6/60/Addis_Ababa_University_logo.svg' },
+    { id: '6', name: 'AASTU', logo_url: 'https://upload.wikimedia.org/wikipedia/en/4/4f/AASTU_logo.svg' },
+    { id: '7', name: 'Global Bank', logo_url: 'https://upload.wikimedia.org/wikipedia/en/8/87/Global_Bank_Ethiopia_logo.svg' },
+    { id: '8', name: 'Bahir Dar University', logo_url: 'https://upload.wikimedia.org/wikipedia/en/1/1a/Bahir_Dar_University_logo.svg' },
+    { id: '9', name: 'Hawassa University', logo_url: 'https://upload.wikimedia.org/wikipedia/en/9/9c/Hawassa_University_logo.svg' },
+    { id: '10', name: 'HP', logo_url: 'https://upload.wikimedia.org/wikipedia/commons/a/ad/HP_logo_2012.svg' },
+    { id: '11', name: 'IBM', logo_url: 'https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg' },
+    { id: '12', name: 'AWS', logo_url: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg' },
+    { id: '13', name: 'Oracle', logo_url: 'https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg' },
+    { id: '14', name: 'Complete Farmer', logo_url: completeFarmerLogo },
+    { id: '15', name: 'Harvey AI', logo_url: harveyAiLogo },
+    { id: '16', name: 'Paladin Drones', logo_url: paladinDronesLogo },
+    { id: '17', name: 'Contrails AI', logo_url: contrailsAiLogo },
 ];
 
 const initialAdmins = [

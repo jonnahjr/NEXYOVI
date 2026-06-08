@@ -11,7 +11,7 @@ const VIDEO_URL =
 const Hero = () => {
   // Hardcoded hero content for reliability and performance
   const mainHeadline = 'The engineering partner Africa\'s fastest companies trust to build — and ship.';
-  const statLine = '50+ enterprise systems shipped across 8 countries.';
+  const statLine = 'Custom software deployed across multiple industries.';
   const ctaPrimary = 'Book a free strategy session';
   const ctaSecondary = 'See our work';
 
@@ -56,11 +56,19 @@ const Hero = () => {
               {/* Main Headline */}
               <motion.h1
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.2, ease: EASE_EXPO as any } } }}
-                className="text-[36px] md:text-[48px] lg:text-[60px] font-black text-white tracking-[-0.04em] leading-[0.95] mb-8"
+                className="text-[36px] md:text-[48px] lg:text-[60px] font-black text-white tracking-[-0.04em] leading-[0.95]"
               >
                 The engineering partner Africa's fastest companies trust
                 <span className="text-[#F5A800]"> to build — and ship.</span>
               </motion.h1>
+
+              {/* Subtitle */}
+              <motion.p
+                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.3, ease: EASE_EXPO as any } } }}
+                className="text-white/40 text-sm md:text-base max-w-xl leading-relaxed font-medium mb-8 mt-4"
+              >
+                We help startups, enterprises, and public institutions design, build, and scale mission-critical digital products.
+              </motion.p>
 
               {/* CTAs */}
               <motion.div

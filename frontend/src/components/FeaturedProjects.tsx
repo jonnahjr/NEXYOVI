@@ -18,8 +18,8 @@ import workspaceCase from '../assets/workspace_case_study.png';
 const projects = [
     {
         name: 'Nexi Market',
-        desc: 'Multi-vendor e-commerce platform with millions of products.',
-        outcome: 'Processed 2.1M transactions/year, reduced checkout time by 35%',
+        desc: 'Multi-vendor e-commerce platform built with modern web and mobile technologies.',
+        outcome: 'Full-featured marketplace with vendor dashboards, payments, and inventory management',
         screenshots: [market1, market2, market3],
         tags: ['Nexyovi Labs', 'E-Commerce', 'Mobile'],
         href: '/projects/nexi-market',
@@ -27,7 +27,7 @@ const projects = [
     {
         name: 'Nexi Locate',
         desc: 'Location discovery app for restaurants, cafes, and more.',
-        outcome: '200K+ active users, 4.8-star rating on app stores',
+        outcome: 'Real-time location search with curated recommendations and user reviews',
         screenshots: [locate1, locate2, locate3],
         tags: ['Nexyovi Labs', 'Maps', 'Mobile'],
         href: '/projects/nexi-locate',
@@ -35,7 +35,7 @@ const projects = [
     {
         name: 'Tele-Psychiatry',
         desc: 'Secure telehealth platform connecting patients with specialists.',
-        outcome: 'HIPAA-compliant, facilitated 50K+ consultations, 95% patient satisfaction',
+        outcome: 'HIPAA-compliant with end-to-end encryption, scheduling, and e-prescribing',
         screenshots: [tele1, tele2, tele3],
         tags: ['iOS', 'Android', 'Health'],
         href: '/projects/tele-psychiatry',
@@ -43,7 +43,7 @@ const projects = [
     {
         name: 'Banking Security Platform',
         desc: 'Enterprise security and fraud detection for leading banks.',
-        outcome: 'Reduced fraud detection time by 40%, processed 2M secure transactions/day',
+        outcome: 'Zero-trust architecture with AI-driven threat detection and real-time monitoring',
         screenshots: [logisticsCase, workspaceCase],
         tags: ['FinTech', 'AI', 'Security'],
         href: '/projects/global-bank-security',

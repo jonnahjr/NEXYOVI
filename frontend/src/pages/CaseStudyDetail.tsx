@@ -4,7 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2, Terminal, ShieldAlert, Cpu, Activity, Clock, Zap } from 'lucide-react';
 import CTASection from '../components/CTASection';
 import futureCity from '../assets/future_city.png';
-import aiAbstract from '../assets/Gemini_Generated_Image_2jai5t2jai5t2jai.png';
+
 
 const caseStudies = {
  'global-bank-security': {
@@ -55,7 +55,8 @@ const caseStudies = {
   title: 'Tele-Psychiatry Platform',
   client: 'National Health Ministry',
   category: 'HealthTech & Cloud',
-  heroImage: aiAbstract,
+heroImage: futureCity,
+
   color: '#8b5cf6',
   bg: 'from-[#8b5cf6]/20 to-transparent',
   overview: 'The National Health Ministry needed a secure, HIPAA-compliant telehealth platform to connect patients with psychiatric specialists across the country, especially in remote areas with limited access to mental health care.',

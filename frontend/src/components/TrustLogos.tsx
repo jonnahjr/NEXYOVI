@@ -1,66 +1,52 @@
 import { motion } from 'framer-motion';
+import { useSite } from '../context/SiteContext';
 
-const techPartners = [
-  { name: 'AWS', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg' },
-  { name: 'Azure', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg' },
-  { name: 'OpenAI', logo: 'https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg' },
-  { name: 'Google Cloud', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/googlecloud/googlecloud-original.svg' },
-  { name: 'Node.js', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg' },
-  { name: 'Python', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg' },
-  { name: 'React', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg' },
-  { name: 'PostgreSQL', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg' },
-  { name: 'Docker', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg' },
-  { name: 'Kubernetes', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg' },
-  { name: 'Oracle', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/oracle/oracle-original.svg' },
-];
+const TrustLogos = () => {
+ const { partners } = useSite();
 
-export default function TrustLogos() {
-  return (
-    <section className="relative py-20 overflow-hidden bg-slate-50">
-      <div className="container mx-auto px-6 max-w-6xl">
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          className="text-center mb-8"
-        >
-          <h2 className="text-slate-500 text-xs font-bold uppercase tracking-[0.25em]">
-            Technology Partners
-          </h2>
-        </motion.div>
+ return (
+  <section className="relative py-16 md:py-20 bg-[#02040a] border-t border-white/[0.05] overflow-hidden">
+   <div className="container mx-auto px-6 max-w-6xl relative z-10">
+    <motion.div
+     initial={{ opacity: 0, y: 15 }}
+     whileInView={{ opacity: 1, y: 0 }}
+     viewport={{ once: true }}
+     transition={{ duration: 0.5 }}
+     className="text-center mb-10"
+    >
+     <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-white/40 mb-2">Experience Across Enterprise, Government & Technology Sectors</p>
+    </motion.div>
 
-        <div className="relative mb-8">
-          <div className="absolute inset-y-0 left-0 w-24 md:w-40 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-24 md:w-40 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none" />
+    <div className="relative">
+     <div className="absolute inset-y-0 left-0 w-24 md:w-40 bg-gradient-to-r from-[#02040a] to-transparent z-10 pointer-events-none" />
+     <div className="absolute inset-y-0 right-0 w-24 md:w-40 bg-gradient-to-l from-[#02040a] to-transparent z-10 pointer-events-none" />
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="overflow-hidden"
-          >
-            <motion.div
-              animate={{ x: ['0%', '-50%'] }}
-              transition={{ ease: 'linear', duration: 30, repeat: Infinity }}
-              className="flex items-center gap-12 md:gap-16 min-w-max"
-            >
-              {[...techPartners, ...techPartners].map((tech, i) => (
-                <div key={i} className="flex items-center justify-center shrink-0 group">
-                  <div className="w-12 h-12 flex items-center justify-center">
-                    <img
-                      src={tech.logo}
-                      alt={tech.name}
-                      className="h-8 w-auto object-contain opacity-60 group-hover:opacity-100 transition-opacity duration-300"
-                    />
-                  </div>
-                </div>
-              ))}
-            </motion.div>
-          </motion.div>
+     <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      className="overflow-hidden"
+     >
+      <motion.div
+       animate={{ x: ['0%', '-50%'] }}
+       transition={{ ease: 'linear', duration: 50, repeat: Infinity }}
+       className="flex items-center gap-12 md:gap-16 min-w-max"
+      >
+       {[...partners, ...partners].map((partner, i) => (
+        <div key={i} className="flex items-center justify-center shrink-0">
+         <img
+          src={partner.logo_url}
+          alt={partner.name}
+          className="h-8 md:h-10 w-auto object-contain opacity-50 hover:opacity-90 transition-opacity duration-300"
+         />
         </div>
-      </div>
-    </section>
-  );
-}
+       ))}
+      </motion.div>
+     </motion.div>
+    </div>
+   </div>
+  </section>
+ );
+};
+
+export default TrustLogos;

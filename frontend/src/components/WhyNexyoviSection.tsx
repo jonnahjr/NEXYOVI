@@ -5,34 +5,28 @@ import { Link } from 'react-router-dom';
 
 const cards = [
   {
-    title: 'Engineering First',
-    desc: 'Senior engineers lead every project, ensuring robust architecture and high-quality code from day one.',
-    accent: '#0ea5e9',
-    link: '/services/software',
+   title: 'Senior Engineers Only',
+   desc: 'No junior staffing. Every project is led by experienced senior engineers who architect, build, and ship production-grade systems.',
+   accent: '#0ea5e9',
+   link: '/services/software',
   },
   {
-    title: 'Security Built-In',
-    desc: 'Security is integrated at every layer, protecting your data and maintaining compliance seamlessly.',
-    accent: '#f97316',
-    link: '/services/security',
+   title: 'Security by Design',
+   desc: 'Security integrated from day one — not bolted on after. Every layer of every system is built with zero-trust principles and compliance in mind.',
+   accent: '#f97316',
+   link: '/services/security',
   },
   {
-    title: 'Long-Term Partnership',
-    desc: 'We stay involved after launch with dedicated support, maintenance, and continuous feature growth.',
-    accent: '#3b82f6',
-    link: '/company',
+   title: 'AI-Native Development',
+   desc: 'Modern AI tooling accelerates delivery across the entire development lifecycle — from code generation to testing, deployment, and monitoring.',
+   accent: '#a855f7',
+   link: '/services/ai',
   },
   {
-    title: 'Elite Talent Network',
-    desc: 'Access top-tier engineers from Ethiopia and beyond — every engineer on our network has shipped production systems at scale.',
-    accent: '#a855f7',
-    link: '/company',
-  },
-  {
-    title: 'Rapid Execution',
-    desc: 'Iterative development cycles with continuous delivery — from concept to production in weeks, not months.',
-    accent: '#14b8a6',
-    link: '/services/cloud',
+   title: 'Long-Term Partnership',
+   desc: 'Support beyond launch. We stay engaged with proactive maintenance, continuous improvements, and strategic guidance as your business evolves.',
+   accent: '#3b82f6',
+   link: '/company',
   },
 ];
 
@@ -54,10 +48,10 @@ export default function WhyNexyoviSection() {
   const cardsContainerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [scrollMetrics, setScrollMetrics] = useState({
-    viewportHeight: 430,
+    viewportHeight: 320,
     startTranslate: 0,
-    endTranslate: -1320,
-    scrollDistance: 1320,
+    endTranslate: -920,
+    scrollDistance: 920,
   });
 
   const { scrollYProgress } = useScroll({
@@ -150,11 +144,11 @@ export default function WhyNexyoviSection() {
         }}
       />
 
-      <div className="sticky top-0 z-10 h-[56vh] min-h-[420px] overflow-hidden">
+      <div className="sticky top-0 z-10 h-[46vh] min-h-[330px] overflow-hidden">
         <div className="container max-w-7xl mx-auto relative z-10 px-6 h-full flex items-center">
-          <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-6 lg:gap-10 items-center w-full min-h-0">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.05fr] gap-4 lg:gap-8 items-center w-full min-h-0">
 
-            {/* Left: Large Title + Arrow */}
+            {/* Left: Title + subtitle */}
             <div className="flex flex-col items-center lg:flex-row gap-3">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -164,9 +158,17 @@ export default function WhyNexyoviSection() {
                 className="relative w-full"
               >
                 <div className="lg:max-w-md">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 mb-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800]" />
+                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">Why Nexyovi?</span>
+                  </div>
                   <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-white tracking-[-0.04em] leading-[0.94]">
-                    <span className="text-[#F5A800]">Nexyovi</span>
+                    Real{' '}
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">differentiation.</span>
                   </h2>
+                  <p className="text-white/40 text-sm mt-4 max-w-xs font-medium leading-relaxed">
+                    This is what buyers compare. We deliver on every point.
+                  </p>
                 </div>
               </motion.div>
 
@@ -195,17 +197,18 @@ export default function WhyNexyoviSection() {
             </div>
 
             {/* Right: Cards container — slides up */}
-            <div ref={cardsViewportRef} className="relative h-[260px] md:h-[320px] overflow-hidden px-3 py-3">
-              <div ref={cardsContainerRef} className="absolute inset-x-3 top-3 space-y-2">
-                {cards.map((card, i) => {
+            <div ref={cardsViewportRef} className="relative h-[210px] md:h-[260px] overflow-hidden px-2 py-2">
+              <div ref={cardsContainerRef} className="absolute inset-x-2 top-2 space-y-2">
+                  {cards.map((card, i) => {
                   return (
-                    <div
+                    <Link
+                      to={card.link}
                       key={card.title}
-                      ref={(el) => { cardRefs.current[i] = el; }}
-                      className="group relative min-h-[110px] origin-center overflow-hidden rounded-[20px] border border-white/10 bg-[#0a0a0e] p-4 md:p-5 transition-all duration-500 hover:border-[#F5A800]/40"
+                      ref={(el) => { cardRefs.current[i] = el as unknown as HTMLDivElement; }}
+                      className="group relative min-h-[92px] origin-center overflow-hidden rounded-2xl border border-white/10 bg-[#0a0a0e] p-3 md:p-4 transition-all duration-500 hover:border-[#F5A800]/40 block"
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                      <div className="relative z-10 space-y-2">
+                      <div className="relative z-10 space-y-1.5">
                         <div>
                           <h3
                             className="text-[15px] md:text-[17px] font-black tracking-[-0.02em] leading-[1.15] mb-1 text-white"
@@ -216,15 +219,8 @@ export default function WhyNexyoviSection() {
                             {card.desc}
                           </p>
                         </div>
-
-                        <Link to={card.link} className="flex items-center gap-2 pt-1 group/link">
-                          <div className="h-[2px] flex-1 max-w-[44px] rounded-full transition-all duration-500 group-hover:max-w-[80px]" style={{ backgroundColor: card.accent }} />
-                          <span className="text-[9px] font-bold uppercase tracking-[0.18em] opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-white/60 group-hover:text-[#F5A800]">
-                            Learn more
-                          </span>
-                        </Link>
                       </div>
-                    </div>
+                    </Link>
                   );
                 })}
               </div>
