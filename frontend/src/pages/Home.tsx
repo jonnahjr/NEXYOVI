@@ -14,8 +14,8 @@ const Home = () => {
   return (
     <div className="bg-[#02040a] min-h-screen text-white font-sans selection:bg-[#F5A800]/30">
       <Hero />
-      <WhyNexyoviSection />
       <EthiopianPartners />
+      <WhyNexyoviSection />
       <ServicesSection />
       <IndustriesSection />
       <HowWeWork />
