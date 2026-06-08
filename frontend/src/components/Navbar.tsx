@@ -5,10 +5,10 @@ import myLogo from '../assets/logo 1.png';
 import { useSite } from '../context/SiteContext';
 
 const navLinks = [
- { name: 'Company', href: '/company' },
  { name: 'Services', href: '/services' },
  { name: 'Industries', href: '/industries' },
  { name: 'Projects', href: '/projects' },
+ { name: 'About', href: '/company' },
  { name: 'Contact', href: '/contact' }];
 
 function NavLink({ children, href, isActive, isHovered, onMouseEnter, onClick }: { children: React.ReactNode, href: string, isActive: boolean, isHovered?: boolean, onMouseEnter?: () => void, onClick: (e: React.MouseEvent) => void }) {
@@ -143,7 +143,7 @@ const Navbar = () => {
              onClick={handleNavClick('/contact#inquiry')}
              className="group inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-[#F5A800] text-black text-[12px] font-bold hover:bg-[#FFD166] transition-all duration-300"
            >
-             <span>Book a session</span>
+             <span>Book Strategy Session</span>
            </Link>
          </div>
 
@@ -182,7 +182,7 @@ const Navbar = () => {
                ))}
                <div className="pt-4 mt-1 border-t border-white/10">
                  <Link to="/contact#inquiry" onClick={handleNavClick('/contact#inquiry')} className="inline-flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl bg-[#F5A800] text-black text-[13px] font-bold hover:bg-[#FFD166] transition-all">
-                   Book a session
+                   Book Strategy Session
                  </Link>
                </div>
              </div>
