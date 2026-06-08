@@ -12,7 +12,7 @@ const Hero = () => {
   const { siteContent } = useSite();
   const hero = siteContent?.hero || {};
   const headline = hero.title || 'Enterprise software for African institutions — built by senior engineers, delivered in weeks.';
-  const subtitle = hero.subtitle || 'We design and build custom enterprise software, AI systems, and cloud infrastructure for banks, hospitals, governments, and businesses across Africa.';
+  const subtitle = hero.subtitle || 'We build enterprise software for banks, hospitals, and telecoms across Africa — delivered by senior engineers in 8–24 weeks.';
   const ctaPrimary = hero.cta_primary || 'Book a strategy session';
   const ctaSecondary = hero.cta_secondary || 'Get free AI audit';
 
