@@ -22,7 +22,7 @@ const projects = [
         outcome: 'Processed 2.1M transactions/year, reduced checkout time by 35%',
         screenshots: [market1, market2, market3],
         tags: ['Nexyovi Labs', 'E-Commerce', 'Mobile'],
-        href: '/projects',
+        href: '/projects/nexi-market',
     },
     {
         name: 'Nexi Locate',
@@ -30,7 +30,7 @@ const projects = [
         outcome: '200K+ active users, 4.8-star rating on app stores',
         screenshots: [locate1, locate2, locate3],
         tags: ['Nexyovi Labs', 'Maps', 'Mobile'],
-        href: '/projects',
+        href: '/projects/nexi-locate',
     },
     {
         name: 'Tele-Psychiatry',
