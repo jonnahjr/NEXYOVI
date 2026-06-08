@@ -58,7 +58,7 @@ const HeroEditor = () => {
           value={form.title}
           onChange={e => setForm({ ...form, title: e.target.value })}
           className={textareaClass + " text-xl font-black"}
-          placeholder="Where Intelligence Meets Infrastructure."
+          placeholder="We build enterprise software, AI systems, and cloud infrastructure for African businesses — fast, secure, senior-led."
         />
       </div>
       <div>

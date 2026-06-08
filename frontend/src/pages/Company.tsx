@@ -1,24 +1,20 @@
-import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import {
   ArrowRight,
-  Building2,
   Calendar,
-  ChevronDown,
   Cloud,
   Code2,
   Cpu,
   Globe,
   Heart,
-  Landmark,
   Linkedin,
-  Rocket,
   Shield,
   ShieldCheck,
   Target,
   Users,
   Zap,
 } from 'lucide-react';
-import React, { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import TestimonialSection from '../components/TestimonialSection';
 import TextReveal from '../components/TextReveal';
@@ -27,15 +23,7 @@ import { EASE_EXPO, fadeUp, staggerContainer } from '../lib/animations';
 
 /* ═══════════════════════════════════════════
    Data
-   ═══════════════════════════════════════════ */
-
-const featuredProjects = [
-  { title: 'Enterprise ERP Platform', desc: 'Full-suite enterprise resource planning system handling inventory, procurement, HR, and financial operations for multi-location organizations.', tag: 'Enterprise Systems', outcome: 'Integrated 12 departments, reduced reporting time by 70%' },
-  { title: 'AI Customer Support System', desc: 'Intelligent customer service platform with LLM-powered triage, sentiment analysis, and automated resolution for enterprise support teams.', tag: 'Artificial Intelligence', outcome: 'Automated 45% of support tickets, reduced response time by 60%' },
-  { title: 'Logistics Management Platform', desc: 'Real-time fleet tracking, route optimization, warehouse management, and supply chain visibility platform for logistics operators.', tag: 'Logistics', outcome: 'Tracked 2,000+ fleet vehicles, optimized routes saving 30% in fuel costs' },
-  { title: 'FinTech Payment Infrastructure', desc: 'High-throughput payment processing platform handling millions of transactions with sub-second settlement and PCI-compliant security.', tag: 'FinTech', outcome: 'Processed 3M+ transactions/month with 99.99% uptime' },
-  { title: 'Healthcare Management System', desc: 'HIPAA-compliant hospital management platform with EHR, telemedicine, patient scheduling, and integrated billing workflows.', tag: 'Healthcare', outcome: 'Managed 100K+ patient records, reduced scheduling conflicts by 55%' },
-];
+   ═══════════════════════════════════════ */
 
 const values = [
   { icon: Shield, title: 'Engineering Integrity', desc: 'Every line of code, every architecture decision holds to the highest standard of quality and security.', accent: '#F5A800' },
@@ -58,88 +46,12 @@ const SectionBadge = ({ label, dark }: { label: string; dark?: boolean }) => (
 /* ═══════════════════════════════════════════
    Company Page Component
    ═══════════════════════════════════════════ */
-function OrganizationsAccordion() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const toggle = (i: number) => {
-    setOpenIndex(openIndex === i ? null : i);
-  };
-
-  return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-      variants={staggerContainer}
-      className="max-w-xl mx-auto"
-    >
-      {[
-        { icon: Rocket, label: 'Startups', desc: 'MVP acceleration, product launches, and scaling engineering teams' },
-        { icon: Heart, label: 'NGOs & Non-Profits', desc: 'Mission-critical systems, donor platforms, and operational tools' },
-        { icon: ShieldCheck, label: 'Healthcare Providers', desc: 'HIPAA-compliant platforms, telemedicine, and patient analytics' },
-        { icon: Landmark, label: 'Financial Institutions', desc: 'Payment infrastructure, fraud detection, and regulatory compliance' },
-        { icon: Building2, label: 'Government Organizations', desc: 'Secure digital infrastructure, identity systems, and citizen services' },
-      ].map((item, i) => {
-        const Icon = item.icon;
-        const isOpen = openIndex === i;
-
-        return (
-          <motion.div key={item.label} variants={fadeUp} className="mb-3">
-            <button
-              type="button"
-              onClick={() => toggle(i)}
-              className="w-full flex items-center gap-4 px-6 py-4 rounded-[20px] bg-white border border-slate-200 hover:border-[#F5A800]/30 transition-all duration-300 text-left group"
-            >
-              <div className="relative w-11 h-11 rounded-xl bg-[#030303] border border-white/10 flex items-center justify-center shrink-0 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 transition-all duration-300">
-                <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
-                <Icon size={18} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-[15px] font-black text-slate-950 tracking-tight group-hover:text-[#F5A800] transition-colors text-left">
-                  {item.label}
-                </h3>
-              </div>
-              <motion.div
-                animate={{ rotate: isOpen ? 180 : 0 }}
-                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                className="w-7 h-7 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0 group-hover:bg-[#F5A800]/10 group-hover:border-[#F5A800]/30 transition-colors"
-              >
-                <ChevronDown size={14} className="text-slate-500" />
-              </motion.div>
-            </button>
-
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <motion.div
-                  key="content"
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                  className="overflow-hidden"
-                >
-                  <div className="px-6 pb-4 pt-3">
-                    <div className="pl-[60px]">
-                      <p className="text-slate-500 text-[13px] leading-relaxed font-medium">
-                        {item.desc}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        );
-      })}
-    </motion.div>
-  );
-}
 
 export default function Company() {
   const { team, settings, siteContent } = useSite();
   const about = siteContent?.about || {};
   const companyTeam = siteContent?.companyTeam || {};
-  const aboutTagline = about.tagline || 'We build the backbone of the digital economy.';
+  const aboutTagline = about.tagline || "Africa's engineering partner for organizations that can't afford to ship slow.";
   const aboutDescription = about.description || 'Nexyovi is an elite software engineering firm headquartered in Addis Ababa, Ethiopia, with a global delivery footprint.';
   const founded = about.founded || '2012';
   const headquarters = about.headquarters || 'Addis Ababa, Ethiopia';
@@ -211,15 +123,10 @@ export default function Company() {
         >
           <TextReveal className="mb-10">
             <h1 className="text-[42px] md:text-[60px] lg:text-[76px] font-black tracking-[-0.03em] leading-[1.05] text-white max-w-5xl mx-auto">
-              We build{' '}
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">
-                software systems
+                Africa's engineering partner
               </span>
-              , AI platforms, and{' '}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">
-                cloud infrastructure
-              </span>
-              {' '}that power modern organizations.
+              {' '}for organizations that can't afford to ship slow.
             </h1>
           </TextReveal>
 
@@ -250,186 +157,104 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          2. OUR STORY — Editorial · Stat Anchors
+          2. OUR STORY
          ═══════════════════════════════════════ */}
       <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
-        <div className="container max-w-6xl mx-auto px-6 relative z-10">
+        <div className="container max-w-5xl mx-auto px-6 relative z-10">
 
-          {/* ── Section badge centered ── */}
+          {/* ── Badge ── */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="mb-14 text-center"
           >
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#F5A800]/15 bg-[#F5A800]/5 px-4 py-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#F5A800]" />
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#F5A800]">Our Story</span>
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-white/20" />
+              <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-white/50">Our Story</span>
             </div>
           </motion.div>
 
-          <div className="grid md:grid-cols-[1fr_1.6fr] gap-10 md:gap-16">
-
-            {/* ══ LEFT: Stat anchors ══ */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <div className="relative">
-                {/* Vertical accent line */}
-                <div className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-[#F5A800]/50 via-[#F5A800]/15 to-transparent hidden md:block" />
-
-                <div className="space-y-10 pl-0 md:pl-8">
-                  {[
-                    { number: '10+', label: 'Enterprise Platforms', accent: false },
-                    { number: '20+', label: 'Elite Engineers', accent: true },
-                    { number: '4', label: 'Countries Served', accent: false },
-                  ].map((stat, i) => (
-                    <motion.div
-                      key={stat.label}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: 0.1 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-                    >
-                      <span
-                        className={`text-[64px] md:text-[80px] lg:text-[96px] font-black tracking-[-0.05em] leading-[0.85] ${
-                          stat.accent ? 'text-[#F5A800]' : 'text-white'
-                        }`}
-                      >
-                        {stat.number}
-                      </span>
-                      <span className="block text-xs md:text-sm font-bold text-white/40 uppercase tracking-[0.2em] mt-1.5">
-                        {stat.label}
-                      </span>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-
-            {/* ══ RIGHT: Story ══ */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <div className="relative pl-0 md:pl-10">
-                {/* Gold quotation mark */}
-                <div className="absolute -top-6 -left-2 md:-left-2 text-[80px] font-black text-[#F5A800]/10 leading-none select-none pointer-events-none">
-                  "
-                </div>
-
-                <div className="space-y-5">
-                  <p className="text-white/65 text-base md:text-lg leading-[1.8] font-medium">
-                    Founded in Addis Ababa in 2024 by Yonas Bogale, Nexyovi was built with a simple mission: help organizations leverage technology to solve complex challenges, operate more efficiently, and grow with confidence.
-                  </p>
-                  <p className="text-white/50 text-base md:text-lg leading-[1.8] font-medium">
-                    What began as a focused software studio quickly evolved into a multidisciplinary engineering company specializing in custom software, artificial intelligence, cloud infrastructure, cybersecurity, and digital transformation.
-                  </p>
-                  <p className="text-white/65 text-base md:text-lg leading-[1.8] font-medium">
-                    Today, Nexyovi partners with startups, enterprises, government organizations, and mission-driven businesses across Africa and beyond — designing, building, and maintaining secure, scalable, production-ready digital systems that deliver measurable outcomes.
-                  </p>
-                  <p className="text-white/50 text-base md:text-lg leading-[1.8] font-medium">
-                    From enterprise applications and AI-powered platforms to cloud-native infrastructure and mission-critical systems, we combine deep engineering expertise with a long-term commitment to client success.
-                  </p>
-
-                  {/* Divider before closing vision */}
-                  <div className="flex items-center gap-3 pt-2">
-                    <div className="h-px w-12 bg-[#F5A800]/40" />
-                    <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/20">Vision</span>
-                  </div>
-
-                  <p className="text-white/70 text-base md:text-lg leading-[1.8] font-semibold italic">
-                    "Our vision is to build technology that creates lasting impact — starting in Africa, built for the world."
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════
-          3. ORGANIZATIONS WE SUPPORT — Light Section
-         ═══════════════════════════════════════ */}
-      <section className="relative py-20 md:py-24 bg-white section-divider-light overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 right-1/4 w-[400px] h-[400px] bg-[#F5A800]/5 blur-[100px] rounded-full" />
-        </div>
-        <div className="container max-w-6xl mx-auto px-6 relative z-10">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-10">
-            <motion.div variants={fadeUp}>
-              <SectionBadge label="Organizations We Support" />
-            </motion.div>
-            <motion.p variants={fadeUp} className="text-slate-500 text-lg font-medium max-w-2xl mx-auto">
-              From high-growth startups to government institutions — we deliver engineering that moves organizations forward.
-            </motion.p>
-          </motion.div>
-
-          <OrganizationsAccordion />
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════
-          4. FEATURED PROJECTS — Creamy White
-         ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-[#FCFBF8] border-t border-slate-200 overflow-hidden">
-        <div className="container max-w-6xl mx-auto px-6 relative z-10">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-16">
-            <motion.div variants={fadeUp}>
-              <SectionBadge label="Featured Work" />
-            </motion.div>
-            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-4">
-              Featured{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Projects.</span>
-            </motion.h2>
-          </motion.div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {featuredProjects.map((project, i) => (
+          {/* ── Stats Row ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="mx-auto mb-16 grid max-w-2xl grid-cols-3 gap-6"
+          >
+            {[
+              { number: '10+', label: 'Enterprise Platforms' },
+              { number: '20+', label: 'Elite Engineers' },
+              { number: '4', label: 'Countries Served' },
+            ].map((stat, i) => (
               <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
+                key={stat.label}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.5 }}
-                className="group bg-white rounded-[24px] border border-slate-200 p-8 transition-all duration-500 hover:-translate-y-1 hover:border-[#F5A800]/40 text-left relative flex flex-col h-full"
+                transition={{ duration: 0.4, delay: 0.1 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                className="text-center"
               >
-                <div className="relative w-12 h-12 rounded-2xl bg-[#030303] border border-white/10 flex items-center justify-center mb-5 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 transition-all duration-300">
-                  <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
-                  <Code2 size={22} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors" />
-                </div>
-                <span className="text-[10px] font-black text-[#F5A800] uppercase tracking-widest mb-2 block">{project.tag}</span>
-                <h3 className="text-xl font-black text-slate-950 mb-2 group-hover:text-[#F5A800] transition-colors">{project.title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed font-medium mb-6">{project.desc}</p>
-                <div className="mt-auto">
-                  {project.outcome && (
-                    <p className="text-[#F5A800]/80 text-[12px] font-semibold leading-relaxed mb-4">
-                      {project.outcome}
-                    </p>
-                  )}
-                  <Link to="/projects" className="inline-flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest text-slate-400 hover:text-[#F5A800] transition-colors mt-2">
-                    View Case Study <ArrowRight size={12} />
-                  </Link>
-                </div>
+                <span className="text-4xl font-black tracking-[-0.04em] text-white md:text-5xl">
+                  {stat.number}
+                </span>
+                <span className="mt-1 block text-[10px] font-medium uppercase tracking-[0.15em] text-white/35">
+                  {stat.label}
+                </span>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
+
+          {/* ── Story ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="mx-auto max-w-3xl"
+          >
+            <div className="space-y-6">
+              <p className="text-base leading-[1.7] text-white/60 md:text-lg">
+                Founded in Addis Ababa in 2024 by Yonas Bogale, Nexyovi was built with a simple mission: help organizations leverage technology to solve complex challenges, operate more efficiently, and grow with confidence.
+              </p>
+              <p className="text-base leading-[1.7] text-white/50 md:text-lg">
+                What began as a focused software studio quickly evolved into a multidisciplinary engineering company specializing in custom software, artificial intelligence, cloud infrastructure, cybersecurity, and digital transformation.
+              </p>
+              <p className="text-base leading-[1.7] text-white/60 md:text-lg">
+                Today, Nexyovi partners with startups, enterprises, government organizations, and mission-driven businesses across Africa and beyond — designing, building, and maintaining secure, scalable, production-ready digital systems that deliver measurable outcomes.
+              </p>
+              <p className="text-base leading-[1.7] text-white/50 md:text-lg">
+                From enterprise applications and AI-powered platforms to cloud-native infrastructure and mission-critical systems, we combine deep engineering expertise with a long-term commitment to client success.
+              </p>
+
+              {/* Vision */}
+              <div className="pt-6">
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+                  <span className="text-[10px] font-medium uppercase tracking-[0.25em] text-white/25">Vision</span>
+                  <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+                </div>
+                <p className="text-center text-base italic leading-relaxed text-white/70 md:text-lg">
+                  "Our vision is to build technology that creates lasting impact — starting in Africa, built for the world."
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
         </div>
       </section>
 
+
+
       {/* ═══════════════════════════════════════
-          5. TESTIMONIALS
+          3. TESTIMONIALS
          ═══════════════════════════════════════ */}
       <TestimonialSection />
 
       {/* ═══════════════════════════════════════
-          6. MISSION & VISION — Dark
+          4. MISSION & VISION — Dark
          ═══════════════════════════════════════ */}
       <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
@@ -487,7 +312,7 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          6. CORE PRINCIPLES — Creamy White
+          5. CORE PRINCIPLES — Creamy White
          ═══════════════════════════════════════ */}
       <section className="relative py-28 md:py-36 bg-[#FCFBF8] border-t border-slate-200 overflow-hidden">
         <div className="container max-w-6xl mx-auto px-6 relative z-10">
@@ -524,7 +349,7 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          7. OUR CAPABILITIES — Creamy White
+          6. OUR CAPABILITIES — Creamy White
          ═══════════════════════════════════════ */}
       <section className="relative py-28 md:py-36 bg-[#FCFBF8] border-t border-slate-200 overflow-hidden">
         <div className="container max-w-5xl mx-auto px-6 relative z-10">
@@ -566,7 +391,7 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          8. LEADERSHIP / TEAM — Enterprise Structure
+          7. LEADERSHIP / TEAM — Enterprise Structure
          ═══════════════════════════════════════ */}
       <section className="relative py-16 md:py-24 bg-[#02040a] section-divider-dark overflow-hidden">
         {/* Subtle grid texture */}
@@ -780,7 +605,7 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          9. SECURITY & COMPLIANCE — Creamy White
+          8. SECURITY & COMPLIANCE — Creamy White
          ═══════════════════════════════════════ */}
       <section className="relative py-28 md:py-36 bg-[#FCFBF8] border-t border-slate-200 overflow-hidden">
         <div className="container max-w-5xl mx-auto px-6 relative z-10">
@@ -817,7 +642,7 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          10. HOW WE ENGAGE — Light Section (near CTA)
+          9. HOW WE ENGAGE — Light Section (near CTA)
          ═══════════════════════════════════════ */}
       <section className="relative py-28 md:py-36 bg-white section-divider-light overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
@@ -863,7 +688,7 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          11. FINAL CTA — Dark Section
+          10. FINAL CTA — Dark Section
          ═══════════════════════════════════════ */}
       <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">

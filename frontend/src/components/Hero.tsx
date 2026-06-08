@@ -11,8 +11,8 @@ const VIDEO_URL =
 const Hero = () => {
   const { siteContent } = useSite();
   const hero = siteContent?.hero || {};
-  const headline = hero.title || 'We ship production-grade software faster.';
-  const subtitle = hero.subtitle || "We build secure, scalable enterprise software, AI systems, and cloud infrastructure for organizations that can't afford to get it wrong.";
+  const headline = hero.title || 'We build enterprise software, AI systems, and cloud infrastructure for African businesses — fast, secure, senior-led.';
+  const subtitle = hero.subtitle || "Where Intelligence Meets Infrastructure. From Addis Ababa to the world.";
   const ctaPrimary = hero.cta_primary || 'Book a strategy session';
   const ctaSecondary = hero.cta_secondary || 'Explore Services';
 
