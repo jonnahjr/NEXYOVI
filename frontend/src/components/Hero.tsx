@@ -9,12 +9,11 @@ const VIDEO_URL =
   'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260508_215831_c6a8989c-d716-4d8d-8745-e972a2eec711.mp4';
 
 const Hero = () => {
-  const { siteContent } = useSite();
-  const hero = siteContent?.hero || {};
-  const headline = hero.title || 'Enterprise software for African institutions — built by senior engineers, delivered in weeks.';
-  const subtitle = hero.subtitle || 'We build enterprise software for banks, hospitals, and telecoms across Africa — delivered by senior engineers in 8–24 weeks.';
-  const ctaPrimary = hero.cta_primary || 'Book a strategy session';
-  const ctaSecondary = hero.cta_secondary || 'See our work →';
+  // Hardcoded hero content for reliability and performance
+  const headline = 'Enterprise software for African institutions — built by senior engineers, delivered in weeks.';
+  const subtitle = 'We build enterprise software for banks, hospitals, and telecoms across Africa — delivered by senior engineers in 8–24 weeks.';
+  const ctaPrimary = 'Book a strategy session';
+  const ctaSecondary = 'See our work →';
 
   return (
     <section className="relative bg-[#02040a] overflow-hidden">
