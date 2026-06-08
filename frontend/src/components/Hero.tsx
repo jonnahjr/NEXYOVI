@@ -10,9 +10,9 @@ const VIDEO_URL =
 
 const Hero = () => {
   // Hardcoded hero content for reliability and performance
-  const differentiatorLine = 'Senior engineers. Africa-first. Shipped in weeks, not months.';
-  const mainHeadline = 'We build the platforms, AI systems, and infrastructure powering Africa\'s fastest-growing companies — from Addis Ababa to the world.';
-  const ctaPrimary = 'Book a strategy session';
+  const mainHeadline = 'The engineering partner Africa\'s fastest companies trust to build — and ship.';
+  const statLine = '50+ enterprise systems shipped across 8 countries.';
+  const ctaPrimary = 'Book a free strategy session';
   const ctaSecondary = 'See our work';
 
   return (
@@ -28,7 +28,7 @@ const Hero = () => {
         >
           <source src={VIDEO_URL} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-black/60" />
       </div>
       {/* ── Content ── */}
       <div className="relative z-10">
@@ -43,31 +43,24 @@ const Hero = () => {
             animate="visible"
             className="px-8 sm:px-16 md:px-24 lg:px-32 pt-32"
           >
-            <div className="max-w-[720px]">
-              {/* Differentiator Line */}
+            <div className="max-w-[680px]">
+              {/* Stat Line */}
               <motion.p
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.1, ease: EASE_EXPO as any } } }}
-                className="text-[#F5A800] font-bold text-sm md:text-base uppercase tracking-[0.2em] mb-6"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F5A800]/10 border border-[#F5A800]/20 mb-8"
               >
-                {differentiatorLine}
+                <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
+                <span className="text-[#F5A800] font-bold text-sm tracking-wide">{statLine}</span>
               </motion.p>
 
               {/* Main Headline */}
               <motion.h1
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.2, ease: EASE_EXPO as any } } }}
-                className="text-[36px] md:text-[48px] lg:text-[60px] font-black text-white tracking-[-0.04em] leading-[0.95] mb-6"
+                className="text-[36px] md:text-[48px] lg:text-[60px] font-black text-white tracking-[-0.04em] leading-[0.95] mb-8"
               >
-                We build the platforms, AI systems, and infrastructure
-                <span className="text-[#F5A800]"> powering Africa's fastest-growing companies — from Addis Ababa to the world.</span>
+                The engineering partner Africa's fastest companies trust
+                <span className="text-[#F5A800]"> to build — and ship.</span>
               </motion.h1>
-
-              {/* Subheadline */}
-              <motion.p
-                variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.3, ease: EASE_EXPO as any } } }}
-                className="text-white/70 text-[16px] md:text-[18px] leading-relaxed max-w-[640px] mb-12"
-              >
-                Nexyovi designs and builds enterprise software, AI systems, cloud infrastructure, and digital platforms for banks, healthcare providers, governments, telecoms, and high-growth companies.
-              </motion.p>
 
               {/* CTAs */}
               <motion.div
