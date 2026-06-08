@@ -161,6 +161,7 @@ export default function Company() {
     .map((name) => teamByName.get(normalizeTeamValue(name)))
     .filter(Boolean);
   const engineeringDeliveryTeam = [
+    'Mikayel Alemu',
     'Sara Denbel',
     'Henok Alemu',
     'Betelhem Assefa',
@@ -646,16 +647,16 @@ export default function Company() {
             </motion.div>
           )}
 
-          <div className="mx-auto mb-8 flex max-w-4xl flex-col items-center text-center">
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30">Founder &amp; CEO</span>
-            <div className="my-2 h-6 w-px bg-gradient-to-b from-white/[0.16] to-white/[0.03]" />
-            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white/[0.03] text-white/35">
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+          <div className="mx-auto mb-4 flex max-w-4xl flex-col items-center text-center">
+            <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30">Founder &amp; CEO</span>
+            <div className="my-1 h-4 w-px bg-gradient-to-b from-white/[0.16] to-white/[0.03]" />
+            <div className="flex h-4 w-4 items-center justify-center rounded-full bg-white/[0.03] text-white/35">
+              <svg width="7" height="7" viewBox="0 0 12 12" fill="none">
                 <path d="M6 10L2 4h8L6 10z" fill="currentColor" />
               </svg>
             </div>
-            <div className="my-2 h-6 w-px bg-gradient-to-b from-white/[0.16] to-white/[0.03]" />
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30">Executive Leadership Team</span>
+            <div className="my-1 h-4 w-px bg-gradient-to-b from-white/[0.16] to-white/[0.03]" />
+            <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30">Executive Leadership Team</span>
           </div>
 
           {/* ═══════════════════════════════════
@@ -702,14 +703,14 @@ export default function Company() {
             </motion.div>
           )}
 
-          <div className="mx-auto mb-6 flex max-w-4xl flex-col items-center text-center">
-            <div className="h-6 w-px bg-gradient-to-b from-white/[0.14] to-white/[0.03]" />
-            <div className="my-2 flex h-6 w-6 items-center justify-center rounded-full bg-white/[0.03] text-white/35">
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+          <div className="mx-auto mb-4 flex max-w-4xl flex-col items-center text-center">
+            <div className="h-4 w-px bg-gradient-to-b from-white/[0.14] to-white/[0.03]" />
+            <div className="my-1 flex h-4 w-4 items-center justify-center rounded-full bg-white/[0.03] text-white/35">
+              <svg width="7" height="7" viewBox="0 0 12 12" fill="none">
                 <path d="M6 10L2 4h8L6 10z" fill="currentColor" />
               </svg>
             </div>
-            <div className="h-6 w-px bg-gradient-to-b from-white/[0.14] to-white/[0.03]" />
+            <div className="h-4 w-px bg-gradient-to-b from-white/[0.14] to-white/[0.03]" />
           </div>
 
           {/* ═══════════════════════════════════
@@ -735,7 +736,7 @@ export default function Company() {
                 whileInView="visible"
                 viewport={{ once: true, margin: '-40px' }}
                 variants={staggerContainer}
-                className="flex flex-nowrap justify-between gap-2 overflow-x-hidden"
+                className="flex flex-nowrap justify-between gap-1 overflow-x-hidden"
               >
                 {engineeringDeliveryTeam.map((member: any) => (
                   <motion.div
@@ -743,25 +744,25 @@ export default function Company() {
                     variants={fadeUp}
                     className="text-center flex-shrink-0 flex-1"
                   >
-                    <div className="mx-auto mb-1 h-7 w-7 overflow-hidden rounded-full">
+                    <div className="mx-auto mb-0.5 h-6 w-6 overflow-hidden rounded-full">
                       {member.img ? (
                         <img src={member.img} alt={member.name} className="h-full w-full object-cover" />
                       ) : (
-                        <div className="flex h-full w-full items-center justify-center text-[8px] font-black text-white/70" style={{ backgroundColor: member.color || '#8b5cf6' }}>
+                        <div className="flex h-full w-full items-center justify-center text-[7px] font-black text-white/70" style={{ backgroundColor: member.color || '#8b5cf6' }}>
                           {member.initials || member.name.split(' ').map((n: string) => n[0]).join('')}
                         </div>
                       )}
                     </div>
-                    <h5 className="text-[10px] font-semibold text-white">{member.name}</h5>
-                    <p className="mt-0.5 text-[6px] font-medium uppercase tracking-[0.12em] text-white/42">{member.role}</p>
+                    <h5 className="text-[9px] font-semibold text-white">{member.name}</h5>
+                    <p className="mt-0.5 text-[5px] font-medium uppercase tracking-[0.12em] text-white/42">{member.role}</p>
                     {member.linkedin && (
                       <a
                         href={member.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-1 inline-flex items-center gap-0.5 text-[7px] font-medium text-white/30 transition-all duration-300 hover:text-[#8fc3f4]"
+                        className="mt-1 inline-flex items-center gap-0.5 text-[6px] font-medium text-white/30 transition-all duration-300 hover:text-[#8fc3f4]"
                       >
-                        <Linkedin size={5} />
+                        <Linkedin size={4} />
                         LinkedIn
                       </a>
                     )}
