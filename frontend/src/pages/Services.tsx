@@ -923,7 +923,7 @@ export default function Services() {
             </div>
             <div className="p-8 rounded-[24px] bg-white border border-slate-200 hover:border-[#F5A800]/40 transition-colors duration-300">
               <div className="relative w-12 h-12 rounded-[16px] bg-[#030303] border border-white/10 flex items-center justify-center mb-5 overflow-hidden shadow-sm"><div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" /><Lightbulb size={20} className="relative z-10 text-zinc-400" /></div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">Technical Consulting</h3>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Fractional CTO Services</h3>
               <p className="text-sm font-medium text-slate-500">Strategic architecture guidance and audits from our senior technical leadership.</p>
             </div>
             <div className="p-8 rounded-[24px] bg-white border border-slate-200 hover:border-[#F5A800]/40 transition-colors duration-300">

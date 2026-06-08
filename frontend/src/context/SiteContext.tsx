@@ -7,12 +7,12 @@ import yonasImg from '../assets/yonas.jpg';
 // Avatar assets are removed — using initials/color fallbacks instead
 
 const initialTeam = [
-    { id: '1', name: 'Yonas Bogale', role: 'Founder & CEO', bio: 'Visionary leader with 12+ years in tech and business strategy across two continents.', img: yonasImg, linkedin: 'https://www.linkedin.com/in/yonas-bogale/' },
+    { id: '1', name: 'Yonas Bogale', role: 'Founder & CEO', bio: 'Visionary leader with 12+ years in tech and business strategy across two continents.', initials: 'YB', color: '#F5A800', linkedin: 'https://www.linkedin.com/in/yonas-bogale/' },
     { id: '2', name: 'Amanuel Tesfaye', role: 'Chief Technology Officer', bio: 'Software architect and engineer with deep expertise in distributed systems, cloud infrastructure, and AI/ML deployment.', initials: 'AT', color: '#8b5cf6', linkedin: 'https://linkedin.com/in/amanuel-tesfaye/' },
     { id: '3', name: 'Selamawit Hailu', role: 'Chief Product Officer', bio: 'Leads product vision and strategy. Passionate about building scalable systems and ensuring user-centric design.', initials: 'SH', color: '#10b981', linkedin: 'https://linkedin.com/in/selamawit-hailu/' },
     { id: '16', name: 'Eyerusalem Bogale', role: 'VP of Operations', bio: 'Operations leader with 10+ years driving efficiency and scaling processes across tech startups.', initials: 'EB', color: '#ff7f50', linkedin: 'https://linkedin.com/in/eyerusalem-bogale' },
-    { id: '10', name: 'Mikayel', role: 'Full Stack Developer', bio: 'Foundation of everything — every project needs this.', initials: 'MK', color: '#ef4444', linkedin: '#' },
-    { id: '11', name: 'Sara', role: 'Mobile/App Developer', bio: 'High demand, tangible product clients can see and touch.', initials: 'SR', color: '#14b8a6', linkedin: '#' },
+    { id: '10', name: 'Mikayel Alemu', role: 'Full Stack Developer', bio: 'Foundation of everything — every project needs this.', initials: 'MK', color: '#ef4444', linkedin: '#' },
+    { id: '11', name: 'Sara Denbel', role: 'Mobile Application Developer', bio: 'High demand, tangible product clients can see and touch.', initials: 'SD', color: '#14b8a6', linkedin: '#' },
     { id: '6', name: 'Henok Alemu', role: 'DevOps Engineer', bio: 'Keeps everything running — cloud, pipelines, deployments.', initials: 'HA', color: '#06b6d4', linkedin: '#' },
     { id: '8', name: 'Betelhem Assefa', role: 'AI/ML Engineer', bio: 'Your biggest differentiator right now.', initials: 'BA', color: '#F5A800', linkedin: '#' },
     { id: '9', name: 'Nahom Girmachew', role: 'Backend Developer', bio: 'Powers APIs, data, and business logic.', initials: 'NG', color: '#a855f7', linkedin: '#' },
@@ -104,6 +104,30 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [settings, setSettings] = useState<any>(initialSettings);
     const [siteContent, setSiteContent] = useState<any>({});
 
+    // Helper function to deduplicate testimonials
+    const deduplicateTestimonials = (data: any[]) => {
+        const seen = new Set<string>();
+        const unique: any[] = [];
+        
+        // First add initialTestimonials
+        for (const t of initialTestimonials) {
+            seen.add(t.id);
+            unique.push(t);
+        }
+
+        // Then add any new testimonials from supabase that aren't duplicates
+        for (const t of data) {
+            const isDuplicate = initialTestimonials.some(
+                it => it.author === t.author && it.content === t.content
+            );
+            if (!seen.has(t.id) && !isDuplicate) {
+                seen.add(t.id);
+                unique.push(t);
+            }
+        }
+        return unique;
+    };
+
     // Fetch initial data from Supabase
     useEffect(() => {
         const fetchData = async () => {
@@ -111,14 +135,24 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
             if (jobsData && jobsData.length > 0) setJobs(jobsData);
 
             const { data: testData } = await supabase.from('testimonials').select('*').order('created_at', { ascending: false });
-            // Merge Supabase data with initial data — fill missing fields (linkedin, img) from initial,
-            // but honor Supabase data for author, role, content (admin edits take priority)
+            
             if (testData && testData.length > 0) {
-                const merged = testData.map((td: any) => {
-                    const match = initialTestimonials.find(it => it.author === td.author);
-                    return match
-                        ? { ...match, ...td, linkedin: td.linkedin || match.linkedin, img: td.img || td.image_url || match.img }
-                        : td;
+                // First, check if there are duplicates in the database and clean them
+                // Merge logic: prefer initialTestimonials as authoritative
+                const merged = initialTestimonials.map(initial => {
+                    // Find if there's a matching db record (same author)
+                    const dbMatch = testData.find(td => td.author === initial.author);
+                    if (dbMatch) {
+                        // Keep initial data but update with any db changes if needed
+                        return {
+                            ...initial,
+                            ...dbMatch,
+                            id: initial.id, // keep original id from initial data
+                            linkedin: dbMatch.linkedin || initial.linkedin,
+                            img: dbMatch.img || dbMatch.image_url || initial.img
+                        };
+                    }
+                    return initial;
                 });
                 setTestimonials(merged);
             }
@@ -188,9 +222,20 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         const testimonialChannel = supabase.channel('realtime-testimonials')
             .on('postgres_changes', { event: '*', schema: 'public', table: 'testimonials' }, (payload) => {
-                if (payload.eventType === 'INSERT') setTestimonials(prev => [payload.new as any, ...prev]);
-                else if (payload.eventType === 'UPDATE') setTestimonials(prev => prev.map(t => t.id === (payload.new as any).id ? payload.new as any : t));
-                else if (payload.eventType === 'DELETE') setTestimonials(prev => prev.filter(t => t.id !== (payload.old as any).id));
+                if (payload.eventType === 'INSERT') {
+                    // Only add if it's not a duplicate of an initial testimonial
+                    const newT = payload.new as any;
+                    const isDuplicate = initialTestimonials.some(
+                        t => t.author === newT.author && t.content === newT.content
+                    );
+                    if (!isDuplicate) {
+                        setTestimonials(prev => [newT, ...prev]);
+                    }
+                } else if (payload.eventType === 'UPDATE') {
+                    setTestimonials(prev => prev.map(t => t.id === (payload.new as any).id ? payload.new as any : t));
+                } else if (payload.eventType === 'DELETE') {
+                    setTestimonials(prev => prev.filter(t => t.id !== (payload.old as any).id));
+                }
             })
             .subscribe();
 
@@ -311,7 +356,7 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
             jobs, team, testimonials, admins, messages, settings, siteContent,
             addJob, updateJob, deleteJob,
             addTeamMember, updateTeamMember, deleteTeamMember,
-            addTestimonial, updateTestimonial, deleteTestimonial,
+            addTestimonial, updateTestimonial, deleteTestimonial, setTestimonials,
             addAdmin, updateAdmin, deleteAdmin,
             addMessage, updateMessage, deleteMessage,
             updateSettings, updateSiteContent,

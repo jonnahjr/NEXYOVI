@@ -8,11 +8,60 @@ import { useSite } from '../../context/SiteContext';
 import { supabase } from '../../lib/supabase';
 
 const AdminTestimonials = () => {
- const { testimonials, addTestimonial, updateTestimonial, deleteTestimonial } = useSite();
+ const { testimonials, addTestimonial, updateTestimonial, deleteTestimonial, setTestimonials } = useSite();
  const [isEditing, setIsEditing] = useState(false);
  const [editing, setEditing] = useState<any>(null);
  const [search, setSearch] = useState('');
  const [isUploading, setIsUploading] = useState(false);
+ const [isCleaning, setIsCleaning] = useState(false);
+
+ const cleanUpDatabase = async () => {
+    setIsCleaning(true);
+    try {
+        // First get all testimonials from database
+        const { data: dbTestimonials, error: fetchError } = await supabase.from('testimonials').select('*');
+        if (fetchError) throw fetchError;
+
+        if (dbTestimonials && dbTestimonials.length > 0) {
+            const initialAuthors = initialTestimonials.map(t => t.author);
+            const idsToDelete: string[] = [];
+            const seenPairs = new Set<string>();
+
+            for (const t of dbTestimonials) {
+                const key = `${t.author}-${t.content}`;
+                // Delete if it's a duplicate pair OR if author is not in initial
+                if (seenPairs.has(key) || !initialAuthors.includes(t.author)) {
+                    idsToDelete.push(t.id);
+                } else {
+                    seenPairs.add(key);
+                }
+            }
+
+            if (idsToDelete.length > 0) {
+                const { error: deleteError } = await supabase.from('testimonials').delete().in('id', idsToDelete);
+                if (deleteError) throw deleteError;
+                alert(`Successfully deleted ${idsToDelete.length} duplicate/extra testimonials from the database!`);
+            } else {
+                alert('No duplicates found in the database!');
+            }
+        }
+        
+        // Also reset the local state to initial
+        setTestimonials(initialTestimonials);
+    } catch (error) {
+        console.error('Error cleaning up database:', error);
+        alert('Error cleaning up database. Check console for details.');
+    } finally {
+        setIsCleaning(false);
+    }
+ };
+
+ // Define initialTestimonials for reference here too
+ const initialTestimonials = [
+    { id: '1', content: "At Nexyovi, we don't just build software — we build the infrastructure that powers organizations across Africa and beyond. Every project we take on is a commitment to excellence, security, and real impact.", author: "Yonas Bogale", role: "Founder & CEO, Nexyovi", linkedin: "https://www.linkedin.com/in/yonas-bogale" },
+    { id: '2', content: "They connected us with top-tier Ethiopian engineering talent and built our core platform in parallel. Our time-to-market dropped from 12 months to 4. Gebeya's partnership with Nexyovi has been transformative for our pan-African expansion.", author: "Amadou Daffe", role: "CEO & Co-Founder, Gebeya", linkedin: "https://et.linkedin.com/in/amadoudaffe" },
+    { id: '4', content: "We needed a secure payment gateway that could handle Ethiopia's unique banking landscape. Nexyovi built it in eight weeks — integrating with four banks and processing live transactions on day one. They understand local infrastructure better than any international firm we've worked with.", author: "Rediet Tsigeberhan", role: "CEO, Arifpay", linkedin: "https://www.linkedin.com/in/rediet-tsigeberhan-97615642" },
+ ];
 
  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
  if (!e.target.files || e.target.files.length === 0) return;
@@ -222,9 +271,14 @@ const AdminTestimonials = () => {
  <h1 className="text-2xl font-bold text-white tracking-tight">Testimonials</h1>
  <p className="text-sm text-white/40 mt-0.5">{testimonials.length} verified reviews</p>
  </div>
+ <div className="flex items-center gap-3">
+ <button onClick={cleanUpDatabase} disabled={isCleaning} className="flex items-center gap-1.5 h-10 px-4 bg-red-500/20 border border-red-500/30 text-red-400 text-sm font-bold uppercase tracking-widest rounded-xl hover:bg-red-500/30 transition-all disabled:opacity-50">
+ {isCleaning ? <X size={16} className="animate-spin" /> : <Trash2 size={16} />} {isCleaning ? 'Cleaning...' : 'Clean Duplicates'}
+ </button>
  <button onClick={() => open()} className="flex items-center gap-1.5 h-10 px-4 bg-[#F5A800] text-white text-sm font-bold uppercase tracking-widest rounded-xl hover:bg-blue-600 transition-all /20">
  <Plus size={16} /> New Testimony
  </button>
+ </div>
  </div>
 
  {/* Search */}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, ArrowRight, Lock, Mail } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useSite } from '../../context/SiteContext';
@@ -7,112 +7,134 @@ import { supabase } from '../../lib/supabase';
 import myLogo from '../../assets/logo 1.png';
 
 const AdminLogin = () => {
- const [email, setEmail] = useState('');
- const [password, setPassword] = useState('');
- const [error, setError] = useState('');
- const [loading, setLoading] = useState(false);
- const navigate = useNavigate();
- const { settings } = useSite();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { settings } = useSite();
 
- const handleLogin = async (e: React.FormEvent) => {
- e.preventDefault();
- setLoading(true);
- setError('');
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
 
- const { data, error: authError } = await supabase.auth.signInWithPassword({
- email,
- password,
- });
+    const { data, error: authError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
- if (authError) {
-  setError(authError.message || 'Invalid email or password');
-  setLoading(false);
- } else {
-  setTimeout(() => navigate('/admin', { replace: true }), 300);
- }
- };
+    if (authError) {
+      setError(authError.message || 'Invalid email or password');
+      setLoading(false);
+    } else {
+      setTimeout(() => navigate('/admin', { replace: true }), 300);
+    }
+  };
 
- return (
- <div className="min-h-screen bg-[#0A0F1C] flex items-center justify-center p-6 relative overflow-hidden" style={{ fontFamily: "'Inter', sans-serif" }}>
- {/* Glow Effects */}
- <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] bg-[#F5A800]/10 blur-[120px] rounded-full pointer-events-none" />
- <div className="absolute bottom-[-20%] left-[-10%] w-[50%] h-[50%] bg-[#4F46E5]/10 blur-[120px] rounded-full pointer-events-none" />
- 
- <motion.div 
- initial={{ opacity: 0, y: 20 }}
- animate={{ opacity: 1, y: 0 }}
- className="w-full max-w-[400px] bg-[#111827] border border-white/10 rounded-2xl p-8 relative z-10 "
- >
- <div className="flex flex-col items-center text-center mb-10">
- {settings?.logo_url ? (
- <img src={settings.logo_url} alt="Logo" className="h-10 mb-6 object-contain" />
- ) : (
- <div className="h-[40px] w-[160px] bg-[#f3a847] mb-6" style={{ WebkitMask: `url('${myLogo}') center / contain no-repeat`, mask: `url('${myLogo}') center / contain no-repeat` }} title="Nexyovi" />
- )}
- <h1 className="text-[22px] font-black text-white tracking-tight">Admin Portal</h1>
- <p className="text-[#9CA3AF] text-xs font-semibold uppercase tracking-widest mt-2">Secure Access</p>
- </div>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-[#02040a] via-[#050816] to-[#02040a] flex items-center justify-center p-6 relative overflow-hidden">
+      {/* Background glows */}
+      <div className="absolute top-[-25%] right-[-15%] w-[600px] h-[600px] bg-[#F5A800]/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-25%] left-[-15%] w-[600px] h-[600px] bg-[#6366f1]/10 rounded-full blur-[120px] pointer-events-none" />
+      
+      <div className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.3) 0.5px, transparent 0.5px)',
+          backgroundSize: '24px 24px'
+        }}
+      />
 
- <form onSubmit={handleLogin} className="space-y-5">
- <div className="space-y-2">
- <label className="text-xs font-bold text-white/40 uppercase tracking-widest ml-1">Email Address</label>
- <div className="relative">
- <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" size={16} />
- <input 
- type="email"
- value={email}
- onChange={(e) => setEmail(e.target.value)}
- className="w-full h-12 pl-12 pr-4 bg-white/5 border border-white/10 rounded-xl text-white text-base focus:border-[#F5A800] focus:ring-1 focus:ring-[#F5A800] outline-none transition-all placeholder:text-white/20"
- placeholder="admin@nexyovi.com"
- required
- />
- </div>
- </div>
+      <motion.div 
+        initial={{ opacity: 0, y: 30, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        className="w-full max-w-md relative z-10"
+      >
+        <div className="bg-gradient-to-br from-[#050816]/95 to-[#02040a]/95 backdrop-blur-xl border border-white/[0.08] rounded-3xl p-10 shadow-2xl relative overflow-hidden">
+          {/* Decorative elements */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#F5A800]/15 to-transparent rounded-full blur-3xl" />
+          
+          <div className="flex flex-col items-center text-center mb-10 relative">
+            {settings?.logo_url ? (
+              <img src={settings.logo_url} alt="Logo" className="h-12 mb-6 object-contain" />
+            ) : (
+              <div className="h-14 w-14 bg-gradient-to-br from-[#F5A800] to-[#ffb700] mb-6 rounded-2xl flex items-center justify-center shadow-lg shadow-[#F5A800]/30">
+                <ShieldCheck size={30} className="text-white" />
+              </div>
+            )}
+            <h1 className="text-2xl font-black text-white tracking-tight mb-2">Admin Portal</h1>
+            <p className="text-white/50 text-xs font-semibold uppercase tracking-[0.25em]">Secure Access</p>
+          </div>
 
- <div className="space-y-2">
- <label className="text-xs font-bold text-white/40 uppercase tracking-widest ml-1">Password</label>
- <div className="relative">
- <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" size={16} />
- <input 
- type="password"
- value={password}
- onChange={(e) => setPassword(e.target.value)}
- className="w-full h-12 pl-12 pr-4 bg-white/5 border border-white/10 rounded-xl text-white text-base focus:border-[#F5A800] focus:ring-1 focus:ring-[#F5A800] outline-none transition-all placeholder:text-white/20"
- placeholder="••••••••"
- required
- />
- </div>
- </div>
+          <form onSubmit={handleLogin} className="space-y-7">
+            <div className="space-y-3">
+              <label className="text-xs font-bold text-white/40 uppercase tracking-[0.2em] ml-1">Email Address</label>
+              <div className="relative group">
+                <div className="absolute left-5 top-1/2 -translate-y-1/2 text-white/35 group-focus-within:text-[#F5A800] transition-colors">
+                  <Mail size={18} />
+                </div>
+                <input 
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full h-14 pl-14 pr-5 bg-white/[0.03] border border-white/[0.08] rounded-2xl text-white text-base outline-none focus:border-[#F5A800]/60 focus:ring-2 focus:ring-[#F5A800]/20 transition-all duration-300 placeholder:text-white/20 group-hover:border-white/[0.12]"
+                  placeholder="admin@nexyovi.com"
+                  required
+                />
+              </div>
+            </div>
 
- {error && (
- <motion.div 
- initial={{ opacity: 0, scale: 0.95 }}
- animate={{ opacity: 1, scale: 1 }}
- className="px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm font-medium text-center"
- >
- {error}
- </motion.div>
- )}
+            <div className="space-y-3">
+              <label className="text-xs font-bold text-white/40 uppercase tracking-[0.2em] ml-1">Password</label>
+              <div className="relative group">
+                <div className="absolute left-5 top-1/2 -translate-y-1/2 text-white/35 group-focus-within:text-[#F5A800] transition-colors">
+                  <Lock size={18} />
+                </div>
+                <input 
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full h-14 pl-14 pr-5 bg-white/[0.03] border border-white/[0.08] rounded-2xl text-white text-base outline-none focus:border-[#F5A800]/60 focus:ring-2 focus:ring-[#F5A800]/20 transition-all duration-300 placeholder:text-white/20 group-hover:border-white/[0.12]"
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
+            </div>
 
- <button 
- type="submit"
- disabled={loading}
- className="w-full h-12 mt-4 bg-gradient-to-r from-[#F5A800] to-[#4F46E5] text-white text-sm font-black uppercase tracking-widest rounded-xl  transition-all flex items-center justify-center gap-2 group disabled:opacity-50"
- >
- {loading ? 'Authenticating...' : 'Sign In'} 
- <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
- </button>
- </form>
+            <AnimatePresence>
+              {error && (
+                <motion.div 
+                  initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  className="px-5 py-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-sm font-medium text-center flex items-center justify-center gap-2"
+                >
+                  <ShieldCheck size={16} />
+                  {error}
+                </motion.div>
+              )}
+            </AnimatePresence>
 
- <div className="mt-8 pt-6 border-t border-white/5 text-center">
- <div className="flex items-center justify-center gap-2 text-xs font-bold text-white/30 uppercase tracking-widest">
- <ShieldCheck size={14} className="text-[#10B981]" />
- Encrypted Connection
- </div>
- </div>
- </motion.div>
- </div>
- );
+            <button 
+              type="submit"
+              disabled={loading}
+              className="w-full h-14 mt-2 bg-gradient-to-r from-[#F5A800] to-[#ffb700] text-white text-sm font-black uppercase tracking-[0.2em] rounded-2xl transition-all duration-300 flex items-center justify-center gap-3 hover:shadow-2xl hover:shadow-[#F5A800]/30 group disabled:opacity-50 disabled:hover:shadow-none"
+            >
+              {loading ? 'Authenticating...' : 'Sign In'} 
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </button>
+          </form>
+
+          <div className="mt-10 pt-6 border-t border-white/[0.06] text-center">
+            <div className="flex items-center justify-center gap-2 text-xs font-bold text-white/35 uppercase tracking-[0.2em]">
+              <ShieldCheck size={16} className="text-emerald-400" />
+              Encrypted Connection
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
 };
 
 export default AdminLogin;

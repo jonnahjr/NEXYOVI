@@ -122,6 +122,7 @@ ALTER TABLE public.team ADD COLUMN IF NOT EXISTS initials  text;
 ALTER TABLE public.team ADD COLUMN IF NOT EXISTS color     text;
 
 INSERT INTO public.team (name, role, bio, linkedin, initials, color) VALUES
+('Yonas Bogale', 'Founder & CEO', 'Visionary leader with 12+ years in tech and business strategy.', 'https://www.linkedin.com/in/yonas-bogale/', 'YB', '#F5A800'),
 ('Amanuel Tesfaye', 'Chief Technology Officer', 'Software architect and engineer with deep expertise in distributed systems, cloud infrastructure, and AI/ML deployment.', 'https://linkedin.com/in/amanuel-tesfaye/', 'AT', '#8b5cf6'),
 ('Selamawit Hailu', 'Chief Product Officer', 'Leads product vision and strategy. Passionate about building scalable systems and ensuring user-centric design.', 'https://linkedin.com/in/selamawit-hailu/', 'SH', '#10b981'),
 ('Eyerusalem Bogale', 'VP of Operations', 'Operations leader with 10+ years driving efficiency and scaling processes across tech startups.', 'https://linkedin.com/in/eyerusalem-bogale', 'EB', '#ff7f50'),

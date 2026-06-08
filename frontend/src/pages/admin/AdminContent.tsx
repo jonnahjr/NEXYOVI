@@ -8,21 +8,26 @@ import {
   LayoutTemplate,
   MessageSquare,
   Save,
-  Users
+  Users,
+  Plus,
+  X
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useSite } from '../../context/SiteContext';
 
-const inputClass = "w-full h-11 px-4 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white text-sm outline-none focus:border-[#F5A800]/60 focus:ring-1 focus:ring-[#F5A800]/30 transition-all placeholder:text-white/20";
-const textareaClass = "w-full px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white text-sm outline-none focus:border-[#F5A800]/60 focus:ring-1 focus:ring-[#F5A800]/30 transition-all placeholder:text-white/20 resize-none leading-relaxed";
-const labelClass = "block text-xs font-bold text-white/30 uppercase tracking-widest mb-2 ml-1";
+const inputClass = "w-full h-14 px-5 bg-white/[0.03] border border-white/[0.08] rounded-2xl text-white text-sm outline-none focus:border-[#F5A800]/60 focus:ring-2 focus:ring-[#F5A800]/20 transition-all placeholder:text-white/20 font-medium";
+const textareaClass = "w-full px-5 py-4 bg-white/[0.03] border border-white/[0.08] rounded-2xl text-white text-sm outline-none focus:border-[#F5A800]/60 focus:ring-2 focus:ring-[#F5A800]/20 transition-all placeholder:text-white/20 resize-none font-medium leading-relaxed";
+const labelClass = "block text-xs font-bold text-white/35 uppercase tracking-[0.2em] mb-3 ml-1";
 
 const SaveButton = ({ onSave, saved }: { onSave: (e: any) => void, saved: boolean }) => (
   <button
     onClick={onSave}
-    className={`flex items-center gap-2 h-9 px-5 text-sm font-bold uppercase tracking-widest rounded-lg transition-all ${saved ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-[#F5A800] text-white hover:bg-blue-500 /20'}`}
+    className={`flex items-center gap-2.5 h-12 px-6 text-sm font-bold uppercase tracking-[0.2em] rounded-2xl transition-all duration-300 ${saved 
+      ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' 
+      : 'bg-gradient-to-r from-[#F5A800] to-[#ffb700] text-white hover:shadow-2xl hover:shadow-[#F5A800]/30'
+    }`}
   >
-    {saved ? <CheckCircle2 size={15} /> : <Save size={15} />}
+    {saved ? <CheckCircle2 size={18} /> : <Save size={18} />}
     {saved ? 'Saved!' : 'Save Changes'}
   </button>
 );
@@ -45,7 +50,7 @@ const HeroEditor = () => {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <div>
         <label className={labelClass}>Main Headline</label>
         <textarea
@@ -66,7 +71,7 @@ const HeroEditor = () => {
           placeholder="We engineer enterprise-grade cloud ecosystems..."
         />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
           <label className={labelClass}>Primary Button Text</label>
           <input type="text" value={form.cta_primary} onChange={e => setForm({ ...form, cta_primary: e.target.value })} className={inputClass} placeholder="Deploy with Nexyovi" />
@@ -76,7 +81,7 @@ const HeroEditor = () => {
           <input type="text" value={form.cta_secondary} onChange={e => setForm({ ...form, cta_secondary: e.target.value })} className={inputClass} placeholder="View Documentation" />
         </div>
       </div>
-      <div className="flex justify-end">
+      <div className="flex justify-end pt-2">
         <SaveButton onSave={handleSave} saved={saved} />
       </div>
     </div>
@@ -115,7 +120,13 @@ const MetricsEditor = () => {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {metrics.map((metric, i) => (
-          <div key={i} className="p-5 bg-white/[0.02] border border-white/[0.05] rounded-xl space-y-4">
+          <div key={i} className="p-6 bg-white/[0.02] border border-white/[0.05] rounded-3xl space-y-5">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 rounded-2xl bg-[#F5A800]/10 flex items-center justify-center text-[#F5A800]">
+                <BarChart3 size={18} />
+              </div>
+              <h4 className="text-sm font-bold text-white">Metric {i + 1}</h4>
+            </div>
             <div>
               <label className={labelClass}>Metric Number (e.g., 12+)</label>
               <input type="text" value={metric.number} onChange={e => updateMetric(i, 'number', e.target.value)} className={inputClass + " text-xl font-bold text-[#F5A800]"} />
@@ -127,7 +138,7 @@ const MetricsEditor = () => {
           </div>
         ))}
       </div>
-      <div className="flex justify-end">
+      <div className="flex justify-end pt-2">
         <SaveButton onSave={handleSave} saved={saved} />
       </div>
     </div>
@@ -167,8 +178,16 @@ const CTAEditor = () => {
     setForm({ ...form, benefits: newBenefits });
   };
 
+  const addBenefit = () => {
+    setForm({ ...form, benefits: [...form.benefits, ''] });
+  };
+
+  const removeBenefit = (index: number) => {
+    setForm({ ...form, benefits: form.benefits.filter((_, i) => i !== index) });
+  };
+
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <div>
         <label className={labelClass}>CTA Headline</label>
         <input type="text" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className={inputClass + " font-bold text-lg"} />
@@ -179,17 +198,27 @@ const CTAEditor = () => {
       </div>
       <div>
         <label className={labelClass}>CTA Description</label>
-        <textarea rows={3} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className={textareaClass} />
+        <textarea rows={4} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className={textareaClass} />
       </div>
       <div>
         <label className={labelClass}>Button Text</label>
         <input type="text" value={form.buttonText} onChange={e => setForm({ ...form, buttonText: e.target.value })} className={inputClass} />
       </div>
-      <div className="pt-4 border-t border-white/[0.05]">
-        <label className={labelClass + " mb-4"}>CTA Benefits List</label>
+      <div className="pt-6 border-t border-white/[0.05] space-y-4">
+        <div className="flex items-center justify-between">
+          <label className={labelClass + " mb-0"}>CTA Benefits List</label>
+          <button onClick={addBenefit} className="flex items-center gap-2 text-xs font-bold text-[#F5A800] uppercase tracking-[0.2em] hover:text-[#ffb700] transition-colors">
+            <Plus size={14} /> Add Benefit
+          </button>
+        </div>
         <div className="space-y-3">
           {form.benefits.map((benefit, i) => (
-            <input key={i} type="text" value={benefit} onChange={e => updateBenefit(i, e.target.value)} className={inputClass} />
+            <div key={i} className="flex gap-3 items-start">
+              <input type="text" value={benefit} onChange={e => updateBenefit(i, e.target.value)} className={inputClass} placeholder="Enter benefit" />
+              <button onClick={() => removeBenefit(i)} className="w-14 h-14 rounded-2xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition-all">
+                <X size={18} />
+              </button>
+            </div>
           ))}
         </div>
       </div>
@@ -226,17 +255,36 @@ const PortfolioEditor = () => {
     setPortfolio(newItems);
   };
 
+  const addPortfolioItem = () => {
+    setPortfolio([...portfolio, { title: '', category: '', desc: '', metrics: '' }]);
+  };
+
+  const removePortfolioItem = (index: number) => {
+    setPortfolio(portfolio.filter((_, i) => i !== index));
+  };
+
   return (
     <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <label className={labelClass + " mb-0"}>Case Studies & Projects</label>
+        <button onClick={addPortfolioItem} className="flex items-center gap-2 text-xs font-bold text-[#F5A800] uppercase tracking-[0.2em] hover:text-[#ffb700] transition-colors">
+          <Plus size={14} /> Add Case Study
+        </button>
+      </div>
       <div className="space-y-6">
         {portfolio.map((item, i) => (
-          <div key={i} className="p-5 bg-white/[0.02] border border-white/[0.05] rounded-xl space-y-4">
-            <h4 className="text-[#F5A800] font-bold text-sm">Case Study {i + 1}</h4>
-            <div className="grid grid-cols-2 gap-4">
+          <div key={i} className="p-6 bg-white/[0.02] border border-white/[0.05] rounded-3xl space-y-5">
+            <div className="flex items-center justify-between">
+              <h4 className="text-sm font-bold text-[#F5A800] uppercase tracking-[0.2em]">Case Study {i + 1}</h4>
+              <button onClick={() => removePortfolioItem(i)} className="w-10 h-10 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition-all">
+                <X size={16} />
+              </button>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div><label className={labelClass}>Title</label><input type="text" value={item.title} onChange={e => updateItem(i, 'title', e.target.value)} className={inputClass} /></div>
               <div><label className={labelClass}>Category</label><input type="text" value={item.category} onChange={e => updateItem(i, 'category', e.target.value)} className={inputClass} /></div>
             </div>
-            <div><label className={labelClass}>Description</label><textarea rows={2} value={item.desc} onChange={e => updateItem(i, 'desc', e.target.value)} className={textareaClass} /></div>
+            <div><label className={labelClass}>Description</label><textarea rows={3} value={item.desc} onChange={e => updateItem(i, 'desc', e.target.value)} className={textareaClass} /></div>
             <div><label className={labelClass}>Metrics (comma separated)</label><input type="text" value={item.metrics} onChange={e => updateItem(i, 'metrics', e.target.value)} className={inputClass} /></div>
           </div>
         ))}
@@ -280,10 +328,10 @@ const ServicesEditor = () => {
     <div className="space-y-6">
       <div className="space-y-6">
         {services.map((item, i) => (
-          <div key={i} className="p-5 bg-white/[0.02] border border-white/[0.05] rounded-xl space-y-4">
-            <h4 className="text-[#F5A800] font-bold text-sm">{item.id.toUpperCase()}</h4>
+          <div key={i} className="p-6 bg-white/[0.02] border border-white/[0.05] rounded-3xl space-y-5">
+            <h4 className="text-sm font-bold text-[#F5A800] uppercase tracking-[0.2em]">{item.id.toUpperCase()}</h4>
             <div><label className={labelClass}>Title</label><input type="text" value={item.title} onChange={e => updateService(i, 'title', e.target.value)} className={inputClass} /></div>
-            <div><label className={labelClass}>Short Description</label><textarea rows={2} value={item.desc} onChange={e => updateService(i, 'desc', e.target.value)} className={textareaClass} /></div>
+            <div><label className={labelClass}>Short Description</label><textarea rows={3} value={item.desc} onChange={e => updateService(i, 'desc', e.target.value)} className={textareaClass} /></div>
           </div>
         ))}
       </div>
@@ -315,11 +363,11 @@ const FooterEditor = () => {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <div>
         <label className={labelClass}>Footer Company Tagline</label>
         <textarea
-          rows={3}
+          rows={4}
           value={form.tagline}
           onChange={e => setForm({ ...form, tagline: e.target.value })}
           className={textareaClass}
@@ -336,7 +384,7 @@ const FooterEditor = () => {
           placeholder="Global. All Rights Reserved."
         />
       </div>
-      <div className="flex justify-end">
+      <div className="flex justify-end pt-2">
         <SaveButton onSave={handleSave} saved={saved} />
       </div>
     </div>
@@ -367,16 +415,16 @@ const AboutEditor = () => {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <div>
         <label className={labelClass}>Company Tagline</label>
         <input type="text" value={form.tagline} onChange={e => setForm({ ...form, tagline: e.target.value })} className={inputClass} />
       </div>
       <div>
         <label className={labelClass}>Company Description</label>
-        <textarea rows={4} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className={textareaClass} />
+        <textarea rows={5} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className={textareaClass} />
       </div>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         <div>
           <label className={labelClass}>Founded</label>
           <input type="text" value={form.founded} onChange={e => setForm({ ...form, founded: e.target.value })} className={inputClass} placeholder="2020" />
@@ -390,7 +438,7 @@ const AboutEditor = () => {
           <input type="text" value={form.countries} onChange={e => setForm({ ...form, countries: e.target.value })} className={inputClass} placeholder="12+" />
         </div>
       </div>
-      <div className="flex justify-end">
+      <div className="flex justify-end pt-2">
         <SaveButton onSave={handleSave} saved={saved} />
       </div>
     </div>
@@ -429,7 +477,13 @@ const ByTheNumbersEditor = () => {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {metrics.map((metric, i) => (
-          <div key={i} className="p-5 bg-white/[0.02] border border-white/[0.05] rounded-xl space-y-4">
+          <div key={i} className="p-6 bg-white/[0.02] border border-white/[0.05] rounded-3xl space-y-5">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 flex items-center justify-center text-cyan-400">
+                <BarChart3 size={18} />
+              </div>
+              <h4 className="text-sm font-bold text-white">Stat {i + 1}</h4>
+            </div>
             <div>
               <label className={labelClass}>Value</label>
               <input
@@ -457,20 +511,20 @@ const ByTheNumbersEditor = () => {
                 className={inputClass}
               />
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <input
                 type="checkbox"
                 id={`hideNumber-${i}`}
                 checked={metric.hideNumber || false}
                 onChange={e => updateMetric(i, 'hideNumber', e.target.checked)}
-                className="w-4 h-4"
+                className="w-5 h-5"
               />
               <label htmlFor={`hideNumber-${i}`} className="text-sm text-white/60">Hide Number</label>
             </div>
           </div>
         ))}
       </div>
-      <div className="flex justify-end">
+      <div className="flex justify-end pt-2">
         <SaveButton onSave={handleSave} saved={saved} />
       </div>
     </div>
@@ -504,12 +558,12 @@ const CompanyTeamEditor = () => {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <div>
         <label className={labelClass}>Section Badge</label>
         <input type="text" value={form.badge} onChange={e => setForm({ ...form, badge: e.target.value })} className={inputClass} />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
           <label className={labelClass}>Section Title</label>
           <input type="text" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className={inputClass} />
@@ -521,9 +575,9 @@ const CompanyTeamEditor = () => {
       </div>
       <div>
         <label className={labelClass}>Section Description</label>
-        <textarea rows={3} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className={textareaClass} />
+        <textarea rows={4} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className={textareaClass} />
       </div>
-      <div className="pt-4 border-t border-white/[0.05] space-y-5">
+      <div className="pt-6 border-t border-white/[0.05] space-y-6">
         <div>
           <label className={labelClass}>Founder Name</label>
           <input type="text" value={form.founder_name} onChange={e => setForm({ ...form, founder_name: e.target.value })} className={inputClass} />
@@ -534,14 +588,14 @@ const CompanyTeamEditor = () => {
         </div>
         <div>
           <label className={labelClass}>Founder Bio</label>
-          <textarea rows={4} value={form.founder_bio} onChange={e => setForm({ ...form, founder_bio: e.target.value })} className={textareaClass} />
+          <textarea rows={5} value={form.founder_bio} onChange={e => setForm({ ...form, founder_bio: e.target.value })} className={textareaClass} />
         </div>
         <div>
           <label className={labelClass}>Founder Button Label</label>
           <input type="text" value={form.founder_button} onChange={e => setForm({ ...form, founder_button: e.target.value })} className={inputClass} />
         </div>
       </div>
-      <div className="flex justify-end">
+      <div className="flex justify-end pt-2">
         <SaveButton onSave={handleSave} saved={saved} />
       </div>
     </div>
@@ -573,12 +627,12 @@ const HomeFounderEditor = () => {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <div>
         <label className={labelClass}>Section Badge</label>
         <input type="text" value={form.badge} onChange={e => setForm({ ...form, badge: e.target.value })} className={inputClass} />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
           <label className={labelClass}>Founder Name</label>
           <input type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} className={inputClass} />
@@ -590,9 +644,9 @@ const HomeFounderEditor = () => {
       </div>
       <div>
         <label className={labelClass}>Founder Bio</label>
-        <textarea rows={5} value={form.bio} onChange={e => setForm({ ...form, bio: e.target.value })} className={textareaClass} />
+        <textarea rows={6} value={form.bio} onChange={e => setForm({ ...form, bio: e.target.value })} className={textareaClass} />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
           <label className={labelClass}>Story Button Label</label>
           <input type="text" value={form.story_button} onChange={e => setForm({ ...form, story_button: e.target.value })} className={inputClass} />
@@ -602,12 +656,12 @@ const HomeFounderEditor = () => {
           <input type="text" value={form.linkedin_button} onChange={e => setForm({ ...form, linkedin_button: e.target.value })} className={inputClass} />
         </div>
       </div>
-      <div className="rounded-xl border border-[#F5A800]/20 bg-[#F5A800]/5 p-4">
-        <p className="text-xs leading-relaxed text-white/40">
+      <div className="rounded-3xl border border-[#F5A800]/20 bg-[#F5A800]/5 p-6">
+        <p className="text-sm leading-relaxed text-white/40">
           Founder image and LinkedIn URL come from Team Management for the founder profile. This editor controls the home section text and button labels.
         </p>
       </div>
-      <div className="flex justify-end">
+      <div className="flex justify-end pt-2">
         <SaveButton onSave={handleSave} saved={saved} />
       </div>
     </div>
@@ -648,41 +702,41 @@ const AdminContent = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 pb-10">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-white">Site Content Editor</h1>
-        <p className="text-white/30 text-sm mt-1">Customize the text and content across the entire website in real-time.</p>
+        <h1 className="text-3xl font-black text-white tracking-tight">Site Content Editor</h1>
+        <p className="text-sm text-white/40 mt-2">Customize the text and content across the entire website in real-time.</p>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-8">
         {/* Sidebar Nav */}
-        <div className="lg:w-64 shrink-0 space-y-1">
+        <div className="lg:w-72 shrink-0 space-y-2">
           {tabs.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-left transition-all group ${activeTab === tab.id
-                ? 'bg-[#F5A800] text-white /20'
-                : 'bg-white/[0.03] border border-white/[0.06] text-white/60 hover:bg-white/[0.06] hover:text-white'
+              className={`w-full flex items-center gap-4 px-5 py-4.5 rounded-2xl text-left transition-all duration-300 group ${activeTab === tab.id
+                ? 'bg-gradient-to-r from-[#F5A800] to-[#ffb700] text-white shadow-xl shadow-[#F5A800]/20'
+                : 'bg-white/[0.03] border border-white/[0.06] text-white/60 hover:bg-white/[0.06] hover:text-white hover:border-white/[0.12]'
                 }`}
             >
-              <tab.icon size={18} className="shrink-0" />
+              <tab.icon size={20} className="shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-bold truncate">{tab.label}</p>
-                <p className={`text-xs truncate mt-0.5 ${activeTab === tab.id ? 'text-white/70' : 'text-white/30'}`}>{tab.description}</p>
+                <p className={`text-xs truncate mt-1 ${activeTab === tab.id ? 'text-white/70' : 'text-white/35'}`}>{tab.description}</p>
               </div>
-              {activeTab === tab.id && <ChevronRight size={14} className="shrink-0" />}
+              {activeTab === tab.id && <ChevronRight size={16} className="shrink-0" />}
             </button>
           ))}
 
           {/* Tip box */}
-          <div className="mt-4 p-4 bg-[#F5A800]/5 border border-[#F5A800]/20 rounded-xl">
-            <div className="flex items-center gap-2 mb-2">
-              <MessageSquare size={14} className="text-[#F5A800]" />
-              <span className="text-xs font-bold text-[#F5A800] uppercase tracking-widest">Live Preview</span>
+          <div className="mt-6 p-6 bg-[#F5A800]/5 border border-[#F5A800]/20 rounded-3xl">
+            <div className="flex items-center gap-3 mb-3">
+              <MessageSquare size={18} className="text-[#F5A800]" />
+              <span className="text-xs font-black text-[#F5A800] uppercase tracking-[0.25em]">Live Preview</span>
             </div>
-            <p className="text-xs text-white/30 leading-relaxed">
+            <p className="text-sm text-white/40 leading-relaxed">
               Changes are applied instantly across the main website when you save. Open the site in another tab to preview.
             </p>
           </div>
@@ -692,24 +746,24 @@ const AdminContent = () => {
         <div className="flex-1">
           <motion.div
             key={activeTab}
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2 }}
-            className="bg-[#0a0a0e]/90 backdrop-blur-sm border border-white/[0.05] rounded-2xl overflow-hidden"
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            className="bg-gradient-to-br from-[#050816]/90 to-[#02040a]/90 backdrop-blur-xl border border-white/[0.08] rounded-3xl overflow-hidden shadow-2xl"
           >
             {/* Panel Header */}
-            <div className="flex items-center gap-3 px-6 py-5 border-b border-white/[0.05] bg-white/[0.01]">
-              <div className="w-10 h-10 rounded-xl bg-[#F5A800]/10 flex items-center justify-center text-[#F5A800]">
-                <active.icon size={20} />
+            <div className="flex items-center gap-4 px-8 py-6 border-b border-white/[0.06] bg-white/[0.01]">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#F5A800] to-[#ffb700] flex items-center justify-center text-white shadow-lg shadow-[#F5A800]/20">
+                <active.icon size={22} />
               </div>
               <div>
-                <h3 className="text-base font-bold text-white">{active.label}</h3>
-                <p className="text-xs text-white/40">{active.description}</p>
+                <h3 className="text-lg font-black text-white">{active.label}</h3>
+                <p className="text-xs text-white/40 mt-1">{active.description}</p>
               </div>
             </div>
 
             {/* Editor Content */}
-            <div className="p-6">
+            <div className="p-8">
               {renderEditor()}
             </div>
           </motion.div>

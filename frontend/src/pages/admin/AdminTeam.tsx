@@ -4,7 +4,6 @@ import {
   ArrowLeft,
   Briefcase,
   Edit2,
-  ExternalLink,
   Eye,
   Image as ImageIcon,
   Linkedin,
@@ -252,15 +251,18 @@ const AdminTeam = () => {
       <motion.div
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
-        className="mx-auto max-w-6xl space-y-6"
+        className="mx-auto max-w-6xl"
       >
-        <div className="flex items-center gap-4">
-          <button
+        {/* ── Header ── */}
+        <div className="mb-8 flex items-center gap-4">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={closeEditor}
             className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.03] text-white/40 transition-all hover:bg-white/[0.08] hover:text-white"
           >
             <ArrowLeft size={18} />
-          </button>
+          </motion.button>
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-white">
               {editing ? 'Edit Team Member' : 'Add Team Member'}
@@ -271,106 +273,172 @@ const AdminTeam = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.1fr_0.9fr]">
-          <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0D1220]">
-            <form onSubmit={save} className="space-y-8 p-6 md:p-8">
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                <div className="space-y-2 md:col-span-2">
-                  <label className="ml-1 text-xs font-bold uppercase tracking-widest text-white/30">
-                    Full Name
-                  </label>
-                  <input
-                    required
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    placeholder="e.g. Yonas Bogale"
-                    className="h-11 w-full rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 text-sm font-semibold text-white outline-none transition-all focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="ml-1 text-xs font-bold uppercase tracking-widest text-white/30">
-                    Role
-                  </label>
-                  <input
-                    required
-                    value={form.role}
-                    onChange={(e) => setForm({ ...form, role: e.target.value })}
-                    placeholder="e.g. Chief Technology Officer"
-                    className="h-11 w-full rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 text-sm font-semibold text-white outline-none transition-all focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="ml-1 text-xs font-bold uppercase tracking-widest text-white/30">
-                    LinkedIn URL
-                  </label>
-                  <input
-                    value={form.linkedin}
-                    onChange={(e) => setForm({ ...form, linkedin: e.target.value })}
-                    placeholder="https://linkedin.com/in/..."
-                    className="h-11 w-full rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 text-sm font-semibold text-white outline-none transition-all focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="ml-1 text-xs font-bold uppercase tracking-widest text-white/30">
-                    Initials
-                  </label>
-                  <input
-                    value={form.initials}
-                    onChange={(e) => setForm({ ...form, initials: e.target.value })}
-                    placeholder="e.g. YB"
-                    className="h-11 w-full rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 text-sm font-semibold uppercase text-white outline-none transition-all focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="ml-1 text-xs font-bold uppercase tracking-widest text-white/30">
-                    Accent Color
-                  </label>
-                  <div className="flex gap-2">
-                    <input
-                      value={form.color}
-                      onChange={(e) => setForm({ ...form, color: e.target.value })}
-                      placeholder="e.g. #8b5cf6"
-                      className="h-11 w-full rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 text-sm font-semibold text-white outline-none transition-all focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20"
-                    />
-                    <div
-                      className="h-11 w-11 shrink-0 rounded-xl border border-white/[0.08]"
-                      style={{ backgroundColor: form.color || getColor(form.name || 'Team Member') }}
-                    />
+        <div className="grid grid-cols-1 gap-8 xl:grid-cols-[1.2fr_0.8fr]">
+          {/* ══ FORM ══ */}
+          <div className="rounded-2xl border border-white/[0.08] bg-gradient-to-b from-[#0D1220] to-[#0a0f1a] p-0 md:p-0">
+            <form onSubmit={save}>
+              {/* Section 1 — Basic Info */}
+              <div className="border-b border-white/[0.06] px-6 py-6 md:px-8 md:py-7">
+                <div className="mb-5 flex items-center gap-3">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#F5A800]/10">
+                    <span className="text-[13px] font-black text-[#F5A800]">1</span>
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-white">Basic Info</h3>
+                    <p className="text-xs text-white/30">Name, role, and social link</p>
                   </div>
                 </div>
 
-                <div className="space-y-2 md:col-span-2">
-                  <label className="ml-1 text-xs font-bold uppercase tracking-widest text-white/30">
-                    Bio
-                  </label>
-                  <textarea
-                    required
-                    rows={7}
-                    value={form.bio}
-                    onChange={(e) => setForm({ ...form, bio: e.target.value })}
-                    placeholder="Describe the specialist, background, and what they lead."
-                    className="w-full resize-none rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm font-medium leading-relaxed text-white outline-none transition-all focus:border-[#F5A800]/50"
-                  />
+                <div className="space-y-4">
+                  {/* Full Name — full width */}
+                  <div className="space-y-1.5">
+                    <label className="ml-0.5 text-[11px] font-bold uppercase tracking-[0.18em] text-white/30">
+                      Full Name <span className="text-[#F5A800]">*</span>
+                    </label>
+                    <div className="relative group">
+                      <input
+                        required
+                        value={form.name}
+                        onChange={(e) => setForm({ ...form, name: e.target.value })}
+                        placeholder="e.g. Yonas Bogale"
+                        className="h-12 w-full rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 pl-11 text-sm font-semibold text-white outline-none transition-all placeholder:text-white/15 focus:border-[#F5A800]/50 focus:bg-[#0D1220] focus:ring-2 focus:ring-[#F5A800]/15"
+                      />
+                      <Users size={15} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/20 transition-colors group-focus-within:text-[#F5A800]/60" />
+                    </div>
+                  </div>
+
+                  {/* Role + LinkedIn */}
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div className="space-y-1.5">
+                      <label className="ml-0.5 text-[11px] font-bold uppercase tracking-[0.18em] text-white/30">
+                        Role <span className="text-[#F5A800]">*</span>
+                      </label>
+                      <input
+                        required
+                        value={form.role}
+                        onChange={(e) => setForm({ ...form, role: e.target.value })}
+                        placeholder="e.g. Chief Technology Officer"
+                        className="h-12 w-full rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 text-sm font-semibold text-white outline-none transition-all placeholder:text-white/15 focus:border-[#F5A800]/50 focus:bg-[#0D1220] focus:ring-2 focus:ring-[#F5A800]/15"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="ml-0.5 text-[11px] font-bold uppercase tracking-[0.18em] text-white/30">
+                        LinkedIn URL
+                      </label>
+                      <div className="relative">
+                        <Linkedin size={15} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#0a66c2]/60" />
+                        <input
+                          value={form.linkedin}
+                          onChange={(e) => setForm({ ...form, linkedin: e.target.value })}
+                          placeholder="https://linkedin.com/in/..."
+                          className="h-12 w-full rounded-xl border border-white/[0.06] bg-white/[0.02] pl-11 pr-4 text-sm font-semibold text-white outline-none transition-all placeholder:text-white/15 focus:border-[#F5A800]/50 focus:bg-[#0D1220] focus:ring-2 focus:ring-[#F5A800]/15"
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="space-y-4 border-t border-white/[0.06] pt-6">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F5A800]/10 text-[#F5A800]">
-                    <ImageIcon size={18} />
+              {/* Section 2 — Profile Display */}
+              <div className="border-b border-white/[0.06] px-6 py-6 md:px-8 md:py-7">
+                <div className="mb-5 flex items-center gap-3">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#F5A800]/10">
+                    <span className="text-[13px] font-black text-[#F5A800]">2</span>
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-white">Photo Control</h3>
-                    <p className="text-xs text-white/35">Upload an image or paste a direct image URL</p>
+                    <h3 className="text-sm font-bold text-white">Profile Display</h3>
+                    <p className="text-xs text-white/30">Initials, accent color, and biography</p>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-[180px_1fr]">
-                  <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#070B14]">
+                <div className="space-y-4">
+                  {/* Initials + Color */}
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div className="space-y-1.5">
+                      <label className="ml-0.5 text-[11px] font-bold uppercase tracking-[0.18em] text-white/30">
+                        Initials
+                      </label>
+                      <input
+                        value={form.initials}
+                        onChange={(e) => setForm({ ...form, initials: e.target.value })}
+                        placeholder="e.g. YB"
+                        maxLength={3}
+                        className="h-12 w-full rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 text-sm font-bold uppercase tracking-[0.15em] text-white outline-none transition-all placeholder:text-white/15 focus:border-[#F5A800]/50 focus:bg-[#0D1220] focus:ring-2 focus:ring-[#F5A800]/15"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="ml-0.5 mb-2 text-[11px] font-bold uppercase tracking-[0.18em] text-white/30">
+                        Accent Color
+                      </label>
+                      <div className="flex gap-2.5">
+                        <div className="relative flex-1">
+                          <input
+                            value={form.color}
+                            onChange={(e) => setForm({ ...form, color: e.target.value })}
+                            placeholder="e.g. #8b5cf6"
+                            className="h-12 w-full rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 pl-10 text-sm font-mono font-semibold text-white outline-none transition-all placeholder:text-white/15 focus:border-[#F5A800]/50 focus:bg-[#0D1220] focus:ring-2 focus:ring-[#F5A800]/15"
+                          />
+                          <div
+                            className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 rounded-md border border-white/20"
+                            style={{ backgroundColor: form.color || getColor(form.name || 'Team Member') }}
+                          />
+                        </div>
+                      </div>
+                      {/* Color swatches */}
+                      <div className="mt-2.5 flex flex-wrap gap-2">
+                        {fallbackColors.map((c) => (
+                          <button
+                            key={c}
+                            type="button"
+                            onClick={() => setForm({ ...form, color: c })}
+                            className={`h-7 w-7 rounded-lg border-2 transition-all ${
+                              form.color.toLowerCase() === c.toLowerCase()
+                                ? 'scale-110 border-white ring-2 ring-white/30'
+                                : 'border-transparent hover:scale-110'
+                            }`}
+                            style={{ backgroundColor: c }}
+                            title={c}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bio */}
+                  <div className="space-y-1.5">
+                    <label className="ml-0.5 text-[11px] font-bold uppercase tracking-[0.18em] text-white/30">
+                      Biography <span className="text-[#F5A800]">*</span>
+                    </label>
+                    <textarea
+                      required
+                      rows={5}
+                      value={form.bio}
+                      onChange={(e) => setForm({ ...form, bio: e.target.value })}
+                      placeholder="Describe the specialist, their background, and what they lead."
+                      className="w-full resize-none rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm font-medium leading-relaxed text-white outline-none transition-all placeholder:text-white/15 focus:border-[#F5A800]/50 focus:bg-[#0D1220]"
+                    />
+                    <div className="flex justify-end">
+                      <span className="text-[10px] font-medium text-white/20">{form.bio.length} / 500</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Section 3 — Photo */}
+              <div className="px-6 py-6 md:px-8 md:py-7">
+                <div className="mb-5 flex items-center gap-3">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-500/10">
+                    <ImageIcon size={16} className="text-cyan-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-white">Photo</h3>
+                    <p className="text-xs text-white/30">Upload an image or paste a direct image URL</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-[160px_1fr]">
+                  {/* Photo preview */}
+                  <div className="overflow-hidden rounded-xl border border-white/[0.08] bg-[#070B14]">
                     <div className="aspect-[4/5]">
                       {previewMember.img ? (
                         <img src={previewMember.img} alt="Preview" className="h-full w-full object-cover" />
@@ -386,15 +454,25 @@ const AdminTeam = () => {
                   </div>
 
                   <div className="space-y-3">
+                    {/* Upload button */}
                     <label
-                      className={`flex h-11 cursor-pointer items-center justify-center gap-2 rounded-xl border text-sm font-bold uppercase tracking-widest transition-all ${
+                      className={`flex h-12 w-full cursor-pointer items-center justify-center gap-2.5 rounded-xl border text-sm font-bold uppercase tracking-[0.15em] transition-all ${
                         isUploading
-                          ? 'border-white/10 bg-white/10 text-white/40'
-                          : 'border-white/10 bg-white/5 text-white hover:bg-white/10'
+                          ? 'border-white/10 bg-white/5 text-white/30'
+                          : 'border-white/[0.08] bg-white/[0.03] text-white/70 hover:border-white/20 hover:bg-white/[0.06] hover:text-white'
                       }`}
                     >
-                      <UploadCloud size={16} />
-                      {isUploading ? 'Uploading...' : 'Upload Photo'}
+                      {isUploading ? (
+                        <>
+                          <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/20 border-t-white" />
+                          Uploading...
+                        </>
+                      ) : (
+                        <>
+                          <UploadCloud size={16} />
+                          Upload Photo
+                        </>
+                      )}
                       <input
                         type="file"
                         accept="image/*"
@@ -403,90 +481,152 @@ const AdminTeam = () => {
                         disabled={isUploading}
                       />
                     </label>
-                    <input
-                      value={form.img}
-                      onChange={(e) => setForm({ ...form, img: e.target.value })}
-                      placeholder="https://example.com/team-photo.jpg"
-                      className="h-11 w-full rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 font-mono text-sm text-white outline-none transition-all focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setForm({ ...form, img: '' })}
-                      className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white/35 transition-colors hover:text-white/70"
-                    >
-                      <X size={14} />
-                      Remove Photo
-                    </button>
+
+                    {/* URL input */}
+                    <div className="relative">
+                      <input
+                        value={form.img}
+                        onChange={(e) => setForm({ ...form, img: e.target.value })}
+                        placeholder="https://example.com/team-photo.jpg"
+                        className="h-12 w-full rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 font-mono text-sm text-white outline-none transition-all placeholder:text-white/15 focus:border-[#F5A800]/50 focus:bg-[#0D1220] focus:ring-2 focus:ring-[#F5A800]/15"
+                      />
+                      {form.img && (
+                        <button
+                          type="button"
+                          onClick={() => setForm({ ...form, img: '' })}
+                          className="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-lg text-white/30 transition-all hover:bg-white/5 hover:text-red-400"
+                        >
+                          <X size={14} />
+                        </button>
+                      )}
+                    </div>
+
+                    {form.img && (
+                      <button
+                        type="button"
+                        onClick={() => setForm({ ...form, img: '' })}
+                        className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white/30 transition-colors hover:text-red-400"
+                      >
+                        <Trash2 size={12} />
+                        Remove Photo
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-3 border-t border-white/[0.06] pt-6">
+              {/* ── Footer actions ── */}
+              <div className="flex items-center justify-between border-t border-white/[0.06] bg-white/[0.01] px-6 py-5 md:px-8">
                 <button
                   type="button"
                   onClick={closeEditor}
-                  className="h-10 px-6 text-sm font-bold text-white/40 transition-colors hover:text-white"
+                  className="flex h-10 items-center gap-2 rounded-xl border border-white/[0.06] bg-white/[0.02] px-5 text-sm font-bold text-white/40 transition-all hover:border-white/20 hover:text-white"
                 >
+                  <ArrowLeft size={14} />
                   Cancel
                 </button>
-                <button
+                <motion.button
                   type="submit"
                   disabled={isSaving || isUploading}
-                  className="flex h-10 items-center gap-2 rounded-xl bg-[#F5A800] px-6 text-sm font-bold uppercase tracking-widest text-white transition-all hover:bg-[#d69200] disabled:cursor-not-allowed disabled:opacity-60"
+                  whileHover={{ scale: isSaving || isUploading ? 1 : 1.02 }}
+                  whileTap={{ scale: isSaving || isUploading ? 1 : 0.98 }}
+                  className="flex h-10 items-center gap-2.5 rounded-xl bg-gradient-to-r from-[#F5A800] to-[#e69900] px-6 text-sm font-bold uppercase tracking-[0.12em] text-white shadow-lg shadow-[#F5A800]/20 transition-all hover:shadow-xl hover:shadow-[#F5A800]/30 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
                 >
-                  <Save size={16} />
-                  {isSaving ? 'Saving...' : editing ? 'Update Member' : 'Create Member'}
-                </button>
+                  {isSaving ? (
+                    <>
+                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                      Saving...
+                    </>
+                  ) : (
+                    <>
+                      <Save size={15} />
+                      {editing ? 'Update Member' : 'Create Member'}
+                    </>
+                  )}
+                </motion.button>
               </div>
             </form>
           </div>
 
+          {/* ══ SIDEBAR — Preview + Notes ══ */}
           <div className="space-y-6">
-            <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0D1220] p-6">
-              <div className="mb-5 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-400">
-                  <Eye size={18} />
+            {/* Live Card Preview */}
+            <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-[#0D1220] to-[#0a0f1a]">
+              {/* Preview header */}
+              <div className="flex items-center gap-3 border-b border-white/[0.06] px-5 py-4">
+                <div className="relative">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-500/10 text-cyan-400">
+                    <Eye size={16} />
+                  </div>
+                  <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-emerald-400">
+                    <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400/60" />
+                  </span>
                 </div>
                 <div>
                   <h3 className="text-sm font-bold text-white">Live Preview</h3>
-                  <p className="text-xs text-white/35">Review the card before publishing it to the site</p>
+                  <p className="text-xs text-white/35">Updates in real-time as you type</p>
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4">
-                <div className="overflow-hidden rounded-xl border border-white/10 bg-[#070B14]">
-                  <div className="aspect-[4/3]">
-                    {previewMember.img ? (
-                      <img src={previewMember.img} alt={previewMember.name} className="h-full w-full object-cover object-top" />
-                    ) : (
-                      <div
-                        className="flex h-full w-full items-center justify-center text-5xl font-black text-white"
-                        style={{ backgroundColor: previewMember.color }}
-                      >
-                        {previewMember.initials}
-                      </div>
-                    )}
+              {/* Preview card — styled like the CompanyLeadership card */}
+              <div className="p-5">
+                <div className="group relative overflow-hidden rounded-2xl border border-white/[0.07] bg-gradient-to-b from-white/[0.04] to-white/[0.01] p-6 text-center transition-all">
+                  {/* Top accent line */}
+                  <div
+                    className="absolute top-0 left-1/2 h-[2px] -translate-x-1/2 rounded-full transition-all duration-500"
+                    style={{
+                      width: previewMember.img ? '40%' : '30%',
+                      background: `linear-gradient(to right, transparent, ${previewMember.color || '#F5A800'}, transparent)`,
+                    }}
+                  />
+
+                  {/* Avatar */}
+                  <div className="relative mx-auto mb-4 h-20 w-20">
+                    <div
+                      className="absolute inset-0 rounded-full opacity-50 blur-xl"
+                      style={{ backgroundColor: previewMember.color || '#F5A800' }}
+                    />
+                    <div
+                      className="relative h-full w-full overflow-hidden rounded-full border-2 transition-all duration-300 group-hover:border-opacity-80"
+                      style={{ borderColor: `${previewMember.color}40` || '#F5A80040' }}
+                    >
+                      {previewMember.img ? (
+                        <img src={previewMember.img} alt={previewMember.name} className="h-full w-full object-cover" />
+                      ) : (
+                        <div
+                          className="flex h-full w-full items-center justify-center text-xl font-black text-white"
+                          style={{ backgroundColor: previewMember.color }}
+                        >
+                          {previewMember.initials}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-                <div className="pt-4">
-                  <div className="mb-1 text-lg font-black text-white">{previewMember.name}</div>
-                  <div className="mb-3 text-[11px] font-black uppercase tracking-[0.2em]" style={{ color: previewMember.color }}>
+
+                  <h4 className="mb-1 text-lg font-black text-white">{previewMember.name}</h4>
+                  <p
+                    className="mb-3 text-[10px] font-black uppercase tracking-[0.2em] transition-colors"
+                    style={{ color: previewMember.color }}
+                  >
                     {previewMember.role}
-                  </div>
-                  <p className="text-sm leading-relaxed text-white/45">{previewMember.bio}</p>
-                  <div className="mt-4 flex items-center gap-2">
-                    <span className="flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-emerald-400">
-                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                  </p>
+                  <p className="mx-auto max-w-[220px] text-xs font-medium leading-relaxed text-white/40">
+                    {previewMember.bio}
+                  </p>
+
+                  <div className="mt-5 flex items-center justify-center gap-3">
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/15 bg-emerald-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-emerald-400">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                       Active
                     </span>
-                    {previewMember.linkedin && (
+                    {previewMember.linkedin && previewMember.linkedin !== '#' && (
                       <a
                         href={previewMember.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/50 transition-all hover:border-[#F5A800]/30 hover:text-[#F5A800]"
+                        className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/40 transition-all hover:border-[#0a66c2]/30 hover:bg-[#0a66c2]/10 hover:text-[#0a66c2]"
                       >
-                        <Linkedin size={15} />
+                        <Linkedin size={13} />
                       </a>
                     )}
                   </div>
@@ -494,11 +634,21 @@ const AdminTeam = () => {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-white/[0.08] bg-[#0D1220] p-6">
-              <h3 className="mb-2 text-sm font-bold text-white">Publishing Notes</h3>
-              <p className="text-sm leading-relaxed text-white/40">
-                Team updates sync through the shared site context, so changes here propagate anywhere the team data is used.
-              </p>
+            {/* Publishing Notes */}
+            <div className="rounded-2xl border border-white/[0.08] bg-gradient-to-b from-[#0D1220] to-[#0a0f1a] p-5">
+              <div className="mb-3 flex items-center gap-2.5">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#F5A800]/10">
+                  <span className="text-[10px] font-black text-[#F5A800]">i</span>
+                </div>
+                <h3 className="text-sm font-bold text-white">Publishing Notes</h3>
+              </div>
+              <div className="space-y-2 text-sm leading-relaxed text-white/35">
+                <p>Team updates sync through the shared site context, so changes here propagate anywhere the team data is used.</p>
+                <div className="flex items-center gap-2 rounded-lg border border-white/[0.05] bg-white/[0.02] px-3 py-2 text-xs">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-500/10 text-[9px] font-bold text-emerald-400">✓</span>
+                  Biographies and photos update live on the Company &rarr; Leadership page.
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -601,15 +751,25 @@ const AdminTeam = () => {
                 </div>
 
                 <div className="flex items-center justify-start gap-2 lg:col-span-2 lg:justify-end">
-                  {member.linkedin && member.linkedin !== '#' && (
+                  {/* LinkedIn — always visible; click opens link if exists, or opens editor to add one */}
+                  {member.linkedin && member.linkedin !== '#' ? (
                     <a
                       href={member.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.05] bg-white/[0.03] text-white/40 transition-all hover:border-cyan-400/20 hover:bg-cyan-500/10 hover:text-cyan-400"
+                      className="flex h-9 w-9 items-center justify-center rounded-lg border border-cyan-400/20 bg-cyan-500/10 text-cyan-400 transition-all hover:bg-cyan-500/20"
+                      title="Open LinkedIn profile"
                     >
-                      <ExternalLink size={14} />
+                      <Linkedin size={14} />
                     </a>
+                  ) : (
+                    <button
+                      onClick={() => open(member)}
+                      className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.05] bg-white/[0.03] text-white/20 transition-all hover:border-[#0a66c2]/30 hover:bg-[#0a66c2]/10 hover:text-[#0a66c2]"
+                      title="Add LinkedIn profile"
+                    >
+                      <Linkedin size={14} />
+                    </button>
                   )}
                   <button
                     onClick={() => open(member)}

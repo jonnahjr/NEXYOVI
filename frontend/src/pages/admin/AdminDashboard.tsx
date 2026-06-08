@@ -1,182 +1,301 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { 
- Users, Briefcase, MessageSquare,
- Star, ArrowUpRight, ShieldCheck,
- BrainCircuit, Network, Zap, Clock,
- LayoutTemplate, Settings, TrendingUp
+  Users, Briefcase, MessageSquare, 
+  Star, ArrowUpRight, ShieldCheck,
+  BrainCircuit, Network, Zap, Clock,
+  LayoutTemplate, Settings, TrendingUp,
+  ChevronRight, Globe, Rocket,
+  BarChart3, ArrowRight
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useSite } from '../../context/SiteContext';
 
 const StatCard = ({ label, value, icon: Icon, color, to, trend }: any) => (
- <Link to={to}>
- <motion.div
- whileHover={{ y: -2 }}
- className="bg-[#0a0a0e]/90 backdrop-blur-sm border border-white/[0.05] rounded-2xl p-5 hover:border-white/[0.15] hover:bg-white/[0.02] transition-all group cursor-pointer"
- >
- <div className="flex items-start justify-between mb-4">
- <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${color}`}>
- <Icon size={20} />
- </div>
- <ArrowUpRight size={16} className="text-white/20 group-hover:text-[#F5A800] transition-colors" />
- </div>
- <div className="text-3xl font-black text-white mb-1">{value}</div>
- <div className="text-xs font-bold text-white/40 uppercase tracking-widest">{label}</div>
- {trend && (
- <div className="flex items-center gap-1 mt-2 text-xs font-bold text-emerald-400">
- <TrendingUp size={12} />{trend}
- </div>
- )}
- </motion.div>
- </Link>
+  <Link to={to}>
+    <motion.div
+      whileHover={{ y: -6, scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+      className="relative bg-gradient-to-br from-[#050816]/90 to-[#02040a]/90 backdrop-blur-xl border border-white/[0.08] rounded-3xl p-7 hover:border-[#F5A800]/40 transition-all duration-500 group cursor-pointer shadow-2xl overflow-hidden"
+    >
+      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-transparent via-transparent to-[#F5A800]/5 pointer-events-none" />
+      
+      <div className="relative flex items-start justify-between mb-5">
+        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${color} shadow-lg shadow-current/20`}>
+          <Icon size={24} />
+        </div>
+        <ArrowUpRight size={20} className="text-white/15 group-hover:text-[#F5A800] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
+      </div>
+      
+      <div className="text-4xl font-black text-white mb-2 tracking-tight relative">
+        {value}
+      </div>
+      <div className="text-xs font-bold text-white/40 uppercase tracking-[0.2em]">
+        {label}
+      </div>
+      
+      {trend && (
+        <div className="flex items-center gap-2 mt-4 text-xs font-bold text-emerald-400 bg-emerald-500/10 px-3 py-2 rounded-xl w-fit border border-emerald-500/20">
+          <TrendingUp size={14} />
+          {trend}
+        </div>
+      )}
+    </motion.div>
+  </Link>
+);
+
+const QuickAction = ({ icon: Icon, label, desc, to, color }: any) => (
+  <Link to={to}>
+    <motion.div
+      whileHover={{ x: 6, scale: 1.01 }}
+      whileTap={{ scale: 0.99 }}
+      className="group flex items-center gap-5 p-6 rounded-3xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/[0.12] transition-all duration-300"
+    >
+      <div className={`w-13 h-13 rounded-2xl flex items-center justify-center ${color} shrink-0 shadow-lg shadow-current/10`}>
+        <Icon size={22} />
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="text-sm font-bold text-white">{label}</div>
+        <div className="text-xs text-white/40 mt-1">{desc}</div>
+      </div>
+      <ChevronRight size={18} className="text-white/15 group-hover:text-[#F5A800] group-hover:translate-x-1 transition-all duration-300" />
+    </motion.div>
+  </Link>
+);
+
+const SystemStatus = ({ name, load, icon: Icon, color, status }: any) => (
+  <div className="flex items-center gap-5 p-5 rounded-3xl bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300">
+    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${color} shrink-0`}>
+      <Icon size={20} />
+    </div>
+    <div className="flex-1 min-w-0">
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-xs font-bold text-white">{name}</span>
+        <span className={`text-[11px] font-black ${load > 80 ? 'text-amber-400' : 'text-emerald-400'}`}>{load}% Load</span>
+      </div>
+      <div className="w-full h-2 bg-white/[0.08] rounded-full overflow-hidden">
+        <motion.div
+          initial={{ width: 0 }}
+          animate={{ width: `${load}%` }}
+          transition={{ duration: 1, ease: 'easeOut', delay: 0.2 }}
+          className={`h-full rounded-full ${load > 80 ? 'bg-amber-400' : load > 60 ? 'bg-cyan-400' : 'bg-emerald-400'}`}
+        />
+      </div>
+    </div>
+    <span className={`text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-xl ${load > 80 ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'}`}>
+      {status}
+    </span>
+  </div>
 );
 
 const AdminDashboard = () => {
- const { jobs, team, testimonials, messages } = useSite();
- const unread = messages.filter((m: any) => m.status === 'unread').length;
+  const { jobs, team, testimonials, messages } = useSite();
+  const unread = messages.filter((m: any) => m.status === 'unread').length;
 
- const systems = [
- { name: 'AI Engine', load: 24, icon: BrainCircuit, color: 'text-cyan-400 bg-cyan-500/10', status: 'Healthy' },
- { name: 'Global Network', load: 41, icon: Network, color: 'text-violet-400 bg-violet-500/10', status: 'Optimal' },
- { name: 'Cyber Shield', load: 12, icon: ShieldCheck, color: 'text-emerald-400 bg-emerald-500/10', status: 'Shielded' },
- { name: 'Cloud Registry', load: 89, icon: Zap, color: 'text-amber-400 bg-amber-500/10', status: 'High Load' }];
+  const systems = [
+    { name: 'AI Engine', load: 24, icon: BrainCircuit, color: 'text-cyan-400 bg-cyan-500/10', status: 'Healthy' },
+    { name: 'Global Network', load: 41, icon: Network, color: 'text-violet-400 bg-violet-500/10', status: 'Optimal' },
+    { name: 'Security Shield', load: 12, icon: ShieldCheck, color: 'text-emerald-400 bg-emerald-500/10', status: 'Shielded' },
+    { name: 'Cloud Registry', load: 72, icon: Zap, color: 'text-[#F5A800] bg-[#F5A800]/10', status: 'Active' }
+  ];
 
- const quickLinks = [
- { label: 'Edit Site Content', path: '/admin/content', icon: LayoutTemplate, desc: 'Hero, stats, footer' },
- { label: 'Post New Job', path: '/admin/jobs', icon: Briefcase, desc: 'Open a new position' },
- { label: 'Add Team Member', path: '/admin/team', icon: Users, desc: 'Manage your team' },
- { label: 'Add Testimonial', path: '/admin/testimonials', icon: Star, desc: 'Client reviews' },
- { label: 'View Messages', path: '/admin/messages', icon: MessageSquare, desc: `${unread || 0} unread` },
- { label: 'Site Settings', path: '/admin/settings', icon: Settings, desc: 'Logo, links, info' }];
+  const quickActions = [
+    { label: 'Edit Site Content', path: '/admin/content', icon: LayoutTemplate, desc: 'Hero, stats, footer, portfolio', color: 'text-[#F5A800] bg-[#F5A800]/10' },
+    { label: 'Post New Job', path: '/admin/jobs', icon: Briefcase, desc: 'Open a new position', color: 'text-cyan-400 bg-cyan-500/10' },
+    { label: 'Manage Team', path: '/admin/team', icon: Users, desc: 'Add or edit team members', color: 'text-emerald-400 bg-emerald-500/10' },
+    { label: 'Add Testimonial', path: '/admin/testimonials', icon: Star, desc: 'Client reviews', color: 'text-violet-400 bg-violet-500/10' },
+    { label: 'View Messages', path: '/admin/messages', icon: MessageSquare, desc: `${unread || 0} unread inquiries`, color: 'text-pink-400 bg-pink-500/10' },
+    { label: 'Site Settings', path: '/admin/settings', icon: Settings, desc: 'Logo, links, company info', color: 'text-slate-300 bg-slate-500/10' }
+  ];
 
- return (
- <div className="space-y-6">
- 
- {/* Welcome Banner */}
- <div className="relative bg-[#0a0a0e]/90 backdrop-blur-sm border border-white/[0.05] rounded-2xl p-6 overflow-hidden">
- <div className="absolute inset-0 bg-gradient-to-r from-white/[0.02] to-transparent pointer-events-none" />
- <div className="relative flex items-center justify-between gap-4">
- <div>
- <p className="text-xs font-bold text-[#F5A800] uppercase tracking-widest mb-2">Welcome back</p>
- <h1 className="text-2xl font-black text-white tracking-tight">Yonas Bogale</h1>
- <p className="text-sm text-white/40 mt-1">Nexyovi Admin Control Panel</p>
- </div>
- <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 px-4 py-2 rounded-xl">
- <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
- <span className="text-xs font-bold text-emerald-400 uppercase tracking-widest">All Systems Online</span>
- </div>
- </div>
- </div>
+  return (
+    <div className="space-y-8 pb-10">
+      {/* Welcome Banner */}
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#F5A800]/15 via-[#050816]/95 to-[#02040a] border border-[#F5A800]/30 p-8 shadow-2xl"
+      >
+        <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-br from-transparent via-[#F5A800]/5 to-transparent pointer-events-none" />
+        <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-[#F5A800]/20 blur-[100px] pointer-events-none" />
+        
+        <div className="relative flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div className="flex-1">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/15 mb-6">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-lg shadow-emerald-400/30" />
+              <span className="text-[11px] font-black uppercase tracking-[0.25em] text-white/60">System Online</span>
+            </div>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tight mb-3">
+              Welcome back, Admin
+            </h1>
+            <p className="text-white/50 text-sm md:text-base max-w-2xl leading-relaxed">
+              Manage your Nexyovi site with complete control — edit content, manage team, and respond to inquiries.
+            </p>
+          </div>
+          
+          <div className="flex items-center gap-6">
+            <div className="text-right hidden sm:block">
+              <div className="text-xs font-black text-white/40 uppercase tracking-[0.2em] mb-2">Today</div>
+              <div className="text-xl font-black text-white">
+                {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+              </div>
+            </div>
+            <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-[#F5A800] to-[#ffb700] flex items-center justify-center shadow-2xl shadow-[#F5A800]/30">
+              <Rocket size={36} className="text-white" />
+            </div>
+          </div>
+        </div>
+      </motion.div>
 
- {/* Stats Grid */}
- <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
- <StatCard label="Open Positions" value={jobs.length} trend="Live on site" icon={Briefcase} color="text-[#F5A800] bg-[#F5A800]/10" to="/admin/jobs" />
- <StatCard label="Team Members" value={team.length} trend="Active staff" icon={Users} color="text-cyan-400 bg-cyan-500/10" to="/admin/team" />
- <StatCard label="Testimonials" value={testimonials.length} trend="Client reviews" icon={Star} color="text-emerald-400 bg-emerald-500/10" to="/admin/testimonials" />
- <StatCard label="Messages" value={messages.length} trend={`${unread} unread`} icon={MessageSquare} color="text-violet-400 bg-violet-500/10" to="/admin/messages" />
- </div>
+      {/* Stats Grid */}
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+      >
+        <StatCard 
+          label="Open Positions" 
+          value={jobs.length} 
+          trend="Live on site" 
+          icon={Briefcase} 
+          color="text-[#F5A800] bg-[#F5A800]/10" 
+          to="/admin/jobs" 
+        />
+        <StatCard 
+          label="Team Members" 
+          value={team.length} 
+          trend="All Active" 
+          icon={Users} 
+          color="text-cyan-400 bg-cyan-500/10" 
+          to="/admin/team" 
+        />
+        <StatCard 
+          label="Testimonials" 
+          value={testimonials.length} 
+          trend="Verified" 
+          icon={Star} 
+          color="text-emerald-400 bg-emerald-500/10" 
+          to="/admin/testimonials" 
+        />
+        <StatCard 
+          label="Messages" 
+          value={messages.length} 
+          trend={`${unread} unread`} 
+          icon={MessageSquare} 
+          color="text-violet-400 bg-violet-500/10" 
+          to="/admin/messages" 
+        />
 
- {/* Middle Grid */}
- <div className="grid grid-cols-1 xl:grid-cols-5 gap-6">
- 
- {/* Quick Actions */}
- <div className="xl:col-span-3 bg-[#0a0a0e]/90 backdrop-blur-sm border border-white/[0.05] rounded-2xl overflow-hidden">
- <div className="px-5 py-4 border-b border-white/[0.05]">
- <h2 className="text-sm font-bold text-white">Quick Actions</h2>
- <p className="text-xs text-white/30 mt-0.5">Manage all areas of the website</p>
- </div>
- <div className="p-4 grid grid-cols-2 md:grid-cols-3 gap-3">
- {quickLinks.map((q, i) => (
- <Link key={i} to={q.path}>
- <motion.div
- whileHover={{ y: -2 }}
- className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-[#F5A800]/40 hover:bg-[#F5A800]/5 transition-all group"
- >
- <div className="w-8 h-8 rounded-lg bg-[#F5A800]/10 flex items-center justify-center text-[#F5A800] mb-3 group-hover:bg-[#F5A800]/20 transition-colors">
- <q.icon size={16} />
- </div>
- <div className="text-sm font-bold text-white leading-tight">{q.label}</div>
- <div className="text-xs text-white/30 mt-1">{q.desc}</div>
- </motion.div>
- </Link>
- ))}
- </div>
- </div>
+        {/* Sparkline decoration under stats */}
+        <div className="lg:col-span-4 -mt-2">
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+        </div>
+      </motion.div>
 
- {/* System Health */}
- <div className="xl:col-span-2 bg-[#0a0a0e]/90 backdrop-blur-sm border border-white/[0.05] rounded-2xl overflow-hidden">
- <div className="px-5 py-4 border-b border-white/[0.05] flex items-center justify-between">
- <h2 className="text-sm font-bold text-white">System Health</h2>
- <span className="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-lg border border-emerald-500/20 uppercase tracking-widest">Live</span>
- </div>
- <div className="p-4 space-y-3">
- {systems.map((s, i) => (
- <div key={i} className="flex items-center gap-3">
- <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${s.color}`}>
- <s.icon size={15} />
- </div>
- <div className="flex-1 min-w-0">
- <div className="flex items-center justify-between mb-1">
- <span className="text-xs font-bold text-white">{s.name}</span>
- <span className={`text-xs font-black ${s.load > 80 ? 'text-amber-400' : 'text-emerald-400'}`}>{s.load}%</span>
- </div>
- <div className="w-full h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
- <motion.div
- initial={{ width: 0 }}
- animate={{ width: `${s.load}%` }}
- transition={{ duration: 0.8, delay: i * 0.1 }}
- className={`h-full rounded-full ${s.load > 80 ? 'bg-amber-400' : s.load > 60 ? 'bg-cyan-400' : 'bg-emerald-400'}`}
- />
- </div>
- </div>
- </div>
- ))}
- </div>
- </div>
- </div>
+      {/* Middle Grid */}
+      <div className="grid grid-cols-1 xl:grid-cols-5 gap-8">
+        {/* Quick Actions */}
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="xl:col-span-3 bg-gradient-to-br from-[#050816]/90 to-[#02040a]/90 backdrop-blur-xl border border-white/[0.08] rounded-3xl overflow-hidden shadow-2xl"
+        >
+          <div className="px-8 py-6 border-b border-white/[0.06] flex items-center justify-between bg-white/[0.01]">
+            <div>
+              <h3 className="text-sm font-black text-white uppercase tracking-[0.2em] text-white/70">Quick Actions</h3>
+              <p className="text-xs text-white/40 mt-1.5">Navigate to key areas instantly</p>
+            </div>
+            <Globe size={22} className="text-[#F5A800]" />
+          </div>
+          <div className="p-6 space-y-3">
+            {quickActions.map((action, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.25 + i * 0.05 }}
+              >
+                <QuickAction key={i} {...action} />
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
 
- {/* Recent Messages */}
- <div className="bg-[#0a0a0e]/90 backdrop-blur-sm border border-white/[0.05] rounded-2xl overflow-hidden">
- <div className="px-5 py-4 border-b border-white/[0.05] flex items-center justify-between">
- <div>
- <h2 className="text-sm font-bold text-white">Recent Messages</h2>
- <p className="text-xs text-white/30 mt-0.5">Inquiries from your website</p>
- </div>
- <Link to="/admin/messages" className="text-xs font-bold text-[#F5A800] hover:text-blue-400 transition-colors uppercase tracking-widest">
- View All →
- </Link>
- </div>
- {messages.length > 0 ? (
- <div className="divide-y divide-white/[0.04]">
- {messages.slice(0, 5).map((m: any, i: number) => (
- <div key={i} className="flex items-center gap-4 px-5 py-3.5 hover:bg-white/[0.02] transition-colors">
- <div className={`w-2 h-2 rounded-full shrink-0 ${m.status === 'unread' ? 'bg-[#F5A800]' : 'bg-white/20'}`} />
- <div className="flex-1 min-w-0">
- <div className="text-sm font-bold text-white">{m.name}</div>
- <div className="text-xs text-white/40 truncate mt-0.5">{m.message}</div>
- </div>
- <div className="text-xs text-white/30 shrink-0 flex items-center gap-1">
- <Clock size={11} />
- {m.created_at ? new Date(m.created_at).toLocaleDateString() : 'Today'}
- </div>
- <span className={`text-xs font-bold px-2 py-0.5 rounded-md shrink-0 ${
- m.status === 'unread' ? 'bg-[#F5A800]/10 text-[#F5A800]' : 'bg-white/5 text-white/30'
- }`}>
- {m.status}
- </span>
- </div>
- ))}
- </div>
- ) : (
- <div className="px-5 py-12 text-center">
- <ShieldCheck size={36} className="mx-auto mb-3 text-white/10" />
- <p className="text-sm text-white/30">No messages yet</p>
- </div>
- )}
- </div>
- </div>
- );
+        {/* System Status & Recent Messages */}
+        <motion.div 
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="xl:col-span-2 space-y-8"
+        >
+          {/* System Health */}
+          <div className="bg-gradient-to-br from-[#050816]/90 to-[#02040a]/90 backdrop-blur-xl border border-white/[0.08] rounded-3xl overflow-hidden shadow-2xl">
+            <div className="px-8 py-6 border-b border-white/[0.06] flex items-center justify-between bg-white/[0.01]">
+              <h3 className="text-sm font-black uppercase tracking-[0.2em] text-white/70">System Health</h3>
+              <span className="text-[10px] font-black text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-xl border border-emerald-500/20 uppercase tracking-[0.15em]">All Systems Go</span>
+            </div>
+            <div className="p-6 space-y-4">
+              {systems.map((s, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: 10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.35 + i * 0.05 }}
+                >
+                  <SystemStatus key={i} {...s} />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Recent Messages */}
+          <div className="bg-gradient-to-br from-[#050816]/90 to-[#02040a]/90 backdrop-blur-xl border border-white/[0.08] rounded-3xl overflow-hidden shadow-2xl">
+            <div className="px-8 py-6 border-b border-white/[0.06] flex items-center justify-between bg-white/[0.01]">
+              <div>
+                <h3 className="text-sm font-black uppercase tracking-[0.2em] text-white/70">Recent Inquiries</h3>
+                <p className="text-xs text-white/40 mt-1.5">{messages.length} total</p>
+              </div>
+              <Link to="/admin/messages" className="text-[11px] font-bold text-[#F5A800] hover:text-[#ffb700] transition-colors uppercase tracking-[0.2em] flex items-center gap-1">
+                View All <ArrowRight size={12} />
+              </Link>
+            </div>
+            {messages.length > 0 ? (
+              <div className="divide-y divide-white/[0.04]">
+                {messages.slice(0, 4).map((m: any, i: number) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.45 + i * 0.05 }}
+                    className="flex items-center gap-5 px-8 py-5 hover:bg-white/[0.03] transition-colors cursor-pointer"
+                  >
+                    <div className={`w-2.5 h-11 rounded-full shrink-0 ${m.status === 'unread' ? 'bg-[#F5A800]' : 'bg-white/15'}`} />
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-bold text-white truncate">{m.name}</div>
+                      <div className="text-xs text-white/40 truncate mt-1">{m.message}</div>
+                    </div>
+                    <div className="text-xs text-white/35 shrink-0 flex items-center gap-1.5">
+                      <Clock size={13} />
+                      {m.created_at ? new Date(m.created_at).toLocaleDateString() : 'Now'}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className="px-8 py-14 text-center">
+                <MessageSquare size={36} className="mx-auto mb-4 text-white/15" />
+                <p className="text-sm text-white/40">No messages yet</p>
+              </div>
+            )}
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  );
 };
 
 export default AdminDashboard;

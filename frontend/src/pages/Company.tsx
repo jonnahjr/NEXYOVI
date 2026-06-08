@@ -144,7 +144,33 @@ export default function Company() {
   const founded = about.founded || '2012';
   const headquarters = about.headquarters || 'Addis Ababa, Ethiopia';
   const clients = about.clients || '50+';
-  const founder = team.find((m: any) => m.id === '1');
+  const normalizeTeamValue = (value: string = '') => value.toLowerCase().replace(/\s+/g, ' ').trim();
+  const teamByName = new Map<string, any>();
+  team.forEach((member: any) => {
+    const key = normalizeTeamValue(member.name);
+    if (key && !teamByName.has(key)) {
+      teamByName.set(key, member);
+    }
+  });
+  const founder = team.find((m: any) => m.id === '1') || teamByName.get(normalizeTeamValue('Yonas Bogale'));
+  const executiveLeadership = [
+    'Amanuel Tesfaye',
+    'Selamawit Hailu',
+    'Eyerusalem Bogale',
+  ]
+    .map((name) => teamByName.get(normalizeTeamValue(name)))
+    .filter(Boolean);
+  const engineeringDeliveryTeam = [
+    'Sara Denbel',
+    'Henok Alemu',
+    'Betelhem Assefa',
+    'Nahom Girmachew',
+    'Biruk Mamo',
+    'Liya Wondesen',
+    'Tsion Wondimu',
+  ]
+    .map((name) => teamByName.get(normalizeTeamValue(name)))
+    .filter(Boolean);
   const companyTeamBadge = companyTeam.badge || 'Our Team';
   const companyTeamTitle = companyTeam.title || 'Meet the Team.';
   const companyTeamHighlight = companyTeam.highlight || 'Team.';
@@ -223,84 +249,105 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          2. OUR STORY — Dark · Split Layout
+          2. OUR STORY — Editorial · Stat Anchors
          ═══════════════════════════════════════ */}
       <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-[#F5A800]/6 rounded-full blur-[140px]" />
-          <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#8b5cf6]/5 rounded-full blur-[100px]" />
-        </div>
-        <div className="container max-w-5xl mx-auto px-6 relative z-10">
-          <div className="grid md:grid-cols-[1fr_1.6fr] gap-12 md:gap-16 items-center">
+        <div className="container max-w-6xl mx-auto px-6 relative z-10">
 
-            {/* Left: Results anchor */}
+          {/* ── Section badge centered ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-14 text-center"
+          >
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#F5A800]/15 bg-[#F5A800]/5 px-4 py-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#F5A800]" />
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#F5A800]">Our Story</span>
+            </div>
+          </motion.div>
+
+          <div className="grid md:grid-cols-[1fr_1.6fr] gap-10 md:gap-16">
+
+            {/* ══ LEFT: Stat anchors ══ */}
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="text-center md:text-left"
             >
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className="inline-flex flex-col gap-6"
-              >
-                <div>
-                  <span className="text-[80px] md:text-[100px] lg:text-[120px] font-black text-white tracking-[-0.05em] leading-[0.85]">
-                    10+
-                  </span>
-                  <span className="text-[16px] font-bold text-white/40 uppercase tracking-[0.2em] mt-1 block">
-                    Enterprise Platforms
-                  </span>
+              <div className="relative">
+                {/* Vertical accent line */}
+                <div className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-[#F5A800]/50 via-[#F5A800]/15 to-transparent hidden md:block" />
+
+                <div className="space-y-10 pl-0 md:pl-8">
+                  {[
+                    { number: '10+', label: 'Enterprise Platforms', accent: false },
+                    { number: '20+', label: 'Elite Engineers', accent: true },
+                    { number: '4', label: 'Countries Served', accent: false },
+                  ].map((stat, i) => (
+                    <motion.div
+                      key={stat.label}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: 0.1 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                      <span
+                        className={`text-[64px] md:text-[80px] lg:text-[96px] font-black tracking-[-0.05em] leading-[0.85] ${
+                          stat.accent ? 'text-[#F5A800]' : 'text-white'
+                        }`}
+                      >
+                        {stat.number}
+                      </span>
+                      <span className="block text-xs md:text-sm font-bold text-white/40 uppercase tracking-[0.2em] mt-1.5">
+                        {stat.label}
+                      </span>
+                    </motion.div>
+                  ))}
                 </div>
-                <div>
-                  <span className="text-[80px] md:text-[100px] lg:text-[120px] font-black text-[#F5A800] tracking-[-0.05em] leading-[0.85]">
-                    20+
-                  </span>
-                  <span className="text-[16px] font-bold text-white/40 uppercase tracking-[0.2em] mt-1 block">
-                    Elite Engineers
-                  </span>
-                </div>
-                <div>
-                  <span className="text-[80px] md:text-[100px] lg:text-[120px] font-black text-white tracking-[-0.05em] leading-[0.85]">
-                    4
-                  </span>
-                  <span className="text-[16px] font-bold text-white/40 uppercase tracking-[0.2em] mt-1 block">
-                    Countries Served
-                  </span>
-                </div>
-              </motion.div>
+              </div>
             </motion.div>
 
-            {/* Right: Story text */}
+            {/* ══ RIGHT: Story ══ */}
             <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="space-y-6"
+              transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             >
-              <motion.div variants={fadeUp}>
-                <SectionBadge label="Our Story" dark />
-              </motion.div>
-              <p className="text-white/60 text-base md:text-lg leading-[1.8] font-medium">
-                Founded in Addis Ababa in 2024 by Yonas Bogale, Nexyovi was built with a simple mission: help organizations leverage technology to solve complex challenges, operate more efficiently, and grow with confidence.
-              </p>
-              <p className="text-white/60 text-base md:text-lg leading-[1.8] font-medium">
-                What began as a focused software studio quickly evolved into a multidisciplinary engineering company specializing in custom software, artificial intelligence, cloud infrastructure, cybersecurity, and digital transformation.
-              </p>
-              <p className="text-white/60 text-base md:text-lg leading-[1.8] font-medium">
-                Today, Nexyovi partners with startups, enterprises, government organizations, and mission-driven businesses across Africa and beyond — designing, building, and maintaining secure, scalable, production-ready digital systems that deliver measurable outcomes.
-              </p>
-              <p className="text-white/60 text-base md:text-lg leading-[1.8] font-medium">
-                From enterprise applications and AI-powered platforms to cloud-native infrastructure and mission-critical systems, we combine deep engineering expertise with a long-term commitment to client success.
-              </p>
-              <p className="text-white/60 text-base md:text-lg leading-[1.8] font-medium">
-                Our vision is to build technology that creates lasting impact — starting in Africa, built for the world.
-              </p>
+              <div className="relative pl-0 md:pl-10">
+                {/* Gold quotation mark */}
+                <div className="absolute -top-6 -left-2 md:-left-2 text-[80px] font-black text-[#F5A800]/10 leading-none select-none pointer-events-none">
+                  "
+                </div>
+
+                <div className="space-y-5">
+                  <p className="text-white/65 text-base md:text-lg leading-[1.8] font-medium">
+                    Founded in Addis Ababa in 2024 by Yonas Bogale, Nexyovi was built with a simple mission: help organizations leverage technology to solve complex challenges, operate more efficiently, and grow with confidence.
+                  </p>
+                  <p className="text-white/50 text-base md:text-lg leading-[1.8] font-medium">
+                    What began as a focused software studio quickly evolved into a multidisciplinary engineering company specializing in custom software, artificial intelligence, cloud infrastructure, cybersecurity, and digital transformation.
+                  </p>
+                  <p className="text-white/65 text-base md:text-lg leading-[1.8] font-medium">
+                    Today, Nexyovi partners with startups, enterprises, government organizations, and mission-driven businesses across Africa and beyond — designing, building, and maintaining secure, scalable, production-ready digital systems that deliver measurable outcomes.
+                  </p>
+                  <p className="text-white/50 text-base md:text-lg leading-[1.8] font-medium">
+                    From enterprise applications and AI-powered platforms to cloud-native infrastructure and mission-critical systems, we combine deep engineering expertise with a long-term commitment to client success.
+                  </p>
+
+                  {/* Divider before closing vision */}
+                  <div className="flex items-center gap-3 pt-2">
+                    <div className="h-px w-12 bg-[#F5A800]/40" />
+                    <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/20">Vision</span>
+                  </div>
+
+                  <p className="text-white/70 text-base md:text-lg leading-[1.8] font-semibold italic">
+                    "Our vision is to build technology that creates lasting impact — starting in Africa, built for the world."
+                  </p>
+                </div>
+              </div>
             </motion.div>
 
           </div>
@@ -314,7 +361,7 @@ export default function Company() {
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/2 right-1/4 w-[400px] h-[400px] bg-[#F5A800]/5 blur-[100px] rounded-full" />
         </div>
-        <div className="container max-w-5xl mx-auto px-6 relative z-10">
+        <div className="container max-w-6xl mx-auto px-6 relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-10">
             <motion.div variants={fadeUp}>
               <SectionBadge label="Organizations We Support" />
@@ -518,159 +565,226 @@ export default function Company() {
       </section>
 
       {/* ═══════════════════════════════════════
-          8. LEADERSHIP / TEAM — Dark Section
+          8. LEADERSHIP / TEAM — Enterprise Structure
          ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#F5A800]/6 blur-[140px] rounded-full" />
-          <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#8b5cf6]/5 blur-[100px] rounded-full" />
-        </div>
+      <section className="relative py-16 md:py-24 bg-[#02040a] section-divider-dark overflow-hidden">
+        {/* Subtle grid texture */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.012]"
+          style={{
+            backgroundImage: `linear-gradient(rgba(245,168,0,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(245,168,0,0.3) 1px, transparent 1px)`,
+            backgroundSize: '80px 80px',
+          }}
+        />
+        {/* Ambient side glows — subtle */}
+        <div className="pointer-events-none absolute left-0 top-1/3 h-[350px] w-[250px] rounded-full bg-[#F5A800]/4 blur-[100px]" />
+        <div className="pointer-events-none absolute right-0 bottom-1/3 h-[300px] w-[200px] rounded-full bg-[#8b5cf6]/3 blur-[80px]" />
+
         <div className="container max-w-5xl mx-auto px-6 relative z-10">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="text-center mb-16">
-            <motion.div variants={fadeUp}>
-              <SectionBadge label={companyTeamBadge} dark />
+
+          {/* ═══════════════════════════════════
+              SECTION HEADER
+          ═══════════════════════════════════ */}
+          <motion.div
+            initial="hidden" whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="mb-10 text-center"
+          >
+            <motion.div variants={fadeUp} className="mb-5">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#F5A800]" />
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/60">{companyTeamBadge}</span>
+              </div>
             </motion.div>
-            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-4">
+            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl lg:text-6xl font-black leading-[0.95] tracking-[-0.04em] text-white">
               {companyTeamTitle.includes(companyTeamHighlight) ? (
-                <>
-                  {companyTeamTitlePrefix}{' '}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">{companyTeamHighlight}</span>
-                </>
-              ) : (
-                companyTeamTitle
-              )}
+                <>{companyTeamTitlePrefix}{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">{companyTeamHighlight}</span></>
+              ) : companyTeamTitle}
             </motion.h2>
-            <motion.p variants={fadeUp} className="text-white/50 text-lg font-medium max-w-xl mx-auto">
+            <motion.p variants={fadeUp} className="mx-auto mt-3 max-w-lg text-base font-medium leading-relaxed text-white/40">
               {companyTeamDescription}
             </motion.p>
           </motion.div>
 
-          {/* Founder spotlight */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-3xl mx-auto text-center mb-20"
-          >
-            <div className="w-28 h-28 rounded-full mx-auto mb-6 overflow-hidden border-2 border-[#F5A800]/20">
-              {founder?.img ? (
-                <img src={founder.img} alt={founderName} className="w-full h-full object-cover" />
-              ) : (
-                <div className="w-full h-full bg-[#F5A800]/10 flex items-center justify-center">
-                  <span className="text-3xl font-black text-[#F5A800]">YB</span>
-                </div>
-              )}
-            </div>
-            <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-1">{founderName}</h2>
-            <p className="text-[#F5A800] text-[12px] font-black uppercase tracking-[0.2em] mb-4">{founderRole}</p>
-            <p className="text-white/50 text-lg leading-relaxed max-w-2xl mx-auto mb-6">
-              {founderBio}
-            </p>
-            <a
-              href={founderLinkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#0a66c2]/10 border border-[#0a66c2]/20 text-[#0a66c2] text-[13px] font-bold hover:bg-[#0a66c2]/20 transition-all mx-auto"
+          {/* ═══════════════════════════════════
+              TIER 1 — FOUNDER & CEO
+          ═══════════════════════════════════ */}
+          {founder && (
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="mx-auto mb-12 max-w-2xl text-center"
             >
-              <Linkedin size={14} />
-              {founderButton}
-            </a>
-          </motion.div>
+              <div className="relative mx-auto mb-6 h-36 w-36 overflow-hidden rounded-full border border-white/10 bg-white/[0.03] md:h-44 md:w-44">
+                {founder.img ? (
+                  <img src={founder.img} alt={founderName} className="h-full w-full object-cover" />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center text-5xl font-black text-white/70" style={{ backgroundColor: founder.color || '#F5A800' }}>
+                    {founder.initials || 'YB'}
+                  </div>
+                )}
+              </div>
+              <h3 className="text-3xl font-black tracking-[-0.02em] text-white md:text-4xl mb-2">{founderName}</h3>
+              <p className="text-sm font-medium text-[#F5A800] uppercase tracking-[0.2em] mb-4">{founderRole}</p>
+              <p className="text-base leading-relaxed text-white/60 mb-6 max-w-md mx-auto">
+                Visionary leader with 12+ years in tech and business strategy.
+              </p>
+              {founderLinkedin && (
+                <a
+                  href={founderLinkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-[#0a66c2]/30 bg-[#0a66c2]/10 px-6 py-3 text-sm font-semibold text-[#8fc3f4] transition-all duration-300 hover:border-[#0a66c2]/50 hover:bg-[#0a66c2]/20"
+                >
+                  <Linkedin size={16} />
+                  LinkedIn Profile
+                </a>
+              )}
+            </motion.div>
+          )}
 
-          {/* Leadership grid — CTO, Head of Engineering, Head of Product */}
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={staggerContainer} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {[2, 3, 16].map((id) => {
-              const member = team.find((m: any) => m.id === String(id));
-              if (!member) return null;
-              return (
+          <div className="mx-auto mb-8 flex max-w-4xl flex-col items-center text-center">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30">Founder &amp; CEO</span>
+            <div className="my-2 h-6 w-px bg-gradient-to-b from-white/[0.16] to-white/[0.03]" />
+            <div className="flex h-6 w-6 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.03] text-white/35">
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+                <path d="M6 10L2 4h8L6 10z" fill="currentColor" />
+              </svg>
+            </div>
+            <div className="my-2 h-6 w-px bg-gradient-to-b from-white/[0.16] to-white/[0.03]" />
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30">Executive Leadership Team</span>
+          </div>
+
+          {/* ═══════════════════════════════════
+              TIER 2 — EXECUTIVE LEADERSHIP
+          ═══════════════════════════════════ */}
+          {executiveLeadership.length > 0 && (
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-40px' }}
+              variants={staggerContainer}
+              className="mx-auto mb-8 grid max-w-6xl grid-cols-1 gap-4 lg:grid-cols-3"
+            >
+              {executiveLeadership.map((member: any) => (
                 <motion.div
                   key={member.id}
                   variants={fadeUp}
-                  className="group bg-white/[0.03] rounded-[24px] border border-white/[0.08] p-8 text-center transition-all duration-500 hover:-translate-y-1 hover:border-[#F5A800]/30"
+                  className="text-center"
                 >
-                  <div className="w-24 h-24 rounded-full mx-auto mb-5 overflow-hidden border-2 border-transparent group-hover:border-[#F5A800]/30 transition-all duration-500">
+                  <div className="mx-auto mb-1 h-10 w-10 overflow-hidden rounded-full bg-white/[0.04]">
                     {member.img ? (
-                      <img src={member.img} alt={member.name} className="w-full h-full object-cover" />
+                      <img src={member.img} alt={member.name} className="h-full w-full object-cover" />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-white font-black text-2xl" style={{ backgroundColor: member.color || '#8b5cf6' }}>
+                      <div className="flex h-full w-full items-center justify-center text-sm font-bold text-white/70" style={{ backgroundColor: member.color || '#8b5cf6' }}>
                         {member.initials || member.name.split(' ').map((n: string) => n[0]).join('')}
                       </div>
                     )}
                   </div>
-                  <h3 className="text-xl font-black text-white mb-0.5 group-hover:text-[#F5A800] transition-colors">{member.name}</h3>
-                  <p className="text-[11px] font-black uppercase tracking-[0.15em] text-[#F5A800] mb-3">{member.role}</p>
-                  <p className="text-white/50 text-sm leading-relaxed font-medium max-w-xs mx-auto mb-4">{member.bio}</p>
+                  <h4 className="text-sm font-bold text-white">{member.name}</h4>
+                  <p className="mt-0.5 text-[9px] font-medium uppercase tracking-[0.15em] text-white/35">{member.role}</p>
                   {member.linkedin && (
                     <a
                       href={member.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a66c2]/10 border border-[#0a66c2]/20 text-[#0a66c2] text-[11px] font-bold hover:bg-[#0a66c2]/20 transition-all"
-                      onClick={(e: React.MouseEvent) => e.stopPropagation()}
+                      className="mt-2 inline-flex items-center gap-1 text-[10px] font-medium text-white/30 transition-all duration-300 hover:text-[#8fc3f4]"
                     >
-                      <Linkedin size={12} />
+                      <Linkedin size={10} />
                       LinkedIn
                     </a>
                   )}
                 </motion.div>
-              );
-            })}
+              ))}
+            </motion.div>
+          )}
 
+          <div className="mx-auto mb-6 flex max-w-4xl flex-col items-center text-center">
+            <div className="h-6 w-px bg-gradient-to-b from-white/[0.14] to-white/[0.03]" />
+            <div className="my-2 flex h-6 w-6 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.03] text-white/35">
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+                <path d="M6 10L2 4h8L6 10z" fill="currentColor" />
+              </svg>
+            </div>
+            <div className="h-6 w-px bg-gradient-to-b from-white/[0.14] to-white/[0.03]" />
+          </div>
 
-          </motion.div>
-
-          {/* Core Team Grid */}
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={staggerContainer} className="grid grid-cols-8 gap-2 max-w-full mx-auto mt-12 px-2">
-            {team.filter((m: any) => !['1', '2', '3', '16'].includes(m.id)).map((member: any) => (
+          {/* ═══════════════════════════════════
+              TIER 3 — ENGINEERING & DELIVERY TEAM
+          ═══════════════════════════════════ */}
+          {engineeringDeliveryTeam.length > 0 && (
+            <>
               <motion.div
-                key={member.id}
-                variants={fadeUp}
-                className="group min-w-0 bg-white/[0.02] rounded-[20px] px-5 py-3 text-center transition-all duration-500 hover:-translate-y-1 hover:bg-white/[0.04]"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="mb-6 text-center"
               >
-                <div className="w-12 h-12 rounded-full mx-auto mb-2 overflow-hidden transition-all duration-500">
-                  {member.img ? (
-                    <img src={member.img} alt={member.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-white font-black text-xs" style={{ backgroundColor: member.color || '#8b5cf6' }}>
-                      {member.initials || member.name.split(' ').map((n: string) => n[0]).join('')}
-                    </div>
-                  )}
-                </div>
-                <h4 className="text-sm font-black text-white mb-1 group-hover:text-[#F5A800] transition-colors">{member.name}</h4>
-                <p className="text-[9px] font-black uppercase tracking-[0.08em] text-[#F5A800] mb-1">{member.role}</p>
-                <p className="text-white/40 text-[10px] leading-relaxed font-medium line-clamp-2 mb-2">{member.bio}</p>
-                {member.linkedin && (
-                  <a
-                    href={member.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white/5 text-white/50 text-[9px] font-bold hover:bg-[#0a66c2]/20 hover:text-[#0a66c2] transition-all mx-auto"
-                    onClick={(e: React.MouseEvent) => e.stopPropagation()}
-                  >
-                    <Linkedin size={10} />
-                    LinkedIn
-                  </a>
-                )}
+                <h3 className="text-lg font-black tracking-[-0.02em] text-white">Engineering &amp; Delivery Team</h3>
+                <p className="mx-auto mt-2 max-w-2xl text-xs leading-relaxed text-white/45">
+                  Cross-functional specialists delivering software engineering, AI systems, infrastructure, security, and product execution.
+                </p>
               </motion.div>
-            ))}
-          </motion.div>
 
-          {/* Distributed team note */}
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: '-40px' }}
+                variants={staggerContainer}
+                className="flex flex-nowrap justify-center gap-2 overflow-x-hidden"
+              >
+                {engineeringDeliveryTeam.map((member: any) => (
+                  <motion.div
+                    key={member.id}
+                    variants={fadeUp}
+                    className="w-[110px] flex-shrink-0 rounded-lg border border-white/[0.06] bg-white/[0.025] px-2 py-2 text-center backdrop-blur-md"
+                  >
+                    <div className="mx-auto mb-1 h-8 w-8 overflow-hidden rounded-full border border-white/[0.1] bg-white/[0.03]">
+                      {member.img ? (
+                        <img src={member.img} alt={member.name} className="h-full w-full object-cover" />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center text-[9px] font-black text-white/70" style={{ backgroundColor: member.color || '#8b5cf6' }}>
+                          {member.initials || member.name.split(' ').map((n: string) => n[0]).join('')}
+                        </div>
+                      )}
+                    </div>
+                    <h5 className="text-[10px] font-semibold leading-tight text-white">{member.name}</h5>
+                    <p className="mt-0.5 text-[6px] font-black uppercase tracking-[0.12em] text-white/42">{member.role}</p>
+                    {member.linkedin && (
+                      <a
+                        href={member.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-2 inline-flex items-center gap-0.5 rounded-md border border-white/[0.08] bg-white/[0.03] px-1.5 py-0.5 text-[7px] font-semibold text-white/65 transition-all duration-300 hover:border-[#0a66c2]/30 hover:bg-[#0a66c2]/10 hover:text-[#8fc3f4]"
+                      >
+                        <Linkedin size={6} />
+                        LinkedIn
+                      </a>
+                    )}
+                  </motion.div>
+                ))}
+              </motion.div>
+            </>
+          )}
+
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="text-center mt-10 max-w-2xl mx-auto"
+            transition={{ delay: 0.25, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="mx-auto mt-8 max-w-3xl text-center"
           >
-            <div className="relative px-8 py-6 rounded-[20px] bg-white/[0.03] border border-white/[0.08]">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-[2px] bg-gradient-to-r from-transparent via-[#F5A800] to-transparent" />
-              <p className="text-white/50 text-sm leading-relaxed font-medium">
-                Supported by a distributed team of software engineers, AI specialists, designers, DevOps engineers, and infrastructure experts across multiple regions.
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.025] px-4 py-3 backdrop-blur-md">
+              <p className="text-xs leading-relaxed text-white/45">
+                Supported by a distributed team of software engineers, AI specialists, designers, DevOps engineers, and infrastructure experts operating across multiple regions.
               </p>
             </div>
           </motion.div>
+
         </div>
       </section>
 

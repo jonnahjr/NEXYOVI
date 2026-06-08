@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
- LayoutDashboard, Briefcase, Users, Settings, 
- LogOut, ChevronLeft, ChevronRight, Bell,
- MessageSquare, Star, ShieldAlert,
- X, Clock, LayoutTemplate, Menu
+  LayoutDashboard, Briefcase, Users, Settings, 
+  LogOut, ChevronLeft, ChevronRight, Bell,
+  MessageSquare, Star, ShieldAlert,
+  X, Clock, LayoutTemplate, Menu
 } from 'lucide-react';
 import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { useSite } from '../../context/SiteContext';
@@ -12,235 +12,263 @@ import { supabase } from '../../lib/supabase';
 import myLogo from '../../assets/logo 1.png';
 
 const AdminLayout = () => {
- const [collapsed, setCollapsed] = useState(false);
- const [showNotifications, setShowNotifications] = useState(false);
- const [mobileOpen, setMobileOpen] = useState(false);
- const location = useLocation();
- const navigate = useNavigate();
- const { messages, settings } = useSite();
+  const [collapsed, setCollapsed] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { messages, settings } = useSite();
 
- const unreadMessages = messages.filter(m => m.status === 'unread');
+  const unreadMessages = messages.filter(m => m.status === 'unread');
 
- const nav = [
- { icon: LayoutDashboard, label: 'Dashboard', path: '/admin' },
- { icon: LayoutTemplate, label: 'Site Content', path: '/admin/content' },
- { icon: Briefcase, label: 'Jobs', path: '/admin/jobs' },
- { icon: Users, label: 'Team', path: '/admin/team' },
- { icon: Star, label: 'Testimonials', path: '/admin/testimonials' },
- { icon: MessageSquare, label: 'Messages', path: '/admin/messages', badge: unreadMessages.length > 0 ? unreadMessages.length : null },
- { icon: ShieldAlert, label: 'Users', path: '/admin/users' },
- { icon: Settings, label: 'Settings', path: '/admin/settings' }];
+  const nav = [
+    { icon: LayoutDashboard, label: 'Dashboard', path: '/admin' },
+    { icon: LayoutTemplate, label: 'Site Content', path: '/admin/content' },
+    { icon: Briefcase, label: 'Jobs', path: '/admin/jobs' },
+    { icon: Users, label: 'Team', path: '/admin/team' },
+    { icon: Star, label: 'Testimonials', path: '/admin/testimonials' },
+    { icon: MessageSquare, label: 'Messages', path: '/admin/messages', badge: unreadMessages.length > 0 ? unreadMessages.length : null },
+    { icon: ShieldAlert, label: 'Users', path: '/admin/users' },
+    { icon: Settings, label: 'Settings', path: '/admin/settings' }
+  ];
 
- const handleLogout = async () => {
- await supabase.auth.signOut();
- navigate('/admin/login');
- };
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate('/admin/login');
+  };
 
- const currentPage = nav.find(n => location.pathname === n.path)?.label 
- || nav.find(n => location.pathname.startsWith(n.path) && n.path !== '/admin')?.label 
- || 'Dashboard';
+  const currentPage = nav.find(n => location.pathname === n.path)?.label 
+    || nav.find(n => location.pathname.startsWith(n.path) && n.path !== '/admin')?.label 
+    || 'Dashboard';
 
- const SidebarContent = () => (
- <>
- {/* Logo */}
- <div className={`h-[72px] flex items-center border-b border-white/[0.06] shrink-0 transition-all ${collapsed ? 'px-5 justify-center' : 'px-6'}`}>
- {settings?.logo_url ? (
- <img src={settings.logo_url} alt="Logo" className="h-12 object-contain" />
- ) : (
- <div
- className={`bg-[#f3a847] transition-all ${collapsed ? 'h-8 w-8' : 'h-12 w-[160px]'}`}
- style={{
- WebkitMask: `url('${myLogo}') ${collapsed ? 'center' : 'left'} center / contain no-repeat`,
- mask: `url('${myLogo}') ${collapsed ? 'center' : 'left'} center / contain no-repeat`
- }}
- />
- )}
- </div>
+  const SidebarContent = () => (
+    <>
+      {/* Logo */}
+      <div className={`h-20 flex items-center border-b border-white/[0.08] shrink-0 transition-all ${collapsed ? 'px-5 justify-center' : 'px-6'}`}>
+        {settings?.logo_url ? (
+          <img src={settings.logo_url} alt="Logo" className="h-10 object-contain" />
+        ) : (
+          <div
+            className={`bg-gradient-to-r from-[#F5A800] to-[#ffb700] transition-all ${collapsed ? 'h-9 w-9 rounded-lg' : 'h-10 w-[150px] rounded-lg'}`}
+            style={{
+              WebkitMask: `url('${myLogo}') ${collapsed ? 'center' : 'left'} center / contain no-repeat`,
+              mask: `url('${myLogo}') ${collapsed ? 'center' : 'left'} center / contain no-repeat`
+            }}
+          />
+        )}
+      </div>
 
- {/* Nav */}
- <nav className="flex-1 py-5 px-3 space-y-0.5 overflow-y-auto">
- {nav.map((item) => {
- const active = location.pathname === item.path;
- return (
- <Link key={item.path} to={item.path} onClick={() => setMobileOpen(false)}
- className={`relative flex items-center gap-3 px-3 h-11 rounded-xl transition-all group ${
- active
- ? 'bg-[#F5A800] text-white /20'
- : 'text-white/50 hover:bg-white/[0.05] hover:text-white'
- }`}
- >
- <item.icon size={18} className="shrink-0" />
- {!collapsed && (
- <span className="text-sm font-semibold flex-1 truncate">{item.label}</span>
- )}
- {!collapsed && item.badge && (
- <span className="text-xs bg-red-500 text-white font-black px-1.5 py-0.5 rounded-md min-w-[20px] text-center">
- {item.badge}
- </span>
- )}
- {collapsed && item.badge && (
- <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-red-500" />
- )}
- </Link>
- );
- })}
- </nav>
+      {/* Nav */}
+      <nav className="flex-1 py-6 px-3 space-y-2 overflow-y-auto">
+        {nav.map((item, index) => {
+          const active = location.pathname === item.path;
+          return (
+            <motion.div
+              key={item.path}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.05 }}
+            >
+              <Link 
+                to={item.path} 
+                onClick={() => setMobileOpen(false)}
+                className={`relative flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 group ${
+                  active
+                    ? 'bg-gradient-to-r from-[#F5A800] to-[#ffb700] text-white shadow-lg shadow-[#F5A800]/20'
+                    : 'text-white/50 hover:bg-white/[0.08] hover:text-white'
+                }`}
+              >
+                <item.icon size={19} className="shrink-0" />
+                {!collapsed && (
+                  <span className="text-sm font-semibold flex-1 truncate">{item.label}</span>
+                )}
+                {!collapsed && item.badge && (
+                  <span className="text-[11px] bg-red-500 text-white font-black px-2 py-0.5 rounded-full min-w-[22px] text-center shadow-sm">
+                    {item.badge}
+                  </span>
+                )}
+                {collapsed && item.badge && (
+                  <span className="absolute top-2 right-2 w-2.5 h-2.5 rounded-full bg-red-500 shadow-sm animate-pulse" />
+                )}
+              </Link>
+            </motion.div>
+          );
+        })}
+      </nav>
 
- {/* Bottom */}
- <div className="px-3 pb-5 space-y-0.5 border-t border-white/[0.06] pt-4">
- <button onClick={() => setCollapsed(!collapsed)}
- className="hidden lg:flex items-center gap-3 px-3 h-11 rounded-xl text-white/30 hover:bg-white/[0.05] hover:text-white transition-all w-full"
- >
- {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
- {!collapsed && <span className="text-sm font-semibold">Collapse</span>}
- </button>
- <button onClick={handleLogout}
- className="flex items-center gap-3 px-3 h-11 rounded-xl text-white/30 hover:bg-red-500/10 hover:text-red-400 transition-all w-full"
- >
- <LogOut size={18} className="shrink-0" />
- {!collapsed && <span className="text-sm font-semibold">Sign Out</span>}
- </button>
- </div>
- </>
- );
+      {/* Bottom */}
+      <div className="px-3 pb-6 space-y-2 border-t border-white/[0.08] pt-4">
+        <button 
+          onClick={() => setCollapsed(!collapsed)}
+          className="hidden lg:flex items-center gap-3 px-4 py-3 rounded-2xl text-white/40 hover:bg-white/[0.08] hover:text-white transition-all w-full"
+        >
+          {collapsed ? <ChevronRight size={19} /> : <ChevronLeft size={19} />}
+          {!collapsed && <span className="text-sm font-semibold">Collapse</span>}
+        </button>
+        <button 
+          onClick={handleLogout}
+          className="flex items-center gap-3 px-4 py-3 rounded-2xl text-white/40 hover:bg-red-500/10 hover:text-red-400 transition-all w-full"
+        >
+          <LogOut size={19} className="shrink-0" />
+          {!collapsed && <span className="text-sm font-semibold">Sign Out</span>}
+        </button>
+      </div>
+    </>
+  );
 
- return (
- <div className="h-screen w-screen bg-[#02040a] text-white flex overflow-hidden" style={{ fontFamily: "'Inter', sans-serif" }}>
- 
- {/* ── MOBILE OVERLAY ── */}
- <AnimatePresence>
- {mobileOpen && (
- <>
- <div className="fixed inset-0 bg-black/60 z-40 lg:hidden" onClick={() => setMobileOpen(false)} />
- <motion.aside
- initial={{ x: -280 }} animate={{ x: 0 }} exit={{ x: -280 }}
- transition={{ type: 'spring', stiffness: 300, damping: 30 }}
- className="fixed left-0 top-0 h-full w-[260px] bg-[#0a0a0e] border-r border-white/[0.05] flex flex-col z-50 lg:hidden"
- >
- <SidebarContent />
- </motion.aside>
- </>
- )}
- </AnimatePresence>
+  return (
+    <div className="h-screen w-screen bg-gradient-to-br from-[#02040a] via-[#050816] to-[#02040a] text-white flex overflow-hidden">
+      {/* Background glows */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-[#F5A800]/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[28rem] h-[28rem] bg-[#6366f1]/10 rounded-full blur-[100px] pointer-events-none" />
+      
+      {/* ── MOBILE OVERLAY ── */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <>
+            <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 lg:hidden" onClick={() => setMobileOpen(false)} />
+            <motion.aside
+              initial={{ x: -300, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -300, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+              className="fixed left-0 top-0 h-full w-[260px] bg-gradient-to-b from-[#050816] to-[#02040a] border-r border-white/[0.08] flex flex-col z-50 lg:hidden shadow-2xl"
+            >
+              <SidebarContent />
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
 
- {/* ── DESKTOP SIDEBAR ── */}
- <motion.aside
- animate={{ width: collapsed ? 68 : 240 }}
- transition={{ type: 'spring', stiffness: 300, damping: 30 }}
- className="h-full bg-[#0a0a0e]/90 backdrop-blur-sm border-r border-white/[0.05] flex-col shrink-0 overflow-hidden hidden lg:flex"
- >
- <SidebarContent />
- </motion.aside>
+      {/* ── DESKTOP SIDEBAR ── */}
+      <motion.aside
+        animate={{ width: collapsed ? 76 : 260 }}
+        transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+        className="h-full bg-gradient-to-b from-[#050816]/95 via-[#070B18]/95 to-[#02040a]/95 backdrop-blur-xl border-r border-white/[0.08] flex-col shrink-0 overflow-hidden hidden lg:flex shadow-2xl"
+      >
+        <SidebarContent />
+      </motion.aside>
 
- {/* ── MAIN ── */}
- <div className="flex-1 flex flex-col h-full overflow-hidden min-w-0">
- 
- {/* Topbar */}
- <header className="h-[72px] bg-[#0a0a0e]/90 backdrop-blur-sm border-b border-white/[0.05] px-6 flex items-center justify-between shrink-0">
- <div className="flex items-center gap-4">
- {/* Mobile menu button */}
- <button onClick={() => setMobileOpen(true)} className="lg:hidden w-9 h-9 rounded-lg border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/5 transition-all">
- <Menu size={18} />
- </button>
- <div>
- <div className="text-base font-bold text-white leading-none">{currentPage}</div>
- <div className="text-xs text-white/30 mt-0.5">Nexyovi Admin Panel</div>
- </div>
- </div>
+      {/* ── MAIN ── */}
+      <div className="flex-1 flex flex-col h-full overflow-hidden min-w-0">
+        {/* Topbar */}
+        <header className="h-20 bg-gradient-to-r from-[#050816]/95 via-[#02040a]/90 to-[#050816]/95 backdrop-blur-xl border-b border-white/[0.08] px-6 flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-4">
+            {/* Mobile menu button */}
+            <button 
+              onClick={() => setMobileOpen(true)} 
+              className="lg:hidden w-11 h-11 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/[0.1] transition-all"
+            >
+              <Menu size={20} />
+            </button>
+            <div>
+              <motion.div 
+                key={currentPage}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-xl font-black text-white leading-none"
+              >
+                {currentPage}
+              </motion.div>
+              <div className="text-xs text-white/35 mt-1">Nexyovi Admin Panel</div>
+            </div>
+          </div>
 
- <div className="flex items-center gap-3">
- {/* Notifications */}
- <div className="relative">
- <button
- onClick={() => setShowNotifications(!showNotifications)}
- className={`relative w-9 h-9 rounded-lg border flex items-center justify-center transition-all ${
- showNotifications ? 'bg-[#F5A800] border-[#F5A800] text-white' : 'bg-white/[0.03] border-white/[0.08] text-white/40 hover:bg-white/[0.08] hover:text-white'
- }`}
- >
- <Bell size={16} />
- {unreadMessages.length > 0 && (
- <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-red-500 border-2 border-[#0D1220] flex items-center justify-center text-[9px] font-black text-white">
- {unreadMessages.length}
- </span>
- )}
- </button>
+          <div className="flex items-center gap-3">
+            {/* Notifications */}
+            <div className="relative">
+              <button
+                onClick={() => setShowNotifications(!showNotifications)}
+                className={`relative w-11 h-11 rounded-xl border flex items-center justify-center transition-all duration-300 ${
+                  showNotifications 
+                    ? 'bg-gradient-to-r from-[#F5A800] to-[#ffb700] border-transparent text-white shadow-lg shadow-[#F5A800]/20' 
+                    : 'bg-white/[0.05] border-white/10 text-white/50 hover:bg-white/[0.1] hover:text-white'
+                }`}
+              >
+                <Bell size={19} />
+                {unreadMessages.length > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 border-2 border-[#050816] flex items-center justify-center text-[10px] font-black text-white shadow-sm">
+                    {unreadMessages.length}
+                  </span>
+                )}
+              </button>
 
- <AnimatePresence>
- {showNotifications && (
- <>
- <div className="fixed inset-0 z-40" onClick={() => setShowNotifications(false)} />
- <motion.div
- initial={{ opacity: 0, y: 8, scale: 0.96 }}
- animate={{ opacity: 1, y: 0, scale: 1 }}
- exit={{ opacity: 0, y: 8, scale: 0.96 }}
- className="absolute right-0 mt-2 w-80 bg-[#0a0a0e] border border-white/[0.05] rounded-2xl z-50 overflow-hidden shadow-2xl"
- >
- <div className="p-4 border-b border-white/[0.06] flex items-center justify-between">
- <h3 className="text-sm font-bold text-white">Notifications</h3>
- <button onClick={() => setShowNotifications(false)} className="text-white/30 hover:text-white transition-colors">
- <X size={16} />
- </button>
- </div>
- <div className="max-h-[320px] overflow-y-auto">
- {messages.length > 0 ? (
- messages.slice(0, 5).map((msg, i) => (
- <Link key={i} to="/admin/messages" onClick={() => setShowNotifications(false)}
- className="block p-4 hover:bg-white/[0.03] border-b border-white/[0.04] transition-colors"
- >
- <div className="flex items-start gap-3">
- <div className={`w-1.5 h-1.5 mt-1.5 rounded-full shrink-0 ${msg.status === 'unread' ? 'bg-[#F5A800]' : 'bg-white/20'}`} />
- <div className="flex-1 min-w-0">
- <div className="flex items-center justify-between mb-1">
- <span className="text-sm font-bold text-white truncate">{msg.name}</span>
- <span className="text-xs text-white/30 flex items-center gap-1 shrink-0 ml-2">
- <Clock size={10} />{msg.created_at ? new Date(msg.created_at).toLocaleDateString() : 'Today'}
- </span>
- </div>
- <p className="text-xs text-white/40 line-clamp-2">{msg.message}</p>
- </div>
- </div>
- </Link>
- ))
- ) : (
- <div className="p-8 text-center">
- <MessageSquare size={28} className="mx-auto mb-2 text-white/20" />
- <p className="text-sm text-white/30">No new messages</p>
- </div>
- )}
- </div>
- <Link to="/admin/messages" onClick={() => setShowNotifications(false)}
- className="block py-3 text-center text-xs font-bold text-[#F5A800] hover:bg-[#F5A800]/5 transition-colors uppercase tracking-widest"
- >
- View all messages
- </Link>
- </motion.div>
- </>
- )}
- </AnimatePresence>
- </div>
+              <AnimatePresence>
+                {showNotifications && (
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setShowNotifications(false)} />
+                    <motion.div
+                      initial={{ opacity: 0, y: 12, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 12, scale: 0.95 }}
+                      className="absolute right-0 mt-3 w-88 bg-gradient-to-br from-[#050816] to-[#02040a] border border-white/[0.08] rounded-2xl z-50 overflow-hidden shadow-2xl"
+                    >
+                      <div className="px-5 py-4 border-b border-white/[0.06] flex items-center justify-between bg-white/[0.02]">
+                        <h3 className="text-sm font-bold text-white">Notifications</h3>
+                        <button onClick={() => setShowNotifications(false)} className="text-white/35 hover:text-white transition-colors">
+                          <X size={17} />
+                        </button>
+                      </div>
+                      <div className="max-h-[320px] overflow-y-auto">
+                        {messages.length > 0 ? (
+                          messages.slice(0, 5).map((msg, i) => (
+                            <Link key={i} to="/admin/messages" onClick={() => setShowNotifications(false)}
+                              className="block px-5 py-4 hover:bg-white/[0.05] border-b border-white/[0.04] transition-colors"
+                            >
+                              <div className="flex items-start gap-3">
+                                <div className={`w-2 h-2 mt-2 rounded-full shrink-0 ${msg.status === 'unread' ? 'bg-[#F5A800]' : 'bg-white/25'}`} />
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-center justify-between mb-1">
+                                    <span className="text-sm font-bold text-white truncate">{msg.name}</span>
+                                    <span className="text-xs text-white/35 flex items-center gap-1 shrink-0 ml-2">
+                                      <Clock size={11} />{msg.created_at ? new Date(msg.created_at).toLocaleDateString() : 'Today'}
+                                    </span>
+                                  </div>
+                                  <p className="text-xs text-white/40 line-clamp-2">{msg.message}</p>
+                                </div>
+                              </div>
+                            </Link>
+                          ))
+                        ) : (
+                          <div className="px-5 py-12 text-center">
+                            <MessageSquare size={30} className="mx-auto mb-3 text-white/20" />
+                            <p className="text-sm text-white/40">No new messages</p>
+                          </div>
+                        )}
+                      </div>
+                      <Link to="/admin/messages" onClick={() => setShowNotifications(false)}
+                        className="block px-5 py-4 text-center text-xs font-black text-[#F5A800] hover:bg-[#F5A800]/10 transition-colors uppercase tracking-[0.2em]"
+                      >
+                        View all messages
+                      </Link>
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
+            </div>
 
- {/* User */}
- <div className="flex items-center gap-3 pl-3 border-l border-white/[0.08]">
- <div className="w-8 h-8 rounded-lg bg-[#F5A800] flex items-center justify-center text-white text-xs font-black shrink-0">
- YB
- </div>
- <div className="hidden sm:block">
- <div className="text-sm font-bold text-white leading-none">Yonas Bogale</div>
- <div className="text-xs text-white/30 mt-0.5">Administrator</div>
- </div>
- </div>
- </div>
- </header>
+            {/* User */}
+            <div className="flex items-center gap-3 pl-3 border-l border-white/[0.1]">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#F5A800] to-[#ffb700] flex items-center justify-center text-white text-xs font-black shrink-0 shadow-lg shadow-[#F5A800]/20">
+                YB
+              </div>
+              <div className="hidden sm:block">
+                <div className="text-sm font-bold text-white leading-none">Yonas Bogale</div>
+                <div className="text-xs text-white/35 mt-0.5">Administrator</div>
+              </div>
+            </div>
+          </div>
+        </header>
 
- {/* Page Content */}
- <main className="flex-1 overflow-y-auto bg-[#02040a]">
- <div className="w-full max-w-7xl mx-auto px-6 py-8">
- <Outlet />
- </div>
- </main>
- </div>
- </div>
- );
+        {/* Page Content */}
+        <main className="flex-1 overflow-y-auto">
+          <div className="w-full max-w-7xl mx-auto px-6 py-8">
+            <Outlet />
+          </div>
+        </main>
+      </div>
+    </div>
+  );
 };
 
 export default AdminLayout;
