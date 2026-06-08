@@ -8,14 +8,12 @@ import HowWeWork from '../components/HowWeWork';
 import IndustriesSection from '../components/IndustriesSection';
 import ServicesSection from '../components/ServicesSection';
 import TestimonialSection from '../components/TestimonialSection';
-import WhyNexyoviSection from '../components/WhyNexyoviSection';
 
 const Home = () => {
     return (
         <div className="bg-[#02040a] min-h-screen text-white font-sans selection:bg-[#F5A800]/30">
             <Hero />
             <EthiopianPartners />
-            <WhyNexyoviSection />
             <ServicesSection />
             <IndustriesSection />
             <HowWeWork />

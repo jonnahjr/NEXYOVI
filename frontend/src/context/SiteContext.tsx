@@ -3,6 +3,16 @@ import { supabase } from '../lib/supabase';
 
 // Initial Team Data
 import yonasImg from '../assets/yonas.jpg';
+import ethioLogo from '../assets/ethio_transparent.png';
+import awsLogo from '../assets/aws-25_transparent.png';
+import ibmLogo from '../assets/ibm-17_transparent.png';
+import microsoftLogo from '../assets/microsoft-19.png';
+import oracleLogo from '../assets/oracle-21_transparent.png';
+import nvidiaLogo from '../assets/nvidia-28.png';
+import completeFarmerLogo from '../assets/Complete Farmer.webp';
+import contrailsAiLogo from '../assets/Contrails AI.webp';
+import harveyAiLogo from '../assets/Harvey AI.avif';
+import paladinDronesLogo from '../assets/Paladin Drones.webp';
 
 // Avatar assets are removed — using initials/color fallbacks instead
 
@@ -25,6 +35,14 @@ const initialTestimonials = [
     { id: '1', content: "At Nexyovi, we don't just build software — we build the infrastructure that powers organizations across Africa and beyond. Every project we take on is a commitment to excellence, security, and real impact.", author: "Yonas Bogale", role: "Founder & CEO, Nexyovi", img: yonasImg, linkedin: "https://www.linkedin.com/in/yonas-bogale" },
     { id: '2', content: "They connected us with top-tier Ethiopian engineering talent and built our core platform in parallel. Our time-to-market dropped from 12 months to 4. Gebeya's partnership with Nexyovi has been transformative for our pan-African expansion.", author: "Amadou Daffe", role: "CEO & Co-Founder, Gebeya", linkedin: "https://et.linkedin.com/in/amadoudaffe" },
     { id: '4', content: "We needed a secure payment gateway that could handle Ethiopia's unique banking landscape. Nexyovi built it in eight weeks — integrating with four banks and processing live transactions on day one. They understand local infrastructure better than any international firm we've worked with.", author: "Rediet Tsigeberhan", role: "CEO, Arifpay", linkedin: "https://www.linkedin.com/in/rediet-tsigeberhan-97615642" },
+];
+
+const initialPartners = [
+    { id: '1', name: 'Ethio Telecom', logo_url: ethioLogo },
+    { id: '2', name: 'Complete Farmer', logo_url: completeFarmerLogo },
+    { id: '3', name: 'Contrails AI', logo_url: contrailsAiLogo },
+    { id: '4', name: 'Harvey AI', logo_url: harveyAiLogo },
+    { id: '5', name: 'Paladin Drones', logo_url: paladinDronesLogo },
 ];
 
 const initialAdmins = [
@@ -54,6 +72,7 @@ interface SiteContextType {
     jobs: any[];
     team: any[];
     testimonials: any[];
+    partners: any[];
     admins: any[];
     messages: any[];
     settings: any;
@@ -66,6 +85,9 @@ interface SiteContextType {
     addTestimonial: (t: any) => void;
     updateTestimonial: (t: any) => void;
     deleteTestimonial: (id: string) => void;
+    addPartner: (p: any) => void;
+    updatePartner: (p: any) => void;
+    deletePartner: (id: string) => void;
     addAdmin: (admin: any) => void;
     updateAdmin: (admin: any) => void;
     deleteAdmin: (id: string) => void;
@@ -99,6 +121,7 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Keep initial testimonials as the authoritative source (has linkedin, img fields)
     // Supabase is used for admin CRUD operations but initial data takes priority
     const [testimonials, setTestimonials] = useState<any[]>(initialTestimonials);
+    const [partners, setPartners] = useState<any[]>(initialPartners);
     const [admins, setAdmins] = useState<any[]>(initialAdmins);
     const [messages, setMessages] = useState<any[]>([]);
     const [settings, setSettings] = useState<any>(initialSettings);
@@ -171,6 +194,22 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     }
                 });
                 setTeam(mergedTeam);
+            }
+
+            const { data: partnersData } = await supabase.from('partners').select('*').order('created_at', { ascending: false });
+            if (partnersData && partnersData.length > 0) {
+                const mergedPartners = initialPartners.map(initial => {
+                    const match = partnersData.find((pd: any) => pd.name === initial.name);
+                    return match
+                        ? { ...initial, ...match, logo_url: match.logo_url || initial.logo_url }
+                        : initial;
+                });
+                partnersData.forEach((pd: any) => {
+                    if (!initialPartners.find(it => it.name === pd.name)) {
+                        mergedPartners.push(pd);
+                    }
+                });
+                setPartners(mergedPartners);
             }
 
             const { data: msgData } = await supabase.from('messages').select('*').order('created_at', { ascending: false });
@@ -247,11 +286,20 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
             })
             .subscribe();
 
+        const partnersChannel = supabase.channel('realtime-partners')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'partners' }, (payload) => {
+                if (payload.eventType === 'INSERT') setPartners(prev => [payload.new as any, ...prev]);
+                else if (payload.eventType === 'UPDATE') setPartners(prev => prev.map(p => p.id === (payload.new as any).id ? payload.new as any : p));
+                else if (payload.eventType === 'DELETE') setPartners(prev => prev.filter(p => p.id !== (payload.old as any).id));
+            })
+            .subscribe();
+
         return () => {
             supabase.removeChannel(msgChannel);
             supabase.removeChannel(jobChannel);
             supabase.removeChannel(testimonialChannel);
             supabase.removeChannel(teamChannel);
+            supabase.removeChannel(partnersChannel);
         };
     }, []);
 
@@ -310,6 +358,29 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (!error) setTestimonials(prev => prev.filter(t => t.id !== id));
     };
 
+    const addPartner = async (p: any) => {
+        const { data, error } = await supabase.from('partners').insert([p]).select();
+        if (!error && data) setPartners(prev => [data[0], ...prev]);
+    };
+    const updatePartner = async (updatedP: any) => {
+        const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(updatedP.id);
+        if (!isUUID) {
+            const { id, ...partnerData } = updatedP;
+            const { data, error } = await supabase.from('partners').insert([partnerData]).select();
+            if (!error && data) setPartners(prev => prev.map(p => p.id === updatedP.id ? data[0] : p));
+        } else {
+            const { data, error } = await supabase.from('partners').update(updatedP).eq('id', updatedP.id).select();
+            if (!error && data) setPartners(prev => prev.map(p => p.id === updatedP.id ? data[0] : p));
+        }
+    };
+    const deletePartner = async (id: string) => {
+        const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+        if (isUUID) {
+            await supabase.from('partners').delete().eq('id', id);
+        }
+        setPartners(prev => prev.filter(p => p.id !== id));
+    };
+
     const addAdmin = (admin: any) => setAdmins(prev => [admin, ...prev]);
     const updateAdmin = (updatedAdmin: any) => setAdmins(prev => prev.map(a => a.id === updatedAdmin.id ? updatedAdmin : a));
     const deleteAdmin = (id: string) => setAdmins(prev => prev.filter(a => a.id !== id));
@@ -353,10 +424,11 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     return (
         <SiteContext.Provider value={{
-            jobs, team, testimonials, admins, messages, settings, siteContent,
+            jobs, team, testimonials, partners, admins, messages, settings, siteContent,
             addJob, updateJob, deleteJob,
             addTeamMember, updateTeamMember, deleteTeamMember,
             addTestimonial, updateTestimonial, deleteTestimonial, setTestimonials,
+            addPartner, updatePartner, deletePartner,
             addAdmin, updateAdmin, deleteAdmin,
             addMessage, updateMessage, deleteMessage,
             updateSettings, updateSiteContent,
