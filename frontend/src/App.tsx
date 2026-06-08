@@ -17,13 +17,6 @@ const Company = lazy(() => import('./pages/Company'));
 
 const Contact = lazy(() => import('./pages/Contact'));
 const TrustCenter = lazy(() => import('./pages/TrustCenter'));
-const Story = lazy(() => import('./pages/company/Story'));
-const MissionVision = lazy(() => import('./pages/company/MissionVision'));
-const Values = lazy(() => import('./pages/company/Values'));
-const Leadership = lazy(() => import('./pages/company/Leadership'));
-const Partners = lazy(() => import('./pages/company/Partners'));
-const Impact = lazy(() => import('./pages/company/Impact'));
-const Culture = lazy(() => import('./pages/company/Culture'));
 // Service subpages merged into massive scroll hub
 const Industries = lazy(() => import('./pages/Industries'));
 const Services = lazy(() => import('./pages/Services'));

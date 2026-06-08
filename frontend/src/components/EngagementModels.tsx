@@ -80,7 +80,6 @@ export default function EngagementModels() {
   });
 
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
-    // Always use scroll to update
     const idx = Math.min(
       models.length - 1,
       Math.floor(v * models.length)
@@ -94,7 +93,7 @@ export default function EngagementModels() {
       className="relative bg-[#FCFBF8]"
       style={{ height: `${models.length * 60}vh` }}
     >
-      {/* Dark diagonal stripes */}
+      {/* Diagonal stripes */}
       <div
         className="absolute inset-0 z-[1] opacity-[0.06] pointer-events-none"
         style={{
@@ -145,7 +144,7 @@ export default function EngagementModels() {
                         className="w-[2px] flex-1 transition-colors duration-500"
                         style={{ backgroundColor: i === 0 ? 'transparent' : (i <= activeIndex ? model.accent : '#e2e8f0') }}
                       />
-                      {/* Icon dot — Projects page style */}
+                      {/* Icon dot */}
                       <div
                         className="relative w-9 h-9 rounded-full border flex items-center justify-center flex-shrink-0 overflow-hidden transition-all duration-300 my-1"
                         style={{
@@ -156,7 +155,7 @@ export default function EngagementModels() {
                           marginLeft: '-18px',
                         }}
                       >
-                        <div className="absolute inset-0 bg-gradient-to-b from-white/40 to-transparent pointer-events-none" />
+<div className="absolute inset-0 bg-gradient-to-b from-white/50 to-transparent pointer-events-none" />
                         {(() => { const Icon = model.icon; return <Icon size={15} style={{ color: isActive ? model.accent : '#94a3b8' }} className="relative z-10 transition-colors duration-300" />; })()}
                       </div>
                       {/* Bottom connector */}
@@ -173,7 +172,7 @@ export default function EngagementModels() {
                     >
                       <div
                         className="text-[14px] font-bold leading-snug transition-colors duration-300"
-                        style={{ color: isActive ? '#0f172a' : '#64748b' }}
+style={{ color: isActive ? '#0f172a' : '#64748b' }}
                       >
                         {model.title}
                       </div>
@@ -235,17 +234,17 @@ export default function EngagementModels() {
                       <div className="h-[1px] flex-1 bg-slate-200" />
                     </div>
 
-                    {/* Icon — Projects page style (light bg, accent color) */}
+                    {/* Icon */}
                     <motion.div
                       animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 10, scale: isActive ? 1 : 0.85 }}
                       transition={{ duration: 0.45, delay: 0.02, ease: [0.16, 1, 0.3, 1] }}
                       className="relative w-11 h-11 rounded-full border flex items-center justify-center overflow-hidden mb-5 shadow-sm"
                       style={{
-                        backgroundColor: `${model.accent}15`,
+                        backgroundColor: `${model.accent}20`,
                         borderColor: `${model.accent}40`,
                       }}
                     >
-                      <div className="absolute inset-0 bg-gradient-to-b from-white/50 to-transparent pointer-events-none" />
+                      <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent pointer-events-none" />
                       {(() => { const Icon = model.icon; return <Icon size={18} style={{ color: model.accent }} className="relative z-10" />; })()}
                     </motion.div>
 
@@ -267,7 +266,7 @@ export default function EngagementModels() {
                       {model.desc}
                     </motion.p>
 
-                    {/* Detail items — staggered */}
+                    {/* Detail items */}
                     <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-5 mb-8">
                       {detailItems(model).map((item, di) => (
                         <motion.div

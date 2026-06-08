@@ -10,7 +10,7 @@ const Footer = () => {
   const [activePolicy, setActivePolicy] = useState<'Terms' | 'Privacy' | 'Legal' | null>(null);
   const companyName = settings.siteName || 'Nexyovi';
   const footerTagline = siteContent?.footer?.tagline || 'Enterprise software, AI systems, and cloud infrastructure for organizations that need secure, scalable technology.';
-  const footerCopyright = siteContent?.footer?.copyright || `© 2024–${new Date().getFullYear()} ${companyName}. All Rights Reserved.`;
+  const footerCopyright = siteContent?.footer?.copyright || `© ${new Date().getFullYear()} ${companyName}. All rights reserved.`;
 
   const policyContent = {
     Terms: {

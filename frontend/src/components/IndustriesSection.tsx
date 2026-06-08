@@ -199,11 +199,8 @@ const IndustriesSection = () => {
 
                                         {/* Row Header (Always visible) */}
                                         <div className="flex items-center justify-between gap-5">
-                                            <div className="flex items-center gap-4 lg:gap-6">
-                                                <div className="text-lg font-bold font-mono text-slate-400 w-6">
-                                                    0{i + 1}
-                                                </div>
-                                                <h3 className={`text-xl md:text-2xl lg:text-[28px] font-black tracking-[-0.02em] transition-all duration-500 ${isActive ? 'text-slate-900 translate-x-1.5' : 'text-slate-500 group-hover:text-slate-800'}`}>
+                                             <div className="flex items-center gap-4 lg:gap-6">
+                                                 <h3 className={`text-xl md:text-2xl lg:text-[28px] font-black tracking-[-0.02em] transition-all duration-500 ${isActive ? 'text-slate-900 translate-x-1.5' : 'text-slate-500 group-hover:text-slate-800'}`}>
                                                     {ind.title}
                                                 </h3>
                                             </div>

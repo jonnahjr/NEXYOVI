@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2, Terminal, ShieldAlert, Cpu, Activity, Clock, Zap } from 'lucide-react';
-import CTASection from '../components/CTASection';
+import FinalCTA from '../components/FinalCTA';
 import futureCity from '../assets/future_city.png';
 
 
@@ -33,7 +33,7 @@ const caseStudies = {
  title: 'AI Smart Logistics Engine',
  client: 'Top-tier Logistics Provider',
  category: 'Artificial Intelligence',
- heroImage: aiAbstract,
+ heroImage: futureCity,
  color: '#10b981',
  bg: 'from-[#10b981]/20 to-transparent',
  overview: 'A leading logistics company struggling with rising fuel costs and inefficient routing needed a modernized, AI-driven approach to their global supply chain management system.',
@@ -266,7 +266,7 @@ const CaseStudyDetail = () => {
  </div>
  </section>
  
- <CTASection />
+ <FinalCTA />
  </div>
  );
 };
