@@ -11,8 +11,8 @@ const VIDEO_URL =
 const Hero = () => {
   const { siteContent } = useSite();
   const hero = siteContent?.hero || {};
-  const headline = hero.title || 'We build enterprise software, AI, and cloud infrastructure for African businesses — senior-led, security-first, delivered in weeks.';
-  const subtitle = hero.subtitle || '';
+  const headline = hero.title || 'Enterprise software for African institutions — built by senior engineers, delivered in weeks.';
+  const subtitle = hero.subtitle || 'We design and build custom enterprise software, AI systems, and cloud infrastructure for banks, hospitals, governments, and businesses across Africa.';
   const ctaPrimary = hero.cta_primary || 'Book a strategy session';
   const ctaSecondary = hero.cta_secondary || 'Get free AI audit';
 
