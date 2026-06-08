@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
-import { Linkedin, Quote } from 'lucide-react';
+import { ArrowRight, Linkedin, Quote } from 'lucide-react';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import c1 from '../assets/c1.jpg';
 import c2 from '../assets/c2.jpg';
 import c3 from '../assets/c3.jpg';
 import yonasImg from '../assets/yonas.jpg';
-import { useSite } from '../context/SiteContext';
 
 const defaultTestimonials = [
     {
@@ -16,7 +16,8 @@ const defaultTestimonials = [
         author: "Yonas Bogale",
         avatar: yonasImg,
         linkedin: "https://www.linkedin.com/in/yonas-bogale",
-        highlight: "real impact"
+        highlight: "real impact",
+        caseStudy: "/company"
     },
     {
         id: '2',
@@ -38,17 +39,19 @@ const defaultTestimonials = [
         avatar: c2,
         linkedin: "https://www.linkedin.com/in/rediet-tsigeberhan-97615642",
         highlight: "fraud rate by 40%",
-        label: "Trusted by founders of"
+        label: "Trusted by founders of",
+        caseStudy: "/projects/global-bank-security"
     },
     {
         id: '3',
-        quote: "They delivered our health infrastructure platform 3 months ahead of schedule, navigating complex compliance requirements seamlessly. The system now serves 2.1M+ users across regional hospitals.",
+        quote: "They delivered our health infrastructure platform 3 months ahead of schedule, navigating complex compliance requirements seamlessly. The system now serves 1.8M+ users across regional hospitals.",
         role: "Chief Technology Officer",
         company: "Ministry of Health",
         author: "Dawit Mekonnen",
         avatar: c3,
         linkedin: "https://linkedin.com",
-        highlight: "2.1M+ users"
+        highlight: "1.8M+ users",
+        caseStudy: "/projects/tele-psychiatry"
     }
 ];
 
@@ -91,36 +94,44 @@ export default function TestimonialSection() {
                                 </p>
                             </div>
 
-                            <div className="flex items-center justify-between pt-4">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-8 h-8 rounded-full overflow-hidden shrink-0">
-                                        {testimonial.img || testimonial.avatar ? (
-                                            <img
-                                                src={testimonial.img || testimonial.avatar}
-                                                alt={testimonial.author}
-                                                className="w-full h-full object-cover"
-                                            />
-                                        ) : (
-                                            <div className="w-full h-full bg-white/10 flex items-center justify-center text-sm font-bold text-white/50">
-                                                {(testimonial.author || "User").split(' ').map(n => n[0]).join('').slice(0,2)}
-                                            </div>
-                                        )}
+                            <div className="flex flex-col pt-4 gap-4">
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-8 h-8 rounded-full overflow-hidden shrink-0">
+                                            {testimonial.img || testimonial.avatar ? (
+                                                <img
+                                                    src={testimonial.img || testimonial.avatar}
+                                                    alt={testimonial.author}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full bg-white/10 flex items-center justify-center text-sm font-bold text-white/50">
+                                                    {(testimonial.author || "User").split(' ').map(n => n[0]).join('').slice(0,2)}
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div>
+                                            <p className="text-white font-semibold text-[12px]">{testimonial.author}</p>
+                                            <p className="text-white/70 text-[11px]">{testimonial.role}</p>
+                                            <p className="text-white/50 text-[10px]">{testimonial.company}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p className="text-white font-semibold text-[12px]">{testimonial.author}</p>
-                                        <p className="text-white/70 text-[11px]">{testimonial.role}</p>
-                                        <p className="text-white/50 text-[10px]">{testimonial.company}</p>
-                                    </div>
+                                    {testimonial.linkedin && (
+                                        <a
+                                            href={testimonial.linkedin}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center text-white/40 hover:text-[#0a66c2] hover:bg-white/10 transition-all"
+                                        >
+                                            <Linkedin size={12} />
+                                        </a>
+                                    )}
                                 </div>
-                                {testimonial.linkedin && (
-                                    <a
-                                        href={testimonial.linkedin}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center text-white/40 hover:text-[#0a66c2] hover:bg-white/10 transition-all"
-                                    >
-                                        <Linkedin size={12} />
-                                    </a>
+                                {testimonial.caseStudy && (
+                                    <Link to={testimonial.caseStudy} className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-[#F5A800] opacity-70 hover:opacity-100 transition-opacity">
+                                        <span>Read Case Study</span>
+                                        <ArrowRight size={10} />
+                                    </Link>
                                 )}
                             </div>
                         </motion.div>
