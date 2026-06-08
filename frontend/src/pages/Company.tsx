@@ -580,7 +580,7 @@ export default function Company() {
         <div className="pointer-events-none absolute left-0 top-1/3 h-[350px] w-[250px] rounded-full bg-[#F5A800]/4 blur-[100px]" />
         <div className="pointer-events-none absolute right-0 bottom-1/3 h-[300px] w-[200px] rounded-full bg-[#8b5cf6]/3 blur-[80px]" />
 
-        <div className="container max-w-5xl mx-auto px-6 relative z-10">
+        <div className="container max-w-full mx-auto px-4 relative z-10">
 
           {/* ═══════════════════════════════════
               SECTION HEADER
@@ -592,7 +592,7 @@ export default function Company() {
             className="mb-10 text-center"
           >
             <motion.div variants={fadeUp} className="mb-5">
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-2">
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/[0.03] px-4 py-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#F5A800]" />
                 <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/60">{companyTeamBadge}</span>
               </div>
@@ -618,7 +618,7 @@ export default function Company() {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="mx-auto mb-12 max-w-2xl text-center"
             >
-              <div className="relative mx-auto mb-6 h-36 w-36 overflow-hidden rounded-full border border-white/10 bg-white/[0.03] md:h-44 md:w-44">
+              <div className="relative mx-auto mb-6 h-36 w-36 overflow-hidden rounded-full bg-white/[0.03] md:h-44 md:w-44">
                 {founder.img ? (
                   <img src={founder.img} alt={founderName} className="h-full w-full object-cover" />
                 ) : (
@@ -637,7 +637,7 @@ export default function Company() {
                   href={founderLinkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-[#0a66c2]/30 bg-[#0a66c2]/10 px-6 py-3 text-sm font-semibold text-[#8fc3f4] transition-all duration-300 hover:border-[#0a66c2]/50 hover:bg-[#0a66c2]/20"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#0a66c2]/10 px-6 py-3 text-sm font-semibold text-[#8fc3f4] transition-all duration-300 hover:bg-[#0a66c2]/20"
                 >
                   <Linkedin size={16} />
                   LinkedIn Profile
@@ -649,7 +649,7 @@ export default function Company() {
           <div className="mx-auto mb-8 flex max-w-4xl flex-col items-center text-center">
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30">Founder &amp; CEO</span>
             <div className="my-2 h-6 w-px bg-gradient-to-b from-white/[0.16] to-white/[0.03]" />
-            <div className="flex h-6 w-6 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.03] text-white/35">
+            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white/[0.03] text-white/35">
               <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
                 <path d="M6 10L2 4h8L6 10z" fill="currentColor" />
               </svg>
@@ -704,7 +704,7 @@ export default function Company() {
 
           <div className="mx-auto mb-6 flex max-w-4xl flex-col items-center text-center">
             <div className="h-6 w-px bg-gradient-to-b from-white/[0.14] to-white/[0.03]" />
-            <div className="my-2 flex h-6 w-6 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.03] text-white/35">
+            <div className="my-2 flex h-6 w-6 items-center justify-center rounded-full bg-white/[0.03] text-white/35">
               <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
                 <path d="M6 10L2 4h8L6 10z" fill="currentColor" />
               </svg>
@@ -735,33 +735,33 @@ export default function Company() {
                 whileInView="visible"
                 viewport={{ once: true, margin: '-40px' }}
                 variants={staggerContainer}
-                className="flex flex-nowrap justify-center gap-4 overflow-x-hidden"
+                className="flex flex-nowrap justify-between gap-2 overflow-x-hidden"
               >
                 {engineeringDeliveryTeam.map((member: any) => (
                   <motion.div
                     key={member.id}
                     variants={fadeUp}
-                    className="text-center flex-shrink-0"
+                    className="text-center flex-shrink-0 flex-1"
                   >
-                    <div className="mx-auto mb-1 h-8 w-8 overflow-hidden rounded-full">
+                    <div className="mx-auto mb-1 h-7 w-7 overflow-hidden rounded-full">
                       {member.img ? (
                         <img src={member.img} alt={member.name} className="h-full w-full object-cover" />
                       ) : (
-                        <div className="flex h-full w-full items-center justify-center text-[9px] font-black text-white/70" style={{ backgroundColor: member.color || '#8b5cf6' }}>
+                        <div className="flex h-full w-full items-center justify-center text-[8px] font-black text-white/70" style={{ backgroundColor: member.color || '#8b5cf6' }}>
                           {member.initials || member.name.split(' ').map((n: string) => n[0]).join('')}
                         </div>
                       )}
                     </div>
-                    <h5 className="text-[11px] font-semibold text-white">{member.name}</h5>
-                    <p className="mt-0.5 text-[7px] font-medium uppercase tracking-[0.12em] text-white/42">{member.role}</p>
+                    <h5 className="text-[10px] font-semibold text-white">{member.name}</h5>
+                    <p className="mt-0.5 text-[6px] font-medium uppercase tracking-[0.12em] text-white/42">{member.role}</p>
                     {member.linkedin && (
                       <a
                         href={member.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-1 inline-flex items-center gap-0.5 text-[8px] font-medium text-white/30 transition-all duration-300 hover:text-[#8fc3f4]"
+                        className="mt-1 inline-flex items-center gap-0.5 text-[7px] font-medium text-white/30 transition-all duration-300 hover:text-[#8fc3f4]"
                       >
-                        <Linkedin size={6} />
+                        <Linkedin size={5} />
                         LinkedIn
                       </a>
                     )}
@@ -778,7 +778,7 @@ export default function Company() {
             transition={{ delay: 0.25, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="mx-auto mt-8 max-w-3xl text-center"
           >
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.025] px-4 py-3 backdrop-blur-md">
+            <div className="rounded-xl bg-white/[0.025] px-4 py-3 backdrop-blur-md">
               <p className="text-xs leading-relaxed text-white/45">
                 Supported by a distributed team of software engineers, AI specialists, designers, DevOps engineers, and infrastructure experts operating across multiple regions.
               </p>
