@@ -55,10 +55,18 @@ const Hero = () => {
               {/* Main Headline */}
               <motion.h1
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.2, ease: EASE_EXPO as any } } }}
-                className="text-[48px] md:text-[64px] lg:text-[76px] font-black text-white tracking-[-0.04em] leading-[0.95] mb-12"
+                className="text-[48px] md:text-[64px] lg:text-[76px] font-black text-white tracking-[-0.04em] leading-[0.95] mb-6"
               >
                 {mainHeadline}
               </motion.h1>
+
+              {/* Subheadline */}
+              <motion.p
+                variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.3, ease: EASE_EXPO as any } } }}
+                className="text-white/70 text-[16px] md:text-[18px] leading-relaxed max-w-[640px] mb-12"
+              >
+                Nexyovi designs and builds enterprise software, AI systems, cloud infrastructure, and digital platforms for banks, healthcare providers, governments, telecoms, and high-growth companies.
+              </motion.p>
 
               {/* CTAs */}
               <motion.div
