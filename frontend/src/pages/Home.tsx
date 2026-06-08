@@ -2,12 +2,10 @@ import EngagementModels from '../components/EngagementModels';
 import EthiopianPartners from '../components/EthiopianPartners';
 import FeaturedProjects from '../components/FeaturedProjects';
 import FinalCTA from '../components/FinalCTA';
-import FounderStory from '../components/FounderStory';
 import Hero from '../components/Hero';
 import HowWeWork from '../components/HowWeWork';
 import IndustriesSection from '../components/IndustriesSection';
 import ServicesSection from '../components/ServicesSection';
-import TestimonialSection from '../components/TestimonialSection';
 
 const Home = () => {
     return (
@@ -18,9 +16,7 @@ const Home = () => {
             <IndustriesSection />
             <HowWeWork />
             <FeaturedProjects />
-            <TestimonialSection />
             <EngagementModels />
-            <FounderStory />
             <FinalCTA />
         </div>
     );
