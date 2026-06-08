@@ -57,7 +57,8 @@ const Hero = () => {
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.2, ease: EASE_EXPO as any } } }}
                 className="text-[48px] md:text-[64px] lg:text-[76px] font-black text-white tracking-[-0.04em] leading-[0.95] mb-6"
               >
-                {mainHeadline}
+                We build the platforms, AI systems, and infrastructure
+                <span className="text-[#F5A800]"> powering Africa's fastest-growing companies — from Addis Ababa to the world.</span>
               </motion.h1>
 
               {/* Subheadline */}
