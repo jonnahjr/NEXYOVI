@@ -14,7 +14,7 @@ const Hero = () => {
   const headline = hero.title || 'Enterprise software for African institutions — built by senior engineers, delivered in weeks.';
   const subtitle = hero.subtitle || 'We build enterprise software for banks, hospitals, and telecoms across Africa — delivered by senior engineers in 8–24 weeks.';
   const ctaPrimary = hero.cta_primary || 'Book a strategy session';
-  const ctaSecondary = hero.cta_secondary || 'Get free AI audit';
+  const ctaSecondary = hero.cta_secondary || 'See our work →';
 
   return (
     <section className="relative bg-[#02040a] overflow-hidden">
@@ -76,10 +76,10 @@ const Hero = () => {
                       <span className="relative z-10 font-bold">{ctaPrimary}</span>
                     </CTAButton>
 
-                    {/* ── Secondary CTA: Free AI Audit ── */}
+                    {/* ── Secondary CTA: See our work → ── */}
                     <Link
-                      to="/contact#inquiry"
-                      id="hero-cta-ai-audit"
+                      to="/industries"
+                      id="hero-cta-see-work"
                       className="group btn-ghost text-[16px] px-10 py-5"
                     >
                       <motion.span
