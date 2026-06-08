@@ -735,33 +735,33 @@ export default function Company() {
                 whileInView="visible"
                 viewport={{ once: true, margin: '-40px' }}
                 variants={staggerContainer}
-                className="flex flex-nowrap justify-center gap-2 overflow-x-hidden"
+                className="flex flex-wrap justify-center gap-6"
               >
                 {engineeringDeliveryTeam.map((member: any) => (
                   <motion.div
                     key={member.id}
                     variants={fadeUp}
-                    className="w-[110px] flex-shrink-0 rounded-lg border border-white/[0.06] bg-white/[0.025] px-2 py-2 text-center backdrop-blur-md"
+                    className="text-center"
                   >
-                    <div className="mx-auto mb-1 h-8 w-8 overflow-hidden rounded-full border border-white/[0.1] bg-white/[0.03]">
+                    <div className="mx-auto mb-1 h-10 w-10 overflow-hidden rounded-full">
                       {member.img ? (
                         <img src={member.img} alt={member.name} className="h-full w-full object-cover" />
                       ) : (
-                        <div className="flex h-full w-full items-center justify-center text-[9px] font-black text-white/70" style={{ backgroundColor: member.color || '#8b5cf6' }}>
+                        <div className="flex h-full w-full items-center justify-center text-[11px] font-black text-white/70" style={{ backgroundColor: member.color || '#8b5cf6' }}>
                           {member.initials || member.name.split(' ').map((n: string) => n[0]).join('')}
                         </div>
                       )}
                     </div>
-                    <h5 className="text-[10px] font-semibold leading-tight text-white">{member.name}</h5>
-                    <p className="mt-0.5 text-[6px] font-black uppercase tracking-[0.12em] text-white/42">{member.role}</p>
+                    <h5 className="text-sm font-semibold text-white">{member.name}</h5>
+                    <p className="mt-0.5 text-[9px] font-medium uppercase tracking-[0.12em] text-white/42">{member.role}</p>
                     {member.linkedin && (
                       <a
                         href={member.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-2 inline-flex items-center gap-0.5 rounded-md border border-white/[0.08] bg-white/[0.03] px-1.5 py-0.5 text-[7px] font-semibold text-white/65 transition-all duration-300 hover:border-[#0a66c2]/30 hover:bg-[#0a66c2]/10 hover:text-[#8fc3f4]"
+                        className="mt-2 inline-flex items-center gap-1 text-[10px] font-medium text-white/30 transition-all duration-300 hover:text-[#8fc3f4]"
                       >
-                        <Linkedin size={6} />
+                        <Linkedin size={8} />
                         LinkedIn
                       </a>
                     )}
