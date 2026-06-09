@@ -8,6 +8,9 @@ import ServicesSection from '../components/ServicesSection';
 import TestimonialSection from '../components/TestimonialSection';
 import TrustLogos from '../components/TrustLogos';
 import WhyNexyoviSection from '../components/WhyNexyoviSection';
+import TechnologiesSection from '../components/TechnologiesSection';
+import DeliverySection from '../components/DeliverySection';
+import SecuritySection from '../components/SecuritySection';
 
 const Home = () => {
   return (
@@ -16,11 +19,14 @@ const Home = () => {
       <TrustLogos />
       <WhyNexyoviSection />
       <ServicesSection />
+      <TechnologiesSection />
       <IndustriesSection />
       <HowWeWork />
       <FeaturedProjects />
+      <DeliverySection />
       <TestimonialSection />
       <EngagementModels />
+      <SecuritySection />
       <FinalCTA />
     </div>
   );

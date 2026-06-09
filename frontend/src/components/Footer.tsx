@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUpRight, Github, Linkedin, Mail, MapPin, Phone, X } from 'lucide-react';
+import { ArrowUpRight, Facebook, Github, Instagram, Linkedin, Mail, MapPin, MessageCircle, Music2, Phone, Send, Slack, Youtube, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import myLogo from '../assets/logo 1.png';
@@ -11,6 +11,19 @@ const Footer = () => {
   const companyName = settings.siteName || 'Nexyovi';
   const footerTagline = siteContent?.footer?.tagline || 'Enterprise software, AI systems, and cloud infrastructure for organizations that need secure, scalable technology.';
   const footerCopyright = siteContent?.footer?.copyright || `© ${new Date().getFullYear()} ${companyName}. All rights reserved.`;
+  const socialIcons: Record<string, React.ElementType> = {
+    twitter: X,
+    linkedin: Linkedin,
+    github: Github,
+    youtube: Youtube,
+    instagram: Instagram,
+    facebook: Facebook,
+    telegram: Send,
+    whatsapp: MessageCircle,
+    tiktok: Music2,
+    discord: MessageCircle,
+    slack: Slack,
+  };
 
   const policyContent = {
     Terms: {
@@ -125,13 +138,13 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-bold text-[12px] uppercase tracking-[0.2em] mb-6">Services</h4>
             <ul className="space-y-3">
-              {[
+              {(siteContent?.footer?.servicesLinks || [
                 { label: 'Software Engineering', path: '/services/software' },
                 { label: 'AI & Automation', path: '/services/ai' },
                 { label: 'Cloud & Infrastructure', path: '/services/infrastructure' },
                 { label: 'Mobile Applications', path: '/services/apps' },
                 { label: 'Data & Analytics', path: '/services/data' },
-              ].map(item => (
+              ]).map((item: any) => (
                 <li key={item.label}>
                   <Link to={item.path} className="text-white/40 hover:text-white text-[13px] transition-colors">{item.label}</Link>
                 </li>
@@ -143,12 +156,12 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-bold text-[12px] uppercase tracking-[0.2em] mb-6">Company</h4>
             <ul className="space-y-3">
-              {[
+              {(siteContent?.footer?.companyLinks || [
                 { label: 'About Us', path: '/company' },
                 { label: 'Industries', path: '/industries' },
                 { label: 'Projects', path: '/projects' },
                 { label: 'Contact', path: '/contact' },
-              ].map(item => (
+              ]).map((item: any) => (
                 <li key={item.label}>
                   <Link to={item.path} className="text-white/40 hover:text-white text-[13px] transition-colors">{item.label}</Link>
                 </li>
@@ -159,29 +172,32 @@ const Footer = () => {
           {/* Connect Column */}
           <div>
             <h4 className="text-white font-bold text-[12px] uppercase tracking-[0.2em] mb-6">Connect</h4>
-            <div className="flex items-center gap-3 mb-6">
-              {[
-                { Icon: Linkedin, href: settings.socials?.linkedin || '#' },
-                { Icon: Github, href: settings.socials?.github || '#' },
-              ].map((item, i) => (
-                <a
-                  key={i}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-[#F5A800] hover:border-[#F5A800]/30 bg-white/[0.03] transition-all duration-300"
-                >
-                  <item.Icon size={16} />
-                </a>
-              ))}
+            <div className="flex flex-wrap items-center gap-3 mb-6">
+              {Object.entries(settings.socials || {}).map(([key, href]) => {
+                if (!href || href === '#') return null;
+                const Icon = socialIcons[key];
+                if (!Icon) return null;
+                return (
+                  <a
+                    key={key}
+                    href={String(href)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-[#F5A800] hover:border-[#F5A800]/30 bg-white/[0.03] transition-all duration-300"
+                    aria-label={key}
+                  >
+                    <Icon size={16} />
+                  </a>
+                );
+              })}
             </div>
 
             {/* CTA */}
             <Link
-              to="/contact#inquiry"
+              to={siteContent?.footer?.cta?.path || '/contact#inquiry'}
               className="group inline-flex items-center gap-2 text-[13px] font-bold text-[#F5A800] hover:text-[#FFD166] transition-colors"
             >
-              Book a strategy session
+              {siteContent?.footer?.cta?.label || 'Book a strategy session'}
               <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </Link>
           </div>

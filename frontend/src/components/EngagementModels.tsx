@@ -93,14 +93,6 @@ export default function EngagementModels() {
       className="relative bg-[#FCFBF8]"
       style={{ height: `${models.length * 60}vh` }}
     >
-      {/* Diagonal stripes */}
-      <div
-        className="absolute inset-0 z-[1] opacity-[0.06] pointer-events-none"
-        style={{
-          backgroundImage: `linear-gradient(135deg, transparent 0%, transparent 30%, #000000 30%, #000000 36%, transparent 36%, transparent 66%, #000000 66%, #000000 72%, transparent 72%, transparent 100%)`,
-        }}
-      />
-
       {/* Sticky wrapper */}
       <div className="sticky top-0 h-screen z-10 flex items-center overflow-hidden">
         <div className="container max-w-[1200px] mx-auto px-6 w-full">
@@ -142,26 +134,26 @@ export default function EngagementModels() {
                       {/* Top connector */}
                       <div
                         className="w-[2px] flex-1 transition-colors duration-500"
-                        style={{ backgroundColor: i === 0 ? 'transparent' : (i <= activeIndex ? model.accent : '#e2e8f0') }}
+                        style={{ backgroundColor: i === 0 ? 'transparent' : (i <= activeIndex ? '#0f172a' : '#e2e8f0') }}
                       />
                       {/* Icon dot */}
                       <div
                         className="relative w-9 h-9 rounded-full border flex items-center justify-center flex-shrink-0 overflow-hidden transition-all duration-300 my-1"
                         style={{
-                          backgroundColor: isActive ? `${model.accent}18` : '#F8F5EB',
-                          borderColor: isActive ? `${model.accent}50` : '#e2e8f0',
-                          boxShadow: isActive ? `0 0 0 4px ${model.accent}15` : 'none',
+                          backgroundColor: isActive ? '#e2e8f0' : '#F8F5EB',
+                          borderColor: isActive ? '#94a3b8' : '#e2e8f0',
+                          boxShadow: isActive ? '0 0 0 4px rgba(0,0,0,0.06)' : 'none',
                           transform: isActive ? 'scale(1.15)' : 'scale(1)',
                           marginLeft: '-18px',
                         }}
                       >
 <div className="absolute inset-0 bg-gradient-to-b from-white/50 to-transparent pointer-events-none" />
-                        {(() => { const Icon = model.icon; return <Icon size={15} style={{ color: isActive ? model.accent : '#94a3b8' }} className="relative z-10 transition-colors duration-300" />; })()}
+                        {(() => { const Icon = model.icon; return <Icon size={15} style={{ color: isActive ? '#0f172a' : '#94a3b8' }} className="relative z-10 transition-colors duration-300" />; })()}
                       </div>
                       {/* Bottom connector */}
                       <div
                         className="w-[2px] flex-1 transition-colors duration-500"
-                        style={{ backgroundColor: i >= models.length - 1 ? 'transparent' : (i < activeIndex ? models[i + 1].accent : '#e2e8f0') }}
+                        style={{ backgroundColor: i >= models.length - 1 ? 'transparent' : (i < activeIndex ? '#0f172a' : '#e2e8f0') }}
                       />
                     </div>
 
@@ -191,11 +183,11 @@ style={{ color: isActive ? '#0f172a' : '#64748b' }}
                     key={model.num}
                     className="shrink-0 flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300"
                     style={{
-                      backgroundColor: isActive ? `${model.accent}18` : '#F8F5EB',
-                      borderColor: isActive ? `${model.accent}50` : '#e2e8f0',
+                      backgroundColor: isActive ? '#e2e8f0' : '#F8F5EB',
+                      borderColor: isActive ? '#94a3b8' : '#e2e8f0',
                     }}
                   >
-                    {(() => { const Icon = model.icon; return <Icon size={14} style={{ color: isActive ? model.accent : '#94a3b8' }} />; })()}
+                    {(() => { const Icon = model.icon; return <Icon size={14} style={{ color: isActive ? '#0f172a' : '#94a3b8' }} />; })()}
                     <span
                       className="text-[11px] font-bold"
                       style={{ color: isActive ? '#0f172a' : '#94a3b8' }}
@@ -240,12 +232,12 @@ style={{ color: isActive ? '#0f172a' : '#64748b' }}
                       transition={{ duration: 0.45, delay: 0.02, ease: [0.16, 1, 0.3, 1] }}
                       className="relative w-11 h-11 rounded-full border flex items-center justify-center overflow-hidden mb-5 shadow-sm"
                       style={{
-                        backgroundColor: `${model.accent}20`,
-                        borderColor: `${model.accent}40`,
+                        backgroundColor: `#e2e8f0`,
+                        borderColor: `#cbd5e1`,
                       }}
                     >
                       <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent pointer-events-none" />
-                      {(() => { const Icon = model.icon; return <Icon size={18} style={{ color: model.accent }} className="relative z-10" />; })()}
+                      {(() => { const Icon = model.icon; return <Icon size={18} style={{ color: '#0f172a' }} className="relative z-10" />; })()}
                     </motion.div>
 
                     {/* Title */}
@@ -292,7 +284,7 @@ style={{ color: isActive ? '#0f172a' : '#64748b' }}
                     <motion.div
                       animate={{ scaleX: isActive ? 1 : 0, opacity: isActive ? 1 : 0 }}
                       transition={{ duration: 0.5, delay: 0.2 }}
-                      style={{ transformOrigin: 'left', backgroundColor: model.accent }}
+                      style={{ transformOrigin: 'left', backgroundColor: '#0f172a' }}
                       className="h-[1.5px] w-full max-w-xl mb-7 rounded-full"
                     />
 

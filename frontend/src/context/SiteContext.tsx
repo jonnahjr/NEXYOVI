@@ -3,6 +3,9 @@ import { supabase } from '../lib/supabase';
 
 // Initial Team Data
 import yonasImg from '../assets/yonas.jpg';
+import c1Img from '../assets/c1.jpg';
+import c2Img from '../assets/c2.jpg';
+import c3Img from '../assets/c3.jpg';
 import ethioLogo from '../assets/ethio_transparent.png';
 import awsLogo from '../assets/aws-25_transparent.png';
 import ibmLogo from '../assets/ibm-17_transparent.png';
@@ -57,6 +60,74 @@ const initialPartners = [
     { id: '17', name: 'Contrails AI', logo_url: contrailsAiLogo },
 ];
 
+export const trustLogosDefaults = [
+    { name: 'Ethio Telecom', logo_url: ethioLogo },
+    { name: 'Commercial Bank of Ethiopia', logo_url: 'https://upload.wikimedia.org/wikipedia/en/5/5e/Commercial_Bank_of_Ethiopia_logo.svg' },
+    { name: 'Zemen Bank', logo_url: 'https://upload.wikimedia.org/wikipedia/commons/6/68/Zemen_Bank_logo.svg' },
+    { name: 'INSA', logo_url: 'https://upload.wikimedia.org/wikipedia/en/7/70/INSA_Ethiopia_logo.svg' },
+    { name: 'Addis Ababa University', logo_url: 'https://upload.wikimedia.org/wikipedia/en/6/60/Addis_Ababa_University_logo.svg' },
+    { name: 'AASTU', logo_url: 'https://upload.wikimedia.org/wikipedia/en/4/4f/AASTU_logo.svg' },
+    { name: 'Global Bank', logo_url: 'https://upload.wikimedia.org/wikipedia/en/8/87/Global_Bank_Ethiopia_logo.svg' },
+];
+
+export const homepageTestimonialsDefaults = [
+    {
+        id: '2',
+        quote: "They connected us with top-tier Ethiopian engineering talent and built our core platform in parallel. They brought deep technical expertise and a true partnership mindset. Gebeya's collaboration with Nexyovi has been transformative for our pan-African expansion.",
+        role: 'CEO & Co-Founder',
+        company: 'Gebeya',
+        author: 'Amadou Daffe',
+        avatar_url: c1Img,
+        linkedin: 'https://et.linkedin.com/in/amadoudaffe',
+        highlight: 'transformative',
+        label: 'Trusted by founders of'
+    },
+    {
+        id: '4',
+        quote: "We needed a secure payment gateway that could handle Ethiopia's unique banking landscape. Nexyovi built it — integrating with four banks and processing live transactions on day one. Their focus on security and reliability has been a game-changer for our platform.",
+        role: 'CEO',
+        company: 'Arifpay',
+        author: 'Rediet Tsigeberhan',
+        avatar_url: c2Img,
+        linkedin: 'https://www.linkedin.com/in/rediet-tsigeberhan-97615642',
+        highlight: 'game-changer',
+        label: 'Trusted by founders of',
+        caseStudy: '/projects/global-bank-security'
+    },
+    {
+        id: '3',
+        quote: 'They delivered our health infrastructure platform ahead of schedule, navigating complex compliance requirements seamlessly. The system now serves users across regional hospitals and clinics.',
+        role: 'Chief Technology Officer',
+        company: 'Ministry of Health',
+        author: 'Dawit Mekonnen',
+        avatar_url: c3Img,
+        linkedin: 'https://linkedin.com',
+        highlight: 'ahead of schedule',
+        caseStudy: '/projects/tele-psychiatry'
+    },
+    {
+        id: '5',
+        quote: 'We needed a complete digital transformation — from legacy systems to modern cloud infrastructure. Nexyovi handled the migration with zero downtime and trained our team on the new stack. Their engineering discipline is world-class.',
+        role: 'Head of Digital',
+        company: 'Commercial Bank of Ethiopia',
+        author: 'Tigist Hailemariam',
+        avatar_url: '',
+        linkedin: '',
+        highlight: 'zero downtime',
+        caseStudy: '/company'
+    },
+    {
+        id: '6',
+        quote: "The mobile app they built for us had over 50k downloads in the first month. But what impressed me most was how they thought about scalability from day one — we haven't had a single performance issue even as traffic grew.",
+        role: 'VP of Product',
+        company: 'Ethio Telecom',
+        author: 'Binyam Alemu',
+        avatar_url: '',
+        linkedin: '',
+        highlight: 'scalability from day one',
+    },
+];
+
 const initialAdmins = [
     { id: '1', username: 'admin', role: 'Super Admin', status: 'Active', lastLogin: '2m ago' },
     { id: '2', username: 'subadmin', role: 'Content Manager', status: 'Active', lastLogin: '1h ago' }];
@@ -72,6 +143,10 @@ const initialSettings = {
         github: '#',
         youtube: '#',
         instagram: '#',
+        facebook: '#',
+        telegram: '#',
+        whatsapp: '+251945628075',
+        tiktok: '#',
         discord: '#',
         slack: '#'
     },
@@ -84,6 +159,7 @@ interface SiteContextType {
     jobs: any[];
     team: any[];
     testimonials: any[];
+    setTestimonials: React.Dispatch<React.SetStateAction<any[]>>;
     partners: any[];
     admins: any[];
     messages: any[];
@@ -197,7 +273,7 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 const mergedTeam = initialTeam.map(it => {
                     const match = teamData.find((td: any) => td.name === it.name);
                     return match
-                        ? { ...it, ...match, img: match.img || it.img, linkedin: match.linkedin || it.linkedin }
+                        ? { ...it, ...match, img: match.img || (it as any).img, linkedin: match.linkedin || it.linkedin }
                         : it;
                 });
                 teamData.forEach((td: any) => {
@@ -229,12 +305,19 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
             const { data: settingsData } = await supabase.from('settings').select('*').eq('id', 'global').single();
             if (settingsData) {
+                const dbSocials = settingsData.social_links || {};
+                const mergedSocials: Record<string, string> = { ...initialSettings.socials };
+                for (const key of Object.keys(dbSocials)) {
+                    if (dbSocials[key] && dbSocials[key] !== '#') {
+                        mergedSocials[key] = dbSocials[key];
+                    }
+                }
                 setSettings({
                     siteName: settingsData.org_name || initialSettings.siteName,
                     email: settingsData.email || initialSettings.email,
                     phone: settingsData.phone || initialSettings.phone,
                     address: settingsData.address || initialSettings.address,
-                    socials: settingsData.social_links || initialSettings.socials,
+                    socials: mergedSocials,
                     logo_url: settingsData.logo_url || initialSettings.logo_url
                 });
             }

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
- Globe, Mail, Phone, MapPin, 
- Twitter, Linkedin, Github, Youtube, Instagram, 
- Slack, Send, Save, CheckCircle2, Zap, Image as ImageIcon, UploadCloud, MessageCircle
+  Globe, Mail, Phone, MapPin, 
+  Twitter, Linkedin, Github, Youtube, Instagram, 
+  Facebook, Music2, Slack, Send, Save, CheckCircle2, Zap, Image as ImageIcon, UploadCloud, MessageCircle
 } from 'lucide-react';
 import { useSite } from '../../context/SiteContext';
 import { supabase } from '../../lib/supabase';
@@ -178,14 +178,17 @@ const AdminSettings = () => {
 
  <div className="space-y-4">
  {[
- { key: 'twitter', label: 'X (Twitter)', icon: Twitter },
- { key: 'linkedin', label: 'LinkedIn', icon: Linkedin },
- { key: 'github', label: 'GitHub', icon: Github },
- { key: 'youtube', label: 'YouTube', icon: Youtube },
- { key: 'instagram', label: 'Instagram', icon: Instagram },
- { key: 'whatsapp', label: 'WhatsApp Number', icon: MessageCircle },
- { key: 'discord', label: 'Discord', icon: Send },
- { key: 'slack', label: 'Slack', icon: Slack }].map((node) => (
+  { key: 'twitter', label: 'X (Twitter)', icon: Twitter },
+  { key: 'linkedin', label: 'LinkedIn', icon: Linkedin },
+  { key: 'github', label: 'GitHub', icon: Github },
+  { key: 'youtube', label: 'YouTube', icon: Youtube },
+  { key: 'instagram', label: 'Instagram', icon: Instagram },
+  { key: 'facebook', label: 'Facebook', icon: Facebook },
+  { key: 'telegram', label: 'Telegram', icon: Send },
+  { key: 'whatsapp', label: 'WhatsApp', icon: MessageCircle },
+  { key: 'tiktok', label: 'TikTok', icon: Music2 },
+  { key: 'discord', label: 'Discord', icon: Send },
+  { key: 'slack', label: 'Slack', icon: Slack }].map((node) => (
  <div key={node.key} className="space-y-2">
  <div className="flex items-center justify-between px-1">
  <label className="text-xs font-bold text-white/30 uppercase tracking-widest">{node.label}</label>

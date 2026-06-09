@@ -390,67 +390,54 @@ function ServiceCard({ service, index }: { service: any; index: number }) {
       transition={{ delay: index * 0.08, duration: 0.6, ease: EASE_EXPO }}
       className="group"
     >
-      <div className="relative flex flex-col bg-white/[0.02] border border-white/[0.06] rounded-[28px] p-7 md:p-8 overflow-hidden transition-all duration-500 hover:bg-white/[0.04] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] hover:border-white/[0.12] h-full">
-        {/* Grain texture */}
-        <div className="absolute inset-0 bg-noise opacity-[0.06] pointer-events-none" />
+      <div className="relative flex flex-col bg-white/[0.02] rounded-[20px] p-5 transition-all duration-300 hover:bg-white/[0.04] h-full">
+        {/* Title */}
+        <h3 className="text-base md:text-lg font-bold text-white mb-1 transition-colors duration-300 group-hover:text-[#F5A800]">
+          {service.title}
+        </h3>
 
-        {/* Accent border glow on hover */}
-        <div
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-[28px]"
-          style={{
-            boxShadow: `inset 0 0 0 1px ${service.accent}25, 0 0 20px ${service.accent}08`
-          }}
-        />
-
-        <div className="relative z-10 flex flex-col h-full">
-          {/* Title */}
-          <h3 className="text-xl md:text-2xl font-bold text-white mb-2 transition-colors duration-300 group-hover:text-[#F5A800]">
-            {service.title}
-          </h3>
-
-          {/* Highlights pills */}
-          {service.highlights && (
-            <div className="flex flex-wrap gap-1.5 mb-3">
-              {service.highlights.map((h: string) => (
-                <span
-                  key={h}
-                  className="text-[9px] font-bold uppercase tracking-widest px-2 py-1 rounded-md"
-                  style={{ background: `${service.accent}15`, color: service.accent, border: `1px solid ${service.accent}25` }}
-                >
-                  {h}
-                </span>
-              ))}
-            </div>
-          )}
-
-          {/* Description */}
-          <p className="text-white/40 text-sm leading-relaxed mb-5 flex-grow group-hover:text-white/60 transition-colors duration-300">
-            {service.longDesc}
-          </p>
-
-          {/* Tags */}
-          <div className="flex flex-wrap gap-1.5 mb-5">
-            {service.tags.slice(0, 4).map((tag: string) => (
+        {/* Highlights pills */}
+        {service.highlights && (
+          <div className="flex flex-wrap gap-1 mb-2">
+            {service.highlights.map((h: string) => (
               <span
-                key={tag}
-                className="text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest bg-white/[0.03] border border-white/[0.06] text-white/35 transition-all duration-300 group-hover:bg-white/[0.06] group-hover:border-white/[0.12] group-hover:text-white/70"
+                key={h}
+                className="text-[8px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded-sm"
+                style={{ background: `${service.accent}20`, color: service.accent }}
               >
-                {tag}
+                {h}
               </span>
             ))}
           </div>
+        )}
 
-          {/* View Service */}
-          <div className="flex items-center gap-2 pt-4 border-t border-white/5">
-            <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.15em] text-white/40 transition-all duration-300 group-hover:text-[#F5A800]">
-              View Service
-              <ArrowRight size={12} className="transition-transform duration-300 group-hover:translate-x-1" />
+        {/* Description */}
+        <p className="text-white/40 text-xs leading-relaxed mb-3 flex-grow group-hover:text-white/60 transition-colors duration-300">
+          {service.longDesc}
+        </p>
+
+        {/* Tags */}
+        <div className="flex flex-wrap gap-1 mb-3">
+          {service.tags.slice(0, 4).map((tag: string) => (
+            <span
+              key={tag}
+              className="text-[8px] font-bold px-2 py-0.5 rounded-full uppercase tracking-widest bg-white/[0.03] text-white/35 transition-all duration-300 group-hover:bg-white/[0.06] group-hover:text-white/70"
+            >
+              {tag}
             </span>
-          </div>
+          ))}
         </div>
-        {/* Full-card Link overlay */}
-        <Link to={service.href} className="absolute inset-0 z-20" aria-label={`View ${service.title} services`} />
+
+        {/* View Service */}
+        <div className="flex items-center gap-1.5 pt-2 border-t border-white/5">
+          <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-white/40 transition-all duration-300 group-hover:text-[#F5A800]">
+            Explore
+            <ArrowRight size={10} className="transition-transform duration-300 group-hover:translate-x-1" />
+          </span>
+        </div>
       </div>
+      {/* Full-card Link overlay */}
+      <Link to={service.href} className="absolute inset-0 z-20" aria-label={`View ${service.title} services`} />
     </motion.div>
   );
 }
@@ -618,10 +605,12 @@ export default function Services() {
             </motion.div>
           </div>
 
-          {/* ── Services Grid — Equal-width 3-column card grid ── */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {/* ── Services Grid — All horizontal, no wrap ── */}
+          <div className="flex gap-3">
             {displayServices.map((service, i) => (
-              <ServiceCard key={service.id} service={service} index={i} />
+              <div key={service.id} className="flex-1 min-w-0">
+                <ServiceCard service={service} index={i} />
+              </div>
             ))}
           </div>
 
@@ -660,59 +649,59 @@ export default function Services() {
               What Each Service <span className="text-[#F5A800]">Includes.</span>
             </h2>
           </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="p-8 rounded-[24px] bg-white/[0.03] border border-white/[0.08]">
-              <h3 className="text-xl font-bold text-white mb-4">Software Engineering</h3>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Custom Web Applications</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">SaaS Platform Development</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Legacy System Modernization</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Enterprise API Architecture</span></li>
+          <div className="flex gap-3">
+            <div className="flex-1 min-w-0 p-4 bg-white/[0.02] rounded-[16px]">
+              <h3 className="text-sm font-bold text-white mb-2">Software Engineering</h3>
+              <ul className="space-y-1.5">
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">Custom Web Applications</span></li>
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">SaaS Platform Development</span></li>
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">Legacy System Modernization</span></li>
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">Enterprise API Architecture</span></li>
               </ul>
             </div>
-            <div className="p-8 rounded-[24px] bg-white/[0.03] border border-white/[0.08]">
-              <h3 className="text-xl font-bold text-white mb-4">Artificial Intelligence</h3>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Custom LLM Integrations</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">AI Agents & Workflow Automation</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Predictive Machine Learning Models</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Computer Vision Systems</span></li>
+            <div className="flex-1 min-w-0 p-4 bg-white/[0.02] rounded-[16px]">
+              <h3 className="text-sm font-bold text-white mb-2">Artificial Intelligence</h3>
+              <ul className="space-y-1.5">
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">Custom LLM Integrations</span></li>
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">AI Agents & Workflow Automation</span></li>
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">Predictive Machine Learning Models</span></li>
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">Computer Vision Systems</span></li>
               </ul>
             </div>
-            <div className="p-8 rounded-[24px] bg-white/[0.03] border border-white/[0.08]">
-              <h3 className="text-xl font-bold text-white mb-4">Cloud & DevOps</h3>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Infrastructure as Code (IaC)</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">CI/CD Pipeline Design</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Cloud Migration Strategy</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Kubernetes & Container Orchestration</span></li>
+            <div className="flex-1 min-w-0 p-4 bg-white/[0.02] rounded-[16px]">
+              <h3 className="text-sm font-bold text-white mb-2">Cloud & DevOps</h3>
+              <ul className="space-y-1.5">
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">Infrastructure as Code (IaC)</span></li>
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">CI/CD Pipeline Design</span></li>
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">Cloud Migration Strategy</span></li>
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">Kubernetes & Container Orchestration</span></li>
               </ul>
             </div>
-            <div className="p-8 rounded-[24px] bg-white/[0.03] border border-white/[0.08]">
-              <h3 className="text-xl font-bold text-white mb-4">Cybersecurity</h3>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Zero-Trust Architecture</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Penetration Testing</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Compliance Audits (ISO, SOC 2, HIPAA)</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Threat Monitoring & Response</span></li>
+            <div className="flex-1 min-w-0 p-4 bg-white/[0.02] rounded-[16px]">
+              <h3 className="text-sm font-bold text-white mb-2">Cybersecurity</h3>
+              <ul className="space-y-1.5">
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">Zero-Trust Architecture</span></li>
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">Penetration Testing</span></li>
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">Compliance Audits (ISO, SOC 2, HIPAA)</span></li>
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">Threat Monitoring & Response</span></li>
               </ul>
             </div>
-            <div className="p-8 rounded-[24px] bg-white/[0.03] border border-white/[0.08]">
-              <h3 className="text-xl font-bold text-white mb-4">Data Systems</h3>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Streaming Data Pipelines</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Real-Time Analytics & BI</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Modern Data Lakes & Warehouses</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Data Governance & Access Controls</span></li>
+            <div className="flex-1 min-w-0 p-4 bg-white/[0.02] rounded-[16px]">
+              <h3 className="text-sm font-bold text-white mb-2">Data Systems</h3>
+              <ul className="space-y-1.5">
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">Streaming Data Pipelines</span></li>
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">Real-Time Analytics & BI</span></li>
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">Modern Data Lakes & Warehouses</span></li>
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">Data Governance & Access Controls</span></li>
               </ul>
             </div>
-            <div className="p-8 rounded-[24px] bg-white/[0.03] border border-white/[0.08]">
-              <h3 className="text-xl font-bold text-white mb-4">Managed Technology</h3>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">24/7 Monitoring & Support</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">SLA-Backed Maintenance</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Reliability Engineering</span></li>
-                <li className="flex items-center gap-3"><CheckCircle size={16} className="text-[#F5A800]" /> <span className="text-sm font-medium text-white/50">Technical Advisory & Roadmapping</span></li>
+            <div className="flex-1 min-w-0 p-4 bg-white/[0.02] rounded-[16px]">
+              <h3 className="text-sm font-bold text-white mb-2">Managed Technology</h3>
+              <ul className="space-y-1.5">
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">24/7 Monitoring & Support</span></li>
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">SLA-Backed Maintenance</span></li>
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">Reliability Engineering</span></li>
+                <li className="flex items-center gap-2"><CheckCircle size={12} className="text-[#F5A800] shrink-0" /> <span className="text-xs font-medium text-white/50">Technical Advisory & Roadmapping</span></li>
               </ul>
             </div>
           </div>

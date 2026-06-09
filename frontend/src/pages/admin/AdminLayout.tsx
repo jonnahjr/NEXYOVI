@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { 
   LayoutDashboard, Briefcase, Users, Settings, 
   LogOut, ChevronLeft, ChevronRight, Bell,
-  MessageSquare, Star, ShieldAlert,
+  MessageSquare, ShieldAlert,
   X, Clock, LayoutTemplate, Menu
 } from 'lucide-react';
 import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
@@ -17,16 +16,18 @@ const AdminLayout = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { messages, settings } = useSite();
+  const { messages, settings, session } = useSite();
 
   const unreadMessages = messages.filter(m => m.status === 'unread');
+
+  const userName = session?.user?.user_metadata?.full_name || session?.user?.email?.split('@')[0] || 'Admin';
+  const userInitials = userName.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2) || 'A';
 
   const nav = [
     { icon: LayoutDashboard, label: 'Dashboard', path: '/admin' },
     { icon: LayoutTemplate, label: 'Site Content', path: '/admin/content' },
     { icon: Briefcase, label: 'Jobs', path: '/admin/jobs' },
     { icon: Users, label: 'Team', path: '/admin/team' },
-    { icon: Star, label: 'Testimonials', path: '/admin/testimonials' },
     { icon: MessageSquare, label: 'Messages', path: '/admin/messages', badge: unreadMessages.length > 0 ? unreadMessages.length : null },
     { icon: ShieldAlert, label: 'Users', path: '/admin/users' },
     { icon: Settings, label: 'Settings', path: '/admin/settings' }
@@ -44,12 +45,12 @@ const AdminLayout = () => {
   const SidebarContent = () => (
     <>
       {/* Logo */}
-      <div className={`h-20 flex items-center border-b border-white/[0.08] shrink-0 transition-all ${collapsed ? 'px-5 justify-center' : 'px-6'}`}>
+      <div className={`h-20 flex items-center border-b border-white/[0.08] shrink-0 transition-all duration-300 ${collapsed ? 'px-5 justify-center' : 'px-6'}`}>
         {settings?.logo_url ? (
           <img src={settings.logo_url} alt="Logo" className="h-10 object-contain" />
         ) : (
           <div
-            className={`bg-gradient-to-r from-[#F5A800] to-[#ffb700] transition-all ${collapsed ? 'h-9 w-9 rounded-lg' : 'h-10 w-[150px] rounded-lg'}`}
+            className={`bg-gradient-to-r from-[#F5A800] to-[#ffb700] transition-all duration-300 ${collapsed ? 'h-9 w-9 rounded-lg' : 'h-10 w-[150px] rounded-lg'}`}
             style={{
               WebkitMask: `url('${myLogo}') ${collapsed ? 'center' : 'left'} center / contain no-repeat`,
               mask: `url('${myLogo}') ${collapsed ? 'center' : 'left'} center / contain no-repeat`
@@ -60,38 +61,32 @@ const AdminLayout = () => {
 
       {/* Nav */}
       <nav className="flex-1 py-6 px-3 space-y-2 overflow-y-auto">
-        {nav.map((item, index) => {
+        {nav.map((item) => {
           const active = location.pathname === item.path;
           return (
-            <motion.div
+            <Link 
               key={item.path}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.05 }}
+              to={item.path} 
+              onClick={() => setMobileOpen(false)}
+              className={`relative flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 group ${
+                active
+                  ? 'bg-gradient-to-r from-[#F5A800] to-[#ffb700] text-white shadow-lg shadow-[#F5A800]/20'
+                  : 'text-white/50 hover:bg-white/[0.08] hover:text-white'
+              }`}
             >
-              <Link 
-                to={item.path} 
-                onClick={() => setMobileOpen(false)}
-                className={`relative flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 group ${
-                  active
-                    ? 'bg-gradient-to-r from-[#F5A800] to-[#ffb700] text-white shadow-lg shadow-[#F5A800]/20'
-                    : 'text-white/50 hover:bg-white/[0.08] hover:text-white'
-                }`}
-              >
-                <item.icon size={19} className="shrink-0" />
-                {!collapsed && (
-                  <span className="text-sm font-semibold flex-1 truncate">{item.label}</span>
-                )}
-                {!collapsed && item.badge && (
-                  <span className="text-[11px] bg-red-500 text-white font-black px-2 py-0.5 rounded-full min-w-[22px] text-center shadow-sm">
-                    {item.badge}
-                  </span>
-                )}
-                {collapsed && item.badge && (
-                  <span className="absolute top-2 right-2 w-2.5 h-2.5 rounded-full bg-red-500 shadow-sm animate-pulse" />
-                )}
-              </Link>
-            </motion.div>
+              <item.icon size={19} className="shrink-0" />
+              {!collapsed && (
+                <span className="text-sm font-semibold flex-1 truncate">{item.label}</span>
+              )}
+              {!collapsed && item.badge && (
+                <span className="text-[11px] bg-red-500 text-white font-black px-2 py-0.5 rounded-full min-w-[22px] text-center shadow-sm">
+                  {item.badge}
+                </span>
+              )}
+              {collapsed && item.badge && (
+                <span className="absolute top-2 right-2 w-2.5 h-2.5 rounded-full bg-red-500 shadow-sm" />
+              )}
+            </Link>
           );
         })}
       </nav>
@@ -118,36 +113,24 @@ const AdminLayout = () => {
 
   return (
     <div className="h-screen w-screen bg-gradient-to-br from-[#02040a] via-[#050816] to-[#02040a] text-white flex overflow-hidden">
-      {/* Background glows */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-[#F5A800]/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[28rem] h-[28rem] bg-[#6366f1]/10 rounded-full blur-[100px] pointer-events-none" />
-      
       {/* ── MOBILE OVERLAY ── */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <>
-            <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 lg:hidden" onClick={() => setMobileOpen(false)} />
-            <motion.aside
-              initial={{ x: -300, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -300, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-              className="fixed left-0 top-0 h-full w-[260px] bg-gradient-to-b from-[#050816] to-[#02040a] border-r border-white/[0.08] flex flex-col z-50 lg:hidden shadow-2xl"
-            >
-              <SidebarContent />
-            </motion.aside>
-          </>
-        )}
-      </AnimatePresence>
+      {mobileOpen && (
+        <>
+          <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 lg:hidden" onClick={() => setMobileOpen(false)} />
+          <aside className="fixed left-0 top-0 h-full w-[260px] bg-gradient-to-b from-[#050816] to-[#02040a] border-r border-white/[0.08] flex flex-col z-50 lg:hidden shadow-2xl transition-transform duration-300">
+            <SidebarContent />
+          </aside>
+        </>
+      )}
 
       {/* ── DESKTOP SIDEBAR ── */}
-      <motion.aside
-        animate={{ width: collapsed ? 76 : 260 }}
-        transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-        className="h-full bg-gradient-to-b from-[#050816]/95 via-[#070B18]/95 to-[#02040a]/95 backdrop-blur-xl border-r border-white/[0.08] flex-col shrink-0 overflow-hidden hidden lg:flex shadow-2xl"
+      <aside
+        className={`h-full bg-gradient-to-b from-[#050816]/95 via-[#070B18]/95 to-[#02040a]/95 backdrop-blur-xl border-r border-white/[0.08] flex-col shrink-0 overflow-hidden hidden lg:flex shadow-2xl transition-all duration-300 ease-out ${
+          collapsed ? 'w-[76px]' : 'w-[260px]'
+        }`}
       >
         <SidebarContent />
-      </motion.aside>
+      </aside>
 
       {/* ── MAIN ── */}
       <div className="flex-1 flex flex-col h-full overflow-hidden min-w-0">
@@ -162,14 +145,9 @@ const AdminLayout = () => {
               <Menu size={20} />
             </button>
             <div>
-              <motion.div 
-                key={currentPage}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-xl font-black text-white leading-none"
-              >
+              <div className="text-xl font-black text-white leading-none">
                 {currentPage}
-              </motion.div>
+              </div>
               <div className="text-xs text-white/35 mt-1">Nexyovi Admin Panel</div>
             </div>
           </div>
@@ -179,7 +157,7 @@ const AdminLayout = () => {
             <div className="relative">
               <button
                 onClick={() => setShowNotifications(!showNotifications)}
-                className={`relative w-11 h-11 rounded-xl border flex items-center justify-center transition-all duration-300 ${
+                className={`relative w-11 h-11 rounded-xl border flex items-center justify-center transition-all duration-200 ${
                   showNotifications 
                     ? 'bg-gradient-to-r from-[#F5A800] to-[#ffb700] border-transparent text-white shadow-lg shadow-[#F5A800]/20' 
                     : 'bg-white/[0.05] border-white/10 text-white/50 hover:bg-white/[0.1] hover:text-white'
@@ -193,67 +171,60 @@ const AdminLayout = () => {
                 )}
               </button>
 
-              <AnimatePresence>
-                {showNotifications && (
-                  <>
-                    <div className="fixed inset-0 z-40" onClick={() => setShowNotifications(false)} />
-                    <motion.div
-                      initial={{ opacity: 0, y: 12, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 12, scale: 0.95 }}
-                      className="absolute right-0 mt-3 w-88 bg-gradient-to-br from-[#050816] to-[#02040a] border border-white/[0.08] rounded-2xl z-50 overflow-hidden shadow-2xl"
-                    >
-                      <div className="px-5 py-4 border-b border-white/[0.06] flex items-center justify-between bg-white/[0.02]">
-                        <h3 className="text-sm font-bold text-white">Notifications</h3>
-                        <button onClick={() => setShowNotifications(false)} className="text-white/35 hover:text-white transition-colors">
-                          <X size={17} />
-                        </button>
-                      </div>
-                      <div className="max-h-[320px] overflow-y-auto">
-                        {messages.length > 0 ? (
-                          messages.slice(0, 5).map((msg, i) => (
-                            <Link key={i} to="/admin/messages" onClick={() => setShowNotifications(false)}
-                              className="block px-5 py-4 hover:bg-white/[0.05] border-b border-white/[0.04] transition-colors"
-                            >
-                              <div className="flex items-start gap-3">
-                                <div className={`w-2 h-2 mt-2 rounded-full shrink-0 ${msg.status === 'unread' ? 'bg-[#F5A800]' : 'bg-white/25'}`} />
-                                <div className="flex-1 min-w-0">
-                                  <div className="flex items-center justify-between mb-1">
-                                    <span className="text-sm font-bold text-white truncate">{msg.name}</span>
-                                    <span className="text-xs text-white/35 flex items-center gap-1 shrink-0 ml-2">
-                                      <Clock size={11} />{msg.created_at ? new Date(msg.created_at).toLocaleDateString() : 'Today'}
-                                    </span>
-                                  </div>
-                                  <p className="text-xs text-white/40 line-clamp-2">{msg.message}</p>
+              {showNotifications && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setShowNotifications(false)} />
+                  <div className="absolute right-0 mt-3 w-88 bg-gradient-to-br from-[#050816] to-[#02040a] border border-white/[0.08] rounded-2xl z-50 overflow-hidden shadow-2xl">
+                    <div className="px-5 py-4 border-b border-white/[0.06] flex items-center justify-between bg-white/[0.02]">
+                      <h3 className="text-sm font-bold text-white">Notifications</h3>
+                      <button onClick={() => setShowNotifications(false)} className="text-white/35 hover:text-white transition-colors">
+                        <X size={17} />
+                      </button>
+                    </div>
+                    <div className="max-h-[320px] overflow-y-auto">
+                      {messages.length > 0 ? (
+                        messages.slice(0, 5).map((msg, i) => (
+                          <Link key={i} to="/admin/messages" onClick={() => setShowNotifications(false)}
+                            className="block px-5 py-4 hover:bg-white/[0.05] border-b border-white/[0.04] transition-colors"
+                          >
+                            <div className="flex items-start gap-3">
+                              <div className={`w-2 h-2 mt-2 rounded-full shrink-0 ${msg.status === 'unread' ? 'bg-[#F5A800]' : 'bg-white/25'}`} />
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center justify-between mb-1">
+                                  <span className="text-sm font-bold text-white truncate">{msg.name}</span>
+                                  <span className="text-xs text-white/35 flex items-center gap-1 shrink-0 ml-2">
+                                    <Clock size={11} />{msg.created_at ? new Date(msg.created_at).toLocaleDateString() : 'Today'}
+                                  </span>
                                 </div>
+                                <p className="text-xs text-white/40 line-clamp-2">{msg.message}</p>
                               </div>
-                            </Link>
-                          ))
-                        ) : (
-                          <div className="px-5 py-12 text-center">
-                            <MessageSquare size={30} className="mx-auto mb-3 text-white/20" />
-                            <p className="text-sm text-white/40">No new messages</p>
-                          </div>
-                        )}
-                      </div>
-                      <Link to="/admin/messages" onClick={() => setShowNotifications(false)}
-                        className="block px-5 py-4 text-center text-xs font-black text-[#F5A800] hover:bg-[#F5A800]/10 transition-colors uppercase tracking-[0.2em]"
-                      >
-                        View all messages
-                      </Link>
-                    </motion.div>
-                  </>
-                )}
-              </AnimatePresence>
+                            </div>
+                          </Link>
+                        ))
+                      ) : (
+                        <div className="px-5 py-12 text-center">
+                          <MessageSquare size={30} className="mx-auto mb-3 text-white/20" />
+                          <p className="text-sm text-white/40">No new messages</p>
+                        </div>
+                      )}
+                    </div>
+                    <Link to="/admin/messages" onClick={() => setShowNotifications(false)}
+                      className="block px-5 py-4 text-center text-xs font-black text-[#F5A800] hover:bg-[#F5A800]/10 transition-colors uppercase tracking-[0.2em]"
+                    >
+                      View all messages
+                    </Link>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* User */}
             <div className="flex items-center gap-3 pl-3 border-l border-white/[0.1]">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#F5A800] to-[#ffb700] flex items-center justify-center text-white text-xs font-black shrink-0 shadow-lg shadow-[#F5A800]/20">
-                YB
+                {userInitials}
               </div>
               <div className="hidden sm:block">
-                <div className="text-sm font-bold text-white leading-none">Yonas Bogale</div>
+                <div className="text-sm font-bold text-white leading-none">{userName}</div>
                 <div className="text-xs text-white/35 mt-0.5">Administrator</div>
               </div>
             </div>

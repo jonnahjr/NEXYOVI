@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import myLogo from '../assets/logo 1.png';
 import { useSite } from '../context/SiteContext';
 
-const navLinks = [
+const defaultNavLinks = [
  { name: 'Services', href: '/services' },
  { name: 'Industries', href: '/industries' },
  { name: 'Projects', href: '/projects' },
@@ -60,11 +60,14 @@ function NavLink({ children, href, isActive, isHovered, onMouseEnter, onClick }:
 }
 
 const Navbar = () => {
- const { settings } = useSite();
- const [mobileOpen, setMobileOpen] = useState(false);
- const [scrolled, setScrolled] = useState(false);
- const [hoveredLink, setHoveredLink] = useState<string | null>(null);
- const location = useLocation();
+  const { settings, siteContent } = useSite();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  const location = useLocation();
+  const navLinks = siteContent?.navigation?.headerLinks?.length
+    ? siteContent.navigation.headerLinks.map((link: any) => ({ name: link.label, href: link.href }))
+    : defaultNavLinks;
 
  useEffect(() => {
    const handleScroll = () => setScrolled(window.scrollY > 50);

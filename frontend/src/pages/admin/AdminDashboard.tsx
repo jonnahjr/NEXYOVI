@@ -1,24 +1,18 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { 
   Users, Briefcase, MessageSquare, 
   Star, ArrowUpRight, ShieldCheck,
-  BrainCircuit, Network, Zap, Clock,
-  LayoutTemplate, Settings, TrendingUp,
-  ChevronRight, Globe, Rocket,
-  BarChart3, ArrowRight
+  BrainCircuit, Network, Zap,
+  LayoutTemplate, Settings,
+  ChevronRight, Rocket,
+  ArrowRight, Clock
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useSite } from '../../context/SiteContext';
 
 const StatCard = ({ label, value, icon: Icon, color, to, trend }: any) => (
   <Link to={to}>
-    <motion.div
-      whileHover={{ y: -6, scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-      className="relative bg-gradient-to-br from-[#050816]/90 to-[#02040a]/90 backdrop-blur-xl border border-white/[0.08] rounded-3xl p-7 hover:border-[#F5A800]/40 transition-all duration-500 group cursor-pointer shadow-2xl overflow-hidden"
-    >
+    <div className="relative bg-gradient-to-br from-[#050816]/90 to-[#02040a]/90 backdrop-blur-xl border border-white/[0.08] rounded-3xl p-7 hover:border-[#F5A800]/40 transition-all duration-300 group cursor-pointer shadow-2xl overflow-hidden">
       <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-transparent via-transparent to-[#F5A800]/5 pointer-events-none" />
       
       <div className="relative flex items-start justify-between mb-5">
@@ -37,21 +31,17 @@ const StatCard = ({ label, value, icon: Icon, color, to, trend }: any) => (
       
       {trend && (
         <div className="flex items-center gap-2 mt-4 text-xs font-bold text-emerald-400 bg-emerald-500/10 px-3 py-2 rounded-xl w-fit border border-emerald-500/20">
-          <TrendingUp size={14} />
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
           {trend}
         </div>
       )}
-    </motion.div>
+    </div>
   </Link>
 );
 
 const QuickAction = ({ icon: Icon, label, desc, to, color }: any) => (
   <Link to={to}>
-    <motion.div
-      whileHover={{ x: 6, scale: 1.01 }}
-      whileTap={{ scale: 0.99 }}
-      className="group flex items-center gap-5 p-6 rounded-3xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/[0.12] transition-all duration-300"
-    >
+    <div className="group flex items-center gap-5 p-6 rounded-3xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/[0.12] transition-all duration-200">
       <div className={`w-13 h-13 rounded-2xl flex items-center justify-center ${color} shrink-0 shadow-lg shadow-current/10`}>
         <Icon size={22} />
       </div>
@@ -59,13 +49,13 @@ const QuickAction = ({ icon: Icon, label, desc, to, color }: any) => (
         <div className="text-sm font-bold text-white">{label}</div>
         <div className="text-xs text-white/40 mt-1">{desc}</div>
       </div>
-      <ChevronRight size={18} className="text-white/15 group-hover:text-[#F5A800] group-hover:translate-x-1 transition-all duration-300" />
-    </motion.div>
+      <ChevronRight size={18} className="text-white/15 group-hover:text-[#F5A800] group-hover:translate-x-1 transition-all duration-200" />
+    </div>
   </Link>
 );
 
 const SystemStatus = ({ name, load, icon: Icon, color, status }: any) => (
-  <div className="flex items-center gap-5 p-5 rounded-3xl bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300">
+  <div className="flex items-center gap-5 p-5 rounded-3xl bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-200">
     <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${color} shrink-0`}>
       <Icon size={20} />
     </div>
@@ -75,11 +65,9 @@ const SystemStatus = ({ name, load, icon: Icon, color, status }: any) => (
         <span className={`text-[11px] font-black ${load > 80 ? 'text-amber-400' : 'text-emerald-400'}`}>{load}% Load</span>
       </div>
       <div className="w-full h-2 bg-white/[0.08] rounded-full overflow-hidden">
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: `${load}%` }}
-          transition={{ duration: 1, ease: 'easeOut', delay: 0.2 }}
-          className={`h-full rounded-full ${load > 80 ? 'bg-amber-400' : load > 60 ? 'bg-cyan-400' : 'bg-emerald-400'}`}
+        <div
+          className={`h-full rounded-full transition-all duration-1000 ease-out ${load > 80 ? 'bg-amber-400' : load > 60 ? 'bg-cyan-400' : 'bg-emerald-400'}`}
+          style={{ width: `${load}%` }}
         />
       </div>
     </div>
@@ -112,19 +100,14 @@ const AdminDashboard = () => {
   return (
     <div className="space-y-8 pb-10">
       {/* Welcome Banner */}
-      <motion.div 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#F5A800]/15 via-[#050816]/95 to-[#02040a] border border-[#F5A800]/30 p-8 shadow-2xl"
-      >
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#F5A800]/15 via-[#050816]/95 to-[#02040a] border border-[#F5A800]/30 p-8 shadow-2xl">
         <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-br from-transparent via-[#F5A800]/5 to-transparent pointer-events-none" />
         <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-[#F5A800]/20 blur-[100px] pointer-events-none" />
         
         <div className="relative flex flex-col lg:flex-row lg:items-center justify-between gap-8">
           <div className="flex-1">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/15 mb-6">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-lg shadow-emerald-400/30" />
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-lg shadow-emerald-400/30" />
               <span className="text-[11px] font-black uppercase tracking-[0.25em] text-white/60">System Online</span>
             </div>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tight mb-3">
@@ -147,15 +130,10 @@ const AdminDashboard = () => {
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Stats Grid */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-      >
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard 
           label="Open Positions" 
           value={jobs.length} 
@@ -189,49 +167,31 @@ const AdminDashboard = () => {
           to="/admin/messages" 
         />
 
-        {/* Sparkline decoration under stats */}
         <div className="lg:col-span-4 -mt-2">
           <div className="h-px w-full bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
         </div>
-      </motion.div>
+      </div>
 
       {/* Middle Grid */}
       <div className="grid grid-cols-1 xl:grid-cols-5 gap-8">
         {/* Quick Actions */}
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="xl:col-span-3 bg-gradient-to-br from-[#050816]/90 to-[#02040a]/90 backdrop-blur-xl border border-white/[0.08] rounded-3xl overflow-hidden shadow-2xl"
-        >
+        <div className="xl:col-span-3 bg-gradient-to-br from-[#050816]/90 to-[#02040a]/90 backdrop-blur-xl border border-white/[0.08] rounded-3xl overflow-hidden shadow-2xl">
           <div className="px-8 py-6 border-b border-white/[0.06] flex items-center justify-between bg-white/[0.01]">
             <div>
               <h3 className="text-sm font-black text-white uppercase tracking-[0.2em] text-white/70">Quick Actions</h3>
               <p className="text-xs text-white/40 mt-1.5">Navigate to key areas instantly</p>
             </div>
-            <Globe size={22} className="text-[#F5A800]" />
+            <LayoutTemplate size={22} className="text-[#F5A800]" />
           </div>
           <div className="p-6 space-y-3">
             {quickActions.map((action, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.25 + i * 0.05 }}
-              >
-                <QuickAction key={i} {...action} />
-              </motion.div>
+              <QuickAction key={i} {...action} />
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* System Status & Recent Messages */}
-        <motion.div 
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="xl:col-span-2 space-y-8"
-        >
+        <div className="xl:col-span-2 space-y-8">
           {/* System Health */}
           <div className="bg-gradient-to-br from-[#050816]/90 to-[#02040a]/90 backdrop-blur-xl border border-white/[0.08] rounded-3xl overflow-hidden shadow-2xl">
             <div className="px-8 py-6 border-b border-white/[0.06] flex items-center justify-between bg-white/[0.01]">
@@ -240,14 +200,7 @@ const AdminDashboard = () => {
             </div>
             <div className="p-6 space-y-4">
               {systems.map((s, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: 10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.35 + i * 0.05 }}
-                >
-                  <SystemStatus key={i} {...s} />
-                </motion.div>
+                <SystemStatus key={i} {...s} />
               ))}
             </div>
           </div>
@@ -266,11 +219,8 @@ const AdminDashboard = () => {
             {messages.length > 0 ? (
               <div className="divide-y divide-white/[0.04]">
                 {messages.slice(0, 4).map((m: any, i: number) => (
-                  <motion.div
+                  <div
                     key={i}
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.45 + i * 0.05 }}
                     className="flex items-center gap-5 px-8 py-5 hover:bg-white/[0.03] transition-colors cursor-pointer"
                   >
                     <div className={`w-2.5 h-11 rounded-full shrink-0 ${m.status === 'unread' ? 'bg-[#F5A800]' : 'bg-white/15'}`} />
@@ -282,7 +232,7 @@ const AdminDashboard = () => {
                       <Clock size={13} />
                       {m.created_at ? new Date(m.created_at).toLocaleDateString() : 'Now'}
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             ) : (
@@ -292,7 +242,7 @@ const AdminDashboard = () => {
               </div>
             )}
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

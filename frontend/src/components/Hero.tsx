@@ -16,7 +16,7 @@ const Hero = () => {
   const ctaSecondary = 'See our work';
 
   return (
-    <section className="relative bg-[#02040a] overflow-hidden">
+    <section className="relative bg-[#FCFBF8] overflow-hidden theme-light">
       {/* ── Video background (covers full Hero) ── */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <video
@@ -28,7 +28,7 @@ const Hero = () => {
         >
           <source src={VIDEO_URL} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-black/10" />
       </div>
       {/* ── Content ── */}
       <div className="relative z-10">
@@ -47,16 +47,16 @@ const Hero = () => {
               {/* Stat Line */}
               <motion.p
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.1, ease: EASE_EXPO as any } } }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F5A800]/10 border border-[#F5A800]/20 mb-8"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-200/60 border border-slate-300 mb-8"
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
-                <span className="text-[#F5A800] font-bold text-sm tracking-wide">{statLine}</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800]" />
+                <span className="text-slate-600 font-bold text-sm tracking-wide">{statLine}</span>
               </motion.p>
 
               {/* Main Headline */}
               <motion.h1
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.2, ease: EASE_EXPO as any } } }}
-                className="text-[36px] md:text-[48px] lg:text-[60px] font-black text-white tracking-[-0.04em] leading-[0.95]"
+                className="text-[36px] md:text-[48px] lg:text-[60px] font-black text-slate-950 tracking-[-0.04em] leading-[0.95]"
               >
                 The engineering partner Africa's fastest companies trust
                 <span className="text-[#F5A800]"> to build — and ship.</span>
@@ -65,7 +65,7 @@ const Hero = () => {
               {/* Subtitle */}
               <motion.p
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.3, ease: EASE_EXPO as any } } }}
-                className="text-white/40 text-sm md:text-base max-w-xl leading-relaxed font-medium mb-8 mt-4"
+                className="text-slate-500 text-sm md:text-base max-w-xl leading-relaxed font-medium mb-8 mt-4"
               >
                 We help startups, enterprises, and public institutions design, build, and scale mission-critical digital products.
               </motion.p>
@@ -96,7 +96,7 @@ const Hero = () => {
                     >
                       <motion.span
                         aria-hidden="true"
-                        className="pointer-events-none absolute inset-y-[12%] left-[-34%] w-[40%] skew-x-[-18deg] rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent blur-lg z-20"
+                        className="pointer-events-none absolute inset-y-[12%] left-[-34%] w-[40%] skew-x-[-18deg] rounded-full bg-gradient-to-r from-transparent via-black/10 to-transparent blur-lg z-20"
                         animate={{ x: ['-150%', '345%'] }}
                         transition={{ duration: 3.5, repeat: Infinity, repeatDelay: 1.8, ease: 'easeInOut' }}
                       />

@@ -2,75 +2,13 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Linkedin, Quote } from 'lucide-react';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import c1 from '../assets/c1.jpg';
-import c2 from '../assets/c2.jpg';
-import c3 from '../assets/c3.jpg';
-
-const defaultTestimonials = [
-    {
-        id: '2',
-        quote: "They connected us with top-tier Ethiopian engineering talent and built our core platform in parallel. They brought deep technical expertise and a true partnership mindset. Gebeya's collaboration with Nexyovi has been transformative for our pan-African expansion.",
-        role: "CEO & Co-Founder",
-        company: "Gebeya",
-        author: "Amadou Daffe",
-        avatar: c1,
-        linkedin: "https://et.linkedin.com/in/amadoudaffe",
-        highlight: "transformative",
-        label: "Trusted by founders of"
-    },
-    {
-        id: '4',
-        quote: "We needed a secure payment gateway that could handle Ethiopia's unique banking landscape. Nexyovi built it — integrating with four banks and processing live transactions on day one. Their focus on security and reliability has been a game-changer for our platform.",
-        role: "CEO",
-        company: "Arifpay",
-        author: "Rediet Tsigeberhan",
-        avatar: c2,
-        linkedin: "https://www.linkedin.com/in/rediet-tsigeberhan-97615642",
-        highlight: "game-changer",
-        label: "Trusted by founders of",
-        caseStudy: "/projects/global-bank-security"
-    },
-    {
-        id: '3',
-        quote: "They delivered our health infrastructure platform ahead of schedule, navigating complex compliance requirements seamlessly. The system now serves users across regional hospitals and clinics.",
-        role: "Chief Technology Officer",
-        company: "Ministry of Health",
-        author: "Dawit Mekonnen",
-        avatar: c3,
-        linkedin: "https://linkedin.com",
-        highlight: "ahead of schedule",
-        caseStudy: "/projects/tele-psychiatry"
-    },
-    {
-        id: '5',
-        quote: "We needed a complete digital transformation — from legacy systems to modern cloud infrastructure. Nexyovi handled the migration with zero downtime and trained our team on the new stack. Their engineering discipline is world-class.",
-        role: "Head of Digital",
-        company: "Commercial Bank of Ethiopia",
-        author: "Tigist Hailemariam",
-        highlight: "zero downtime",
-        caseStudy: "/projects/global-bank-security"
-    },
-    {
-        id: '6',
-        quote: "The mobile app they built for us had over 50k downloads in the first month. But what impressed me most was how they thought about scalability from day one — we haven't had a single performance issue even as traffic grew.",
-        role: "VP of Product",
-        company: "Ethio Telecom",
-        author: "Binyam Alemu",
-        highlight: "scalability from day one",
-    },
-    {
-        id: '7',
-        quote: "Nexyovi's team embedded with ours for six months and rebuilt our entire data infrastructure. They didn't just deliver on time — they transferred knowledge to our engineers throughout the process. That partnership mentality is rare.",
-        role: "Director of Engineering",
-        company: "INSA",
-        author: "Meron Tadesse",
-        highlight: "partnership mentality",
-        caseStudy: "/company"
-    },
-];
+import { homepageTestimonialsDefaults, useSite } from '../context/SiteContext';
 
 export default function TestimonialSection() {
-    const testimonials = defaultTestimonials;
+    const { siteContent } = useSite();
+    const testimonials = siteContent?.testimonialsSection?.items?.length
+        ? siteContent.testimonialsSection.items
+        : homepageTestimonialsDefaults;
 
     return (
         <section className="relative bg-[#02040a] py-16 section-divider-dark overflow-hidden">
@@ -117,9 +55,9 @@ export default function TestimonialSection() {
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center gap-3">
                                                 <div className="w-8 h-8 rounded-full overflow-hidden shrink-0">
-                                                    {testimonial.img || testimonial.avatar ? (
+                                                    {testimonial.avatar_url || testimonial.img || testimonial.avatar ? (
                                                         <img
-                                                            src={testimonial.img || testimonial.avatar}
+                                                            src={testimonial.avatar_url || testimonial.img || testimonial.avatar}
                                                             alt={testimonial.author}
                                                             className="w-full h-full object-cover"
                                                         />

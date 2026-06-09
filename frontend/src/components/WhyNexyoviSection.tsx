@@ -136,15 +136,8 @@ export default function WhyNexyoviSection() {
       style={{ height: `${Math.ceil(scrollMetrics.viewportHeight + scrollMetrics.scrollDistance)}px` }}
     >
       <div className="absolute inset-0 z-0 bg-[#FCFBF8]" />
-      {/* Two diagonal // lines in dark slate */}
-      <div
-        className="absolute inset-0 z-[1] opacity-[0.04] pointer-events-none"
-        style={{
-          backgroundImage: `linear-gradient(135deg, transparent 0%, transparent 30%, #02040a 30%, #02040a 36%, transparent 36%, transparent 66%, #02040a 66%, #02040a 72%, transparent 72%, transparent 100%)`,
-        }}
-      />
 
-      <div className="sticky top-0 z-10 h-[46vh] min-h-[330px] overflow-hidden">
+      <div className="sticky top-0 z-10 h-[38vh] min-h-[260px] overflow-hidden">
         <div className="container max-w-7xl mx-auto relative z-10 px-6 h-full flex items-center">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.05fr] gap-4 lg:gap-8 items-center w-full min-h-0">
 
@@ -158,15 +151,15 @@ export default function WhyNexyoviSection() {
                 className="relative w-full"
               >
                 <div className="lg:max-w-md">
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 bg-white mb-4">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 bg-white mb-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800]" />
                     <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">Why Nexyovi?</span>
                   </div>
-                  <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-slate-950 tracking-[-0.04em] leading-[0.94]">
+                  <h2 className="text-xl md:text-3xl lg:text-4xl font-black text-slate-950 tracking-[-0.04em] leading-[0.94]">
                     Real{' '}
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">differentiation.</span>
                   </h2>
-                  <p className="text-slate-500 text-sm mt-4 max-w-xs font-medium leading-relaxed">
+                  <p className="text-slate-500 text-xs mt-2 max-w-xs font-medium leading-relaxed">
                     This is what buyers compare. We deliver on every point.
                   </p>
                 </div>
@@ -197,7 +190,7 @@ export default function WhyNexyoviSection() {
             </div>
 
             {/* Right: Cards container — slides up */}
-            <div ref={cardsViewportRef} className="relative h-[210px] md:h-[260px] overflow-hidden px-2 py-2">
+            <div ref={cardsViewportRef} className="relative h-[170px] md:h-[210px] overflow-hidden px-2 py-2">
               <div ref={cardsContainerRef} className="absolute inset-x-2 top-2 space-y-2">
                   {cards.map((card, i) => {
                   return (
@@ -205,17 +198,17 @@ export default function WhyNexyoviSection() {
                       to={card.link}
                       key={card.title}
                       ref={(el) => { cardRefs.current[i] = el as unknown as HTMLDivElement; }}
-                      className="group relative min-h-[92px] origin-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-3 md:p-4 transition-all duration-500 hover:border-[#F5A800]/40 hover:-translate-y-0.5 hover:shadow-lg block"
+                      className="group relative min-h-[74px] origin-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-2.5 md:p-3 transition-all duration-500 hover:border-[#F5A800]/40 hover:-translate-y-0.5 hover:shadow-lg block"
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-[#F5A800]/[0.03] to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                      <div className="relative z-10 space-y-1.5">
+                      <div className="relative z-10 space-y-1">
                         <div>
                           <h3
-                            className="text-[15px] md:text-[17px] font-black tracking-[-0.02em] leading-[1.15] mb-1 text-slate-950"
+                            className="text-[13px] md:text-[15px] font-black tracking-[-0.02em] leading-[1.15] mb-0.5 text-slate-950"
                           >
                             {card.title}
                           </h3>
-                          <p className="text-slate-500 text-[12px] md:text-[13px] leading-relaxed max-w-md font-medium">
+                          <p className="text-slate-500 text-[11px] md:text-[12px] leading-relaxed max-w-md font-medium">
                             {card.desc}
                           </p>
                         </div>

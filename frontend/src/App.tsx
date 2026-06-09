@@ -76,93 +76,97 @@ function App() {
  const isStandalone = location.pathname.startsWith('/admin') ||
  location.pathname.startsWith('/systems');
 
- // Initialize Lenis smooth scrolling on public routes only
- useLenis(!isStandalone);
+  // Initialize Lenis smooth scrolling on public routes only
+  useLenis(!isStandalone);
 
- return (
- <ToastProvider>
- <div className="min-h-screen bg-[#050816]">
- <ScrollToTop />
- {!isStandalone && <Navbar />}
+  const routeTree = (
+    <Routes location={location}>
+      {/* ── Public ── */}
+      <Route path="/" element={<Home />} />
+      <Route path="/services" element={<Services />} />
+      <Route path="/services/:serviceId" element={<ServiceDetail />} />
+      <Route path="/systems/crm" element={<CRMSystem />} />
 
- <main className={isStandalone ? 'h-screen overflow-hidden' : ''}>
- <AnimatePresence mode="wait">
- <motion.div
- key={location.pathname}
- variants={pageVariants}
- initial="initial"
- animate="animate"
- exit="exit"
- transition={pageTransition}
- className="w-full h-full"
- >
- <Suspense fallback={<PageLoader />}>
- <Routes location={location}>
- {/* ── Public ── */}
- <Route path="/" element={<Home />} />
- <Route path="/services" element={<Services />} />
- <Route path="/services/:serviceId" element={<ServiceDetail />} />
- <Route path="/systems/crm" element={<CRMSystem />} />
+      {/* Legacy redirects */}
+      <Route path="/security" element={<Navigate to="/services/security" replace />} />
+      <Route path="/software" element={<Navigate to="/services/software" replace />} />
+      <Route path="/networking" element={<Navigate to="/services/networking" replace />} />
+      <Route path="/ai" element={<Navigate to="/services/ai" replace />} />
+      <Route path="/cloud" element={<Navigate to="/services/cloud" replace />} />
+      <Route path="/data" element={<Navigate to="/services/data" replace />} />
+      <Route path="/apps" element={<Navigate to="/services/apps" replace />} />
 
- {/* Legacy redirects */}
- <Route path="/security" element={<Navigate to="/services/security" replace />} />
- <Route path="/software" element={<Navigate to="/services/software" replace />} />
- <Route path="/networking" element={<Navigate to="/services/networking" replace />} />
- <Route path="/ai" element={<Navigate to="/services/ai" replace />} />
- <Route path="/cloud" element={<Navigate to="/services/cloud" replace />} />
- <Route path="/data" element={<Navigate to="/services/data" replace />} />
- <Route path="/apps" element={<Navigate to="/services/apps" replace />} />
+      <Route path="/industries" element={<Industries />} />
+      <Route path="/fintech" element={<Navigate to="/industries" replace />} />
+      <Route path="/health" element={<Navigate to="/industries" replace />} />
+      <Route path="/gov" element={<Navigate to="/industries" replace />} />
+      <Route path="/retail" element={<Navigate to="/industries" replace />} />
+      <Route path="/edu" element={<Navigate to="/industries" replace />} />
 
- <Route path="/industries" element={<Industries />} />
- <Route path="/fintech" element={<Navigate to="/industries" replace />} />
- <Route path="/health" element={<Navigate to="/industries" replace />} />
- <Route path="/gov" element={<Navigate to="/industries" replace />} />
- <Route path="/retail" element={<Navigate to="/industries" replace />} />
- <Route path="/edu" element={<Navigate to="/industries" replace />} />
+      <Route path="/founders" element={<Navigate to="/#leadership" replace />} />
+      <Route path="/team" element={<Navigate to="/#leadership" replace />} />
+      <Route path="/offices" element={<Navigate to="/#offices" replace />} />
+      <Route path="/sustainability" element={<Navigate to="/#impact" replace />} />
 
+      <Route path="/about" element={<Navigate to="/company" replace />} />
+      <Route path="/company" element={<Company />} />
+      <Route path="/company/story" element={<Navigate to="/company#story" replace />} />
+      <Route path="/company/mission-vision" element={<Navigate to="/company#vision" replace />} />
+      <Route path="/company/values" element={<Navigate to="/company#values" replace />} />
+      <Route path="/company/leadership" element={<Navigate to="/company#leadership" replace />} />
+      <Route path="/company/partners" element={<Navigate to="/company#partners" replace />} />
+      <Route path="/company/impact" element={<Navigate to="/company#impact" replace />} />
+      <Route path="/company/culture" element={<Navigate to="/company#culture" replace />} />
 
- <Route path="/founders" element={<Navigate to="/#leadership" replace />} />
- <Route path="/team" element={<Navigate to="/#leadership" replace />} />
- <Route path="/offices" element={<Navigate to="/#offices" replace />} />
- <Route path="/sustainability" element={<Navigate to="/#impact" replace />} />
+      <Route path="/legal" element={<TrustCenter />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/projects" element={<ProjectsPage />} />
+      <Route path="/projects/:id" element={<CaseStudyDetail />} />
+      <Route path="/portfolio" element={<Navigate to="/projects" replace />} />
 
- <Route path="/about" element={<Navigate to="/company" replace />} />
- <Route path="/company" element={<Company />} />
- <Route path="/company/story" element={<Navigate to="/company#story" replace />} />
- <Route path="/company/mission-vision" element={<Navigate to="/company#vision" replace />} />
- <Route path="/company/values" element={<Navigate to="/company#values" replace />} />
- <Route path="/company/leadership" element={<Navigate to="/company#leadership" replace />} />
- <Route path="/company/partners" element={<Navigate to="/company#partners" replace />} />
- <Route path="/company/impact" element={<Navigate to="/company#impact" replace />} />
- <Route path="/company/culture" element={<Navigate to="/company#culture" replace />} />
+      {/* ── Admin ── */}
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
+        <Route index element={<AdminDashboard />} />
+        <Route path="jobs" element={<AdminJobs />} />
+        <Route path="team" element={<AdminTeam />} />
+        <Route path="testimonials" element={<AdminTestimonials />} />
+        <Route path="messages" element={<AdminMessages />} />
+        <Route path="users" element={<AdminUsers />} />
+        <Route path="content" element={<AdminContent />} />
+        <Route path="settings" element={<AdminSettings />} />
+      </Route>
 
- <Route path="/legal" element={<TrustCenter />} />
- <Route path="/contact" element={<Contact />} />
- <Route path="/projects" element={<ProjectsPage />} />
- <Route path="/projects/:id" element={<CaseStudyDetail />} />
- <Route path="/portfolio" element={<Navigate to="/projects" replace />} />
- {/* Legacy /portfolio redirect */}
+      <Route path="/map-calibrate" element={<MapCalibrate />} />
+      <Route path="*" element={<Home />} />
+    </Routes>
+  );
 
- {/* ── Admin ── */}
- <Route path="/admin/login" element={<AdminLogin />} />
- <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
- <Route index element={<AdminDashboard />} />
- <Route path="jobs" element={<AdminJobs />} />
- <Route path="team" element={<AdminTeam />} />
- <Route path="testimonials" element={<AdminTestimonials />} />
- <Route path="messages" element={<AdminMessages />} />
- <Route path="users" element={<AdminUsers />} />
- <Route path="content" element={<AdminContent />} />
- <Route path="settings" element={<AdminSettings />} />
- </Route>
+  return (
+  <ToastProvider>
+  <div className="min-h-screen bg-[#050816]">
+  <ScrollToTop />
+  {!isStandalone && <Navbar />}
 
- <Route path="/map-calibrate" element={<MapCalibrate />} />
- <Route path="*" element={<Home />} />
- </Routes>
- </Suspense>
- </motion.div>
- </AnimatePresence>
- </main>
+  <main className={isStandalone ? 'h-screen overflow-hidden' : ''}>
+  <Suspense fallback={<PageLoader />}>
+    {isStandalone ? routeTree : (
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={location.pathname}
+          variants={pageVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={pageTransition}
+          className="w-full h-full"
+        >
+          {routeTree}
+        </motion.div>
+      </AnimatePresence>
+    )}
+  </Suspense>
+  </main>
 
   {!isStandalone && <Footer />}
         {!isStandalone && <Chatbot />}

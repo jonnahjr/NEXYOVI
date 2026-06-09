@@ -82,9 +82,9 @@ const ServicesSection = () => {
                     {/* Left Column: Sticky Header */}
                     <div className="lg:w-1/3">
                         <div className="lg:sticky lg:top-32">
-                            <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-slate-950 tracking-[-0.04em] leading-[0.92] mb-6">
+                            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-slate-950 tracking-[-0.04em] leading-[0.92] mb-6">
                                 Full-Stack <br />
-                                <span className="block text-center -translate-x-4">Digital</span>
+                                <span className="block text-left">Digital</span>
                                 <span className="text-[#F5A800]">Services</span>
                             </h2>
 
