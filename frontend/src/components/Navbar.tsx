@@ -7,8 +7,8 @@ import { useSite } from '../context/SiteContext';
 const defaultNavLinks = [
  { name: 'Services', href: '/services' },
  { name: 'Industries', href: '/industries' },
- { name: 'Projects', href: '/projects' },
- { name: 'About', href: '/company' },
+  { name: 'Portfolio', href: '/projects' },
+  { name: 'Company', href: '/company' },
  { name: 'Contact', href: '/contact' }];
 
 function NavLink({ children, href, isActive, isHovered, onMouseEnter, onClick }: { children: React.ReactNode, href: string, isActive: boolean, isHovered?: boolean, onMouseEnter?: () => void, onClick: (e: React.MouseEvent) => void }) {
@@ -42,18 +42,8 @@ function NavLink({ children, href, isActive, isHovered, onMouseEnter, onClick }:
          />
        )}
 
-       {/* Text Roll-over Animation */}
-       <div className="relative overflow-hidden leading-none block">
-         <motion.div
-           initial={false}
-           animate={{ y: isHovered ? '-100%' : '0%' }}
-           transition={{ ease: [0.76, 0, 0.24, 1], duration: 0.4 }}
-           className="flex flex-col items-center"
-         >
-           <span className="block">{children}</span>
-           <span className="block absolute top-full left-0 right-0 text-center">{children}</span>
-         </motion.div>
-       </div>
+       {/* Text — simple single span */}
+        <span className="relative leading-none">{children}</span>
      </Link>
    </div>
  );

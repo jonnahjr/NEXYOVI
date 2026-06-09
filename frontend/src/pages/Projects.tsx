@@ -83,10 +83,10 @@ interface Project {
 const PROJECTS: Project[] = [
   {
     id: 'neural-sentinel',
-    title: 'AI Customer Support System',
-    subtitle: 'Automated Natural Language Triage',
+    title: 'Neural Sentinel',
+    subtitle: 'AI-Powered Threat Defense',
     category: 'AI Systems',
-    tags: ['LLM', 'Predictive', 'Real-Time'],
+    tags: ['LLM', 'Threat Detection', 'Real-Time'],
     icon: ShieldCheck,
     color: '#F5A800',
     glow: 'rgba(245,168,0,0.15)',
@@ -95,19 +95,19 @@ const PROJECTS: Project[] = [
     status: 'Live',
     impact: 'Enterprise threat prevention',
     description:
-      'An autonomous defense engine trained on 900M threat signatures. It identifies zero-day exploits before signature databases update, cutting mean-time-to-detect from hours to milliseconds.',
+      'An autonomous defense engine trained on behavioral analysis and threat intelligence. It identifies zero-day exploits by detecting anomalous patterns in real-time network traffic.',
     metrics: [
-      { label: 'Threats Blocked', value: '500M+/yr' },
-      { label: 'False Positive Rate', value: '0.002%' },
-      { label: 'Detection Latency', value: '<8ms' }],
+      { label: 'Detection', value: 'Real-Time Threat Detection' },
+      { label: 'Analysis', value: 'Behavioral Anomaly Analysis' },
+      { label: 'Protection', value: 'Zero-Day Identification' }],
     featured: true,
   },
   {
     id: 'quantum-ledger',
-    title: 'Financial Analytics Dashboard',
-    subtitle: 'High-Volume Executive Intelligence',
+    title: 'Quantum Ledger',
+    subtitle: 'Post-Quantum Settlement Network',
     category: 'Data Systems',
-    tags: ['Business Intelligence', 'Data Pipeline', 'Streaming'],
+    tags: ['Blockchain', 'Cryptography', 'Payments'],
     icon: Database,
     color: '#8b5cf6',
     glow: 'rgba(139,92,246,0.15)',
@@ -118,53 +118,54 @@ const PROJECTS: Project[] = [
     description:
       'A cryptographically hardened settlement network built for the post-quantum era. Uses lattice-based cryptography to future-proof transactions against upcoming quantum computing threats.',
     metrics: [
-      { label: 'Daily Volume', value: '$240M+' },
-      { label: 'Settlement Time', value: '1.4s' },
-      { label: 'Quantum Resilience', value: 'NIST L5' }],
+      { label: 'Security', value: 'Post-Quantum Cryptography' },
+      { label: 'Standard', value: 'NIST Lattice L5' },
+      { label: 'Integrity', value: 'Immutable Audit Trail' }],
   },
   {
     id: 'apex-cloud',
-    title: 'Multi-Tenant SaaS Platform',
-    subtitle: 'Global Distributed Microservices',
+    title: 'Apex Cloud',
+    subtitle: 'Global Multi-Region Infrastructure',
     category: 'Software',
-    tags: ['Kubernetes', 'B2B', 'Multi-Tenant'],
+    tags: ['Kubernetes', 'Multi-Region', 'Orchestration'],
     icon: Cloud,
     color: '#06b6d4',
     glow: 'rgba(6,182,212,0.15)',
     gradient: 'from-[#06b6d4]/20 via-[#06b6d4]/5 to-transparent',
     year: '2023',
     status: 'Live',
-    impact: '99.9997% uptime record',
+    impact: '99.99% uptime record',
     description:
       'An enterprise-grade cloud operating system enabling organizations to run workloads across 14 regions with zero vendor lock-in, automated failover, and millisecond geo-routing.',
     metrics: [
-      { label: 'Peak Concurrency', value: '12M req/s' },
-      { label: 'Cost Reduction', value: '67%' },
-      { label: 'Deploy Time', value: '3 min' }],
+      { label: 'Architecture', value: 'Multi-Region Mesh' },
+      { label: 'Failover', value: 'Automated Geo-Routing' },
+      { label: 'Deployment', value: 'Zero Lock-In' }],
   },
   {
     id: 'ion-network',
-    title: 'Government Service Portal',
-    subtitle: 'Secure Health Data Infrastructure',
-    category: 'Security',
-    tags: ['HIPAA', 'Zero-Trust', 'Encryption'],
+    title: 'ION Network',
+    subtitle: 'Metro Data Center Backbone',
+    category: 'Infrastructure',
+    tags: ['SD-WAN', 'Fiber', 'Low-Latency'],
     icon: Wifi,
     color: '#10b981',
     glow: 'rgba(16,185,129,0.15)',
     gradient: 'from-[#10b981]/20 via-[#10b981]/5 to-transparent',
     year: '2024',
     status: 'In Progress',
-    impact: '38 cities connected',
+    impact: '8 cities connected',
     description:
-      'A privately operated fiber-over-SD-WAN backbone connecting 38 metropolitan data centers with sub-2ms cross-region routing, purpose-built for latency-critical financial workloads.',
+      'A privately operated SD-WAN backbone connecting metropolitan data centers with low-latency cross-region routing, purpose-built for latency-critical financial workloads.',
     metrics: [
-      { label: 'Bandwidth', value: '400 Gbps' },
-      { label: 'Redundancy', value: 'N+3' }],
+      { label: 'Connectivity', value: 'SD-WAN Backbone' },
+      { label: 'Latency', value: 'Sub-2ms Routing' },
+      { label: 'Resilience', value: 'N+2 Redundancy' }],
   },
   {
     id: 'cipher-vault',
-    title: 'Hospital Management System',
-    subtitle: 'Hardware Security Module as a Service',
+    title: 'CipherVault',
+    subtitle: 'Cloud HSM as a Service',
     category: 'Security',
     tags: ['HSM', 'Key Management', 'FIPS 140-3'],
     icon: Lock,
@@ -173,32 +174,33 @@ const PROJECTS: Project[] = [
     gradient: 'from-[#ef4444]/20 via-[#ef4444]/5 to-transparent',
     year: '2023',
     status: 'Live',
-    impact: '2,400+ organizations secured',
+    impact: '120+ organizations secured',
     description:
       'A cloud-native HSM service replacing costly on-prem hardware. Delivers FIPS 140-3 Level 3 cryptographic operations via API — from key generation to certificate signing — at enterprise scale.',
     metrics: [
-      { label: 'Crypto Ops/sec', value: '500K' },
-      { label: 'Compliance', value: 'FIPS/PCI' }],
+      { label: 'Compliance', value: 'FIPS 140-3 L3' },
+      { label: 'Delivery', value: 'API-First HSM' },
+      { label: 'Coverage', value: 'Key Mgmt & Signing' }],
   },
   {
     id: 'prism-ai',
-    title: 'Logistics Tracking Platform',
-    subtitle: 'Predictive Supply Chain Interface',
-    category: 'Software',
-    tags: ['IoT', 'Tracking', 'Event-Driven'],
+    title: 'Prism AI',
+    subtitle: 'Predictive Infrastructure Operations',
+    category: 'AI Systems',
+    tags: ['AI Ops', 'Predictive', 'Automation'],
     icon: Cpu,
     color: '#f97316',
     glow: 'rgba(249,115,22,0.15)',
     gradient: 'from-[#f97316]/20 via-[#f97316]/5 to-transparent',
     year: '2024',
     status: 'Live',
-    impact: '$90M outage costs prevented',
+    impact: '$2.8M outage costs prevented',
     description:
-      'A self-learning operations brain that predicts infrastructure failures up to 72 hours in advance. It autonomously re-routes traffic, provisions capacity, and updates runbooks — no human required.',
+      'A self-learning operations engine that predicts infrastructure failures before they occur. It autonomously re-routes traffic, provisions capacity, and updates runbooks — no human required.',
     metrics: [
-      { label: 'Prediction Accuracy', value: '97.4%' },
-      { label: 'Advance Warning', value: '72 hrs' },
-      { label: 'Auto-Remediation', value: '89%' }],
+      { label: 'Intelligence', value: 'Predictive AI Ops' },
+      { label: 'Response', value: 'Auto-Remediation' },
+      { label: 'Scope', value: 'Cross-Stack Coverage' }],
   },
   {
     id: 'pharmaflow',
@@ -365,11 +367,11 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
         </div>
 
         {/* Metrics strip */}
-        <div className="grid grid-cols-3 gap-2 mb-6 p-4 rounded-2xl bg-slate-50 border border-slate-200">
+        <div className="flex flex-col gap-2 mb-6 p-4 rounded-2xl bg-slate-50 border border-slate-200">
           {project.metrics.map((m) => (
-            <div key={m.label} className="text-center">
-              <div className="text-base md:text-lg font-black text-slate-950 mb-0.5">{m.value}</div>
-              <div className="text-[9px] font-bold uppercase tracking-widest text-slate-400">{m.label}</div>
+            <div key={m.label} className="flex items-center gap-2">
+              <div className="w-1 h-1 rounded-full bg-[#F5A800] shrink-0" />
+              <span className="text-sm font-semibold text-slate-700">{m.value}</span>
             </div>
           ))}
         </div>
@@ -505,6 +507,23 @@ const StoreButton = ({ dark = false, platform = 'app-store' }: { dark?: boolean;
 export default function Projects() {
 
 
+  // ── Filter State ──
+  const [activeFilter, setActiveFilter] = useState<string>('All');
+  const filterLabels = ['All', 'Software', 'AI', 'Data', 'Infrastructure', 'Security'];
+
+  const categoryMap: Record<string, string> = {
+    'AI Systems': 'AI',
+    'Software': 'Software',
+    'Data Systems': 'Data',
+    'Infrastructure': 'Infrastructure',
+    'Security': 'Security',
+  };
+
+  const filteredProjects = activeFilter === 'All'
+    ? PROJECTS
+    : PROJECTS.filter(p => categoryMap[p.category] === activeFilter);
+
+
   // ── Hero Parallax (matching Services page) ──
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -517,10 +536,10 @@ export default function Projects() {
 
   // ── Stats ──
   const stats = [
-    { icon: Layers, label: 'Enterprise Projects', value: 50, suffix: '+', color: '#F5A800' },
-    { icon: Users, label: 'Clients Served', value: 20, suffix: '+', color: '#8b5cf6' },
-    { icon: Globe, label: 'Countries Deployed', value: 4, suffix: '', color: '#06b6d4' },
-    { icon: Clock, label: 'Avg Time to Ship', value: 12, suffix: ' wks', color: '#10b981' },
+    { label: 'Projects Delivered', value: 50, suffix: '+' },
+    { label: 'Organizations Served', value: 20, suffix: '+' },
+    { label: 'Industries', value: 8, suffix: '' },
+    { label: 'Service Verticals', value: 6, suffix: '+' },
   ];
 
   return (
@@ -553,7 +572,7 @@ export default function Projects() {
           </TextReveal>
           <TextReveal delay={0.15}>
             <h1 className="text-[48px] md:text-[72px] lg:text-[96px] font-black tracking-[-0.04em] leading-[0.9] mb-6">
-              <span className="text-white/20">One Project at a Time.</span>
+              <span className="text-white/20">One Reference at a Time.</span>
             </h1>
           </TextReveal>
 
@@ -564,7 +583,7 @@ export default function Projects() {
             transition={{ delay: 0.35, duration: 0.7, ease: EASE_EXPO }}
             className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed mb-10"
           >
-            From autonomous AI defense systems to quantum-hardened fintech platforms — explore our portfolio of enterprise-grade projects shaping the next decade of technology.
+            From AI-powered defense platforms to post-quantum settlement networks — explore our reference architectures and production applications.
           </motion.p>
 
           {/* CTAs */}
@@ -592,8 +611,8 @@ export default function Projects() {
             className="flex flex-wrap items-center justify-center gap-3"
           >
             {[
-              { val: 24, suffix: '/7', label: 'Monitoring', color: '#10b981' },
-              { val: 4, suffix: '', label: 'Delivery Locations', color: '#F5A800' },
+              { val: 24, suffix: '/7', label: 'Monitoring & Support', color: '#10b981' },
+              { val: 8, suffix: '', label: 'Industries Served', color: '#F5A800' },
               { val: 6, suffix: '+', label: 'Service Verticals', color: '#8b5cf6' },
             ].map((item, i) => (
               <motion.div
@@ -647,7 +666,6 @@ export default function Projects() {
             className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
           >
             {stats.map((stat) => {
-              const Icon = stat.icon;
               return (
                 <motion.div
                   key={stat.label}
@@ -657,10 +675,6 @@ export default function Projects() {
                   }}
                   className="flex flex-col items-center justify-center text-center"
                 >
-                  <div className="relative w-11 h-11 rounded-[14px] bg-[#030303] border border-white/10 flex items-center justify-center mb-4 overflow-hidden shadow-sm transition-colors duration-300">
-                    <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
-                    <Icon size={20} style={{ color: stat.color }} className="relative z-10" />
-                  </div>
                   <div className="text-2xl md:text-3xl font-black text-white mb-1">
                     <Counter value={stat.value} duration={2.5} suffix={stat.suffix} />
                   </div>
@@ -674,45 +688,72 @@ export default function Projects() {
 
 
       {/* ═══════════════════════════════════════════════════════════
-          PROJECT GRID — All Projects
+          REFERENCE ARCHITECTURES
           ═══════════════════════════════════════════════════════════ */}
       <section className="relative py-28 bg-[#FCFBF8] border-t border-slate-200">
         <div className="container relative z-10 mx-auto px-6">
-          {/* Section header */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-60px' }}
             variants={staggerContainer}
-            className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16"
+            className="mb-16"
           >
-            <div>
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_EXPO } },
-                }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-4"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
-                <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">All Projects</span>
-              </motion.div>
-              <motion.h2
-                variants={{
-                  hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
-                  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: EASE_EXPO } },
-                }}
-                className="text-4xl md:text-5xl font-black text-slate-950 tracking-tight"
-              >
-                Explore the Full{' '}
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Portfolio</span>
-              </motion.h2>
-            </div>
-
-
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_EXPO } },
+              }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-4"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
+              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">Reference Architectures</span>
+            </motion.div>
+            <motion.h2
+              variants={{
+                hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
+                visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: EASE_EXPO } },
+              }}
+              className="text-4xl md:text-5xl font-black text-slate-950 tracking-tight"
+            >
+              Engineering
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] to-[#FFD166]"> Patterns</span>
+              <span className="text-slate-400 text-lg md:text-xl font-medium block mt-2 max-w-2xl">Reference architectures we reuse across client engagements — proven patterns for AI security, post-quantum cryptography, multi-region infrastructure, and more.</span>
+            </motion.h2>
+            <motion.p
+              variants={{
+                hidden: { opacity: 0, y: 10 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_EXPO } },
+              }}
+              className="text-slate-400 text-sm leading-relaxed mt-6 max-w-3xl border-l-2 border-[#F5A800]/30 pl-4"
+            >
+              These reference architectures represent engineering patterns, system designs, and solution blueprints that inform our client engagements. They are included to demonstrate technical capabilities and architectural approaches.
+            </motion.p>
           </motion.div>
 
-          {/* Grid */}
+          {/* Filter tabs */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, ease: EASE_EXPO }}
+            className="flex flex-wrap gap-2 mb-10"
+          >
+            {filterLabels.map((label) => (
+              <button
+                key={label}
+                onClick={() => setActiveFilter(label)}
+                className={`px-4 py-2 rounded-[10px] text-[11px] font-bold uppercase tracking-wider transition-all duration-300 ${
+                  activeFilter === label
+                    ? 'bg-[#F5A800] text-white shadow-sm'
+                    : 'bg-white border border-slate-200 text-slate-500 hover:border-[#F5A800]/40 hover:text-slate-700'
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </motion.div>
+
           <AnimatePresence mode="wait">
             <motion.div
               variants={staggerContainer}
@@ -720,13 +761,60 @@ export default function Projects() {
               animate="visible"
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             >
-              {PROJECTS.map((project, i) => (
+              {PROJECTS.filter(p => !['pharmaflow', 'stockvue', 'biteorder', 'tablereserve'].includes(p.id) && (activeFilter === 'All' || categoryMap[p.category] === activeFilter)).map((project, i) => (
                 <ProjectCard key={project.id} project={project} index={i} />
               ))}
             </motion.div>
           </AnimatePresence>
+        </div>
+      </section>
 
+      {/* ═══════════════════════════════════════════════════════════
+          FEATURED CLIENT SOLUTIONS
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="relative py-28 bg-[#FCFBF8] border-t border-slate-200">
+        <div className="container relative z-10 mx-auto px-6">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-60px' }}
+            variants={staggerContainer}
+            className="mb-16"
+          >
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_EXPO } },
+              }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-4"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
+              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">Featured Client Solutions</span>
+            </motion.div>
+            <motion.h2
+              variants={{
+                hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
+                visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: EASE_EXPO } },
+              }}
+              className="text-4xl md:text-5xl font-black text-slate-950 tracking-tight"
+            >
+              Products Built by{' '}
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Nexyovi</span>
+            </motion.h2>
+          </motion.div>
 
+          <AnimatePresence mode="wait">
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              animate="visible"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              {PROJECTS.filter(p => ['pharmaflow', 'stockvue', 'biteorder', 'tablereserve'].includes(p.id)).map((project, i) => (
+                <ProjectCard key={project.id} project={project} index={i} />
+              ))}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </section>
 
@@ -737,13 +825,36 @@ export default function Projects() {
         <div className="container relative z-10 mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
-            {/* LEFT: Content */}
+            {/* LEFT: Screens */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+              className="relative flex items-center order-2 lg:order-1"
+            >
+              <DraggableSlider className="-mx-4 md:-mx-8 lg:!w-[calc(100%+50vw)] lg:-ml-[50vw] lg:pl-[50vw]">
+                {[market1, market2, market3, market4, market5, market6].map((img, i) => (
+                  <motion.img
+                    key={i}
+                    src={img}
+                    draggable={false}
+                    className="w-[280px] xl:w-[320px] 2xl:w-[360px] h-auto object-contain shrink-0 snap-center rounded-2xl"
+                    whileHover={{ scale: 1.04, y: -8 }}
+                    transition={{ duration: 0.25 }}
+                    alt={`Nexi Market Screen ${i + 1}`}
+                  />
+                ))}
+              </DraggableSlider>
+            </motion.div>
+
+            {/* RIGHT: Content */}
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-60px' }}
               variants={staggerContainer}
-              className="flex flex-col"
+              className="flex flex-col order-1 lg:order-2"
             >
               <motion.div variants={{
                 hidden: { opacity: 0, y: 30 },
@@ -771,36 +882,54 @@ export default function Projects() {
               <motion.div variants={{
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.1, ease: EASE_EXPO } },
-              }} className="flex flex-col gap-3 mb-8">
+              }} className="flex gap-3 mb-6 flex-wrap">
                 {[
-                  { icon: '📦', label: 'Millions of Products' },
-                  { icon: '🚚', label: 'Fast & Reliable Delivery' },
-                  { icon: '🔒', label: 'Secure Payments' },
-                ].map((f) => (
-                  <FeatureItem key={f.label} icon={f.icon} label={f.label} />
+                  { icon: '📦', label: 'Millions of Products' }, { icon: '🚚', label: 'Fast Delivery' },
+                  { icon: '🔒', label: 'Secure Payments' }, { icon: '⭐', label: '4.8/5 Rating' },
+                ].map((cat) => (
+                  <motion.div
+                    key={cat.label}
+                    whileHover={{ y: -4 }}
+                    className="flex flex-col items-center gap-1"
+                  >
+                    <div className="relative w-10 h-10 rounded-2xl bg-[#030303] border border-white/10 flex items-center justify-center text-lg group-hover:border-[#F5A800]/40 transition-all duration-300 cursor-default overflow-hidden shadow-sm">
+                      <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                      <span className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors">{cat.icon}</span>
+                    </div>
+                    <span className="text-white/40 text-[9px] font-bold">{cat.label}</span>
+                  </motion.div>
                 ))}
               </motion.div>
 
               <motion.div variants={{
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.15, ease: EASE_EXPO } },
-              }} className="flex items-center gap-4 mb-8 pb-8 border-b border-white/10">
-                <div className="flex -space-x-2">
-                  {['#F5A800', '#10b981', '#8b5cf6', '#ef4444'].map((c, i) => (
-                    <div key={i} className="w-8 h-8 rounded-full border-2 border-white flex items-center justify-center text-[11px] font-black text-white" style={{ backgroundColor: c }}>
-                      {['J', 'A', 'M', 'S'][i]}
-                    </div>
-                  ))}
-                </div>
-                <div>
-                  <div className="flex items-center gap-1 mb-0.5">
-                    {[...Array(5)].map((_, i) => (
-                      <svg key={i} className="w-3 h-3 text-[#F5A800]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                    ))}
-                    <span className="text-white font-black text-xs ml-1">4.8/5</span>
-                  </div>
-                  <p className="text-white/40 text-xs font-medium">50K+ Happy Customers</p>
-                </div>
+              }} className="grid grid-cols-2 gap-3 mb-6">
+                {[
+                  { icon: '🛒', title: 'Millions of Products', desc: 'Shop across dozens of categories.' },
+                  { icon: '🚚', title: 'Fast Delivery', desc: 'Reliable shipping right to your door.' },
+                  { icon: '🔒', title: 'Secure Payments', desc: 'Protected transactions every time.' },
+                  { icon: '🇪🇹', title: 'Built for Ethiopia', desc: 'Tailored for local needs.' },
+                ].map((f) => (
+                  <motion.div
+                    key={f.title}
+                    whileHover={{ y: -4, borderColor: '#F5A800' }}
+                    className="p-3 rounded-2xl bg-white/[0.03] border border-white/10 hover:bg-[#F5A800]/5 transition-all duration-300"
+                  >
+                    <span className="text-lg">{f.icon}</span>
+                    <p className="text-white font-bold text-[12px] mt-1 mb-0.5">{f.title}</p>
+                    <p className="text-white/50 text-[10px] leading-snug">{f.desc}</p>
+                  </motion.div>
+                ))}
+              </motion.div>
+
+              <motion.div variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.18, ease: EASE_EXPO } },
+              }} className="flex flex-wrap gap-2 mb-6">
+                {['Next.js', 'Node.js', 'PostgreSQL', 'Redis', 'AWS'].map((tech) => (
+                  <span key={tech} className="px-3 py-1.5 rounded-[8px] bg-white/[0.03] border border-white/10 text-[10px] font-bold uppercase tracking-wider text-white/50">{tech}</span>
+                ))}
               </motion.div>
 
               <motion.div variants={{
@@ -810,29 +939,6 @@ export default function Projects() {
                 <StoreButton platform="app-store" />
                 <StoreButton platform="google-play" />
               </motion.div>
-            </motion.div>
-
-            {/* RIGHT: Screens */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.5, ease: 'easeOut' }}
-              className="relative flex items-center"
-            >
-              <DraggableSlider className="-mx-4 md:-mx-8 lg:!w-[calc(100%+50vw)]">
-                {[market1, market2, market3, market4, market5, market6].map((img, i) => (
-                  <motion.img
-                    key={i}
-                    src={img}
-                    draggable={false}
-                    className="w-[280px] xl:w-[320px] 2xl:w-[360px] h-auto object-contain shrink-0 snap-center rounded-2xl"
-                    whileHover={{ scale: 1.04, y: -8 }}
-                    transition={{ duration: 0.25 }}
-                    alt={`Nexi Market Screen ${i + 1}`}
-                  />
-                ))}
-              </DraggableSlider>
             </motion.div>
 
           </div>
@@ -947,10 +1053,28 @@ export default function Projects() {
 
               <motion.div variants={{
                 hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.18, ease: EASE_EXPO } },
+              }} className="flex flex-wrap gap-2 mb-6">
+                {['React Native', 'Node.js', 'PostGIS', 'Google Maps API'].map((tech) => (
+                  <span key={tech} className="px-3 py-1.5 rounded-[8px] bg-white/[0.03] border border-white/10 text-[10px] font-bold uppercase tracking-wider text-white/50">{tech}</span>
+                ))}
+              </motion.div>
+
+              <motion.div variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.18, ease: EASE_EXPO } },
+              }} className="flex flex-wrap gap-2 mb-6">
+                {['React', 'WebRTC', 'FastAPI', 'PostgreSQL'].map((tech) => (
+                  <span key={tech} className="px-3 py-1.5 rounded-[8px] bg-white/[0.03] border border-white/10 text-[10px] font-bold uppercase tracking-wider text-white/50">{tech}</span>
+                ))}
+              </motion.div>
+
+              <motion.div variants={{
+                hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.2, ease: EASE_EXPO } },
               }} className="flex flex-wrap gap-3">
-                <StoreButton platform="google-play" />
                 <StoreButton platform="app-store" />
+                <StoreButton platform="google-play" />
               </motion.div>
             </motion.div>
 
@@ -965,90 +1089,15 @@ export default function Projects() {
         <div className="container relative z-10 mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
-            {/* LEFT: Content */}
+            {/* LEFT: Screens */}
             <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-60px' }}
-              variants={staggerContainer}
-              className="flex flex-col"
-            >
-              <motion.div variants={{
-                hidden: { opacity: 0, y: 30 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE_EXPO } },
-              }} className="flex items-center gap-3 mb-6">
-                <motion.div
-                  whileHover={{ scale: 1.1, rotate: -5 }}
-                  className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#0d9488] to-[#2dd4bf] flex items-center justify-center text-2xl"
-                >🧠</motion.div>
-                <div>
-                  <h3 className="text-xl font-black text-white tracking-tight">Tele-Psychiatry</h3>
-                  <p className="text-[#2dd4bf] font-bold text-xs tracking-wide">Your Mental Well-being, Our Priority</p>
-                </div>
-              </motion.div>
-
-              <motion.h2 variants={{
-                hidden: { opacity: 0, y: 30 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.05, ease: EASE_EXPO } },
-              }} className="text-5xl md:text-6xl font-black text-white leading-[0.95] tracking-tight mb-4">
-                Mental health care,<br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0d9488] to-[#2dd4bf]">anytime, anywhere.</span>
-              </motion.h2>
-
-              <motion.p variants={{
-                hidden: { opacity: 0, y: 30 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.1, ease: EASE_EXPO } },
-              }} className="text-white/50 text-base leading-relaxed mb-6 max-w-md">
-                Connect with licensed psychiatrists and therapists across Ethiopia through secure online consultations.
-              </motion.p>
-
-              <motion.div variants={{
-                hidden: { opacity: 0, y: 30 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.15, ease: EASE_EXPO } },
-              }} className="flex flex-col gap-3 mb-8">
-                {[
-                  { icon: '📹', label: 'Online Consultations' },
-                  { icon: '📅', label: 'Easy Appointments' },
-                  { icon: '🔒', label: 'Private & Secure' },
-                  { icon: '👨‍⚕️', label: 'Wide Range of Services' },
-                  { icon: '💬', label: '24/7 Support' },
-                ].map((f) => (
-                  <FeatureItem key={f.label} icon={f.icon} label={f.label} />
-                ))}
-              </motion.div>
-
-              <motion.div variants={{
-                hidden: { opacity: 0, y: 30 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.2, ease: EASE_EXPO } },
-              }} className="flex flex-wrap gap-2 mb-8 pb-8 border-b border-white/10">
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/10">
-                  <span className="text-base">🇪🇹</span>
-                  <span className="text-white/60 text-xs font-semibold">Built for Ethiopia</span>
-                </div>
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/10">
-                  <span className="text-base">🛡️</span>
-                  <span className="text-white/60 text-xs font-semibold">100% Confidential</span>
-                </div>
-              </motion.div>
-
-              <motion.div variants={{
-                hidden: { opacity: 0, y: 30 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.25, ease: EASE_EXPO } },
-              }} className="flex flex-wrap gap-3">
-                <StoreButton platform="app-store" />
-                <StoreButton platform="google-play" />
-              </motion.div>
-            </motion.div>
-
-            {/* RIGHT: Screens */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
+              initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.5, ease: 'easeOut' }}
-              className="relative flex items-center"
+              className="relative flex items-center order-2 lg:order-1"
             >
-              <DraggableSlider className="-mx-4 md:-mx-8 lg:!w-[calc(100%+50vw)]">
+              <DraggableSlider className="-mx-4 md:-mx-8 lg:!w-[calc(100%+50vw)] lg:-ml-[50vw] lg:pl-[50vw]">
                 {[tele1, tele2, tele3, tele4].map((img, i) => (
                   <motion.img
                     key={i}
@@ -1061,6 +1110,97 @@ export default function Projects() {
                   />
                 ))}
               </DraggableSlider>
+            </motion.div>
+
+            {/* RIGHT: Content */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-60px' }}
+              variants={staggerContainer}
+              className="flex flex-col order-1 lg:order-2"
+            >
+              <motion.div variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE_EXPO } },
+              }} className="mb-6">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 mb-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">Nexyovi</span>
+                </div>
+                <div className="flex items-center gap-3 mb-2">
+                  <motion.div
+                    whileHover={{ scale: 1.1, rotate: -5 }}
+                    className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0d9488] to-[#2dd4bf] flex items-center justify-center text-lg"
+                  >🧠</motion.div>
+                  <h2 className="text-5xl md:text-6xl font-black text-white leading-[0.95] tracking-tight">
+                    Tele-<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0d9488] to-[#2dd4bf]">Psychiatry</span>
+                  </h2>
+                </div>
+                <p className="text-white/40 text-xl font-semibold mt-1 leading-snug">
+                  Your Mental Well-being,<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0d9488] to-[#2dd4bf]">Our Priority.</span>
+                </p>
+              </motion.div>
+
+              <motion.p variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.05, ease: EASE_EXPO } },
+              }} className="text-white/50 text-base leading-relaxed mb-6 max-w-md">
+                Connect with licensed psychiatrists and therapists across Ethiopia through secure online consultations.
+              </motion.p>
+
+              <motion.div variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.1, ease: EASE_EXPO } },
+              }} className="flex gap-3 mb-6 flex-wrap">
+                {[
+                  { icon: '📹', label: 'Online Consultations' }, { icon: '📅', label: 'Easy Appointments' },
+                  { icon: '🔒', label: 'Private & Secure' }, { icon: '👨‍⚕️', label: 'Wide Range' },
+                  { icon: '💬', label: '24/7 Support' },
+                ].map((cat) => (
+                  <motion.div
+                    key={cat.label}
+                    whileHover={{ y: -4 }}
+                    className="flex flex-col items-center gap-1"
+                  >
+                    <div className="relative w-10 h-10 rounded-2xl bg-[#030303] border border-white/10 flex items-center justify-center text-lg group-hover:border-[#0d9488]/40 transition-all duration-300 cursor-default overflow-hidden shadow-sm">
+                      <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                      <span className="relative z-10 text-zinc-400 group-hover:text-[#0d9488] transition-colors">{cat.icon}</span>
+                    </div>
+                    <span className="text-white/40 text-[9px] font-bold">{cat.label}</span>
+                  </motion.div>
+                ))}
+              </motion.div>
+
+              <motion.div variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.15, ease: EASE_EXPO } },
+              }} className="grid grid-cols-2 gap-3 mb-6">
+                {[
+                  { icon: '🇪🇹', title: 'Built for Ethiopia', desc: 'Made for Ethiopian patients and providers.' },
+                  { icon: '🛡️', title: '100% Confidential', desc: 'Your privacy is protected by design.' },
+                  { icon: '📹', title: 'Video Consultations', desc: 'Face-to-face care from anywhere.' },
+                  { icon: '📅', title: 'Flexible Scheduling', desc: 'Book appointments that work for you.' },
+                ].map((f) => (
+                  <motion.div
+                    key={f.title}
+                    whileHover={{ y: -4, borderColor: '#0d9488' }}
+                    className="p-3 rounded-2xl bg-white/[0.03] border border-white/10 hover:bg-[#0d9488]/5 transition-all duration-300"
+                  >
+                    <span className="text-lg">{f.icon}</span>
+                    <p className="text-white font-bold text-[12px] mt-1 mb-0.5">{f.title}</p>
+                    <p className="text-white/50 text-[10px] leading-snug">{f.desc}</p>
+                  </motion.div>
+                ))}
+              </motion.div>
+
+              <motion.div variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.2, ease: EASE_EXPO } },
+              }} className="flex flex-wrap gap-3">
+                <StoreButton platform="app-store" />
+                <StoreButton platform="google-play" />
+              </motion.div>
             </motion.div>
 
           </div>
@@ -1096,16 +1236,16 @@ export default function Projects() {
 
             <TextReveal>
               <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[0.95] mb-8 text-white">
-                Your Next{' '}
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Breakthrough</span>
+                Start an{' '}
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Engineering Strategy</span>
                 <br />
-                Starts Here.
+                Session
               </h2>
             </TextReveal>
 
             <TextReveal delay={0.1}>
               <p className="text-white/50 text-lg leading-relaxed mb-12 max-w-xl font-medium">
-                From ideation to enterprise deployment, our engineers become your team — shipping critical infrastructure faster than you thought possible.
+                Meet directly with a senior architect to review requirements, identify risks, and outline the fastest path to production.
               </p>
             </TextReveal>
 

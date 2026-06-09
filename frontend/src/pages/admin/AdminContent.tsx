@@ -1118,7 +1118,7 @@ const ByTheNumbersEditor = () => {
     { value: 24, suffix: '/7', label: 'Monitoring & Support' },
     { value: 12, suffix: '+', label: 'Core Engineering Practices' },
     { value: 6, suffix: '', label: 'Technology Domains' },
-    { value: 0, suffix: '', label: 'Engineering-Led Delivery Teams', hideNumber: true },
+    { value: 0, suffix: '', label: 'Architect-Led Delivery Teams', hideNumber: true },
   ]);
 
   useEffect(() => {

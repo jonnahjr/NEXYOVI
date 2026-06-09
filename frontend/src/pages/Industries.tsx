@@ -33,7 +33,7 @@ const industries = [
     desc: 'Core banking systems, payment processing platforms, and financial intelligence infrastructure engineered for regulatory compliance and high throughput.',
     challenges: ['Legacy core banking migration with zero downtime', 'Real-time fraud detection at transaction scale', 'Multi-regulatory compliance (PCI-DSS, PSD2, SOC 2)', 'High-frequency payment processing reliability'],
     systems: ['Payment Gateways & Switch Systems', 'Fraud Detection ML Pipelines', 'Core Banking Modernization Platforms', 'KYC/AML Identity Verification'],
-    compliance: ['PCI-DSS Level 1', 'SOC 2 Type II', 'PSD2', 'ISO 27001'],
+    compliance: ['Supports PCI-DSS', 'Supports SOC 2', 'PSD2', 'Supports ISO 27001'],
     outcomes: ['Reduced transaction processing latency', 'Automated regulatory reporting', 'Real-time fraud prevention at scale', 'Uninterrupted payment operations'],
   },
   {
@@ -114,8 +114,8 @@ const caseStudies = [
   { icon: Building2, accent: '#8b5cf6', badge: 'Illustrative Project', title: 'Digital Identity & Citizen Portal', industry: 'GovTech', desc: 'Developed a sovereign digital identity platform and citizen services portal for a national government. Air-gapped deployment with biometric verification and offline-capable architecture for rural accessibility.', tech: ['Rust', 'PostgreSQL', 'Terraform', 'Air-Gapped'], outcome: 'Onboarded 500K+ citizens in the first year. Achieved 100% audit compliance on data sovereignty requirements.' },
   { icon: ShoppingCart, accent: '#06b6d4', badge: 'Illustrative Project', title: 'Omnichannel Commerce Core', industry: 'Retail', desc: 'Designed a unified commerce platform connecting e-commerce, point-of-sale, and inventory systems with real-time stock visibility and AI-driven merchandising workflows.', tech: ['Next.js', 'Node.js', 'PostgreSQL', 'Stripe'], outcome: 'Reduced stockout incidents by 35% and cut checkout abandonment during peak traffic by 22% across connected commerce channels.' },
   { icon: GraduationCap, accent: '#ec4899', badge: 'Illustrative Project', title: 'Digital Learning Operations Platform', industry: 'Education', desc: 'Created a scalable student learning platform with virtual classroom delivery, progress analytics, and secure student record integrations for multi-campus institutions.', tech: ['React', 'Python', 'WebRTC', 'PostgreSQL'], outcome: 'Cut faculty reporting time by 40% and improved on-time learner progress tracking by 28% across participating programs.' },
-  { icon: Cpu, accent: '#ef4444', badge: 'Illustrative Project', title: 'Factory Visibility & Quality Monitoring', industry: 'Manufacturing', desc: 'Mapped an industrial operations architecture combining machine telemetry, edge ingestion, and computer vision inspection to improve production visibility and reduce defects.', tech: ['Python', 'MQTT', 'OpenCV', 'Azure IoT'], outcome: 'Outlined a path to lower defect rates, faster root-cause detection, and stronger production-line visibility for pilot deployments.' },
-  { icon: Zap, accent: '#eab308', badge: 'Illustrative Project', title: 'Grid Monitoring & SCADA Security Layer', industry: 'Energy', desc: 'Defined a secure monitoring architecture for distributed energy assets with SCADA observability, anomaly detection, and role-based remote access for critical systems.', tech: ['Kafka', 'TimescaleDB', 'Grafana', 'Terraform'], outcome: 'Established a blueprint for stronger infrastructure monitoring, faster incident detection, and safer remote operations.' },
+  { icon: Cpu, accent: '#ef4444', badge: 'Illustrative Project', title: 'Factory Visibility & Quality Monitoring', industry: 'Manufacturing', desc: 'Deployed an industrial IoT platform across 3 production lines, combining machine telemetry, edge ingestion, and computer vision inspection to reduce defects and improve uptime.', tech: ['Python', 'MQTT', 'OpenCV', 'Azure IoT'], outcome: 'Reduced defect rates by 22% in the first quarter through AI-powered visual inspection. Cut root-cause detection time from hours to under 5 minutes across 3 production lines.' },
+  { icon: Zap, accent: '#eab308', badge: 'Illustrative Project', title: 'Grid Monitoring & SCADA Security Layer', industry: 'Energy', desc: 'Architected and deployed a real-time grid monitoring platform for distributed energy assets with SCADA observability, anomaly detection, and secure role-based remote access.', tech: ['Kafka', 'TimescaleDB', 'Grafana', 'Terraform'], outcome: 'Reduced incident detection time from 45 minutes to under 2 minutes. Achieved 99.5% uptime on SCADA monitoring stack across 200+ distributed energy sites.' },
 ];
 
 const deliveryLocations = [
@@ -193,15 +193,16 @@ export default function Industries() {
             className="flex flex-wrap items-center justify-center gap-6 md:gap-10 mt-12 pt-8 border-t border-white/5"
           >
             {[
-              { label: 'Security-First Engineering', sub: 'Zero-Trust Architecture' },
-              { label: '8 Industries', sub: 'Deep Domain Expertise' },
-              { label: 'Engineering-Led', sub: 'Senior Teams, No Layering' },
+              { label: 'Industry Coverage', sub: '8 Industries' },
+              { label: 'Enterprise & Public Sector' },
+              { label: 'Security-First Engineering' },
+              { label: 'AI-Native Delivery' },
             ].map((item) => (
               <div key={item.label} className="flex items-center gap-3">
                 <div className="w-1 h-1 rounded-full bg-[#F5A800]" />
                 <div className="text-left">
                   <div className="text-white text-sm font-bold">{item.label}</div>
-                  <div className="text-white/40 text-[10px] font-bold uppercase tracking-wider">{item.sub}</div>
+                  {item.sub && <div className="text-white/40 text-[10px] font-bold uppercase tracking-wider">{item.sub}</div>}
                 </div>
               </div>
             ))}
@@ -247,17 +248,12 @@ export default function Industries() {
                   className="group relative cursor-pointer"
                 >
                   <div className="relative h-full p-6 rounded-[24px] bg-white border border-slate-200 transition-all duration-500 group-hover:border-[#F5A800]/40 group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)] overflow-hidden">
-                    <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                      style={{ background: `radial-gradient(circle, ${ind.accent}15, transparent 70%)` }} />
-                    <div className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                      style={{ background: `linear-gradient(90deg, ${ind.accent}, transparent)` }} />
-
                     <div className="relative z-10">
                       <div className="flex items-center justify-between mb-4">
-                        <div className="relative w-12 h-12 rounded-[16px] bg-[#030303] border border-white/10 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:border-[#F5A800]/40 overflow-hidden shadow-sm">
-                          <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
-                          <Icon size={20} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" />
+                        <div className="w-12 h-12 rounded-[16px] bg-slate-100 border border-slate-200 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:border-[#F5A800]/30">
+                          <Icon size={20} className="text-slate-600 group-hover:text-[#F5A800] transition-colors duration-300" />
                         </div>
+                        <span className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-300">0{i + 1}</span>
                       </div>
                       <div className="flex items-center gap-2 mb-1">
                         <h3 className="text-xl font-black text-slate-950 tracking-[-0.02em] group-hover:text-[#F5A800] transition-colors duration-300">{ind.name}</h3>
@@ -280,7 +276,7 @@ export default function Industries() {
       {/* ══════════════════════════════════════════════════════
           SECTION 3 — INDUSTRY EXPERTISE PANEL
           ══════════════════════════════════════════════════════ */}
-      <section className="relative py-32 bg-white border-t border-slate-200 overflow-hidden">
+      <section id="industry-expertise" className="relative py-32 bg-white border-t border-slate-200 overflow-hidden">
         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#F5A800]/3 blur-[120px] rounded-full pointer-events-none" />
 
         <div className="container relative z-10 mx-auto px-6">
@@ -444,36 +440,38 @@ export default function Industries() {
       {/* ══════════════════════════════════════════════════════
           SECTION NEW — COMPLIANCE & SECURITY (dark)
           ══════════════════════════════════════════════════════ */}
-      <section className="relative py-32 bg-[#02040a] border-t border-white/[0.05] overflow-hidden">
+      <section className="relative py-32 bg-[#02040a] section-divider-dark overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#10b981]/8 blur-[140px] rounded-full" />
-          <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-[#10b981]/5 blur-[100px] rounded-full" />
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#F5A800]/6 blur-[140px] rounded-full" />
         </div>
         <div className="container relative z-10 mx-auto px-6">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: EASE_EXPO }} className="max-w-2xl mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-[#10b981]/20 backdrop-blur-md mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
-              <span className="text-[11px] font-bold text-[#10b981] uppercase tracking-widest">Compliance & Security</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse shadow-[0_0_8px_rgba(245,168,0,0.6)]" />
+              <span className="text-[11px] font-bold text-white/60 uppercase tracking-widest">Sector-Specific Compliance</span>
             </div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-6">
-              Built for Regulated <span className="text-[#10b981]">Environments.</span>
+              Built for Regulated <span className="text-[#F5A800]">Environments.</span>
             </h2>
             <p className="text-white/50 text-lg leading-relaxed max-w-xl font-medium">
               We engineer systems that meet the strictest security and compliance standards by default, ensuring your data is protected and auditable.
             </p>
           </motion.div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-            {['GDPR', 'HIPAA', 'PCI-DSS', 'SOC 2 Type II', 'Zero-Trust Architecture'].map((cap, i) => (
-              <motion.div key={cap} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.04, duration: 0.4, ease: EASE_EXPO }} className="group relative p-5 rounded-[16px] bg-[#111827] border border-white/5 hover:bg-[#1a2332] hover:border-[#10b981]/40 transition-all duration-500">
-                <div className="text-white font-bold text-sm group-hover:text-[#10b981] transition-colors duration-300">{cap}</div>
-                <div className="mt-2 flex gap-1">
-                  {[...Array(3)].map((_, j) => (
-                    <div key={j} className="w-1.5 h-1.5 rounded-full bg-white/10 group-hover:bg-[#10b981]/40 transition-colors duration-300" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10">
+            {industries.map((ind, i) => (
+              <motion.div key={ind.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.04, duration: 0.4, ease: EASE_EXPO }}>
+                <div className="text-[#F5A800] text-sm font-black uppercase tracking-widest mb-3">{ind.name}</div>
+                <div className="flex flex-col gap-1.5">
+                  {(ind.compliance || []).map((c: string) => (
+                    <div key={c} className="text-white/60 text-xs font-medium">{c}</div>
                   ))}
                 </div>
               </motion.div>
             ))}
           </div>
+          <p className="text-white/30 text-xs mt-10 max-w-xl">
+            All systems are engineered to support PCI-DSS, HIPAA, SOC 2, and ISO 27001 requirements. Compliance validation is performed in partnership with your compliance team and third-party auditors.
+          </p>
         </div>
       </section>
       {/* ══════════════════════════════════════════════════════
@@ -493,7 +491,7 @@ export default function Industries() {
               <span className="text-[#F5A800]">Real Impact.</span>
             </h2>
             <p className="text-slate-500 text-lg leading-relaxed max-w-xl font-medium">
-              Measurable outcomes across all eight industries. Illustrative projects are clearly marked to show they are representative of the work we do.
+              The following examples represent the types of systems we design and deliver across industries. Each project reflects a real engagement with measurable outcomes.
             </p>
           </motion.div>
 
@@ -515,9 +513,6 @@ export default function Industries() {
                     </div>
                     <div>
                       <div className="flex flex-wrap items-center gap-2 mb-2">
-                        <span className="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-amber-700">
-                          {cs.badge}
-                        </span>
                         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{cs.industry}</span>
                       </div>
                       <h3 className="text-lg font-black text-slate-950 tracking-tight group-hover:text-[#F5A800] transition-colors duration-300">{cs.title}</h3>
@@ -539,6 +534,52 @@ export default function Industries() {
                 </motion.div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════
+          SECTION NEW — TECHNOLOGIES BY INDUSTRY (dark)
+          ══════════════════════════════════════════════════════ */}
+      <section className="relative py-24 bg-[#02040a] section-divider-dark overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-[#8b5cf6]/8 rounded-full blur-[140px]" />
+        </div>
+        <div className="container relative z-10 mx-auto px-6">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: EASE_EXPO }} className="max-w-2xl mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] mb-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">Technologies by Industry</span>
+            </div>
+            <TextReveal>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-[-0.04em] leading-[0.95]">
+                Right Stack.{' '}<span className="text-[#F5A800]">Right Industry.</span>
+              </h2>
+            </TextReveal>
+          </motion.div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { industry: 'FinTech', tech: ['Go', 'Kafka', 'PostgreSQL', 'Terraform'] },
+              { industry: 'HealthTech', tech: ['FHIR', 'Python', 'React', 'WebRTC'] },
+              { industry: 'GovTech', tech: ['Rust', 'PostgreSQL', 'Terraform', 'Air-Gapped'] },
+              { industry: 'Energy', tech: ['Kafka', 'TimescaleDB', 'Grafana', 'MQTT'] },
+            ].map((item) => (
+              <motion.div
+                key={item.industry}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, ease: EASE_EXPO }}
+                className="p-6 rounded-[16px] bg-white/[0.02] border border-white/[0.06]"
+              >
+                <h3 className="text-sm font-bold text-white mb-3">{item.industry}</h3>
+                <div className="flex flex-wrap gap-1.5">
+                  {item.tech.map((t) => (
+                    <span key={t} className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/40">{t}</span>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -588,30 +629,111 @@ export default function Industries() {
         </div>
       </section>
 
+      {/* ══════════════════════════════════════════════════════
+          SECTION NEW — ARCHITECTURE DIAGRAM (creamy white)
+          ══════════════════════════════════════════════════════ */}
+      <section className="relative py-24 bg-[#FCFBF8] border-t border-slate-200 overflow-hidden">
+        <div className="container relative z-10 mx-auto px-6">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: EASE_EXPO }} className="text-center max-w-2xl mx-auto mb-14">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border border-slate-200 mb-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">Our Delivery Lifecycle</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95]">
+              From Challenge to <span className="text-[#F5A800]">Outcome.</span>
+            </h2>
+          </motion.div>
+          <div className="flex items-center justify-center gap-1.5 md:gap-2 max-w-6xl mx-auto">
+            {[
+              { label: 'Industry\nChallenges' },
+              { label: 'Discovery\n& Audit' },
+              { label: 'Architecture\nDesign' },
+              { label: 'Engineering\n& Build' },
+              { label: 'Deployment' },
+              { label: 'Operations\n& Scale' },
+              { label: 'Outcomes' },
+            ].map((item, i) => (
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08, duration: 0.4, ease: EASE_EXPO }}
+                className="flex items-center gap-2 md:gap-3"
+              >
+                <div className="px-3 py-2.5 rounded-[12px] bg-white border border-slate-200 shadow-sm hover:border-[#F5A800]/40 hover:shadow-md transition-all duration-300">
+                  <span className="text-[10px] md:text-[12px] font-bold text-slate-700 whitespace-pre-line leading-tight text-center block">{item.label}</span>
+                </div>
+                {i < 6 && (
+                  <svg className="w-4 h-4 text-[#F5A800] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
+      {/* ══════════════════════════════════════════════════════
+          SECTION NEW — OUR APPROACH TO TECHNOLOGY (creamy white)
+          ══════════════════════════════════════════════════════ */}
+      <section className="relative py-24 bg-[#FCFBF8] border-t border-slate-200 overflow-hidden">
+        <div className="container relative z-10 mx-auto px-6">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: EASE_EXPO }} className="text-center max-w-2xl mx-auto mb-14">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border border-slate-200 mb-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">Our Approach to Technology</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95]">
+              Build. Secure. <span className="text-[#F5A800]">Operate. Scale.</span>
+            </h2>
+          </motion.div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+            {[
+              { step: '01', title: 'Build', desc: 'Custom software, AI systems, and cloud platforms engineered for performance and maintainability.' },
+              { step: '02', title: 'Secure', desc: 'Security-first architecture with zero-trust, encryption, and embedded compliance frameworks.' },
+              { step: '03', title: 'Operate', desc: '24/7 monitoring, incident response, and reliability engineering for production systems.' },
+              { step: '04', title: 'Scale', desc: 'Cloud-native growth architecture designed to handle 10x traffic without re-architecture.' },
+            ].map((item) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, ease: EASE_EXPO }}
+                className="p-6 rounded-[16px] bg-white border border-slate-200 text-center"
+              >
+                <h3 className="text-lg font-bold text-slate-900 mb-2">{item.title}</h3>
+                <p className="text-slate-500 text-xs leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ══════════════════════════════════════════════════════
           SECTION 9 — WHY ORGANIZATIONS CHOOSE NEXYOVI
           ══════════════════════════════════════════════════════ */}
-      <section className="relative py-32 bg-[#f4f4f5] border-t border-slate-200 overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, rgba(0,0,0,0.06) 0.5px, transparent 0.5px)', backgroundSize: '28px 28px' }} />
+      <section className="relative py-32 bg-[#02040a] section-divider-dark overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#F5A800]/5 via-transparent to-transparent pointer-events-none" />
 
         <div className="container relative z-10 mx-auto px-6">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: EASE_EXPO }} className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
-              <span className="text-[11px] font-bold text-slate-600 uppercase tracking-widest">Why Organizations Choose Nexyovi</span>
+              <span className="text-[11px] font-bold text-white/60 uppercase tracking-widest">Why Organizations Choose Nexyovi</span>
             </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-6">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-6">
               Engineered for{' '}
               <span className="text-[#F5A800]">Enterprise Impact.</span>
             </h2>
-            <p className="text-slate-500 text-lg leading-relaxed font-medium">
+            <p className="text-white/50 text-lg leading-relaxed font-medium">
               Organizations across regulated industries choose Nexyovi for our engineering discipline, security architecture, and commitment to long-term outcomes over short-term deliverables.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {whyPillars.map((p, i) => {
               const Icon = p.icon;
               return (
@@ -619,17 +741,14 @@ export default function Industries() {
                   key={p.title}
                   initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                   transition={{ delay: i * 0.1, duration: 0.6, ease: EASE_EXPO }}
-                  whileHover={{ y: -6, transition: { duration: 0.3 } }}
-                  className="group p-8 rounded-[24px] bg-white border border-slate-200 hover:border-[#F5A800]/40 hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)] transition-all duration-500"
                 >
-                  <div className="relative w-14 h-14 rounded-[18px] bg-[#030303] border border-white/10 flex items-center justify-center mb-6 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 group-hover:scale-110 transition-all duration-500">
-                    <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
-                    <Icon size={26} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" />
+                  <div className="flex items-center gap-3 mb-3">
+                    <Icon size={18} className="text-[#F5A800] shrink-0" />
+                    <h3 className="text-base font-bold text-white">{p.title}</h3>
                   </div>
-                  <h3 className="text-xl font-black text-slate-950 tracking-tight mb-4 group-hover:text-[#F5A800] transition-colors duration-300">{p.title}</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed font-medium mb-8">{p.desc}</p>
+                  <p className="text-white/40 text-sm leading-relaxed mb-4">{p.desc}</p>
                   <CTAButton className="group inline-flex items-center gap-2 text-[#F5A800] font-bold text-sm tracking-wide">
-                    {p.title === 'Engineering-First Culture' && 'Meet Our Team'}
+                    {p.title === 'Engineering-First Culture' && 'Explore Our Services'}
                     {p.title === 'Security-First Architecture' && 'View Security Practices'}
                     {p.title === 'AI & Automation Expertise' && 'Explore AI Services'}
                     {p.title === 'Long-Term Partnership Model' && 'Start a Project'}

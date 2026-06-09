@@ -59,8 +59,6 @@ const AdminTestimonials = () => {
  // Define initialTestimonials for reference here too
  const initialTestimonials = [
     { id: '1', content: "At Nexyovi, we don't just build software — we build the infrastructure that powers organizations across Africa and beyond. Every project we take on is a commitment to excellence, security, and real impact.", author: "Yonas Bogale", role: "Founder & CEO, Nexyovi", linkedin: "https://www.linkedin.com/in/yonas-bogale" },
-    { id: '2', content: "They connected us with top-tier Ethiopian engineering talent and built our core platform in parallel. Our time-to-market dropped from 12 months to 4. Gebeya's partnership with Nexyovi has been transformative for our pan-African expansion.", author: "Amadou Daffe", role: "CEO & Co-Founder, Gebeya", linkedin: "https://et.linkedin.com/in/amadoudaffe" },
-    { id: '4', content: "We needed a secure payment gateway that could handle Ethiopia's unique banking landscape. Nexyovi built it in eight weeks — integrating with four banks and processing live transactions on day one. They understand local infrastructure better than any international firm we've worked with.", author: "Rediet Tsigeberhan", role: "CEO, Arifpay", linkedin: "https://www.linkedin.com/in/rediet-tsigeberhan-97615642" },
  ];
 
  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {

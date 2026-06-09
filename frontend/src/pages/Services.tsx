@@ -139,7 +139,7 @@ const defaultMetrics = [
   { value: 24, suffix: '/7', label: 'Monitoring & Support' },
   { value: 12, suffix: '+', label: 'Core Engineering Practices' },
   { value: 6, suffix: '', label: 'Technology Domains' },
-  { value: 0, suffix: '', label: 'Engineering-Led Delivery Teams', hideNumber: true },
+  { value: 100, suffix: '%', label: 'Architect-Led Delivery Teams' },
 ];
 
 // ── Differentiators ───────────────────────────────────────────
@@ -247,20 +247,20 @@ function AnimatedCounter({ value, suffix, label, subtitle, index, light = false,
   return (
     <motion.div
       onViewportEnter={() => setHasTriggered(true)}
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={viewport}
-      transition={{ delay: index * 0.1, duration: 0.7, ease: EASE_EXPO }}
+      transition={{ delay: index * 0.1, duration: 0.6, ease: EASE_EXPO }}
       className="text-center"
     >
       {!hideNumber && (
-        <div className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-2">
+        <div className="text-3xl md:text-4xl font-black tracking-tight mb-1">
           <span className={`tabular-nums ${light ? 'text-slate-950' : 'text-white'} bg-clip-text ${light ? '' : 'text-transparent bg-gradient-to-r from-[#F5A800] to-[#FFD166]'}`}>
             {light ? `${value}${suffix}` : formatDisplay(display)}
           </span>
         </div>
       )}
-      <div className={`text-sm md:text-base font-medium leading-relaxed ${light ? 'text-slate-500' : 'text-white/50'} ${hideNumber ? 'text-base md:text-lg font-bold text-slate-800' : ''}`}>
+      <div className={`text-xs md:text-sm font-medium leading-relaxed ${light ? 'text-slate-500' : 'text-white/50'} ${hideNumber ? 'text-base md:text-lg font-bold text-slate-800' : ''}`}>
         {label}
       </div>
       {hideNumber && subtitle && (
@@ -337,38 +337,30 @@ function TechCategory({ category, icon: Icon, items }: {
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={viewport}
       transition={{ duration: 0.6, ease: EASE_EXPO }}
-      className="p-8 rounded-[24px] bg-white border border-slate-200 hover:border-[#F5A800]/40 transition-colors duration-300"
     >
-      <div className="flex items-center gap-2.5 mb-5">
-        <div className="relative w-12 h-12 rounded-[16px] bg-[#030303] border border-white/10 flex items-center justify-center overflow-hidden shadow-sm">
-          <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
-          <Icon size={20} className="relative z-10 text-zinc-400" />
-        </div>
-        <h3 className="text-lg font-bold text-slate-900">{category}</h3>
+      <div className="flex items-center gap-2 mb-4">
+        <Icon size={16} className="text-white/60" />
+        <h3 className="text-sm font-bold text-white/80 uppercase tracking-wider">{category}</h3>
       </div>
 
-      <div className="grid grid-cols-2 gap-x-4 gap-y-3">
+      <div className="flex flex-wrap gap-x-5 gap-y-2">
         {items.map((item, i) => {
           const BrandIcon = item.icon;
           return (
             <motion.div
               key={item.name}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 8 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={viewport}
-              transition={{ delay: i * 0.1, duration: 0.4, ease: EASE_EXPO }}
-              className="flex items-center gap-2.5 text-sm font-medium text-slate-500"
+              transition={{ delay: i * 0.04, duration: 0.3, ease: EASE_EXPO }}
+              className="flex items-center gap-1.5 text-xs font-medium text-white/40"
             >
-              <div className="w-8 h-8 rounded-[10px] bg-slate-50 border border-slate-200 flex items-center justify-center shrink-0">
-                <BrandIcon size={16} style={{ color: item.color }} />
-              </div>
-              <span className="leading-snug">
-                {item.name}
-              </span>
+              <BrandIcon size={12} className="text-white/30" />
+              <span>{item.name}</span>
             </motion.div>
           );
         })}
@@ -390,9 +382,9 @@ function ServiceCard({ service, index }: { service: any; index: number }) {
       transition={{ delay: index * 0.08, duration: 0.6, ease: EASE_EXPO }}
       className="group"
     >
-      <div className="relative flex flex-col bg-white/[0.02] rounded-[20px] p-5 transition-all duration-300 hover:bg-white/[0.04] h-full">
+      <div className="relative flex flex-col bg-white rounded-[16px] p-4 border border-slate-200 transition-all duration-300 hover:border-[#F5A800]/40 h-full">
         {/* Title */}
-        <h3 className="text-base md:text-lg font-bold text-white mb-1 transition-colors duration-300 group-hover:text-[#F5A800]">
+        <h3 className="text-sm md:text-base font-bold text-slate-900 mb-1 transition-colors duration-300 group-hover:text-[#F5A800]">
           {service.title}
         </h3>
 
@@ -412,7 +404,7 @@ function ServiceCard({ service, index }: { service: any; index: number }) {
         )}
 
         {/* Description */}
-        <p className="text-white/40 text-xs leading-relaxed mb-3 flex-grow group-hover:text-white/60 transition-colors duration-300">
+        <p className="text-slate-500 text-xs leading-relaxed mb-3 flex-grow group-hover:text-slate-700 transition-colors duration-300">
           {service.longDesc}
         </p>
 
@@ -421,7 +413,7 @@ function ServiceCard({ service, index }: { service: any; index: number }) {
           {service.tags.slice(0, 4).map((tag: string) => (
             <span
               key={tag}
-              className="text-[8px] font-bold px-2 py-0.5 rounded-full uppercase tracking-widest bg-white/[0.03] text-white/35 transition-all duration-300 group-hover:bg-white/[0.06] group-hover:text-white/70"
+              className="text-[8px] font-bold px-2 py-0.5 rounded-full uppercase tracking-widest bg-slate-100 text-slate-400 transition-all duration-300 group-hover:bg-slate-200 group-hover:text-slate-600"
             >
               {tag}
             </span>
@@ -429,8 +421,8 @@ function ServiceCard({ service, index }: { service: any; index: number }) {
         </div>
 
         {/* View Service */}
-        <div className="flex items-center gap-1.5 pt-2 border-t border-white/5">
-          <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-white/40 transition-all duration-300 group-hover:text-[#F5A800]">
+        <div className="flex items-center gap-1.5 pt-2 border-t border-slate-100">
+          <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400 transition-all duration-300 group-hover:text-[#F5A800]">
             Explore
             <ArrowRight size={10} className="transition-transform duration-300 group-hover:translate-x-1" />
           </span>
@@ -545,20 +537,7 @@ export default function Services() {
       {/* ══════════════════════════════════════════════════════
           SERVICES GRID — Cinematic Card Redesign
           ══════════════════════════════════════════════════════ */}
-      <section id="services-grid" className="relative bg-[#02040a] py-32 overflow-hidden section-divider-dark">
-        {/* Animated background — subtle glowing particles */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-1/4 right-1/4 w-[700px] h-[700px] bg-[#F5A800]/4 blur-[180px] rounded-full" />
-          <div className="absolute bottom-1/4 left-1/4 w-[500px] h-[500px] bg-[#6366f1]/4 blur-[140px] rounded-full" />
-          {/* Dot pattern overlay */}
-          <div className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.3) 0.5px, transparent 0.5px)',
-              backgroundSize: '32px 32px'
-            }}
-          />
-        </div>
-
+      <section id="services-grid" className="relative bg-[#FCFBF8] py-32 overflow-hidden border-t border-slate-200">
         <div className="container max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           {/* ── Section Header ── */}
           <div className="flex flex-col lg:flex-row items-end justify-between mb-20 gap-8">
@@ -567,23 +546,23 @@ export default function Services() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={viewport}
-                className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] mb-8"
+                className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-slate-100 border border-slate-200 mb-8"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse shadow-[0_0_8px_rgba(245,168,0,0.6)]" />
-                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-white/60">What We Build</span>
-                <span className="w-px h-3 bg-white/10" />
+                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-slate-600">What We Build</span>
+                <span className="w-px h-3 bg-slate-200" />
                 <span className="text-[11px] font-bold text-[#F5A800]">6 Disciplines</span>
               </motion.div>
 
               <TextReveal>
-                <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-[-0.04em] leading-[0.92] mb-4">
+                <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-slate-950 tracking-[-0.04em] leading-[0.92] mb-4">
                   Full-Spectrum <br className="hidden md:block" />
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">Engineering.</span>
                 </h2>
               </TextReveal>
 
               <TextReveal delay={0.1}>
-                <p className="text-white/50 text-lg md:text-xl leading-relaxed font-medium max-w-xl">
+                <p className="text-slate-500 text-lg md:text-xl leading-relaxed font-medium max-w-xl">
                   From architecture to deployment to ongoing operations — every capability your organization needs to build, secure, and scale.
                 </p>
               </TextReveal>
@@ -597,10 +576,10 @@ export default function Services() {
             >
               <Link
                 to="/contact#inquiry"
-                className="group inline-flex items-center gap-3 px-8 py-4 rounded-full border border-white/10 bg-white/[0.03] text-white/80 font-bold text-[13px] uppercase tracking-wider transition-all duration-300 hover:bg-white/[0.08] hover:border-[#F5A800]/30 hover:text-white"
+                className="group btn-gold text-[13px] px-6 py-3"
               >
-                Need a custom solution?
-                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                <span className="relative z-10">Need a custom solution?</span>
+                <ArrowRight size={14} className="relative z-10 group-hover:translate-x-1 transition-transform" />
               </Link>
             </motion.div>
           </div>
@@ -622,10 +601,10 @@ export default function Services() {
           >
             <Link
               to="/contact#inquiry"
-              className="group inline-flex items-center justify-center w-full gap-3 px-8 py-4 rounded-full border border-white/10 bg-white/[0.03] text-white/80 font-bold text-[13px] uppercase tracking-wider transition-all duration-300 hover:bg-white/[0.08] hover:border-[#F5A800]/30 hover:text-white"
+              className="group btn-gold text-[13px] px-6 py-3"
             >
-              Need a custom solution?
-              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              <span className="relative z-10">Need a custom solution?</span>
+              <ArrowRight size={14} className="relative z-10 group-hover:translate-x-1 transition-transform" />
             </Link>
           </motion.div>
         </div>
@@ -727,7 +706,8 @@ export default function Services() {
             </div>
             <TextReveal>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-4">
-                From Discovery to Scale.
+                From Discovery to{' '}
+                <span className="text-[#F5A800]">Scale.</span>
               </h2>
             </TextReveal>
             <TextReveal delay={0.1}>
@@ -746,12 +726,12 @@ export default function Services() {
       </section>
 
       {/* ══════════════════════════════════════════════════════
-          TECHNOLOGY ECOSYSTEM — creamy white
+          TECHNOLOGY ECOSYSTEM — dark
           ══════════════════════════════════════════════════════ */}
-      <section className="relative py-32 bg-[#FCFBF8] border-t border-slate-200 overflow-hidden">
+      <section className="relative py-20 bg-[#02040a] section-divider-dark overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-[#8b5cf6]/5 rounded-full blur-[140px]" />
-          <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-[#F5A800]/4 rounded-full blur-[100px]" />
+          <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-[#8b5cf6]/8 rounded-full blur-[140px]" />
+          <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-[#F5A800]/6 rounded-full blur-[100px]" />
         </div>
 
         <div className="container max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
@@ -760,20 +740,20 @@ export default function Services() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={viewport}
             transition={{ duration: 0.7, ease: EASE_EXPO }}
-            className="max-w-2xl mb-16"
+            className="max-w-2xl mb-12"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">Technology Ecosystem</span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">Technology Ecosystem</span>
             </div>
             <TextReveal>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-4">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-3">
                 Modern Stack.{' '}
                 <span className="text-[#F5A800]">Proven Tools.</span>
               </h2>
             </TextReveal>
             <TextReveal delay={0.1}>
-              <p className="text-slate-500 text-lg leading-relaxed max-w-xl font-medium">
+              <p className="text-white/50 text-base leading-relaxed max-w-xl font-medium">
                 We select the right tools for each project based on reliability, maintainability, and fit for your operating environment.
               </p>
             </TextReveal>
@@ -782,7 +762,7 @@ export default function Services() {
 
 
         <div className="container max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10">
             {techEcosystem.map((cat, i) => (
               <TechCategory key={cat.category} category={cat.category} icon={cat.icon} items={cat.items} />
             ))}
@@ -792,8 +772,8 @@ export default function Services() {
       {/* ══════════════════════════════════════════════════════
           BY THE NUMBERS (dark)
           ══════════════════════════════════════════════════════ */}
-      <section className="relative py-32 bg-[#02040a] section-divider-dark overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#F5A800]/5 via-transparent to-transparent pointer-events-none" />
+      <section className="relative py-16 md:py-20 bg-[#FCFBF8] border-t border-slate-200 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#F5A800]/3 via-transparent to-transparent pointer-events-none" />
 
         <div className="container max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
           <motion.div
@@ -801,36 +781,37 @@ export default function Services() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={viewport}
             transition={{ duration: 0.7, ease: EASE_EXPO }}
-            className="text-center max-w-2xl mx-auto mb-16"
+            className="text-center max-w-2xl mx-auto mb-10"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border border-slate-200 mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">By the Numbers</span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">By the Numbers</span>
             </div>
             <TextReveal>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-4">
+              <h2 className="text-3xl md:text-4xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-2">
                 Engineered for Impact.
               </h2>
             </TextReveal>
             <TextReveal delay={0.1}>
-              <p className="text-white/50 text-lg leading-relaxed font-medium">
+              <p className="text-slate-500 text-sm md:text-base leading-relaxed font-medium">
                 Measurable results across every engagement.
               </p>
             </TextReveal>
           </motion.div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {displayMetrics.map((metric, i) => (
-              <AnimatedCounter key={metric.label} {...metric} index={i} light={false} />
+              <AnimatedCounter key={metric.label} {...metric} index={i} light={true} />
             ))}
           </div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════
-          WHY NEXYOVI — Differentiators (creamy white)
+          WHY NEXYOVI — Differentiators (dark)
           ══════════════════════════════════════════════════════ */}
-      <section className="relative py-32 bg-[#FCFBF8] border-t border-slate-200 overflow-hidden">
+      <section className="relative py-32 bg-[#02040a] section-divider-dark overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#F5A800]/5 via-transparent to-transparent pointer-events-none" />
         <div className="container max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -839,42 +820,39 @@ export default function Services() {
             transition={{ duration: 0.7, ease: EASE_EXPO }}
             className="max-w-2xl mb-16"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Why Choose Us</span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">Why Choose Us</span>
             </div>
             <TextReveal>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-4">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-4">
                 Built{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Different.</span>
               </h2>
             </TextReveal>
             <TextReveal delay={0.1}>
-              <p className="text-slate-600 text-lg leading-relaxed max-w-xl font-medium">
+              <p className="text-white/50 text-lg leading-relaxed max-w-xl font-medium">
                 Not a consultancy. Not an agency. An engineering partner that ships.
               </p>
             </TextReveal>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {differentiators.map((item, i) => {
               const Icon = item.icon;
               return (
                 <motion.div
                   key={item.title}
-                  initial={{ opacity: 0, y: 40 }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={viewport}
-                  transition={{ delay: i * 0.12, duration: 0.7, ease: EASE_EXPO }}
-                  whileHover={{ y: -4, transition: { duration: 0.3 } }}
-                  className="group p-8 rounded-[20px] bg-white border border-slate-200 hover:border-[#F5A800]/40 transition-all duration-500"
+                  transition={{ delay: i * 0.12, duration: 0.6, ease: EASE_EXPO }}
                 >
-                  <div className="relative w-12 h-12 rounded-[14px] bg-[#030303] border border-white/10 flex items-center justify-center mb-5 overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 group-hover:scale-110 transition-all duration-500">
-                    <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
-                    <Icon size={22} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" />
+                  <div className="flex items-center gap-3 mb-3">
+                    <Icon size={18} className="text-[#F5A800]" />
+                    <h3 className="text-base font-bold text-white">{item.title}</h3>
                   </div>
-                  <h3 className="text-lg font-bold text-slate-950 mb-3 group-hover:text-[#F5A800] transition-colors duration-300">{item.title}</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
+                  <p className="text-white/40 text-sm leading-relaxed">{item.desc}</p>
                 </motion.div>
               );
             })}
