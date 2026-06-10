@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
+import CompanyStory from '../components/CompanyStory';
 import TestimonialSection from '../components/TestimonialSection';
 import TextReveal from '../components/TextReveal';
 import { useSite } from '../context/SiteContext';
@@ -161,105 +162,13 @@ export default function Company() {
             <div className="w-px h-10 bg-gradient-to-b from-white/25 to-transparent" />
           </motion.div>
         </motion.div>
-      </section>
-
-      {/* ═══════════════════════════════════════
-           2. OUR STORY — Creamy White
+      </section>      {/* ═══════════════════════════════════════
+           2. OUR STORY
           ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-[#FCFBF8] border-t border-slate-200 overflow-hidden">
-        <div className="container max-w-6xl mx-auto px-6 relative z-10">
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="text-center mb-16"
-          >
-            <motion.div variants={fadeUp}>
-              <SectionBadge label="Our Story" />
-            </motion.div>
-            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-4">
-              Built in{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Addis Ababa.</span>
-            </motion.h2>
-            <motion.p variants={fadeUp} className="text-slate-600 text-lg font-medium max-w-2xl mx-auto">
-              From a focused software studio to a cross-continental engineering force.
-            </motion.p>
-          </motion.div>
-
-          {/* ── Stats Row ── */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="mx-auto mb-16 grid max-w-2xl grid-cols-3 gap-6"
-          >
-            {[
-              { number: '10+', label: 'Enterprise Platforms' },
-              { number: '20+', label: 'Elite Engineers' },
-              { number: '4', label: 'Countries Served' },
-            ].map((stat) => (
-              <motion.div
-                key={stat.label}
-                variants={fadeUp}
-                className="text-center"
-              >
-                <span className="text-4xl font-black tracking-[-0.04em] text-slate-950 md:text-5xl">
-                  {stat.number}
-                </span>
-                <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400">
-                  {stat.label}
-                </span>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* ── Story ── */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="mx-auto max-w-3xl"
-          >
-            <div className="space-y-6">
-              <motion.p variants={fadeUp} className="text-base leading-[1.8] text-slate-600 md:text-lg">
-                Founded in Addis Ababa in 2024 by Yonas Bogale, Nexyovi was built with a simple mission: help organizations leverage technology to solve complex challenges, operate more efficiently, and grow with confidence.
-              </motion.p>
-              <motion.p variants={fadeUp} className="text-base leading-[1.8] text-slate-500 md:text-lg">
-                What began as a focused software studio quickly evolved into a multidisciplinary engineering company specializing in custom software, artificial intelligence, cloud infrastructure, cybersecurity, and digital transformation.
-              </motion.p>
-              <motion.p variants={fadeUp} className="text-base leading-[1.8] text-slate-600 md:text-lg">
-                Today, Nexyovi partners with startups, enterprises, government organizations, and mission-driven businesses across Africa and beyond — designing, building, and maintaining production-ready digital systems that deliver measurable outcomes.
-              </motion.p>
-              <motion.p variants={fadeUp} className="text-base leading-[1.8] text-slate-500 md:text-lg">
-                From enterprise applications and AI-powered platforms to cloud-native infrastructure and mission-critical systems, we combine deep engineering expertise with a long-term commitment to client success.
-              </motion.p>
-            </div>
-          </motion.div>
-
-          {/* ── Vision Block ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2, ease: EASE_EXPO }}
-            className="mx-auto mt-14 max-w-3xl rounded-[24px] border border-slate-200 bg-white p-8 md:p-10 text-center"
-          >
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Vision</span>
-            <p className="mt-4 text-xl md:text-2xl font-semibold leading-relaxed text-slate-800 italic">
-              "Our vision is to build technology that creates lasting impact — starting in Africa, built for the world."
-            </p>
-          </motion.div>
-
-        </div>
-      </section>
-
-
+      <CompanyStory />
 
       {/* ═══════════════════════════════════════
-          3. TESTIMONIALS
+           3. TESTIMONIALS
          ═══════════════════════════════════════ */}
       <TestimonialSection />
 

@@ -1,203 +1,156 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
- UserPlus, Search, Edit2, Trash2, ShieldCheck, 
- X, Save, Lock, Shield, User, ArrowLeft
-} from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Shield, Plus, Edit2, Trash2, Search, Save, X, Clock } from 'lucide-react';
 import { useSite } from '../../context/SiteContext';
 
+const roles = [
+  { id: 'super-admin', name: 'Super Admin', desc: 'Full access to all features', color: 'bg-rose-500/10 text-rose-400 border-rose-500/20' },
+  { id: 'admin', name: 'Admin', desc: 'Content, team, jobs, messages', color: 'bg-blue-500/10 text-blue-400 border-blue-500/20' },
+  { id: 'editor', name: 'Editor', desc: 'Edit content only', color: 'bg-amber-500/10 text-amber-400 border-amber-500/20' },
+  { id: 'viewer', name: 'Viewer', desc: 'Read-only access', color: 'bg-white/5 text-white/40 border-white/10' },
+];
+
 const AdminUsers = () => {
- const { admins, addAdmin, updateAdmin, deleteAdmin } = useSite();
- const [isEditing, setIsEditing] = useState(false);
- const [editing, setEditing] = useState<any>(null);
- const [search, setSearch] = useState('');
+  const { admins, addAdmin, updateAdmin, deleteAdmin } = useSite();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showForm, setShowForm] = useState(false);
+  const [editing, setEditing] = useState<any>(null);
+  const [form, setForm] = useState({ name: '', email: '', role: 'admin', password: '' });
 
- const [form, setForm] = useState({
- username: '',
- role: 'Content Manager',
- status: 'Active',
- password: '',
- });
+  const filteredUsers = admins.filter((u: any) => u.name?.toLowerCase().includes(searchQuery.toLowerCase()) || u.email?.toLowerCase().includes(searchQuery.toLowerCase()));
 
- const open = (admin: any = null) => {
- if (admin) {
- setEditing(admin);
- setForm({
- username: admin.username,
- role: admin.role,
- status: admin.status,
- password: '',
- });
- } else {
- setEditing(null);
- setForm({
- username: '',
- role: 'Content Manager',
- status: 'Active',
- password: '',
- });
- }
- setIsEditing(true);
- };
+  const openNew = () => { setEditing(null); setForm({ name: '', email: '', role: 'admin', password: '' }); setShowForm(true); };
+  const openEdit = (u: any) => { setEditing(u); setForm({ name: u.name || '', email: u.email || '', role: u.role || 'admin', password: '' }); setShowForm(true); };
 
- const save = (e: React.FormEvent) => {
- e.preventDefault();
- if (editing) {
- updateAdmin({ ...editing, ...form });
- } else {
- addAdmin({
- ...form,
- id: `admin-${Date.now()}`,
- lastLogin: 'Never',
- });
- }
- setIsEditing(false);
- };
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name || !form.email) return;
+    if (editing) { updateAdmin({ ...editing, name: form.name, email: form.email, role: form.role }); }
+    else { addAdmin({ id: Date.now().toString(), name: form.name, email: form.email, role: form.role, createdAt: new Date().toISOString(), lastLogin: null, twoFactorEnabled: false }); }
+    setShowForm(false); setEditing(null);
+  };
 
- const filtered = admins.filter(a => 
- a.username.toLowerCase().includes(search.toLowerCase())
- );
+  const handleDelete = (id: string) => { if (window.confirm('Delete this user?')) deleteAdmin(id); };
+  const getRole = (roleId: string) => roles.find(r => r.id === roleId) || roles[1];
 
- if (isEditing) {
- return (
- <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6 max-w-5xl mx-auto">
- <div className="flex items-center gap-4">
- <button onClick={() => setIsEditing(false)} className="w-9 h-9 rounded-xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-white/40 hover:bg-white/[0.08] hover:text-white transition-all">
- <ArrowLeft size={18} />
- </button>
- <div>
- <h1 className="text-2xl font-bold text-white tracking-tight">{editing ? 'Modify Access Control' : 'Provision Administrative Node'}</h1>
- <p className="text-sm text-white/40 mt-0.5">Permissions & Security Protocol Management</p>
- </div>
- </div>
+  return (
+    <div className="space-y-6">
+      <div className="bg-[#0D1220] border border-white/[0.08] rounded-xl p-5">
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-xl font-bold text-white">User Access Control</h1>
+            <p className="text-xs text-white/40 mt-1">{admins.length} users · {roles.length} roles</p>
+          </div>
+          <button onClick={openNew} className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#F5A800] to-[#ffb700] text-black text-sm font-bold rounded-lg hover:shadow-lg hover:shadow-[#F5A800]/20 transition-all">
+            <Plus size={16} /> Add User
+          </button>
+        </div>
+      </div>
 
- <div className="bg-[#0D1220] border border-white/[0.08] rounded-2xl overflow-hidden ">
- <form onSubmit={save} className="p-6 md:p-8 space-y-8">
- <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
- <div className="space-y-2">
- <label className="text-xs font-bold text-white/30 uppercase tracking-widest ml-1">Identity (Username / Email)</label>
- <input required value={form.username} onChange={e => setForm({...form, username: e.target.value})} placeholder="e.g. admin@nexyovi.com"
- className="w-full h-11 px-4 bg-white/[0.02] border border-white/[0.06] rounded-xl text-sm text-white outline-none focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20 transition-all font-semibold" />
- </div>
- <div className="grid grid-cols-2 gap-4">
- <div className="space-y-2">
- <label className="text-xs font-bold text-white/30 uppercase tracking-widest ml-1">Access Level</label>
- <select value={form.role} onChange={e => setForm({...form, role: e.target.value})}
- className="w-full h-11 px-4 bg-white/[0.02] border border-white/[0.06] rounded-xl text-sm text-white outline-none focus:border-[#F5A800]/50 appearance-none transition-all font-semibold">
- <option value="Super Admin" className="bg-[#0D1220]">Super Admin</option>
- <option value="Content Manager" className="bg-[#0D1220]">Content Manager</option>
- <option value="Security Auditor" className="bg-[#0D1220]">Security Auditor</option>
- </select>
- </div>
- <div className="space-y-2">
- <label className="text-xs font-bold text-white/30 uppercase tracking-widest ml-1">Status</label>
- <select value={form.status} onChange={e => setForm({...form, status: e.target.value})}
- className="w-full h-11 px-4 bg-white/[0.02] border border-white/[0.06] rounded-xl text-sm text-white outline-none focus:border-[#F5A800]/50 appearance-none transition-all font-semibold">
- <option value="Active" className="bg-[#0D1220]">Active</option>
- <option value="Suspended" className="bg-[#0D1220]">Suspended</option>
- </select>
- </div>
- </div>
- </div>
+      {showForm && (
+        <>
+          <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40" onClick={() => setShowForm(false)} />
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
+              className="bg-[#0D1220] border border-white/[0.08] rounded-2xl shadow-2xl w-full max-w-lg">
+              <form onSubmit={handleSave} className="p-6 space-y-4">
+                <div className="flex items-center justify-between pb-4 border-b border-white/[0.06]">
+                  <div>
+                    <h2 className="text-lg font-bold text-white">{editing ? 'Edit User' : 'Create User'}</h2>
+                    <p className="text-xs text-white/40 mt-0.5">Set permissions and access level</p>
+                  </div>
+                  <button type="button" onClick={() => setShowForm(false)} className="w-8 h-8 rounded-lg border border-white/10 flex items-center justify-center text-white/40 hover:text-white transition-all"><X size={16} /></button>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-white/50 mb-1.5">Name *</label>
+                    <input required value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
+                      className="w-full h-10 px-4 bg-white/[0.03] border border-white/[0.08] rounded-lg text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20 transition-colors" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-white/50 mb-1.5">Email *</label>
+                    <input required type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
+                      className="w-full h-10 px-4 bg-white/[0.03] border border-white/[0.08] rounded-lg text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#F5A800]/50 transition-colors" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-white/50 mb-1.5">Password {editing && '(optional)'}</label>
+                    <input type="password" value={form.password} onChange={e => setForm({ ...form, password: e.target.value })}
+                      className="w-full h-10 px-4 bg-white/[0.03] border border-white/[0.08] rounded-lg text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#F5A800]/50 transition-colors"
+                      placeholder={editing ? 'Leave blank' : 'Secure password'} />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-white/50 mb-1.5">Role</label>
+                    <select value={form.role} onChange={e => setForm({ ...form, role: e.target.value })}
+                      className="w-full h-10 px-4 bg-white/[0.03] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-[#F5A800]/50 transition-colors">
+                      {roles.map(r => <option key={r.id} value={r.id} className="bg-[#0D1220]">{r.name}</option>)}
+                    </select>
+                  </div>
+                </div>
+                <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/[0.06]">
+                  <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-sm font-medium text-white/40 hover:text-white transition-colors">Cancel</button>
+                  <button type="submit" className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-[#F5A800] to-[#ffb700] text-black text-sm font-bold rounded-lg hover:shadow-lg hover:shadow-[#F5A800]/20 transition-all">
+                    <Save size={15} /> {editing ? 'Save Changes' : 'Create User'}
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        </>
+      )}
 
- <div className="space-y-2">
- <label className="text-xs font-bold text-white/30 uppercase tracking-widest ml-1">Security Key (Password)</label>
- <div className="relative">
- <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/10" size={16} />
- <input type="password" value={form.password} onChange={e => setForm({...form, password: e.target.value})} placeholder="••••••••"
- className="w-full h-11 pl-11 pr-4 bg-white/[0.02] border border-white/[0.06] rounded-xl text-sm text-white outline-none focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20 transition-all font-semibold" />
- </div>
- </div>
+      <div className="relative">
+        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+        <input value={searchQuery} onChange={e => setSearchQuery(e.target.value)} placeholder="Search users..."
+          className="w-full h-10 pl-10 pr-4 bg-[#0D1220] border border-white/[0.08] rounded-lg text-sm text-white/70 placeholder:text-white/25 focus:outline-none focus:border-[#F5A800]/50 transition-colors" />
+      </div>
 
- <div className="bg-[#F5A800]/5 border border-[#F5A800]/10 p-5 rounded-xl flex items-start gap-4">
- <Shield size={20} className="text-[#F5A800] shrink-0 mt-0.5" />
- <div>
- <h4 className="text-sm font-bold text-[#F5A800] uppercase tracking-widest mb-1">Administrative Protocol</h4>
- <p className="text-xs text-white/50 leading-relaxed font-medium">
- Provisioning a new administrative node grants access to critical platform infrastructure. Ensure identity verification is complete before deploying access credentials.
- </p>
- </div>
- </div>
+      <div className="space-y-3">
+        {filteredUsers.length > 0 ? filteredUsers.map((user: any) => {
+          const roleInfo = getRole(user.role);
+          return (
+            <div key={user.id} className="bg-[#0D1220] border border-white/[0.08] rounded-xl p-5 hover:border-white/20 hover:shadow-lg transition-all">
+              <div className="flex items-start justify-between">
+                <div className="flex items-start gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#F5A800] to-[#ffb700] flex items-center justify-center shrink-0 text-black text-sm font-bold shadow-sm">
+                    {user.name?.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2) || 'A'}
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-white">{user.name}</h3>
+                    <p className="text-sm text-white/50 mt-0.5">{user.email}</p>
+                    <div className="flex items-center gap-3 mt-2">
+                      <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border ${roleInfo.color}`}>{roleInfo.name}</span>
+                      <span className="text-xs text-white/30 flex items-center gap-1"><Clock size={11} />{user.lastLogin ? new Date(user.lastLogin).toLocaleDateString() : 'Never logged in'}</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button onClick={() => openEdit(user)} className="w-8 h-8 rounded-lg border border-white/10 flex items-center justify-center text-white/30 hover:text-[#F5A800] hover:border-[#F5A800]/30 transition-all"><Edit2 size={14} /></button>
+                  <button onClick={() => handleDelete(user.id)} className="w-8 h-8 rounded-lg border border-white/10 flex items-center justify-center text-white/30 hover:text-red-400 hover:border-red-400/30 transition-all"><Trash2 size={14} /></button>
+                </div>
+              </div>
+            </div>
+          );
+        }) : (
+          <div className="bg-[#0D1220] border border-dashed border-white/10 rounded-xl py-16 text-center">
+            <Shield size={32} className="mx-auto mb-3 text-white/20" />
+            <p className="text-sm text-white/50 font-medium">No users found</p>
+          </div>
+        )}
+      </div>
 
- <div className="flex items-center justify-end gap-3 pt-6 border-t border-white/[0.06]">
- <button type="button" onClick={() => setIsEditing(false)} className="h-10 px-6 text-sm font-bold text-white/40 hover:text-white transition-colors">Cancel</button>
- <button type="submit" className="h-10 px-6 bg-[#F5A800] text-white text-sm font-bold uppercase tracking-widest rounded-xl hover:bg-blue-600 flex items-center gap-2 transition-all /20">
- <Save size={16} /> {editing ? 'Save Changes' : 'Deploy Identity'}
- </button>
- </div>
- </form>
- </div>
- </motion.div>
- );
- }
-
- return (
- <div className="space-y-6 max-w-6xl mx-auto">
- {/* Header */}
- <div className="flex items-center justify-between">
- <div>
- <h1 className="text-2xl font-bold text-white tracking-tight">Access Control</h1>
- <p className="text-sm text-white/40 mt-0.5">{admins.length} administrator nodes</p>
- </div>
- <button onClick={() => open()} className="flex items-center gap-1.5 h-10 px-4 bg-[#F5A800] text-white text-sm font-bold uppercase tracking-widest rounded-xl hover:bg-blue-600 transition-all /20">
- <UserPlus size={16} /> Provision Admin
- </button>
- </div>
-
- {/* Search */}
- <div className="relative">
- <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" />
- <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by identity..." className="w-full h-12 pl-11 pr-4 bg-[#0D1220] border border-white/[0.08] rounded-xl text-sm text-white placeholder:text-white/20 outline-none focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20 transition-all " />
- </div>
-
- {/* Admin Table */}
- <div className="bg-[#0D1220] border border-white/[0.08] rounded-2xl overflow-hidden ">
- <div className="grid grid-cols-12 px-6 py-3 border-b border-white/[0.06] text-xs font-bold text-white/30 uppercase tracking-widest">
- <div className="col-span-4">Identity</div>
- <div className="col-span-3">Access Level</div>
- <div className="col-span-3">Status</div>
- <div className="col-span-2 text-right">Actions</div>
- </div>
- {filtered.length > 0 ? filtered.map((admin) => (
- <motion.div key={admin.id} layout className="grid grid-cols-12 items-center px-6 py-4 border-b border-white/[0.04] hover:bg-white/[0.02] transition-colors group last:border-0">
- <div className="col-span-4 flex items-center gap-4">
- <div className={`w-10 h-10 rounded-xl ${admin.role === 'Super Admin' ? 'bg-[#F5A800]/10 text-[#F5A800]' : 'bg-white/5 text-white/20'} border border-white/[0.05] flex items-center justify-center shrink-0`}>
- <ShieldCheck size={16} />
- </div>
- <div className="min-w-0 pr-4">
- <div className="text-sm font-bold text-white truncate">{admin.username}</div>
- <div className="text-xs text-white/40 font-mono mt-0.5">ID: {admin.id?.substring(0, 8)}</div>
- </div>
- </div>
- <div className="col-span-3">
- <span className={`text-xs font-bold px-2.5 py-1 rounded-md ${admin.role === 'Super Admin' ? 'text-[#F5A800] bg-[#F5A800]/10 border border-[#F5A800]/20' : 'text-white/50 bg-white/5'}`}>
- {admin.role}
- </span>
- </div>
- <div className="col-span-3 flex items-center gap-2">
- <div className={`w-2 h-2 rounded-full ${admin.status === 'Active' ? 'bg-emerald-500 ' : 'bg-rose-500'}`} />
- <span className="text-sm font-medium text-white/60">{admin.status}</span>
- </div>
- <div className="col-span-2 flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
- <button onClick={() => open(admin)} className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/[0.05] hover:bg-[#F5A800]/10 hover:border-[#F5A800]/20 hover:text-[#F5A800] text-white/40 flex items-center justify-center transition-all">
- <Edit2 size={14} />
- </button>
- <button onClick={() => deleteAdmin(admin.id)} className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/[0.05] hover:bg-red-500/10 hover:border-red-500/20 hover:text-red-400 text-white/40 flex items-center justify-center transition-all disabled:opacity-30" disabled={admin.username === 'yonasbogale@nexyovi.com'}>
- <Trash2 size={14} />
- </button>
- </div>
- </motion.div>
- )) : (
- <div className="py-16 text-center">
- <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mx-auto mb-3">
- <Lock size={20} className="text-white/20" />
- </div>
- <div className="text-sm text-white/40">No identities found.</div>
- </div>
- )}
- </div>
- </div>
- );
+      <div className="bg-[#0D1220] border border-white/[0.08] rounded-xl p-5">
+        <h3 className="text-sm font-bold text-white mb-4">Role Permissions</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {roles.map(r => (
+            <div key={r.id} className="px-4 py-3 bg-white/[0.03] rounded-lg border border-white/[0.06]">
+              <h4 className="text-sm font-bold text-white">{r.name}</h4>
+              <p className="text-xs text-white/40 mt-0.5">{r.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default AdminUsers;

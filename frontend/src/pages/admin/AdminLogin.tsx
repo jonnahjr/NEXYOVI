@@ -3,8 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, ArrowRight, Lock, Mail } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useSite } from '../../context/SiteContext';
-import { supabase } from '../../lib/supabase';
-import myLogo from '../../assets/logo 1.png';
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
@@ -12,23 +10,19 @@ const AdminLogin = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { settings } = useSite();
+  const { settings, login } = useSite();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
-    const { data, error: authError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (authError) {
-      setError(authError.message || 'Invalid email or password');
-      setLoading(false);
-    } else {
+    try {
+      await login(email, password);
       setTimeout(() => navigate('/admin', { replace: true }), 300);
+    } catch (err: any) {
+      setError(err.message || 'Invalid email or password');
+      setLoading(false);
     }
   };
 

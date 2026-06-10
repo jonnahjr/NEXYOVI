@@ -2,8 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/src/assets/logo 1.png" />
+
+    <!-- ── Security Meta Tags ────────────────────────────── -->
+    <!-- Content Security Policy (meta tag fallback) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; media-src 'self' https://*.cloudfront.net https://*.supabase.co; connect-src 'self' https://kgokqftntqszjnwsaegj.supabase.co ws://localhost:* http://localhost:*; base-uri 'self'; form-action 'self'; object-src 'none'" />
+    <!-- Referrer Policy -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <!-- Prevent automatic detection of phone numbers, emails, addresses -->
+    <meta name="format-detection" content="telephone=no, email=no, address=no" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Nexyovi | Multi-Disciplinary Tech Powerhouse</title>
     <meta name="description" content="Nexyovi is a global tech leader specializing in Cyber Security, AI Solutions, Software Engineering, and Enterprise Networking." />
     <meta property="og:title" content="Nexyovi | Multi-Disciplinary Tech Powerhouse" />
@@ -12,7 +24,13 @@
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <!-- Google Fonts - crossorigin required for SRI-compatible CDN; integrity omitted because Google Fonts CSS is dynamic per UA -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" crossorigin="anonymous" />
+
+    <!-- CSP Nonce: The Vite dev server and production build use nonce-based CSP.
+         The backend generates a nonce per request via res.locals.nonce.
+         In production, the HTML is served through the backend which injects the nonce.
+         For Vite dev mode, 'unsafe-inline' is allowed for HMR. -->
   </head>
   <body>
     <div id="root"></div>

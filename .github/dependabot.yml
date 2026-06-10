@@ -1,0 +1,85 @@
+# ════════════════════════════════════════════════════════════
+# Dependabot Configuration - Automated Dependency Management
+# ════════════════════════════════════════════════════════════
+# This file is managed by the Nexyovi Security team.
+# All changes should be reviewed by the security team.
+# ════════════════════════════════════════════════════════════
+
+version: 2
+updates:
+  # ── Frontend (npm) ─────────────────────────────────────
+  - package-ecosystem: "npm"
+    directory: "/frontend"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Africa/Addis_Ababa"
+    labels:
+      - "dependencies"
+      - "frontend"
+      - "security"
+    # Group non-major updates together to reduce PR noise
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+        update-types:
+          - "minor"
+          - "patch"
+      development-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+    # Security updates have no limit
+    open-pull-requests-limit: 10
+    # Auto-approve and merge patch-level security updates
+    reviewers:
+      - "nexyovi/security-team"
+    assignees:
+      - "security-bot"
+    # Ignore major version bumps (manual review required)
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # ── Backend (npm) ──────────────────────────────────────
+  - package-ecosystem: "npm"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Africa/Addis_Ababa"
+    labels:
+      - "dependencies"
+      - "backend"
+      - "security"
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+        update-types:
+          - "minor"
+          - "patch"
+      development-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "nexyovi/security-team"
+
+  # ── GitHub Actions ─────────────────────────────────────
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    labels:
+      - "dependencies"
+      - "ci-cd"
+    groups:
+      actions-dependencies:
+        patterns:
+          - "*"

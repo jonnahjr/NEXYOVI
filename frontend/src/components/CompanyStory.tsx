@@ -1,62 +1,109 @@
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-import { fadeUp, viewport } from '../lib/animations';
+import { EASE_EXPO } from '../lib/animations';
+
+const paragraphs = [
+  `Founded in Addis Ababa in 2024 by Yonas Bogale, Nexyovi was built with a simple mission: help organizations leverage technology to solve complex challenges, operate more efficiently, and grow with confidence.`,
+  `What began as a focused software studio quickly evolved into a multidisciplinary engineering company specializing in custom software, artificial intelligence, cloud infrastructure, cybersecurity, and digital transformation.`,
+  `Today, Nexyovi partners with startups, enterprises, government organizations, and mission-driven businesses across Africa and beyond — designing, building, and maintaining production-ready digital systems that deliver measurable outcomes.`,
+  `From enterprise applications and AI-powered platforms to cloud-native infrastructure and mission-critical systems, we combine deep engineering expertise with a long-term commitment to client success.`,
+];
 
 const CompanyStory = () => {
- return (
- <section className="bg-[#02040a] py-24 relative overflow-hidden text-white">
- {/* Decorative gradients */}
- <div className="absolute inset-0 opacity-5 bg-gradient-to-br from-[#F5A800] to-[#FFD166] pointer-events-none" />
- <div className="container mx-auto px-6 lg:px-12 relative z-10">
- {/* Header */}
- <motion.div
- variants={fadeUp}
- initial="hidden"
- whileInView="visible"
- viewport={viewport}
- className="text-center mb-12"
- >
- <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter mb-4">
- Our <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Story</span>
- </h2>
- <p className="text-white/70 max-w-2xl mx-auto text-lg">
- From a bold vision in Addis Ababa to a global software and AI company — we help businesses build digital products, automate workflows, and modernize operations.
- </p>
- </motion.div>
- {/* Timeline */}
- <div className="max-w-3xl mx-auto relative">
- {/* Vertical Line */}
- <div className="absolute top-0 bottom-0 left-[27px] w-px bg-white/10" />
+  return (
+    <section className="relative bg-[#FCFBF8] border-t border-slate-200 py-28 md:py-36 overflow-hidden">
+      <div className="container max-w-4xl mx-auto px-6 relative z-10">
 
- <div className="space-y-12">
- {[
-  { year: '2018', title: 'Founded', desc: 'Bootstrapped the first prototype in Addis Ababa, focusing on AI-driven automation for Ethiopian enterprises.' },
-  { year: '2020', title: 'First Enterprise Clients', desc: 'Shipped production systems for government and financial sector clients, establishing our engineering reputation.' },
-  { year: '2022', title: 'Expanding Horizons', desc: 'Grew our engineering team and expanded service offerings across cloud infrastructure, AI, and cybersecurity.' },
-  { year: '2024', title: 'Enterprise Suite', desc: 'Released a full-stack platform serving finance, health, and government sectors across the region.' }].map((item, i) => (
- <motion.div
- key={i}
- initial={{ opacity: 0, x: -20 }}
- whileInView={{ opacity: 1, x: 0 }}
- viewport={viewport}
- transition={{ delay: i * 0.15, duration: 0.6 }}
- className="relative pl-16 group"
- >
- {/* Node */}
- <div className="absolute left-[19px] top-1.5 w-4 h-4 rounded-full bg-[#02040a] border-2 border-white/20 group-hover:border-[#F5A800] transition-colors duration-300 z-10 " />
- 
- <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-3 group-hover:border-[#F5A800]/30 transition-colors">
- <span className="text-[10px] font-black text-[#F5A800] uppercase tracking-widest">{item.year}</span>
- </div>
- <h3 className="text-white font-black text-2xl tracking-tight mb-2 group-hover:text-[#F5A800] transition-colors">{item.title}</h3>
- <p className="text-white/60 text-base leading-relaxed max-w-xl">{item.desc}</p>
- </motion.div>
- ))}
- </div>
- </div>
- </div>
- </section>
- );
+        {/* ── Label ── */}
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: EASE_EXPO }}
+          className="text-[10px] font-bold tracking-[0.3em] uppercase text-slate-400 mb-8"
+        >
+          Our Story
+        </motion.p>
+
+        {/* ── Title ── */}
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.05, ease: EASE_EXPO }}
+          className="text-5xl md:text-6xl lg:text-7xl font-black tracking-[-0.04em] leading-[1.05] mb-4 text-slate-950"
+        >
+          Built in{' '}
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">
+            Addis Ababa.
+          </span>
+        </motion.h2>
+
+        {/* ── Subtitle ── */}
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1, ease: EASE_EXPO }}
+          className="text-slate-500 text-lg md:text-xl font-medium leading-relaxed max-w-2xl mb-14"
+        >
+          From a focused software studio to a cross-continental engineering force.
+        </motion.p>
+
+        {/* ── Stats — inline, no boxes ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.15, ease: EASE_EXPO }}
+          className="flex flex-wrap gap-x-10 gap-y-4 mb-16"
+        >
+          {[
+            { value: '10+', label: 'Enterprise Platforms' },
+            { value: '20+', label: 'Elite Engineers' },
+            { value: '4', label: 'Countries Served' },
+          ].map((stat) => (
+            <div key={stat.label} className="flex items-baseline gap-2">
+              <span className="text-3xl md:text-4xl font-black tracking-tight text-slate-900">{stat.value}</span>
+              <span className="text-slate-400 text-sm font-medium">{stat.label}</span>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* ── Narrative paragraphs ── */}
+        <div className="max-w-3xl space-y-7 mb-20">
+          {paragraphs.map((text, i) => (
+            <motion.p
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-30px' }}
+              transition={{ duration: 0.5, delay: 0.1 * i, ease: EASE_EXPO }}
+              className="text-slate-600 text-base md:text-lg leading-[1.8] font-[425]"
+            >
+              {text}
+            </motion.p>
+          ))}
+        </div>
+
+        {/* ── Vision — just text, no box ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1, ease: EASE_EXPO }}
+        >
+          <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-slate-400 mb-4">Vision</p>
+          <blockquote className="text-2xl md:text-3xl lg:text-4xl font-black tracking-[-0.02em] leading-[1.2] text-slate-800 max-w-3xl">
+            &ldquo;Our vision is to build technology that creates lasting impact{' '}
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] to-[#FFD166]">
+              &mdash; starting in Africa, built for the world.
+            </span>&rdquo;
+          </blockquote>
+        </motion.div>
+
+      </div>
+    </section>
+  );
 };
 
 export default CompanyStory;

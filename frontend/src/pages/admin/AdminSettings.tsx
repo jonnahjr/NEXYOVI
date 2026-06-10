@@ -1,220 +1,149 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { 
-  Globe, Mail, Phone, MapPin, 
-  Twitter, Linkedin, Github, Youtube, Instagram, 
-  Facebook, Music2, Slack, Send, Save, CheckCircle2, Zap, Image as ImageIcon, UploadCloud, MessageCircle
-} from 'lucide-react';
+import React, { useState } from 'react';
+import { Save, Globe, Mail, Phone, MapPin, Image, Settings, UploadCloud } from 'lucide-react';
 import { useSite } from '../../context/SiteContext';
 import { supabase } from '../../lib/supabase';
 
 const AdminSettings = () => {
- const { settings, updateSettings } = useSite();
- const [formData, setFormData] = useState(settings);
- const [isSaved, setIsSaved] = useState(false);
- const [isUploading, setIsUploading] = useState(false);
+  const { settings, updateSettings } = useSite();
+  const [saving, setSaving] = useState(false);
+  const [saveStatus, setSaveStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [form, setForm] = useState({ siteName: settings?.siteName || 'Nexyovi', email: settings?.email || '', phone: settings?.phone || '', address: settings?.address || '', logo_url: settings?.logo_url || '' });
+  const [socials, setSocials] = useState<Record<string, string>>(settings?.socials || { twitter: '', linkedin: '', github: '', youtube: '', instagram: '', facebook: '', telegram: '', whatsapp: '' });
 
- // Sync form when settings load from Supabase
- useEffect(() => { setFormData(settings); }, [settings]);
+  const handleSave = async () => {
+    setSaving(true); setSaveStatus(null);
+    try { await updateSettings({ ...form, socials }); setSaveStatus({ type: 'success', message: 'Settings saved!' }); }
+    catch { setSaveStatus({ type: 'error', message: 'Error saving' }); }
+    finally { setSaving(false); setTimeout(() => setSaveStatus(null), 3000); }
+  };
 
- const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
- if (!e.target.files || e.target.files.length === 0) return;
- const file = e.target.files[0];
- 
- setIsUploading(true);
- try {
- const fileExt = file.name.split('.').pop();
- const fileName = `logo_${Math.random()}.${fileExt}`;
- const filePath = `settings/${fileName}`;
+  const socialList = [
+    { key: 'twitter', label: 'Twitter / X', ph: 'https://twitter.com/nexyovi' },
+    { key: 'linkedin', label: 'LinkedIn', ph: 'https://linkedin.com/company/nexyovi' },
+    { key: 'github', label: 'GitHub', ph: 'https://github.com/nexyovi' },
+    { key: 'youtube', label: 'YouTube', ph: 'https://youtube.com/@nexyovi' },
+    { key: 'instagram', label: 'Instagram', ph: 'https://instagram.com/nexyovi' },
+    { key: 'facebook', label: 'Facebook', ph: 'https://facebook.com/nexyovi' },
+    { key: 'telegram', label: 'Telegram', ph: 'https://t.me/nexyovi' },
+    { key: 'whatsapp', label: 'WhatsApp', ph: '+251900000000' },
+  ];
 
- const { error: uploadError } = await supabase.storage
- .from('nexyovi_assets')
- .upload(filePath, file);
+  return (
+    <div className="space-y-6 max-w-4xl">
+      <div className="bg-[#0D1220] border border-white/[0.08] rounded-xl p-5">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#F5A800] to-[#ffb700] flex items-center justify-center"><Settings size={18} className="text-black" /></div>
+          <div>
+            <h1 className="text-xl font-bold text-white">Settings</h1>
+            <p className="text-xs text-white/40 mt-0.5">Manage site branding, contact, and social links</p>
+          </div>
+        </div>
+      </div>
 
- if (uploadError) throw uploadError;
+      {saveStatus && (
+        <div className={`px-5 py-3 rounded-xl border text-sm font-semibold ${saveStatus.type === 'success' ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' : 'bg-red-500/10 border-red-500/20 text-red-400'}`}>
+          {saveStatus.message}
+        </div>
+      )}
 
- const { data } = supabase.storage
- .from('nexyovi_assets')
- .getPublicUrl(filePath);
+      <div className="bg-[#0D1220] border border-white/[0.08] rounded-xl overflow-hidden">
+        <div className="px-6 py-4 border-b border-white/[0.06] bg-white/[0.02] flex items-center gap-2">
+          <Image size={15} className="text-white/40" />
+          <h2 className="text-sm font-bold text-white">Branding</h2>
+        </div>
+        <div className="px-6 py-5 space-y-4">
+          <div>
+            <label className="block text-xs font-semibold text-white/50 mb-1.5">Site Name</label>
+            <input value={form.siteName} onChange={e => setForm({ ...form, siteName: e.target.value })}
+              className="w-full max-w-md h-10 px-4 bg-white/[0.03] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20 transition-colors" />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-white/50 mb-1.5">Logo</label>
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-3">
+                <input value={form.logo_url} onChange={e => setForm({ ...form, logo_url: e.target.value })}
+                  className="flex-1 h-10 px-4 bg-white/[0.03] border border-white/[0.08] rounded-lg text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#F5A800]/50 transition-colors" placeholder="https://..." />
+                {form.logo_url && (
+                  <div className="w-10 h-10 rounded-lg border border-white/10 overflow-hidden shrink-0 bg-white/[0.03] flex items-center justify-center">
+                    <img src={form.logo_url} alt="" className="w-8 h-8 object-contain" />
+                  </div>
+                )}
+              </div>
+              <label className={`inline-flex items-center gap-2 h-9 px-4 rounded-lg border border-white/10 text-xs font-semibold transition-all cursor-pointer w-fit ${uploading ? 'bg-white/5 text-white/40' : 'bg-white/[0.03] text-white/60 hover:bg-white/[0.06]'}`}>
+                <UploadCloud size={14} />{uploading ? 'Uploading...' : 'Upload from computer'}
+                <input type="file" accept="image/*" className="hidden" disabled={uploading}
+                  onChange={async (e) => {
+                    if (!e.target.files?.[0]) return;
+                    setUploading(true);
+                    try {
+                      const file = e.target.files[0];
+                      const fn = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+                      const { error } = await supabase.storage.from('nexyovi_assets').upload(`logos/${fn}`, file);
+                      if (error) throw error;
+                      const { data } = supabase.storage.from('nexyovi_assets').getPublicUrl(`logos/${fn}`);
+                      setForm(f => ({ ...f, logo_url: data.publicUrl }));
+                    } catch (err: any) { alert(`Upload failed: ${err.message}`); }
+                    finally { setUploading(false); }
+                  }} />
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
 
- setFormData({ ...formData, logo_url: data.publicUrl });
- } catch (error) {
- console.error('Error uploading logo:', error);
- alert('Error uploading logo.');
- } finally {
- setIsUploading(false);
- }
- };
+      <div className="bg-[#0D1220] border border-white/[0.08] rounded-xl overflow-hidden">
+        <div className="px-6 py-4 border-b border-white/[0.06] bg-white/[0.02] flex items-center gap-2">
+          <Mail size={15} className="text-white/40" />
+          <h2 className="text-sm font-bold text-white">Contact Information</h2>
+        </div>
+        <div className="px-6 py-5 space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-semibold text-white/50 mb-1.5 flex items-center gap-1.5"><Mail size={13} className="text-white/30" /> Email</label>
+              <input value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
+                className="w-full h-10 px-4 bg-white/[0.03] border border-white/[0.08] rounded-lg text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#F5A800]/50 transition-colors" placeholder="info@nexyovi.com" />
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-white/50 mb-1.5 flex items-center gap-1.5"><Phone size={13} className="text-white/30" /> Phone</label>
+              <input value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })}
+                className="w-full h-10 px-4 bg-white/[0.03] border border-white/[0.08] rounded-lg text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#F5A800]/50 transition-colors" placeholder="+251..." />
+            </div>
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-white/50 mb-1.5 flex items-center gap-1.5"><MapPin size={13} className="text-white/30" /> Address</label>
+            <input value={form.address} onChange={e => setForm({ ...form, address: e.target.value })}
+              className="w-full h-10 px-4 bg-white/[0.03] border border-white/[0.08] rounded-lg text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#F5A800]/50 transition-colors" placeholder="Bole District, Addis Ababa" />
+          </div>
+        </div>
+      </div>
 
- const handleSave = (e: React.FormEvent) => {
- e.preventDefault();
- updateSettings(formData);
- setIsSaved(true);
- setTimeout(() => setIsSaved(false), 3000);
- };
+      <div className="bg-[#0D1220] border border-white/[0.08] rounded-xl overflow-hidden">
+        <div className="px-6 py-4 border-b border-white/[0.06] bg-white/[0.02] flex items-center gap-2">
+          <Globe size={15} className="text-white/40" />
+          <h2 className="text-sm font-bold text-white">Social Links</h2>
+        </div>
+        <div className="px-6 py-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {socialList.map(s => (
+              <div key={s.key}>
+                <label className="block text-xs font-semibold text-white/50 mb-1.5 capitalize">{s.label}</label>
+                <input value={socials[s.key] || ''} onChange={e => setSocials({ ...socials, [s.key]: e.target.value })}
+                  className="w-full h-10 px-4 bg-white/[0.03] border border-white/[0.08] rounded-lg text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#F5A800]/50 transition-colors" placeholder={s.ph} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
- return (
- <div className="space-y-6 max-w-6xl mx-auto">
- {/* Header */}
- <div className="flex items-center justify-between">
- <div>
- <h1 className="text-2xl font-bold text-white tracking-tight">Global Configuration</h1>
- <p className="text-sm text-white/40 mt-0.5">Manage brand identity and connectivity nodes</p>
- </div>
- <button 
- onClick={handleSave}
- className="flex items-center gap-1.5 h-10 px-6 bg-[#F5A800] text-white text-sm font-bold uppercase tracking-widest rounded-xl hover:bg-blue-600 transition-all /20"
- >
- {isSaved ? <CheckCircle2 size={16} /> : <Save size={16} />}
- {isSaved ? 'Synchronized' : 'Save Changes'}
- </button>
- </div>
-
- <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
- {/* Core Identity */}
- <div className="space-y-6">
- <div className="bg-[#0D1220] border border-white/[0.08] rounded-2xl p-6 md:p-8 space-y-6 ">
- <div className="flex items-center gap-3 border-b border-white/[0.06] pb-4">
- <div className="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400">
- <Globe size={18} />
- </div>
- <h3 className="text-lg font-bold text-white">Brand Identity</h3>
- </div>
- 
- <div className="space-y-5">
- <div className="space-y-2">
- <label className="text-xs font-bold text-white/30 uppercase tracking-widest">Organization Name</label>
- <input 
- type="text" 
- value={formData.siteName}
- onChange={(e) => setFormData({...formData, siteName: e.target.value})}
- className="w-full h-11 px-4 bg-white/[0.02] border border-white/[0.06] rounded-xl text-sm font-semibold text-white outline-none focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20 transition-all"
- />
- </div>
-
- <div className="space-y-2">
- <label className="text-xs font-bold text-white/30 uppercase tracking-widest">Main Website Logo</label>
- <div className="flex gap-4 items-center">
- <div className="w-16 h-16 rounded-xl bg-[#070B14] border border-white/10 flex items-center justify-center overflow-hidden shrink-0">
- {formData.logo_url ? (
- <img src={formData.logo_url} alt="Logo" className="w-full h-full object-contain p-2" />
- ) : (
- <ImageIcon size={20} className="text-white/20" />
- )}
- </div>
- <label className={`h-11 px-6 flex items-center justify-center gap-2 rounded-xl border border-white/10 font-bold transition-all cursor-pointer text-sm ${isUploading ? 'bg-white/10 text-white/50' : 'bg-white/5 text-white hover:bg-white/10 hover:border-white/20'}`}>
- <UploadCloud size={16} />
- {isUploading ? 'Uploading...' : 'Upload Logo'}
- <input 
- type="file" 
- accept="image/*"
- className="hidden" 
- onChange={handleLogoUpload}
- disabled={isUploading}
- />
- </label>
- </div>
- </div>
- <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
- <div className="space-y-2">
- <label className="text-xs font-bold text-white/30 uppercase tracking-widest">Command Email</label>
- <div className="relative">
- <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={14} />
- <input 
- type="email" 
- value={formData.email}
- onChange={(e) => setFormData({...formData, email: e.target.value})}
- className="w-full h-11 pl-11 pr-4 bg-white/[0.02] border border-white/[0.06] rounded-xl text-sm font-semibold text-white outline-none focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20 transition-all"
- />
- </div>
- </div>
- <div className="space-y-2">
- <label className="text-xs font-bold text-white/30 uppercase tracking-widest">Global Phone</label>
- <div className="relative">
- <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={14} />
- <input 
- type="text" 
- value={formData.phone}
- onChange={(e) => setFormData({...formData, phone: e.target.value})}
- className="w-full h-11 pl-11 pr-4 bg-white/[0.02] border border-white/[0.06] rounded-xl text-sm font-semibold text-white outline-none focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20 transition-all"
- />
- </div>
- </div>
- </div>
- <div className="space-y-2">
- <label className="text-xs font-bold text-white/30 uppercase tracking-widest">Primary Hub Address</label>
- <div className="relative">
- <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={14} />
- <input 
- type="text" 
- value={formData.address}
- onChange={(e) => setFormData({...formData, address: e.target.value})}
- className="w-full h-11 pl-11 pr-4 bg-white/[0.02] border border-white/[0.06] rounded-xl text-sm font-semibold text-white outline-none focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20 transition-all"
- />
- </div>
- </div>
- </div>
- </div>
-
- <div className="bg-[#F5A800]/5 border border-[#F5A800]/10 p-6 rounded-2xl text-[#F5A800]/80">
- <div className="flex items-center gap-3 mb-2">
- <Zap size={18} className="fill-current" />
- <h3 className="text-sm font-bold uppercase tracking-widest text-[#F5A800]">Real-time Synchronization</h3>
- </div>
- <p className="text-xs font-medium leading-relaxed text-[#F5A800]/60">
- Changes are instantly broadcasted to the entire network. All global contact nodes and footer links will update in real-time.
- </p>
- </div>
- </div>
-
- {/* Social Network Nodes */}
- <div className="bg-[#0D1220] border border-white/[0.08] rounded-2xl p-6 md:p-8 space-y-6 h-fit">
- <div className="flex items-center gap-3 border-b border-white/[0.06] pb-4">
- <div className="w-10 h-10 rounded-xl bg-violet-500/10 flex items-center justify-center text-violet-400">
- <Send size={18} />
- </div>
- <h3 className="text-lg font-bold text-white">Social Connectivity</h3>
- </div>
-
- <div className="space-y-4">
- {[
-  { key: 'twitter', label: 'X (Twitter)', icon: Twitter },
-  { key: 'linkedin', label: 'LinkedIn', icon: Linkedin },
-  { key: 'github', label: 'GitHub', icon: Github },
-  { key: 'youtube', label: 'YouTube', icon: Youtube },
-  { key: 'instagram', label: 'Instagram', icon: Instagram },
-  { key: 'facebook', label: 'Facebook', icon: Facebook },
-  { key: 'telegram', label: 'Telegram', icon: Send },
-  { key: 'whatsapp', label: 'WhatsApp', icon: MessageCircle },
-  { key: 'tiktok', label: 'TikTok', icon: Music2 },
-  { key: 'discord', label: 'Discord', icon: Send },
-  { key: 'slack', label: 'Slack', icon: Slack }].map((node) => (
- <div key={node.key} className="space-y-2">
- <div className="flex items-center justify-between px-1">
- <label className="text-xs font-bold text-white/30 uppercase tracking-widest">{node.label}</label>
- </div>
- <div className="relative group">
- <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-[#F5A800] transition-colors">
- <node.icon size={14} />
- </div>
- <input 
- type="text" 
- value={formData.socials[node.key]}
- onChange={(e) => setFormData({
- ...formData, 
- socials: { ...formData.socials, [node.key]: e.target.value }
- })}
- className="w-full h-11 pl-11 pr-4 bg-white/[0.02] border border-white/[0.05] rounded-xl text-sm font-semibold text-white/60 outline-none focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20 transition-all font-mono"
- placeholder="https://..."
- />
- </div>
- </div>
- ))}
- </div>
- </div>
- </div>
- </div>
- );
+      <div className="flex items-center justify-end">
+        <button onClick={handleSave} disabled={saving}
+          className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-[#F5A800] to-[#ffb700] text-black text-sm font-bold rounded-lg hover:shadow-lg hover:shadow-[#F5A800]/20 transition-all disabled:opacity-50">
+          <Save size={16} /> {saving ? 'Saving...' : 'Save Settings'}
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default AdminSettings;

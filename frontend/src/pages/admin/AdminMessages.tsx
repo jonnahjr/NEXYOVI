@@ -1,162 +1,124 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
- Mail, Search, Trash2, ChevronRight, 
- X, MessageSquare, Clock, User, Building,
- CheckCircle2, Trash, Quote, ArrowLeft
-} from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Search, Mail, Trash2, Check, ArrowLeft, Clock, X } from 'lucide-react';
 import { useSite } from '../../context/SiteContext';
 
 const AdminMessages = () => {
- const { messages, deleteMessage } = useSite();
- const [selectedMsg, setSelectedMsg] = useState<any>(null);
- const [searchQuery, setSearchQuery] = useState('');
+  const { messages, updateMessage, deleteMessage } = useSite();
+  const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState<'all' | 'unread' | 'read'>('all');
+  const [selected, setSelected] = useState<any>(null);
 
- const filtered = messages.filter(m => 
- m.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
- m.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
- m.message.toLowerCase().includes(searchQuery.toLowerCase())
- );
+  const filtered = messages.filter((m: any) => {
+    const ms = m.name?.toLowerCase().includes(search.toLowerCase()) || m.email?.toLowerCase().includes(search.toLowerCase()) || m.message?.toLowerCase().includes(search.toLowerCase());
+    const mf = filter === 'all' ? true : filter === 'unread' ? (m.status === 'unread' || m.status === 'new') : m.status === 'read';
+    return ms && mf;
+  });
 
- if (selectedMsg) {
- return (
- <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6 max-w-6xl mx-auto">
- <div className="flex items-center gap-4">
- <button onClick={() => setSelectedMsg(null)} className="w-9 h-9 rounded-xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-white/40 hover:bg-white/[0.08] hover:text-white transition-all">
- <ArrowLeft size={18} />
- </button>
- <div>
- <h1 className="text-2xl font-bold text-white tracking-tight">Inquiry Details</h1>
- <p className="text-sm text-white/40 mt-0.5">Transmission ID: {selectedMsg.id}</p>
- </div>
- </div>
+  const unreadCount = messages.filter((m: any) => m.status === 'unread' || m.status === 'new').length;
 
- <div className="bg-[#0D1220] border border-white/[0.08] rounded-2xl overflow-hidden p-6 md:p-8 space-y-6 md:space-y-8">
- <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
- <div className="lg:col-span-1 space-y-4 md:space-y-6">
- <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-5 md:p-6 space-y-5">
- <div>
- <div className="text-xs font-bold text-white/30 uppercase tracking-widest mb-1">Lead Identity</div>
- <div className="text-lg font-bold text-white">{selectedMsg.name}</div>
- </div>
- <div>
- <div className="text-xs font-bold text-white/30 uppercase tracking-widest mb-1">Communication Node</div>
- <div className="text-sm font-semibold text-[#F5A800] break-all">{selectedMsg.email}</div>
- </div>
- <div>
- <div className="text-xs font-bold text-white/30 uppercase tracking-widest mb-1">Organization / Company</div>
- <div className="text-sm font-semibold text-white/60">{selectedMsg.company || 'Not Specified'}</div>
- </div>
- <div className="pt-4 border-t border-white/[0.04]">
- <div className="text-xs font-bold text-white/30 uppercase tracking-widest mb-1">Received Timestamp</div>
- <div className="text-sm font-semibold text-white/40">{selectedMsg.created_at ? new Date(selectedMsg.created_at).toLocaleString() : 'Just now'}</div>
- </div>
- </div>
- 
- <button 
- onClick={() => { deleteMessage(selectedMsg.id); setSelectedMsg(null); }}
- className="w-full h-11 bg-red-500/10 border border-red-500/20 text-red-500 text-sm font-bold rounded-xl hover:bg-red-500 hover:text-white transition-all flex items-center justify-center gap-2"
- >
- <Trash size={16} /> Delete Intel Report
- </button>
- </div>
+  const markAsRead = async (msg: any) => { if (msg.status === 'unread' || msg.status === 'new') await updateMessage(msg.id, { status: 'read' }); };
+  const handleDelete = async (id: string) => { if (window.confirm('Delete this message?')) { await deleteMessage(id); if (selected?.id === id) setSelected(null); } };
 
- <div className="lg:col-span-2 space-y-6">
- <div className="bg-white/[0.02] border border-white/5 rounded-[24px] p-6 md:p-8 relative h-full min-h-[300px]">
- <Quote className="absolute top-6 right-6 text-white/[0.03]" size={60} />
- <div className="text-xs font-bold text-[#F5A800] uppercase tracking-[0.2em] mb-6">Decrypted Message Content</div>
- <div className="text-sm md:text-base text-white/80 leading-relaxed font-medium italic">
- "{selectedMsg.message}"
- </div>
- </div>
- </div>
- </div>
- 
- <div className="flex items-center gap-4 p-4 bg-emerald-500/5 border border-emerald-500/10 rounded-xl">
- <CheckCircle2 size={20} className="text-emerald-500 shrink-0" />
- <div className="text-xs font-semibold text-white/40 uppercase tracking-wider leading-relaxed">
- Security verified. Transmission received through the <span className="text-white">Nexyovi Global Contact Terminal</span>. No anomalies detected.
- </div>
- </div>
- </div>
- </motion.div>
- );
- }
+  const formatDate = (dateStr: string) => {
+    if (!dateStr) return 'Unknown';
+    const d = new Date(dateStr); const now = new Date(); const diff = Math.floor((now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24));
+    if (diff === 0) return `Today at ${d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
+    if (diff === 1) return 'Yesterday';
+    if (diff < 7) return `${diff}d ago`;
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  };
 
- return (
- <div className="space-y-6 max-w-6xl mx-auto">
- {/* Header */}
- <div className="flex items-center justify-between">
- <div>
- <h1 className="text-2xl font-bold text-white tracking-tight">Incoming Intelligence</h1>
- <p className="text-sm text-white/40 mt-0.5">{messages.length} inquiries received</p>
- </div>
- </div>
+  if (selected) {
+    return (
+      <div className="space-y-6 max-w-4xl">
+        <button onClick={() => setSelected(null)} className="flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors"><ArrowLeft size={16} /> Back</button>
+        <div className="bg-[#0D1220] border border-white/[0.08] rounded-xl overflow-hidden">
+          <div className="px-6 py-5 border-b border-white/[0.06]">
+            <div className="flex items-start justify-between">
+              <div>
+                <h2 className="text-xl font-bold text-white">{selected.name}</h2>
+                <a href={`mailto:${selected.email}`} className="text-sm text-[#F5A800] hover:underline mt-1 inline-block">{selected.email}</a>
+              </div>
+              <span className="text-xs text-white/30 flex items-center gap-1"><Clock size={12} />{formatDate(selected.created_at)}</span>
+            </div>
+          </div>
+          <div className="px-6 py-6"><p className="text-sm text-white/70 leading-relaxed whitespace-pre-wrap">{selected.message || selected.content || 'No content'}</p></div>
+          <div className="px-6 py-4 border-t border-white/[0.06] bg-white/[0.02] flex items-center justify-between">
+            <div className="text-xs text-white/30">
+              {selected.phone && <span>Phone: {selected.phone}</span>}
+              {selected.company && <span className="ml-4">Company: {selected.company}</span>}
+            </div>
+            <button onClick={() => handleDelete(selected.id)} className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg hover:bg-red-500/20 transition-all"><Trash2 size={13} /> Delete</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
- {/* Search */}
- <div className="relative">
- <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" />
- <input 
- value={searchQuery} 
- onChange={e => setSearchQuery(e.target.value)} 
- placeholder="Search by name, email or content..." 
- className="w-full h-12 pl-11 pr-4 bg-[#0D1220] border border-white/[0.08] rounded-xl text-sm text-white placeholder:text-white/20 outline-none focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20 transition-all " 
- />
- </div>
+  return (
+    <div className="space-y-6">
+      <div className="bg-[#0D1220] border border-white/[0.08] rounded-xl p-5">
+        <div>
+          <h1 className="text-xl font-bold text-white">Messages</h1>
+          <p className="text-xs text-white/40 mt-1">{messages.length} total · {unreadCount} unread</p>
+        </div>
+      </div>
 
- {/* Messages Table */}
- <div className="bg-[#0D1220] border border-white/[0.08] rounded-2xl overflow-hidden ">
- <div className="grid grid-cols-12 px-6 py-3 border-b border-white/[0.06] text-xs font-bold text-white/30 uppercase tracking-widest">
- <div className="col-span-5 md:col-span-4">Sender</div>
- <div className="col-span-3 hidden md:block">Service</div>
- <div className="col-span-5 md:col-span-3">Received</div>
- <div className="col-span-2 text-right">Actions</div>
- </div>
- 
- {filtered.length > 0 ? filtered.map((msg) => (
- <motion.div 
- key={msg.id}
- layout
- onClick={() => setSelectedMsg(msg)}
- className="grid grid-cols-12 items-center px-6 py-4 border-b border-white/[0.04] hover:bg-white/[0.02] transition-colors group cursor-pointer last:border-0"
- >
- <div className="col-span-5 md:col-span-4 flex items-center gap-4">
- <div className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-center text-white/20 group-hover:bg-[#F5A800]/10 group-hover:text-[#F5A800] group-hover:border-[#F5A800]/20 transition-all shrink-0">
- <Mail size={16} />
- </div>
- <div className="min-w-0 pr-4">
- <div className="text-sm font-bold text-white truncate">{msg.name}</div>
- <div className="text-xs text-white/40 truncate mt-0.5">{msg.email}</div>
- </div>
- </div>
- <div className="col-span-3 hidden md:block">
- <span className="text-xs font-bold text-[#F5A800] bg-[#F5A800]/10 px-2.5 py-1 rounded-md border border-[#F5A800]/20 uppercase tracking-widest">
- {msg.service || 'General'}
- </span>
- </div>
- <div className="col-span-5 md:col-span-3 flex items-center gap-2 text-sm font-medium text-white/60">
- <Clock size={14} className="text-white/20 shrink-0" />
- <span className="truncate">{msg.created_at ? new Date(msg.created_at).toLocaleDateString() : 'Now'}</span>
- </div>
- <div className="col-span-2 flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
- <button 
- onClick={(e) => { e.stopPropagation(); deleteMessage(msg.id); }}
- className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/[0.05] hover:bg-red-500/10 hover:border-red-500/20 hover:text-red-400 text-white/40 flex items-center justify-center transition-all"
- >
- <Trash2 size={14} />
- </button>
- <ChevronRight size={16} className="text-white/20 group-hover:text-[#F5A800]" />
- </div>
- </motion.div>
- )) : (
- <div className="py-16 text-center">
- <Mail size={32} className="mx-auto mb-3 text-white/10" />
- <div className="text-sm text-white/40">No intelligence records found.</div>
- </div>
- )}
- </div>
- </div>
- );
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1">
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search messages..."
+            className="w-full h-10 pl-10 pr-4 bg-[#0D1220] border border-white/[0.08] rounded-lg text-sm text-white/70 placeholder:text-white/25 focus:outline-none focus:border-[#F5A800]/50 transition-colors" />
+        </div>
+        <div className="flex gap-1 p-0.5 bg-white/[0.04] rounded-lg">
+          {(['all', 'unread', 'read'] as const).map(f => (
+            <button key={f} onClick={() => setFilter(f)}
+              className={`px-4 py-1.5 text-xs font-bold rounded-md transition-all capitalize ${filter === f ? 'bg-[#F5A800] text-black shadow-sm' : 'text-white/40 hover:text-white'}`}>
+              {f}{f === 'unread' && unreadCount > 0 ? ` (${unreadCount})` : ''}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="bg-[#0D1220] border border-white/[0.08] rounded-xl overflow-hidden">
+        {filtered.length > 0 ? (
+          <div className="divide-y divide-white/[0.04]">
+            {filtered.map((msg: any) => (
+              <div key={msg.id} onClick={() => { setSelected(msg); markAsRead(msg); }}
+                className={`cursor-pointer hover:bg-white/[0.02] transition-colors ${msg.status === 'unread' || msg.status === 'new' ? 'border-l-2 border-l-[#F5A800]' : ''}`}>
+                <div className="px-5 py-4 flex items-start gap-4">
+                  <div className={`w-2 h-2 mt-2 rounded-full shrink-0 ${msg.status === 'unread' || msg.status === 'new' ? 'bg-[#F5A800]' : 'bg-white/20'}`} />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className={`text-sm ${msg.status === 'unread' || msg.status === 'new' ? 'font-bold text-white' : 'font-semibold text-white/70'}`}>{msg.name}</span>
+                      <span className="text-xs text-white/30 shrink-0">{formatDate(msg.created_at)}</span>
+                    </div>
+                    <div className="text-xs text-white/40 mt-0.5">{msg.email}</div>
+                    <p className="text-sm text-white/50 mt-1.5 line-clamp-2">{msg.message || msg.content || 'No content'}</p>
+                  </div>
+                  <div className="flex items-center gap-1.5 shrink-0 pt-1">
+                    {msg.status !== 'read' && (
+                      <button onClick={e => { e.stopPropagation(); updateMessage(msg.id, { status: 'read' }); }}
+                        className="w-7 h-7 rounded-lg border border-white/10 flex items-center justify-center text-white/30 hover:text-emerald-400 hover:border-emerald-400/30 transition-all"><Check size={13} /></button>
+                    )}
+                    <button onClick={e => { e.stopPropagation(); handleDelete(msg.id); }}
+                      className="w-7 h-7 rounded-lg border border-white/10 flex items-center justify-center text-white/30 hover:text-red-400 hover:border-red-400/30 transition-all"><Trash2 size={13} /></button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="py-16 text-center">
+            <Mail size={32} className="mx-auto mb-3 text-white/20" />
+            <p className="text-sm text-white/50 font-medium">No messages found</p>
+            <p className="text-xs text-white/30 mt-1">{search ? 'Try a different search' : 'No messages yet'}</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default AdminMessages;

@@ -147,7 +147,7 @@ export default function EngagementModels() {
                           marginLeft: '-18px',
                         }}
                       >
-<div className="absolute inset-0 bg-gradient-to-b from-white/50 to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-b from-white/50 to-transparent pointer-events-none" />
                         {(() => { const Icon = model.icon; return <Icon size={15} style={{ color: isActive ? '#0f172a' : '#94a3b8' }} className="relative z-10 transition-colors duration-300" />; })()}
                       </div>
                       {/* Bottom connector */}
@@ -157,14 +157,14 @@ export default function EngagementModels() {
                       />
                     </div>
 
-                    {/* Number + label */}
+                    {/* Label */}
                     <div
                       className="py-5 transition-all duration-300"
                       style={{ opacity: isActive ? 1 : 0.5 }}
                     >
                       <div
                         className="text-[14px] font-bold leading-snug transition-colors duration-300"
-style={{ color: isActive ? '#0f172a' : '#64748b' }}
+                        style={{ color: isActive ? '#0f172a' : '#64748b' }}
                       >
                         {model.title}
                       </div>
@@ -215,30 +215,6 @@ style={{ color: isActive ? '#0f172a' : '#64748b' }}
                     transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
                     className="absolute inset-0 flex flex-col justify-center"
                   >
-                    {/* Mobile number badge */}
-                    <div className="flex items-center gap-3 mb-4 lg:hidden">
-                      <span
-                        className="text-[10px] font-bold tracking-[0.22em] uppercase"
-                        style={{ color: model.accent }}
-                      >
-                        / {model.num}
-                      </span>
-                      <div className="h-[1px] flex-1 bg-slate-200" />
-                    </div>
-
-                    {/* Icon */}
-                    <motion.div
-                      animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 10, scale: isActive ? 1 : 0.85 }}
-                      transition={{ duration: 0.45, delay: 0.02, ease: [0.16, 1, 0.3, 1] }}
-                      className="relative w-11 h-11 rounded-full border flex items-center justify-center overflow-hidden mb-5 shadow-sm"
-                      style={{
-                        backgroundColor: `#e2e8f0`,
-                        borderColor: `#cbd5e1`,
-                      }}
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent pointer-events-none" />
-                      {(() => { const Icon = model.icon; return <Icon size={18} style={{ color: '#0f172a' }} className="relative z-10" />; })()}
-                    </motion.div>
 
                     {/* Title */}
                     <motion.h3

@@ -1,0 +1,64 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    ":separateMajorMinor",
+    ":combinePatchMinorUpdates",
+    ":enableVulnerabilityAlerts",
+    "group:allNonMajor"
+  ],
+  "labels": ["dependencies", "security"],
+  "schedule": ["before 9am on Monday"],
+  "timezone": "Africa/Addis_Ababa",
+  "packageRules": [
+    {
+      "description": "Auto-merge patch and minor updates for dev dependencies",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "description": "Security-critical packages get priority review",
+      "matchPackageNames": [
+        "express",
+        "helmet",
+        "express-rate-limit",
+        "react-router-dom",
+        "@supabase/supabase-js",
+        "validator"
+      ],
+      "labels": ["dependencies", "security-critical"],
+      "reviewers": ["team:security"]
+    },
+    {
+      "description": "Pin major version updates require manual review",
+      "matchUpdateTypes": ["major"],
+      "labels": ["dependencies", "major-update"],
+      "automerge": false,
+      "assignees": ["security-bot"]
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "labels": ["security", "vulnerability"],
+    "assignees": ["security-bot"]
+  },
+  "npm": {
+    "packageRules": [
+      {
+        "matchFile": "backend/package.json",
+        "labels": ["dependencies", "backend"]
+      },
+      {
+        "matchFile": "frontend/package.json",
+        "labels": ["dependencies", "frontend"]
+      }
+    ]
+  },
+  "github-actions": {
+    "enabled": true,
+    "labels": ["dependencies", "ci-cd"]
+  },
+  "ignorePaths": ["node_modules/**", "**/node_modules/**"],
+  "prHourlyLimit": 2,
+  "prConcurrentLimit": 10
+}

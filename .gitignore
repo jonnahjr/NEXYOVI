@@ -21,6 +21,21 @@ dist-ssr/
 .env
 .env.local
 .env.*.local
+.env.production
+.env.production.local
+
+# Sensitive Files
+*.key
+*.pem
+*.cert
+*.p8
+credentials.json
+secrets.json
+private/
+
+# Supabase
+.supabase/
+supabase/.temp/
 
 # Editor
 .vscode/*

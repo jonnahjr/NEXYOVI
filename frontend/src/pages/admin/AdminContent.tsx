@@ -1,1593 +1,772 @@
-import { motion } from 'framer-motion';
-import {
-  BarChart3,
-  CheckCircle2,
-  ChevronRight,
-  FileText,
-  Globe,
-  LayoutTemplate,
-  Image as ImageIcon,
-  MessageSquare,
-  Quote,
-  ArrowUp,
-  ArrowDown,
-  Search,
-  Save,
-  Users,
-  Plus,
-  UploadCloud,
-  X,
-  Cpu,
-  Shield,
-  Target,
-  Briefcase
-} from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { homepageTestimonialsDefaults, trustLogosDefaults, useSite } from '../../context/SiteContext';
+import React, { useState, useEffect } from 'react';
+import { Save, X, Check, LayoutTemplate, Search, UploadCloud } from 'lucide-react';
+import { useSite } from '../../context/SiteContext';
 import { supabase } from '../../lib/supabase';
 
-const inputClass = "w-full h-14 px-5 bg-white/[0.03] border border-white/[0.08] rounded-2xl text-white text-sm outline-none focus:border-[#F5A800]/60 focus:ring-2 focus:ring-[#F5A800]/20 transition-all placeholder:text-white/20 font-medium";
-const textareaClass = "w-full px-5 py-4 bg-white/[0.03] border border-white/[0.08] rounded-2xl text-white text-sm outline-none focus:border-[#F5A800]/60 focus:ring-2 focus:ring-[#F5A800]/20 transition-all placeholder:text-white/20 resize-none font-medium leading-relaxed";
-const labelClass = "block text-xs font-bold text-white/35 uppercase tracking-[0.2em] mb-3 ml-1";
-
-const createTrustLogosForm = () => ({
-  title: 'Experience Across Enterprise, Government & Technology Sectors',
-  items: trustLogosDefaults.map(item => ({ ...item }))
-});
-
-const createTestimonialsForm = () => ({
-  items: homepageTestimonialsDefaults.map(item => ({ ...item }))
-});
-
-const createNavigationForm = () => ({
-  headerLinks: [
-    { label: 'Services', href: '/services' },
-    { label: 'Industries', href: '/industries' },
-    { label: 'Projects', href: '/projects' },
-    { label: 'About', href: '/company' },
-    { label: 'Contact', href: '/contact' }
-  ],
-  ctaLabel: 'Book Strategy Session'
-});
-
-const createSeoForm = () => ({
-  metaTitle: 'Nexyovi - Enterprise Software, AI & Cloud',
-  metaDescription: 'Nexyovi builds secure enterprise software, AI systems, and cloud infrastructure for organizations across Africa and beyond.',
-  canonicalUrl: 'https://nexyovi.com',
-  ogImage: '',
-  robots: 'index, follow',
-  structuredData: ''
-});
-
-const createMediaForm = () => ({
-  items: [] as Array<{ id: string; name: string; url: string; type: string }>
-});
-
-const SaveButton = ({ onSave, saved }: { onSave: (e: any) => void, saved: boolean }) => (
-  <button
-    onClick={onSave}
-    className={`flex items-center gap-2.5 h-12 px-6 text-sm font-bold uppercase tracking-[0.2em] rounded-2xl transition-all duration-300 ${saved 
-      ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' 
-      : 'bg-gradient-to-r from-[#F5A800] to-[#ffb700] text-white hover:shadow-2xl hover:shadow-[#F5A800]/30'
-    }`}
-  >
-    {saved ? <CheckCircle2 size={18} /> : <Save size={18} />}
-    {saved ? 'Saved!' : 'Save Changes'}
-  </button>
-);
-
-// ── HERO SECTION EDITOR ──
-const HeroEditor = () => {
-  const { siteContent, updateSiteContent } = useSite();
-  const [saved, setSaved] = useState(false);
-  const [form, setForm] = useState({ title: '', subtitle: '', cta_primary: '', cta_secondary: '' });
-
-  useEffect(() => {
-    if (siteContent?.hero) setForm({ ...siteContent.hero });
-  }, [siteContent]);
-
-  const handleSave = async (e: any) => {
-    e.preventDefault();
-    await updateSiteContent('hero', form);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
-
-  return (
-    <div className="space-y-6">
-      <div>
-        <label className={labelClass}>Main Headline</label>
-        <textarea
-          rows={2}
-          value={form.title}
-          onChange={e => setForm({ ...form, title: e.target.value })}
-          className={textareaClass + " text-xl font-black"}
-          placeholder="We build enterprise software, AI systems, and cloud infrastructure for African businesses — fast, secure, senior-led."
-        />
-      </div>
-      <div>
-        <label className={labelClass}>Subtitle / Description</label>
-        <textarea
-          rows={4}
-          value={form.subtitle}
-          onChange={e => setForm({ ...form, subtitle: e.target.value })}
-          className={textareaClass}
-          placeholder="We engineer enterprise-grade cloud ecosystems..."
-        />
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div>
-          <label className={labelClass}>Primary Button Text</label>
-          <input type="text" value={form.cta_primary} onChange={e => setForm({ ...form, cta_primary: e.target.value })} className={inputClass} placeholder="Deploy with Nexyovi" />
-        </div>
-        <div>
-          <label className={labelClass}>Secondary Button Text</label>
-          <input type="text" value={form.cta_secondary} onChange={e => setForm({ ...form, cta_secondary: e.target.value })} className={inputClass} placeholder="View Documentation" />
-        </div>
-      </div>
-      <div className="flex justify-end pt-2">
-        <SaveButton onSave={handleSave} saved={saved} />
-      </div>
-    </div>
-  );
-};
-
-// ── METRICS EDITOR ──
-const MetricsEditor = () => {
-  const { siteContent, updateSiteContent } = useSite();
-  const [saved, setSaved] = useState(false);
-  const [metrics, setMetrics] = useState([
-    { number: '12+', label: 'Years Experience' },
-    { number: '150+', label: 'Projects Delivered' },
-    { number: '99.9%', label: 'Uptime SLA' },
-    { number: '24/7', label: 'Support & Monitoring' }
-  ]);
-
-  useEffect(() => {
-    if (siteContent?.metrics) setMetrics(siteContent.metrics);
-  }, [siteContent]);
-
-  const handleSave = async (e: any) => {
-    e.preventDefault();
-    await updateSiteContent('metrics', metrics);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
-
-  const updateMetric = (index: number, field: string, value: string) => {
-    const newMetrics = [...metrics];
-    newMetrics[index] = { ...newMetrics[index], [field]: value };
-    setMetrics(newMetrics);
-  };
-
-  return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {metrics.map((metric, i) => (
-          <div key={i} className="p-6 bg-white/[0.02] border border-white/[0.05] rounded-3xl space-y-5">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="w-10 h-10 rounded-2xl bg-[#F5A800]/10 flex items-center justify-center text-[#F5A800]">
-                <BarChart3 size={18} />
-              </div>
-              <h4 className="text-sm font-bold text-white">Metric {i + 1}</h4>
-            </div>
-            <div>
-              <label className={labelClass}>Metric Number (e.g., 12+)</label>
-              <input type="text" value={metric.number} onChange={e => updateMetric(i, 'number', e.target.value)} className={inputClass + " text-xl font-bold text-[#F5A800]"} />
-            </div>
-            <div>
-              <label className={labelClass}>Metric Label</label>
-              <input type="text" value={metric.label} onChange={e => updateMetric(i, 'label', e.target.value)} className={inputClass} />
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="flex justify-end pt-2">
-        <SaveButton onSave={handleSave} saved={saved} />
-      </div>
-    </div>
-  );
-};
-
-// ── TRUST LOGOS EDITOR ──
-const TrustLogosEditor = () => {
-  const { siteContent, updateSiteContent } = useSite();
-  const [saved, setSaved] = useState(false);
-  const [uploadingIndex, setUploadingIndex] = useState<number | null>(null);
-  const [form, setForm] = useState(createTrustLogosForm());
-
-  useEffect(() => {
-    if (siteContent?.trustLogos) {
-      setForm({
-        ...createTrustLogosForm(),
-        ...siteContent.trustLogos,
-        items: siteContent.trustLogos.items?.length
-          ? siteContent.trustLogos.items.map((item: any) => ({
-              name: item.name || '',
-              logo_url: item.logo_url || ''
-            }))
-          : createTrustLogosForm().items
-      });
-    }
-  }, [siteContent]);
-
-  const handleSave = async (e: any) => {
-    e.preventDefault();
-    await updateSiteContent('trustLogos', form);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
-
-  const updateItem = (index: number, field: 'name' | 'logo_url', value: string) => {
-    const nextItems = [...form.items];
-    nextItems[index] = { ...nextItems[index], [field]: value };
-    setForm({ ...form, items: nextItems });
-  };
-
-  const handleLogoUpload = async (index: number, e: any) => {
-    if (!e.target.files || e.target.files.length === 0) return;
-
-    const file = e.target.files[0];
-    setUploadingIndex(index);
-
-    try {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `trust_logo_${Date.now()}_${Math.random().toString(36).slice(2)}.${fileExt}`;
-      const filePath = `trust-logos/${fileName}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from('nexyovi_assets')
-        .upload(filePath, file);
-
-      if (uploadError) throw uploadError;
-
-      const { data } = supabase.storage
-        .from('nexyovi_assets')
-        .getPublicUrl(filePath);
-
-      updateItem(index, 'logo_url', data.publicUrl);
-    } catch (error) {
-      console.error('Error uploading trust logo:', error);
-      alert('Logo upload failed. Please check console for details.');
-    } finally {
-      setUploadingIndex(null);
-      e.target.value = '';
-    }
-  };
-
-  const addItem = () => {
-    setForm({ ...form, items: [...form.items, { name: '', logo_url: '' }] });
-  };
-
-  const removeItem = (index: number) => {
-    setForm({ ...form, items: form.items.filter((_: any, i: number) => i !== index) });
-  };
-
-  return (
-    <div className="space-y-6">
-      <div>
-        <label className={labelClass}>Section Heading</label>
-        <input
-          type="text"
-          value={form.title}
-          onChange={e => setForm({ ...form, title: e.target.value })}
-          className={inputClass}
-        />
-      </div>
-
-      <div className="flex items-center justify-between">
-        <label className={labelClass + " mb-0"}>Logo List</label>
-        <button onClick={addItem} className="flex items-center gap-2 text-xs font-bold text-[#F5A800] uppercase tracking-[0.2em] hover:text-[#ffb700] transition-colors">
-          <Plus size={14} /> Add Logo
-        </button>
-      </div>
-
-      <div className="space-y-5">
-        {form.items.map((item, i) => (
-          <div key={i} className="p-6 bg-white/[0.02] border border-white/[0.05] rounded-3xl space-y-5">
-            <div className="flex items-center justify-between">
-              <h4 className="text-sm font-bold text-[#F5A800] uppercase tracking-[0.2em]">Logo {i + 1}</h4>
-              <button onClick={() => removeItem(i)} className="w-10 h-10 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition-all">
-                <X size={16} />
-              </button>
-            </div>
-            <div>
-              <label className={labelClass}>Organization Name</label>
-              <input type="text" value={item.name} onChange={e => updateItem(i, 'name', e.target.value)} className={inputClass} />
-            </div>
-            <div>
-              <label className={labelClass}>Logo URL</label>
-              <input type="text" value={item.logo_url} onChange={e => updateItem(i, 'logo_url', e.target.value)} className={inputClass} />
-            </div>
-            <div>
-              <label className={labelClass}>Upload Local File</label>
-              <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
-                <div className="w-20 h-20 rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden flex items-center justify-center shrink-0">
-                  {item.logo_url ? (
-                    <img src={item.logo_url} alt={item.name || 'Logo preview'} className="w-full h-full object-contain p-2" />
-                  ) : (
-                    <ImageIcon size={20} className="text-white/20" />
-                  )}
-                </div>
-                <label className={`h-12 px-5 flex items-center justify-center gap-2 rounded-2xl border border-white/10 font-bold transition-all cursor-pointer text-sm ${uploadingIndex === i ? 'bg-white/10 text-white/50' : 'bg-white/5 text-white hover:bg-white/10 hover:border-white/20'}`}>
-                  <UploadCloud size={16} />
-                  {uploadingIndex === i ? 'Uploading...' : 'Upload File'}
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={(event) => handleLogoUpload(i, event)}
-                    disabled={uploadingIndex === i}
-                  />
-                </label>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="flex justify-end pt-2">
-        <SaveButton onSave={handleSave} saved={saved} />
-      </div>
-    </div>
-  );
-};
-
-// ── HOMEPAGE TESTIMONIALS EDITOR ──
-const HomepageTestimonialsEditor = () => {
-  const { siteContent, updateSiteContent } = useSite();
-  const [saved, setSaved] = useState(false);
-  const [uploadingIndex, setUploadingIndex] = useState<number | null>(null);
-  const [form, setForm] = useState(createTestimonialsForm());
-
-  useEffect(() => {
-    if (siteContent?.testimonialsSection) {
-      setForm({
-        items: siteContent.testimonialsSection.items?.length
-          ? siteContent.testimonialsSection.items.map((item: any) => ({
-              id: item.id || '',
-              quote: item.quote || '',
-              role: item.role || '',
-              company: item.company || '',
-              author: item.author || '',
-              avatar_url: item.avatar_url || item.img || '',
-              linkedin: item.linkedin || '',
-              highlight: item.highlight || '',
-              label: item.label || 'Trusted by founders of',
-              caseStudy: item.caseStudy || ''
-            }))
-          : createTestimonialsForm().items
-      });
-    }
-  }, [siteContent]);
-
-  const handleSave = async (e: any) => {
-    e.preventDefault();
-    await updateSiteContent('testimonialsSection', form);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
-
-  const updateItem = (index: number, field: string, value: string) => {
-    const nextItems = [...form.items];
-    nextItems[index] = { ...nextItems[index], [field]: value };
-    setForm({ ...form, items: nextItems });
-  };
-
-  const addItem = () => {
-    setForm({
-      ...form,
-      items: [
-        ...form.items,
-        {
-          id: `${Date.now()}`,
-          quote: '',
-          role: '',
-          company: '',
-          author: '',
-          avatar_url: '',
-          linkedin: '',
-          highlight: '',
-          label: 'Trusted by founders of',
-          caseStudy: ''
-        }
-      ]
-    });
-  };
-
-  const removeItem = (index: number) => {
-    setForm({ ...form, items: form.items.filter((_: any, i: number) => i !== index) });
-  };
-
-  const handleAvatarUpload = async (index: number, e: any) => {
-    if (!e.target.files || e.target.files.length === 0) return;
-
-    const file = e.target.files[0];
-    setUploadingIndex(index);
-
-    try {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `testimonial_${Date.now()}_${Math.random().toString(36).slice(2)}.${fileExt}`;
-      const filePath = `homepage-testimonials/${fileName}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from('nexyovi_assets')
-        .upload(filePath, file);
-
-      if (uploadError) throw uploadError;
-
-      const { data } = supabase.storage
-        .from('nexyovi_assets')
-        .getPublicUrl(filePath);
-
-      updateItem(index, 'avatar_url', data.publicUrl);
-    } catch (error) {
-      console.error('Error uploading testimonial avatar:', error);
-      alert('Avatar upload failed. Please check console for details.');
-    } finally {
-      setUploadingIndex(null);
-      e.target.value = '';
-    }
-  };
-
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <label className={labelClass + ' mb-0'}>Testimonials List</label>
-        <button onClick={addItem} className="flex items-center gap-2 text-xs font-bold text-[#F5A800] uppercase tracking-[0.2em] hover:text-[#ffb700] transition-colors">
-          <Plus size={14} /> Add Testimonial
-        </button>
-      </div>
-
-      <div className="space-y-6">
-        {form.items.map((item, i) => (
-          <div key={i} className="p-6 bg-white/[0.02] border border-white/[0.05] rounded-3xl space-y-5">
-            <div className="flex items-center justify-between">
-              <h4 className="text-sm font-bold text-[#F5A800] uppercase tracking-[0.2em]">Testimonial {i + 1}</h4>
-              <button onClick={() => removeItem(i)} className="w-10 h-10 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition-all">
-                <X size={16} />
-              </button>
-            </div>
-
-            <div>
-              <label className={labelClass}>Quote</label>
-              <textarea rows={5} value={item.quote} onChange={e => updateItem(i, 'quote', e.target.value)} className={textareaClass} />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div><label className={labelClass}>Author</label><input type="text" value={item.author} onChange={e => updateItem(i, 'author', e.target.value)} className={inputClass} /></div>
-              <div><label className={labelClass}>Role</label><input type="text" value={item.role} onChange={e => updateItem(i, 'role', e.target.value)} className={inputClass} /></div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div><label className={labelClass}>Company</label><input type="text" value={item.company} onChange={e => updateItem(i, 'company', e.target.value)} className={inputClass} /></div>
-              <div><label className={labelClass}>Highlight Text</label><input type="text" value={item.highlight} onChange={e => updateItem(i, 'highlight', e.target.value)} className={inputClass} /></div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div><label className={labelClass}>LinkedIn URL</label><input type="text" value={item.linkedin} onChange={e => updateItem(i, 'linkedin', e.target.value)} className={inputClass} /></div>
-              <div><label className={labelClass}>Case Study URL</label><input type="text" value={item.caseStudy || ''} onChange={e => updateItem(i, 'caseStudy', e.target.value)} className={inputClass} /></div>
-            </div>
-
-            <div>
-              <label className={labelClass}>Avatar URL or Upload</label>
-              <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
-                <div className="w-20 h-20 rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden flex items-center justify-center shrink-0">
-                  {item.avatar_url ? (
-                    <img src={item.avatar_url} alt={item.author || 'Avatar preview'} className="w-full h-full object-cover" />
-                  ) : (
-                    <ImageIcon size={20} className="text-white/20" />
-                  )}
-                </div>
-                <label className={`h-12 px-5 flex items-center justify-center gap-2 rounded-2xl border border-white/10 font-bold transition-all cursor-pointer text-sm ${uploadingIndex === i ? 'bg-white/10 text-white/50' : 'bg-white/5 text-white hover:bg-white/10 hover:border-white/20'}`}>
-                  <UploadCloud size={16} />
-                  {uploadingIndex === i ? 'Uploading...' : 'Upload Avatar'}
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={(event) => handleAvatarUpload(i, event)}
-                    disabled={uploadingIndex === i}
-                  />
-                </label>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="flex justify-end pt-2">
-        <SaveButton onSave={handleSave} saved={saved} />
-      </div>
-    </div>
-  );
-};
-
-// ── NAVIGATION EDITOR ──
-const NavigationEditor = () => {
-  const { siteContent, updateSiteContent } = useSite();
-  const [saved, setSaved] = useState(false);
-  const [form, setForm] = useState(createNavigationForm());
-
-  useEffect(() => {
-    if (siteContent?.navigation) {
-      setForm({
-        ...createNavigationForm(),
-        ...siteContent.navigation,
-        headerLinks: siteContent.navigation.headerLinks?.length ? siteContent.navigation.headerLinks : createNavigationForm().headerLinks
-      });
-    }
-  }, [siteContent]);
-
-  const handleSave = async (e: any) => {
-    e.preventDefault();
-    await updateSiteContent('navigation', form);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
-
-  const updateLink = (index: number, field: 'label' | 'href', value: string) => {
-    const next = [...form.headerLinks];
-    next[index] = { ...next[index], [field]: value };
-    setForm({ ...form, headerLinks: next });
-  };
-
-  const addLink = () => {
-    setForm({ ...form, headerLinks: [...form.headerLinks, { label: '', href: '' }] });
-  };
-
-  const removeLink = (index: number) => {
-    setForm({ ...form, headerLinks: form.headerLinks.filter((_, i) => i !== index) });
-  };
-
-  const moveLink = (index: number, direction: -1 | 1) => {
-    const next = [...form.headerLinks];
-    const target = index + direction;
-    if (target < 0 || target >= next.length) return;
-    [next[index], next[target]] = [next[target], next[index]];
-    setForm({ ...form, headerLinks: next });
-  };
-
-  return (
-    <div className="space-y-6">
-      <div>
-        <label className={labelClass}>Primary CTA Label</label>
-        <input type="text" value={form.ctaLabel} onChange={e => setForm({ ...form, ctaLabel: e.target.value })} className={inputClass} />
-      </div>
-
-      <div className="flex items-center justify-between">
-        <label className={labelClass + ' mb-0'}>Header Menu</label>
-        <button onClick={addLink} className="flex items-center gap-2 text-xs font-bold text-[#F5A800] uppercase tracking-[0.2em] hover:text-[#ffb700] transition-colors">
-          <Plus size={14} /> Add Item
-        </button>
-      </div>
-
-      <div className="space-y-4">
-        {form.headerLinks.map((link, i) => (
-          <div key={i} className="p-5 bg-white/[0.02] border border-white/[0.05] rounded-3xl space-y-4">
-            <div className="flex items-center justify-between">
-              <h4 className="text-sm font-bold text-[#F5A800] uppercase tracking-[0.2em]">Link {i + 1}</h4>
-              <div className="flex items-center gap-2">
-                <button onClick={() => moveLink(i, -1)} className="w-9 h-9 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center text-white/40 hover:text-white hover:bg-white/[0.06] transition-all">
-                  <ArrowUp size={14} />
-                </button>
-                <button onClick={() => moveLink(i, 1)} className="w-9 h-9 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center text-white/40 hover:text-white hover:bg-white/[0.06] transition-all">
-                  <ArrowDown size={14} />
-                </button>
-                <button onClick={() => removeLink(i)} className="w-9 h-9 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition-all">
-                  <X size={14} />
-                </button>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div><label className={labelClass}>Label</label><input type="text" value={link.label} onChange={e => updateLink(i, 'label', e.target.value)} className={inputClass} /></div>
-              <div><label className={labelClass}>URL</label><input type="text" value={link.href} onChange={e => updateLink(i, 'href', e.target.value)} className={inputClass} /></div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="flex justify-end pt-2">
-        <SaveButton onSave={handleSave} saved={saved} />
-      </div>
-    </div>
-  );
-};
-
-// ── SEO EDITOR ──
-const SEOEditor = () => {
-  const { siteContent, updateSiteContent } = useSite();
-  const [saved, setSaved] = useState(false);
-  const [form, setForm] = useState(createSeoForm());
-
-  useEffect(() => {
-    if (siteContent?.seo) {
-      setForm({ ...createSeoForm(), ...siteContent.seo });
-    }
-  }, [siteContent]);
-
-  const handleSave = async (e: any) => {
-    e.preventDefault();
-    await updateSiteContent('seo', form);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
-
-  return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div className="md:col-span-2"><label className={labelClass}>Meta Title</label><input type="text" value={form.metaTitle} onChange={e => setForm({ ...form, metaTitle: e.target.value })} className={inputClass} /></div>
-        <div className="md:col-span-2"><label className={labelClass}>Meta Description</label><textarea rows={4} value={form.metaDescription} onChange={e => setForm({ ...form, metaDescription: e.target.value })} className={textareaClass} /></div>
-        <div><label className={labelClass}>Canonical URL</label><input type="text" value={form.canonicalUrl} onChange={e => setForm({ ...form, canonicalUrl: e.target.value })} className={inputClass} /></div>
-        <div><label className={labelClass}>Robots</label><input type="text" value={form.robots} onChange={e => setForm({ ...form, robots: e.target.value })} className={inputClass} /></div>
-        <div className="md:col-span-2"><label className={labelClass}>Open Graph Image URL</label><input type="text" value={form.ogImage} onChange={e => setForm({ ...form, ogImage: e.target.value })} className={inputClass} /></div>
-        <div className="md:col-span-2"><label className={labelClass}>Structured Data JSON-LD</label><textarea rows={6} value={form.structuredData} onChange={e => setForm({ ...form, structuredData: e.target.value })} className={textareaClass} placeholder='{"@context":"https://schema.org", ...}' /></div>
-      </div>
-      <div className="flex justify-end pt-2"><SaveButton onSave={handleSave} saved={saved} /></div>
-    </div>
-  );
-};
-
-// ── MEDIA LIBRARY EDITOR ──
-const MediaLibraryEditor = () => {
-  const { siteContent, updateSiteContent } = useSite();
-  const [saved, setSaved] = useState(false);
-  const [uploading, setUploading] = useState(false);
-  const [query, setQuery] = useState('');
-  const [form, setForm] = useState(createMediaForm());
-
-  useEffect(() => {
-    if (siteContent?.mediaLibrary) {
-      setForm({
-        items: siteContent.mediaLibrary.items || []
-      });
-    }
-  }, [siteContent]);
-
-  const handleUpload = async (e: any) => {
-    if (!e.target.files || e.target.files.length === 0) return;
-    const file = e.target.files[0];
-    setUploading(true);
-
-    try {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `media_${Date.now()}_${Math.random().toString(36).slice(2)}.${fileExt}`;
-      const filePath = `media/${fileName}`;
-
-      const { error } = await supabase.storage.from('nexyovi_assets').upload(filePath, file);
-      if (error) throw error;
-
-      const { data } = supabase.storage.from('nexyovi_assets').getPublicUrl(filePath);
-      const next = [{ id: fileName, name: file.name, url: data.publicUrl, type: file.type || 'image' }, ...form.items];
-      setForm({ items: next });
-    } catch (error) {
-      console.error('Media upload failed:', error);
-      alert('Media upload failed.');
-    } finally {
-      setUploading(false);
-      e.target.value = '';
-    }
-  };
-
-  const filtered = form.items.filter(item => `${item.name} ${item.url}`.toLowerCase().includes(query.toLowerCase()));
-
-  const handleSave = async (e: any) => {
-    e.preventDefault();
-    await updateSiteContent('mediaLibrary', form);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
-
-  const removeItem = (index: number) => {
-    setForm({ items: form.items.filter((_, i) => i !== index) });
-  };
-
-  return (
-    <div className="space-y-6">
-      <div className="flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
-        <div className="relative flex-1 max-w-xl">
-          <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
-          <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search media" className={inputClass + ' pl-11'} />
-        </div>
-        <label className={`h-12 px-5 flex items-center justify-center gap-2 rounded-2xl border border-white/10 font-bold transition-all cursor-pointer text-sm ${uploading ? 'bg-white/10 text-white/50' : 'bg-white/5 text-white hover:bg-white/10 hover:border-white/20'}`}>
-          <UploadCloud size={16} />
-          {uploading ? 'Uploading...' : 'Upload Media'}
-          <input type="file" accept="image/*,video/*,.svg" className="hidden" onChange={handleUpload} disabled={uploading} />
-        </label>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-        {filtered.map((item, i) => (
-          <div key={item.id} className="p-4 rounded-3xl border border-white/[0.05] bg-white/[0.02] space-y-4">
-            <div className="aspect-[16/10] rounded-2xl overflow-hidden bg-black/30 border border-white/[0.05] flex items-center justify-center">
-              {item.type?.startsWith('video') ? (
-                <video src={item.url} controls className="w-full h-full object-cover" />
-              ) : (
-                <img src={item.url} alt={item.name} className="w-full h-full object-contain p-3" />
-              )}
-            </div>
-            <div className="flex items-start justify-between gap-3">
-              <div className="min-w-0">
-                <p className="text-sm font-semibold text-white truncate">{item.name}</p>
-                <p className="text-xs text-white/30 truncate">{item.url}</p>
-              </div>
-              <button onClick={() => removeItem(i)} className="w-9 h-9 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition-all">
-                <X size={14} />
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="flex justify-end pt-2">
-        <SaveButton onSave={handleSave} saved={saved} />
-      </div>
-    </div>
-  );
-};
-
-// ── CTA GLOBALS EDITOR ──
-const CTAEditor = () => {
-  const { siteContent, updateSiteContent } = useSite();
-  const [saved, setSaved] = useState(false);
-  const [form, setForm] = useState({
-    title: "Let's Build Together",
-    subtitle: "Ready to scale? Let's talk.",
-    description: "Book your 45-minute strategy session today. We take on a limited number of new clients each quarter to ensure maximum quality and dedicated attention.",
-    buttonText: "Book a strategy session",
-    benefits: [
-      "AI audit + 2–3 ROI ideas in 45 min",
-      "Prioritized roadmap outline, zero cost",
-      "Strict NDA, fully confidential"
-    ]
-  });
-
-  useEffect(() => {
-    if (siteContent?.ctas) setForm({ ...form, ...siteContent.ctas });
-  }, [siteContent]);
-
-  const handleSave = async (e: any) => {
-    e.preventDefault();
-    await updateSiteContent('ctas', form);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
-
-  const updateBenefit = (index: number, value: string) => {
-    const newBenefits = [...form.benefits];
-    newBenefits[index] = value;
-    setForm({ ...form, benefits: newBenefits });
-  };
-
-  const addBenefit = () => {
-    setForm({ ...form, benefits: [...form.benefits, ''] });
-  };
-
-  const removeBenefit = (index: number) => {
-    setForm({ ...form, benefits: form.benefits.filter((_, i) => i !== index) });
-  };
-
-  return (
-    <div className="space-y-6">
-      <div>
-        <label className={labelClass}>CTA Headline</label>
-        <input type="text" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className={inputClass + " font-bold text-lg"} />
-      </div>
-      <div>
-        <label className={labelClass}>CTA Subheadline</label>
-        <input type="text" value={form.subtitle} onChange={e => setForm({ ...form, subtitle: e.target.value })} className={inputClass} />
-      </div>
-      <div>
-        <label className={labelClass}>CTA Description</label>
-        <textarea rows={4} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className={textareaClass} />
-      </div>
-      <div>
-        <label className={labelClass}>Button Text</label>
-        <input type="text" value={form.buttonText} onChange={e => setForm({ ...form, buttonText: e.target.value })} className={inputClass} />
-      </div>
-      <div className="pt-6 border-t border-white/[0.05] space-y-4">
-        <div className="flex items-center justify-between">
-          <label className={labelClass + " mb-0"}>CTA Benefits List</label>
-          <button onClick={addBenefit} className="flex items-center gap-2 text-xs font-bold text-[#F5A800] uppercase tracking-[0.2em] hover:text-[#ffb700] transition-colors">
-            <Plus size={14} /> Add Benefit
-          </button>
-        </div>
-        <div className="space-y-3">
-          {form.benefits.map((benefit, i) => (
-            <div key={i} className="flex gap-3 items-start">
-              <input type="text" value={benefit} onChange={e => updateBenefit(i, e.target.value)} className={inputClass} placeholder="Enter benefit" />
-              <button onClick={() => removeBenefit(i)} className="w-14 h-14 rounded-2xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition-all">
-                <X size={18} />
-              </button>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="flex justify-end pt-4">
-        <SaveButton onSave={handleSave} saved={saved} />
-      </div>
-    </div>
-  );
-};
-
-// ── PORTFOLIO EDITOR ──
-const PortfolioEditor = () => {
-  const { siteContent, updateSiteContent } = useSite();
-  const [saved, setSaved] = useState(false);
-  const [portfolio, setPortfolio] = useState([
-    { title: 'Aura Intelligence Platform', category: 'AI & Data Science', desc: 'Distributed ML pipeline for predictive maintenance in industrial manufacturing clusters.', metrics: '70% Reduced Downtime, Sub-10ms Latency' },
-    { title: 'SEC-Net Global Firewall', category: 'Cybersecurity', desc: 'Advanced zero-trust network infrastructure for secure cross-continental data transmission.', metrics: 'Enterprise-grade Threat Mitigation, AI-Driven Auditing' }
-  ]);
-
-  useEffect(() => {
-    if (siteContent?.portfolio) setPortfolio(siteContent.portfolio);
-  }, [siteContent]);
-
-  const handleSave = async (e: any) => {
-    e.preventDefault();
-    await updateSiteContent('portfolio', portfolio);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
-
-  const updateItem = (index: number, field: string, value: string) => {
-    const newItems = [...portfolio];
-    newItems[index] = { ...newItems[index], [field]: value };
-    setPortfolio(newItems);
-  };
-
-  const addPortfolioItem = () => {
-    setPortfolio([...portfolio, { title: '', category: '', desc: '', metrics: '' }]);
-  };
-
-  const removePortfolioItem = (index: number) => {
-    setPortfolio(portfolio.filter((_, i) => i !== index));
-  };
-
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <label className={labelClass + " mb-0"}>Case Studies & Projects</label>
-        <button onClick={addPortfolioItem} className="flex items-center gap-2 text-xs font-bold text-[#F5A800] uppercase tracking-[0.2em] hover:text-[#ffb700] transition-colors">
-          <Plus size={14} /> Add Case Study
-        </button>
-      </div>
-      <div className="space-y-6">
-        {portfolio.map((item, i) => (
-          <div key={i} className="p-6 bg-white/[0.02] border border-white/[0.05] rounded-3xl space-y-5">
-            <div className="flex items-center justify-between">
-              <h4 className="text-sm font-bold text-[#F5A800] uppercase tracking-[0.2em]">Case Study {i + 1}</h4>
-              <button onClick={() => removePortfolioItem(i)} className="w-10 h-10 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition-all">
-                <X size={16} />
-              </button>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div><label className={labelClass}>Title</label><input type="text" value={item.title} onChange={e => updateItem(i, 'title', e.target.value)} className={inputClass} /></div>
-              <div><label className={labelClass}>Category</label><input type="text" value={item.category} onChange={e => updateItem(i, 'category', e.target.value)} className={inputClass} /></div>
-            </div>
-            <div><label className={labelClass}>Description</label><textarea rows={3} value={item.desc} onChange={e => updateItem(i, 'desc', e.target.value)} className={textareaClass} /></div>
-            <div><label className={labelClass}>Metrics (comma separated)</label><input type="text" value={item.metrics} onChange={e => updateItem(i, 'metrics', e.target.value)} className={inputClass} /></div>
-          </div>
-        ))}
-      </div>
-      <div className="flex justify-end pt-2">
-        <SaveButton onSave={handleSave} saved={saved} />
-      </div>
-    </div>
-  );
-};
-
-// ── SERVICES EDITOR ──
-const ServicesEditor = () => {
-  const { siteContent, updateSiteContent } = useSite();
-  const [saved, setSaved] = useState(false);
-  const [services, setServices] = useState([
-    { id: 'software', title: 'Software Engineering', desc: 'Custom platforms, SaaS products, and enterprise applications engineered for massive concurrency and global scale.' },
-    { id: 'infrastructure', title: 'Infrastructure & Networking', desc: 'Cloud architecture, zero-trust networks, server deployments, and continuous reliability engineering.' },
-    { id: 'ai', title: 'Artificial Intelligence', desc: 'Predictive models, intelligent agents, and custom LLM integrations that automate complex workflows.' },
-    { id: 'security', title: 'Cybersecurity', desc: 'Security audits, infrastructure hardening, compliance, penetration testing, and continuous threat monitoring.' }
-  ]);
-
-  useEffect(() => {
-    if (siteContent?.services) setServices(siteContent.services);
-  }, [siteContent]);
-
-  const handleSave = async (e: any) => {
-    e.preventDefault();
-    await updateSiteContent('services', services);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
-
-  const updateService = (index: number, field: string, value: string) => {
-    const newItems = [...services];
-    newItems[index] = { ...newItems[index], [field]: value };
-    setServices(newItems);
-  };
-
-  return (
-    <div className="space-y-6">
-      <div className="space-y-6">
-        {services.map((item, i) => (
-          <div key={i} className="p-6 bg-white/[0.02] border border-white/[0.05] rounded-3xl space-y-5">
-            <h4 className="text-sm font-bold text-[#F5A800] uppercase tracking-[0.2em]">{item.id.toUpperCase()}</h4>
-            <div><label className={labelClass}>Title</label><input type="text" value={item.title} onChange={e => updateService(i, 'title', e.target.value)} className={inputClass} /></div>
-            <div><label className={labelClass}>Short Description</label><textarea rows={3} value={item.desc} onChange={e => updateService(i, 'desc', e.target.value)} className={textareaClass} /></div>
-          </div>
-        ))}
-      </div>
-      <div className="flex justify-end pt-2">
-        <SaveButton onSave={handleSave} saved={saved} />
-      </div>
-    </div>
-  );
-};
-
-// ── FOOTER CONTENT EDITOR ──
-const FooterEditor = () => {
-  const { siteContent, updateSiteContent } = useSite();
-  const [saved, setSaved] = useState(false);
-  const [form, setForm] = useState({
-    tagline: 'Nexyovi is a modern software and AI development company helping businesses build digital products, automate workflows, and modernize operations.',
-    copyright: 'Global. All Rights Reserved.',
-    servicesLinks: [
-      { label: 'Software Engineering', path: '/services/software' },
-      { label: 'AI & Automation', path: '/services/ai' },
-      { label: 'Cloud & Infrastructure', path: '/services/infrastructure' },
-      { label: 'Mobile Applications', path: '/services/apps' },
-      { label: 'Data & Analytics', path: '/services/data' }
-    ],
-    companyLinks: [
-      { label: 'About Us', path: '/company' },
-      { label: 'Industries', path: '/industries' },
-      { label: 'Projects', path: '/projects' },
-      { label: 'Contact', path: '/contact' }
-    ],
-    cta: { label: 'Book a strategy session', path: '/contact#inquiry' }
-  });
-
-  useEffect(() => {
-    if (siteContent?.footer) setForm({ ...createFooterDefaults(), ...siteContent.footer });
-  }, [siteContent]);
-
-  const createFooterDefaults = () => ({
-    tagline: 'Nexyovi is a modern software and AI development company helping businesses build digital products, automate workflows, and modernize operations.',
-    copyright: 'Global. All Rights Reserved.',
-    servicesLinks: [
-      { label: 'Software Engineering', path: '/services/software' },
-      { label: 'AI & Automation', path: '/services/ai' },
-      { label: 'Cloud & Infrastructure', path: '/services/infrastructure' },
-      { label: 'Mobile Applications', path: '/services/apps' },
-      { label: 'Data & Analytics', path: '/services/data' }
-    ],
-    companyLinks: [
-      { label: 'About Us', path: '/company' },
-      { label: 'Industries', path: '/industries' },
-      { label: 'Projects', path: '/projects' },
-      { label: 'Contact', path: '/contact' }
-    ],
-    cta: { label: 'Book a strategy session', path: '/contact#inquiry' }
-  });
-
-  const handleSave = async (e: any) => {
-    e.preventDefault();
-    await updateSiteContent('footer', form);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
-
-  const addServiceLink = () => setForm({ ...form, servicesLinks: [...form.servicesLinks, { label: '', path: '' }] });
-  const removeServiceLink = (i: number) => setForm({ ...form, servicesLinks: form.servicesLinks.filter((_: any, idx: number) => idx !== i) });
-  const updateServiceLink = (i: number, field: string, value: string) => {
-    const links = [...form.servicesLinks];
-    links[i] = { ...links[i], [field]: value };
-    setForm({ ...form, servicesLinks: links });
-  };
-
-  const addCompanyLink = () => setForm({ ...form, companyLinks: [...form.companyLinks, { label: '', path: '' }] });
-  const removeCompanyLink = (i: number) => setForm({ ...form, companyLinks: form.companyLinks.filter((_: any, idx: number) => idx !== i) });
-  const updateCompanyLink = (i: number, field: string, value: string) => {
-    const links = [...form.companyLinks];
-    links[i] = { ...links[i], [field]: value };
-    setForm({ ...form, companyLinks: links });
-  };
-
-  return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div className="md:col-span-2">
-          <label className={labelClass}>Footer Tagline</label>
-          <textarea rows={3} value={form.tagline} onChange={e => setForm({ ...form, tagline: e.target.value })} className={textareaClass} />
-        </div>
-        <div>
-          <label className={labelClass}>Copyright Suffix</label>
-          <input type="text" value={form.copyright} onChange={e => setForm({ ...form, copyright: e.target.value })} className={inputClass} placeholder="Global. All Rights Reserved." />
-        </div>
-        <div>
-          <label className={labelClass}>CTA Label</label>
-          <input type="text" value={form.cta.label} onChange={e => setForm({ ...form, cta: { ...form.cta, label: e.target.value } })} className={inputClass} placeholder="Book a strategy session" />
-        </div>
-        <div>
-          <label className={labelClass}>CTA Path</label>
-          <input type="text" value={form.cta.path} onChange={e => setForm({ ...form, cta: { ...form.cta, path: e.target.value } })} className={inputClass} placeholder="/contact#inquiry" />
-        </div>
-      </div>
-
-      <div>
-        <div className="flex items-center justify-between mb-3">
-          <label className={labelClass + ' !mb-0'}>Services Links</label>
-          <button type="button" onClick={addServiceLink} className="text-xs font-bold text-[#F5A800] hover:text-[#ffb700] transition-colors flex items-center gap-1">
-            <Plus size={14} /> Add Link
-          </button>
-        </div>
-        <div className="space-y-2">
-          {form.servicesLinks.map((link: any, i: number) => (
-            <div key={i} className="flex items-center gap-3">
-              <input type="text" value={link.label} onChange={e => updateServiceLink(i, 'label', e.target.value)} className={inputClass + ' flex-1'} placeholder="Label" />
-              <input type="text" value={link.path} onChange={e => updateServiceLink(i, 'path', e.target.value)} className={inputClass + ' flex-1'} placeholder="/path" />
-              <button onClick={() => removeServiceLink(i)} className="w-9 h-9 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center shrink-0 transition-all"><X size={14} /></button>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <div className="flex items-center justify-between mb-3">
-          <label className={labelClass + ' !mb-0'}>Company Links</label>
-          <button type="button" onClick={addCompanyLink} className="text-xs font-bold text-[#F5A800] hover:text-[#ffb700] transition-colors flex items-center gap-1">
-            <Plus size={14} /> Add Link
-          </button>
-        </div>
-        <div className="space-y-2">
-          {form.companyLinks.map((link: any, i: number) => (
-            <div key={i} className="flex items-center gap-3">
-              <input type="text" value={link.label} onChange={e => updateCompanyLink(i, 'label', e.target.value)} className={inputClass + ' flex-1'} placeholder="Label" />
-              <input type="text" value={link.path} onChange={e => updateCompanyLink(i, 'path', e.target.value)} className={inputClass + ' flex-1'} placeholder="/path" />
-              <button onClick={() => removeCompanyLink(i)} className="w-9 h-9 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center shrink-0 transition-all"><X size={14} /></button>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="flex justify-end pt-2">
-        <SaveButton onSave={handleSave} saved={saved} />
-      </div>
-    </div>
-  );
-};
-
-// ── ABOUT / COMPANY SECTION EDITOR ──
-const AboutEditor = () => {
-  const { siteContent, updateSiteContent } = useSite();
-  const [saved, setSaved] = useState(false);
-  const [form, setForm] = useState({
-    tagline: 'Modern software. Smarter AI. Real results.',
-    description: 'Nexyovi is a modern software and AI development company helping businesses build digital products, automate workflows, and modernize operations.',
-    founded: '2020',
-    employees: '20+',
-    countries: '2'
-  });
-
-  useEffect(() => {
-    if (siteContent?.about) setForm({ ...siteContent.about });
-  }, [siteContent]);
-
-  const handleSave = async (e: any) => {
-    e.preventDefault();
-    await updateSiteContent('about', form);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
-
-  return (
-    <div className="space-y-6">
-      <div>
-        <label className={labelClass}>Company Tagline</label>
-        <input type="text" value={form.tagline} onChange={e => setForm({ ...form, tagline: e.target.value })} className={inputClass} />
-      </div>
-      <div>
-        <label className={labelClass}>Company Description</label>
-        <textarea rows={5} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className={textareaClass} />
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <div>
-          <label className={labelClass}>Founded</label>
-          <input type="text" value={form.founded} onChange={e => setForm({ ...form, founded: e.target.value })} className={inputClass} placeholder="2020" />
-        </div>
-        <div>
-          <label className={labelClass}>Employees</label>
-          <input type="text" value={form.employees} onChange={e => setForm({ ...form, employees: e.target.value })} className={inputClass} placeholder="30+" />
-        </div>
-        <div>
-          <label className={labelClass}>Countries</label>
-          <input type="text" value={form.countries} onChange={e => setForm({ ...form, countries: e.target.value })} className={inputClass} placeholder="12+" />
-        </div>
-      </div>
-      <div className="flex justify-end pt-2">
-        <SaveButton onSave={handleSave} saved={saved} />
-      </div>
-    </div>
-  );
-};
-
-// ── BY THE NUMBERS EDITOR ──
-const ByTheNumbersEditor = () => {
-  const { siteContent, updateSiteContent } = useSite();
-  const [saved, setSaved] = useState(false);
-  const [metrics, setMetrics] = useState([
-    { value: 24, suffix: '/7', label: 'Monitoring & Support' },
-    { value: 12, suffix: '+', label: 'Core Engineering Practices' },
-    { value: 6, suffix: '', label: 'Technology Domains' },
-    { value: 0, suffix: '', label: 'Architect-Led Delivery Teams', hideNumber: true },
-  ]);
-
-  useEffect(() => {
-    if (siteContent?.byTheNumbers) setMetrics(siteContent.byTheNumbers);
-  }, [siteContent]);
-
-  const handleSave = async (e: any) => {
-    e.preventDefault();
-    await updateSiteContent('byTheNumbers', metrics);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
-
-  const updateMetric = (index: number, field: string, value: any) => {
-    const newMetrics = [...metrics];
-    newMetrics[index] = { ...newMetrics[index], [field]: field === 'value' ? Number(value) : value };
-    setMetrics(newMetrics);
-  };
-
-  return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {metrics.map((metric, i) => (
-          <div key={i} className="p-6 bg-white/[0.02] border border-white/[0.05] rounded-3xl space-y-5">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 flex items-center justify-center text-cyan-400">
-                <BarChart3 size={18} />
-              </div>
-              <h4 className="text-sm font-bold text-white">Stat {i + 1}</h4>
-            </div>
-            <div>
-              <label className={labelClass}>Value</label>
-              <input
-                type="number"
-                value={metric.value}
-                onChange={e => updateMetric(i, 'value', e.target.value)}
-                className={inputClass + " text-xl font-bold text-[#F5A800]"}
-              />
-            </div>
-            <div>
-              <label className={labelClass}>Suffix</label>
-              <input
-                type="text"
-                value={metric.suffix}
-                onChange={e => updateMetric(i, 'suffix', e.target.value)}
-                className={inputClass}
-              />
-            </div>
-            <div>
-              <label className={labelClass}>Label</label>
-              <input
-                type="text"
-                value={metric.label}
-                onChange={e => updateMetric(i, 'label', e.target.value)}
-                className={inputClass}
-              />
-            </div>
-            <div className="flex items-center gap-3">
-              <input
-                type="checkbox"
-                id={`hideNumber-${i}`}
-                checked={metric.hideNumber || false}
-                onChange={e => updateMetric(i, 'hideNumber', e.target.checked)}
-                className="w-5 h-5"
-              />
-              <label htmlFor={`hideNumber-${i}`} className="text-sm text-white/60">Hide Number</label>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="flex justify-end pt-2">
-        <SaveButton onSave={handleSave} saved={saved} />
-      </div>
-    </div>
-  );
-};
-
-// ── COMPANY TEAM SECTION EDITOR ──
-const CompanyTeamEditor = () => {
-  const { siteContent, updateSiteContent } = useSite();
-  const [saved, setSaved] = useState(false);
-  const [form, setForm] = useState({
-    badge: 'Our Team',
-    title: 'Meet the Team.',
-    highlight: 'Team.',
-    description: 'Leadership team overseeing software engineering, AI innovation, and cloud infrastructure delivery across global markets.',
-    founder_name: 'Yonas Bogale',
-    founder_role: 'Founder & CEO',
-    founder_bio: "Leading Nexyovi's mission to build practical software, AI solutions, and digital infrastructure for modern businesses.",
-    founder_button: 'LinkedIn Profile'
-  });
-
-  useEffect(() => {
-    if (siteContent?.companyTeam) setForm({ ...form, ...siteContent.companyTeam });
-  }, [siteContent]);
-
-  const handleSave = async (e: any) => {
-    e.preventDefault();
-    await updateSiteContent('companyTeam', form);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
-
-  return (
-    <div className="space-y-6">
-      <div>
-        <label className={labelClass}>Section Badge</label>
-        <input type="text" value={form.badge} onChange={e => setForm({ ...form, badge: e.target.value })} className={inputClass} />
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div>
-          <label className={labelClass}>Section Title</label>
-          <input type="text" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className={inputClass} />
-        </div>
-        <div>
-          <label className={labelClass}>Highlighted Word</label>
-          <input type="text" value={form.highlight} onChange={e => setForm({ ...form, highlight: e.target.value })} className={inputClass} placeholder="Team." />
-        </div>
-      </div>
-      <div>
-        <label className={labelClass}>Section Description</label>
-        <textarea rows={4} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className={textareaClass} />
-      </div>
-      <div className="pt-6 border-t border-white/[0.05] space-y-6">
-        <div>
-          <label className={labelClass}>Founder Name</label>
-          <input type="text" value={form.founder_name} onChange={e => setForm({ ...form, founder_name: e.target.value })} className={inputClass} />
-        </div>
-        <div>
-          <label className={labelClass}>Founder Role</label>
-          <input type="text" value={form.founder_role} onChange={e => setForm({ ...form, founder_role: e.target.value })} className={inputClass} />
-        </div>
-        <div>
-          <label className={labelClass}>Founder Bio</label>
-          <textarea rows={5} value={form.founder_bio} onChange={e => setForm({ ...form, founder_bio: e.target.value })} className={textareaClass} />
-        </div>
-        <div>
-          <label className={labelClass}>Founder Button Label</label>
-          <input type="text" value={form.founder_button} onChange={e => setForm({ ...form, founder_button: e.target.value })} className={inputClass} />
-        </div>
-      </div>
-      <div className="flex justify-end pt-2">
-        <SaveButton onSave={handleSave} saved={saved} />
-      </div>
-    </div>
-  );
-};
-
-// ── HOME FOUNDER SECTION EDITOR ──
-const HomeFounderEditor = () => {
-  const { siteContent, updateSiteContent } = useSite();
-  const [saved, setSaved] = useState(false);
-  const [form, setForm] = useState({
-    badge: 'Leadership',
-    name: 'Yonas Bogale',
-    role: 'Founder & CEO',
-    bio: "Nexyovi was founded on a singular vision: to bring world-class engineering rigor to digital transformation. We believe that robust systems are built from the ground up, not patched together as an afterthought.",
-    story_button: 'Read our full story ->',
-    linkedin_button: 'Connect on LinkedIn'
-  });
-
-  useEffect(() => {
-    if (siteContent?.homeFounder) setForm({ ...form, ...siteContent.homeFounder });
-  }, [siteContent]);
-
-  const handleSave = async (e: any) => {
-    e.preventDefault();
-    await updateSiteContent('homeFounder', form);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
-
-  return (
-    <div className="space-y-6">
-      <div>
-        <label className={labelClass}>Section Badge</label>
-        <input type="text" value={form.badge} onChange={e => setForm({ ...form, badge: e.target.value })} className={inputClass} />
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div>
-          <label className={labelClass}>Founder Name</label>
-          <input type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} className={inputClass} />
-        </div>
-        <div>
-          <label className={labelClass}>Founder Role</label>
-          <input type="text" value={form.role} onChange={e => setForm({ ...form, role: e.target.value })} className={inputClass} />
-        </div>
-      </div>
-      <div>
-        <label className={labelClass}>Founder Bio</label>
-        <textarea rows={6} value={form.bio} onChange={e => setForm({ ...form, bio: e.target.value })} className={textareaClass} />
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div>
-          <label className={labelClass}>Story Button Label</label>
-          <input type="text" value={form.story_button} onChange={e => setForm({ ...form, story_button: e.target.value })} className={inputClass} />
-        </div>
-        <div>
-          <label className={labelClass}>LinkedIn Button Label</label>
-          <input type="text" value={form.linkedin_button} onChange={e => setForm({ ...form, linkedin_button: e.target.value })} className={inputClass} />
-        </div>
-      </div>
-      <div className="rounded-3xl border border-[#F5A800]/20 bg-[#F5A800]/5 p-6">
-        <p className="text-sm leading-relaxed text-white/40">
-          Founder image and LinkedIn URL come from Team Management for the founder profile. This editor controls the home section text and button labels.
-        </p>
-      </div>
-      <div className="flex justify-end pt-2">
-        <SaveButton onSave={handleSave} saved={saved} />
-      </div>
-    </div>
-  );
-};
-
-// ── TECHNOLOGIES EDITOR ──
-const TechnologiesEditor = () => {
-  const { siteContent, updateSiteContent } = useSite();
-  const [saved, setSaved] = useState(false);
-  const [form, setForm] = useState({
+// ════════════════════════════════════════════════════════════════
+// ── DEFAULT VALUES — one-to-one with hardcoded site content
+//    so admin forms are NEVER empty when first opened
+// ════════════════════════════════════════════════════════════════
+const SECTION_DEFAULTS: Record<string, Record<string, string>> = {
+  // ═══ HOME PAGE ═══════════════════════════════════════
+  hero: {
+    mainHeadline: "The engineering partner Africa's fastest companies trust to build — and ship.",
+    subtitle: 'We help startups, enterprises, and public institutions design, build, and scale mission-critical digital products.',
+    statLine: 'Custom software deployed across multiple industries.',
+    primaryCTA: 'Book a free strategy session',
+    primaryLink: '/contact#inquiry',
+    secondaryCTA: 'See our services',
+    secondaryLink: '/services',
+    videoUrl: 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260508_215831_c6a8989c-d716-4d8d-8745-e972a2eec711.mp4',
+  },
+  trustLogos: {
+    heading: 'Experience Across Enterprise, Government & Technology Sectors',
+    subtitle: 'Trusted by leading organizations',
+  },
+  whyNexyovi: {
+    badge: 'Why Nexyovi?',
+    title: 'Real differentiation.',
+    subtitle: 'This is what buyers compare. We deliver on every point.',
+    card1Title: 'Senior Engineers Only',
+    card1Desc: 'No junior staffing. Every project is led by experienced senior engineers who architect, build, and ship production-grade systems.',
+    card1Link: '/services/software',
+    card2Title: 'Security by Design',
+    card2Desc: 'Security integrated from day one — not bolted on after. Every layer of every system is built with zero-trust principles and compliance in mind.',
+    card2Link: '/services/security',
+    card3Title: 'AI-Native Development',
+    card3Desc: 'Modern AI tooling accelerates delivery across the entire development lifecycle — from code generation to testing, deployment, and monitoring.',
+    card3Link: '/services/ai',
+    card4Title: 'Long-Term Partnership',
+    card4Desc: 'Support beyond launch. We stay engaged with proactive maintenance, continuous improvements, and strategic guidance as your business evolves.',
+    card4Link: '/company',
+  },
+  servicesHome: {
+    heading: 'Full-Stack Digital Services',
+    description: 'From software and AI to infrastructure and strategy — we deliver end-to-end digital solutions for modern businesses.',
+    ctaText: 'Explore All Capabilities',
+    ctaLink: '/services',
+  },
+  technologies: {
     badge: 'Engineering Stack',
     title: 'Technologies We Build With',
-    subtitle: 'Modern, battle-tested technologies we use to architect and deliver production-grade systems for startups, enterprises, and government organizations.'
-  });
-
-  useEffect(() => {
-    if (siteContent?.technologies) setForm({ ...form, ...siteContent.technologies });
-  }, [siteContent]);
-
-  const handleSave = async (e: any) => {
-    e.preventDefault();
-    await updateSiteContent('technologies', form);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
-
-  return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div><label className={labelClass}>Badge Text</label><input type="text" value={form.badge} onChange={e => setForm({ ...form, badge: e.target.value })} className={inputClass} /></div>
-        <div><label className={labelClass}>Section Title</label><input type="text" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className={inputClass} /></div>
-        <div className="md:col-span-2"><label className={labelClass}>Subtitle</label><textarea rows={3} value={form.subtitle} onChange={e => setForm({ ...form, subtitle: e.target.value })} className={textareaClass} /></div>
-      </div>
-      <div className="flex justify-end pt-2"><SaveButton onSave={handleSave} saved={saved} /></div>
-    </div>
-  );
-};
-
-// ── DELIVERY EDITOR ──
-const DeliveryEditor = () => {
-  const { siteContent, updateSiteContent } = useSite();
-  const [saved, setSaved] = useState(false);
-  const [form, setForm] = useState({
+    subtitle: 'Modern, battle-tested technologies we use to architect and deliver production-grade systems for startups, enterprises, and government organizations.',
+  },
+  industriesHome: {
+    heading: 'Industries We Empower',
+    description: 'Deep domain expertise across our core verticals — building solutions that understand your industry.',
+    ctaText: 'Explore All Verticals',
+    ctaLink: '/industries',
+  },
+  howWeWork: {
+    heading: 'How We Work',
+    description: 'Our engineering process is designed for transparency, security, and long-term success. From the first whiteboard session to post-launch support.',
+    step1Title: 'Discovery',
+    step1Desc: 'We analyze your business needs, technical constraints, and project objectives.',
+    step2Title: 'Architecture',
+    step2Desc: 'System design, database modeling, and technical infrastructure planning.',
+    step3Title: 'Development',
+    step3Desc: 'Agile sprints with regular reviews, focusing on clean code and performance.',
+    step4Title: 'Deployment',
+    step4Desc: 'Automated CI/CD pipelines, security audits, and seamless production launch.',
+    step5Title: 'Support',
+    step5Desc: 'Ongoing maintenance, proactive monitoring, and feature iteration.',
+  },
+  featuredProjects: {
+    badge: 'Featured Projects',
+    heading: "Products we've shipped.",
+    description: 'Reference architectures and client solutions we have delivered.',
+    ctaText: 'View All',
+    ctaLink: '/projects',
+  },
+  delivery: {
     badge: 'Track Record',
     title: 'Proven Delivery Across Critical Industries',
-    subtitle: 'Every engagement is measured by business impact, technical rigor, and long-term reliability.'
-  });
-
-  useEffect(() => {
-    if (siteContent?.delivery) setForm({ ...form, ...siteContent.delivery });
-  }, [siteContent]);
-
-  const handleSave = async (e: any) => {
-    e.preventDefault();
-    await updateSiteContent('delivery', form);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
-
-  return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div><label className={labelClass}>Badge Text</label><input type="text" value={form.badge} onChange={e => setForm({ ...form, badge: e.target.value })} className={inputClass} /></div>
-        <div className="md:col-span-2"><label className={labelClass}>Section Title</label><input type="text" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className={inputClass} /></div>
-        <div className="md:col-span-2"><label className={labelClass}>Subtitle</label><textarea rows={3} value={form.subtitle} onChange={e => setForm({ ...form, subtitle: e.target.value })} className={textareaClass} /></div>
-      </div>
-      <div className="flex justify-end pt-2"><SaveButton onSave={handleSave} saved={saved} /></div>
-    </div>
-  );
-};
-
-// ── SECURITY EDITOR ──
-const SecurityEditor = () => {
-  const { siteContent, updateSiteContent } = useSite();
-  const [saved, setSaved] = useState(false);
-  const [form, setForm] = useState({
+    subtitle: 'Every engagement is measured by business impact, technical rigor, and long-term reliability. Here is how we deliver.',
+  },
+  engagementModels: {
+    badge: 'How We Engage',
+    heading: 'Flexible engagement models for every stage',
+    description: 'Project-based, dedicated teams, fractional CTO, or long-term partnerships.',
+  },
+  security: {
     badge: 'Trust Architecture',
     title: 'Security Built Into Every Layer',
-    subtitle: 'Enterprise-grade security is not an add-on — it is embedded in our architecture, processes, and delivery from day one.'
-  });
-
-  useEffect(() => {
-    if (siteContent?.security) setForm({ ...form, ...siteContent.security });
-  }, [siteContent]);
-
-  const handleSave = async (e: any) => {
-    e.preventDefault();
-    await updateSiteContent('security', form);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
-
-  return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div><label className={labelClass}>Badge Text</label><input type="text" value={form.badge} onChange={e => setForm({ ...form, badge: e.target.value })} className={inputClass} /></div>
-        <div className="md:col-span-2"><label className={labelClass}>Section Title</label><input type="text" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className={inputClass} /></div>
-        <div className="md:col-span-2"><label className={labelClass}>Subtitle</label><textarea rows={3} value={form.subtitle} onChange={e => setForm({ ...form, subtitle: e.target.value })} className={textareaClass} /></div>
-      </div>
-      <div className="flex justify-end pt-2"><SaveButton onSave={handleSave} saved={saved} /></div>
-    </div>
-  );
-};
-
-// ── FINAL CTA EDITOR ──
-const FinalCtaEditor = () => {
-  const { siteContent, updateSiteContent } = useSite();
-  const [saved, setSaved] = useState(false);
-  const [form, setForm] = useState({
+    subtitle: 'Enterprise-grade security is not an add-on — it is embedded in our architecture, processes, and delivery from day one.',
+  },
+  finalCta: {
     headline: "Let's Build What's Next.",
     description: "Whether you're launching a new platform, modernizing infrastructure, implementing AI systems, or scaling an existing product, our team helps turn complex ideas into secure, production-ready solutions.",
     primaryLabel: 'Book Strategy Session',
     primaryPath: '/contact?type=strategy-session#inquiry',
     secondaryLabel: 'Explore Our Work',
-    secondaryPath: '/projects'
-  });
+    secondaryPath: '/projects',
+    trustIndicator1: 'Response within 24 hours',
+    trustIndicator2: 'NDA available upon request',
+    trustIndicator3: 'Senior engineers only',
+    trustIndicator4: 'Long-term support available',
+  },
 
-  useEffect(() => {
-    if (siteContent?.finalCta) setForm({ ...form, ...siteContent.finalCta });
-  }, [siteContent]);
+  // ═══ COMPANY PAGE ═══════════════════════════════════
+  companyHero: {
+    headline: "Africa's engineering partner for mission-critical software systems.",
+    subtitle: 'We design and build secure, scalable platforms for organizations that cannot afford to fail.',
+    primaryCTA: 'Book a strategy session',
+    primaryLink: '/contact#inquiry',
+    secondaryCTA: 'Explore Services',
+    secondaryLink: '/services',
+    stat1Label: 'Enterprise Platforms',
+    stat1Value: '10+',
+    stat2Label: 'Elite Engineers',
+    stat2Value: '20+',
+    stat3Label: 'Countries',
+    stat3Value: '4',
+    stat4Label: 'Sectors',
+    stat4Value: 'Banking · Gov · Telecom · Health',
+  },
+  companyMission: {
+    badge: 'Why We Exist',
+    heading: 'Mission & Vision.',
+    missionText: 'To deliver enterprise software engineering, AI, and cloud infrastructure that helps organizations build and scale with confidence.',
+    visionText: 'To build the technology infrastructure that powers Africa\'s next generation of global institutions — from fintech to government, healthcare to logistics — with world-class engineering, security, and reliability.',
+  },
+  companyPrinciples: {
+    badge: 'Core Principles',
+    title: 'Built on Principles.',
+    subtitle: 'Uncompromising standards that guide our engineering and define every partnership.',
+    principle1Title: 'Security as Foundation',
+    principle1Desc: 'Security is not a feature — it is the foundation. Every system is built with zero-trust principles, encryption by default, and compliance-ready architecture.',
+    principle2Title: 'Precision Over Speed',
+    principle2Desc: 'We ship with precision, not speed for speed\'s sake. Fast delivery means nothing without reliability, security, and the right architecture underneath.',
+    principle3Title: 'Global Ambition',
+    principle3Desc: 'African innovation engineered to compete on the world stage. Great technology knows no borders.',
+    principle4Title: 'Deep Partnership',
+    principle4Desc: 'Not vendors, but technical co-founders committed to your mission and outcomes.',
+    principle5Title: 'Technical Excellence',
+    principle5Desc: 'Mastery is non-negotiable. We focus deeply on architecture, performance, and maintainability in everything we ship.',
+    principle6Title: 'Client Success',
+    principle6Desc: 'Your success is our success. We measure our performance by the quantifiable improvements we deliver.',
+  },
+  companyCapabilities: {
+    badge: 'Our Capabilities',
+    title: 'Full-Spectrum Capabilities.',
+    subtitle: 'End-to-end capabilities across the full technology stack — from code to infrastructure.',
+    cap1Title: 'Full-Stack Engineering',
+    cap1Desc: 'Web, mobile, and backend systems engineered for scale, performance, and maintainability.',
+    cap2Title: 'AI & Automation Expertise',
+    cap2Desc: 'Custom LLM integrations, intelligent agents, and workflow automation for real business problems.',
+    cap3Title: 'Cloud-Native Delivery',
+    cap3Desc: 'Multi-cloud architecture, Kubernetes orchestration, and serverless deployments at global scale.',
+    cap4Title: 'Enterprise Security Practices',
+    cap4Desc: 'Zero-trust principles, automated security scanning, and compliance-aware engineering built into every delivery.',
+  },
+  companyWhyNexyovi: {
+    badge: 'Why Nexyovi',
+    title: 'Different by Design.',
+    subtitle: 'We don\'t just write code — we take full ownership of outcomes.',
+    pillar1Title: 'We Own Outcomes, Not Just Tickets',
+    pillar1Desc: 'We measure success by what ships, performs, and endures. Every engagement is structured around deliverables, milestones, and measurable impact — not billable hours.',
+    pillar2Title: 'Deep Engineering, Not Generalists',
+    pillar2Desc: 'Our team is built around specialization — security, AI, cloud infrastructure, and full-stack development. You get experts, not generalist consultants.',
+    pillar3Title: 'African Roots, Global Standards',
+    pillar3Desc: 'Built in Ethiopia, delivering at world-class level. We combine deep local context with international engineering practices, compliance, and security standards.',
+    pillar4Title: 'Long-Term Partnership, Not Vendorship',
+    pillar4Desc: 'We embed with your team, understand your mission, and stay accountable for the long haul. Our best work happens in multi-year relationships.',
+  },
 
-  const handleSave = async (e: any) => {
-    e.preventDefault();
-    await updateSiteContent('finalCta', form);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
+  // ═══ SERVICES PAGE ══════════════════════════════════
+  servicesHero: {
+    headline1: 'Enterprise Technology.',
+    headline2: 'Production-ready systems. Built for scale.',
+    description: 'We design, build, and operate enterprise software, AI systems, and cloud infrastructure for organizations that need secure, scalable technology. Engineering-led delivery teams — no outsourcing layers.',
+    primaryCTA: 'View All Services',
+    primaryLink: '#services-grid',
+    secondaryCTA: 'Book a strategy session',
+    secondaryLink: '/contact#inquiry',
+  },
+  byTheNumbers: {
+    badge: 'By the Numbers',
+    title: 'Engineered for Impact.',
+    description: 'Measurable results across every engagement.',
+    metric1Label: 'Monitoring & Support',
+    metric1Value: '24',
+    metric1Suffix: '/7',
+    metric2Label: 'Core Engineering Practices',
+    metric2Value: '12',
+    metric2Suffix: '+',
+    metric3Label: 'Technology Domains',
+    metric3Value: '6',
+    metric3Suffix: '',
+    metric4Label: 'Architect-Led Delivery',
+    metric4Value: '100',
+    metric4Suffix: '%',
+  },
+  servicesDifferentiators: {
+    badge: 'Why Choose Us',
+    title: 'Built Different.',
+    subtitle: 'Not a consultancy. Not an agency. An engineering partner that ships.',
+    diff1Title: 'Senior Engineering Teams',
+    diff1Desc: 'Every engagement is led by experienced architects with a track record of shipping enterprise-scale systems. No junior allocation.',
+    diff2Title: 'True Partnership Model',
+    diff2Desc: 'We embed with your team, transfer knowledge continuously, and ensure you own the system — not us.',
+    diff3Title: 'Outcome-Based Delivery',
+    diff3Desc: 'We optimize for business KPIs, not technical vanity metrics. Measurable ROI before we scale engagement.',
+  },
 
-  return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div className="md:col-span-2"><label className={labelClass}>Headline</label><input type="text" value={form.headline} onChange={e => setForm({ ...form, headline: e.target.value })} className={inputClass} /></div>
-        <div className="md:col-span-2"><label className={labelClass}>Description</label><textarea rows={4} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className={textareaClass} /></div>
-        <div><label className={labelClass}>Primary CTA Label</label><input type="text" value={form.primaryLabel} onChange={e => setForm({ ...form, primaryLabel: e.target.value })} className={inputClass} /></div>
-        <div><label className={labelClass}>Primary CTA Path</label><input type="text" value={form.primaryPath} onChange={e => setForm({ ...form, primaryPath: e.target.value })} className={inputClass} /></div>
-        <div><label className={labelClass}>Secondary CTA Label</label><input type="text" value={form.secondaryLabel} onChange={e => setForm({ ...form, secondaryLabel: e.target.value })} className={inputClass} /></div>
-        <div><label className={labelClass}>Secondary CTA Path</label><input type="text" value={form.secondaryPath} onChange={e => setForm({ ...form, secondaryPath: e.target.value })} className={inputClass} /></div>
-      </div>
-      <div className="flex justify-end pt-2"><SaveButton onSave={handleSave} saved={saved} /></div>
-    </div>
-  );
+  // ═══ INDUSTRIES PAGE ════════════════════════════════
+  industriesHero: {
+    headline: 'Engineering for Regulated Industries.',
+    description: 'Custom software, AI systems, and cloud infrastructure built for the compliance, security, and operational requirements of fintech, healthcare, government, and enterprise markets.',
+    primaryCTA: 'Explore Industries',
+    primaryLink: '#industries-overview',
+  },
+
+  // ═══ PROJECTS PAGE ═════════════════════════════════
+  projectsHero: {
+    headline: 'Engineering the Future, One Reference at a Time.',
+    description: 'From AI-powered defense platforms to post-quantum settlement networks — explore our reference architectures and production applications.',
+    primaryCTA: 'Book a strategy session',
+    primaryLink: '/contact#inquiry',
+  },
+  projectsStats: {
+    stat1Label: 'Projects Delivered',
+    stat1Value: '50',
+    stat1Suffix: '+',
+    stat2Label: 'Organizations Served',
+    stat2Value: '20',
+    stat2Suffix: '+',
+    stat3Label: 'Industries',
+    stat3Value: '8',
+    stat3Suffix: '',
+    stat4Label: 'Service Verticals',
+    stat4Value: '6',
+    stat4Suffix: '+',
+  },
+
+  // ═══ CONTACT PAGE ══════════════════════════════════
+  contactHero: {
+    headline: "Let's Build Something Exceptional.",
+    description: 'Engage our elite engineering team to build, secure, or scale your mission-critical enterprise systems.',
+    primaryCTA: 'Submit Project Brief',
+  },
+
+  // ═══ GLOBAL ════════════════════════════════════════
+  navigation: {
+    linkLabels: 'Services, Industries, Portfolio, Company, Contact',
+    linkPaths: '/services, /industries, /projects, /company, /contact',
+    ctaText: 'Get Started',
+    ctaLink: '/contact#inquiry',
+  },
+  seo: {
+    metaTitle: 'Nexyovi | Multi-Disciplinary Tech Powerhouse',
+    metaDescription: 'Nexyovi is a global tech leader specializing in Cyber Security, AI Solutions, Software Engineering, and Enterprise Networking.',
+    ogImage: '',
+    keywords: 'software engineering, AI, cybersecurity, cloud infrastructure, Ethiopia',
+    faviconUrl: '/favicon.ico',
+  },
+  footer: {
+    tagline: 'Nexyovi — Senior engineering, rooted in Addis Ababa, deployed globally.',
+    copyright: '© 2025 Nexyovi Technologies. All rights reserved.',
+    description: 'Enterprise software, AI systems, and cloud infrastructure for organizations that need secure, scalable technology.',
+    serviceLink1Label: 'Software Engineering',
+    serviceLink1Path: '/services/software',
+    serviceLink2Label: 'AI & Automation',
+    serviceLink2Path: '/services/ai',
+    serviceLink3Label: 'Cloud & Infrastructure',
+    serviceLink3Path: '/services/infrastructure',
+    serviceLink4Label: 'Mobile Applications',
+    serviceLink4Path: '/services/apps',
+    serviceLink5Label: 'Data & Analytics',
+    serviceLink5Path: '/services/data',
+    companyLink1Label: 'Company',
+    companyLink1Path: '/company',
+    companyLink2Label: 'Industries',
+    companyLink2Path: '/industries',
+    companyLink3Label: 'Projects',
+    companyLink3Path: '/projects',
+    companyLink4Label: 'Contact',
+    companyLink4Path: '/contact',
+  },
 };
 
-const tabs = [
-  { id: 'hero', label: 'Hero Section', icon: LayoutTemplate, description: 'Main headline, subtitle and CTA buttons' },
-  { id: 'metrics', label: 'Trust Metrics', icon: BarChart3, description: 'Company performance stat cards' },
-  { id: 'navigation', label: 'Navigation', icon: LayoutTemplate, description: 'Header menu and primary CTA' },
-  { id: 'seo', label: 'SEO', icon: Search, description: 'Meta tags and structured data' },
-  { id: 'mediaLibrary', label: 'Media Library', icon: ImageIcon, description: 'Central asset storage and uploads' },
-  { id: 'trustLogos', label: 'Trust Logos', icon: Globe, description: 'Section heading and client logo strip' },
-  { id: 'testimonialsSection', label: 'Testimonials', icon: Quote, description: 'Homepage testimonial cards and avatars' },
-  { id: 'byTheNumbers', label: 'By The Numbers', icon: BarChart3, description: '24/7 support, engineering practices, etc.' },
-  { id: 'homeFounder', label: 'Home Leadership', icon: Users, description: 'Home founder section text and actions' },
-  { id: 'companyTeam', label: 'Company Team', icon: Users, description: 'Team section heading and founder spotlight' },
-  { id: 'about', label: 'About / Company', icon: Globe, description: 'Company identity and key facts' },
-  { id: 'services', label: 'Services', icon: CheckCircle2, description: 'Service listings' },
-  { id: 'portfolio', label: 'Portfolio', icon: Globe, description: 'Case studies & projects' },
-  { id: 'ctas', label: 'Bottom CTAs', icon: MessageSquare, description: 'Ready to scale? global texts' },
-  { id: 'footer', label: 'Footer Text', icon: FileText, description: 'Footer tagline and copyright text' },
-  { id: 'technologies', label: 'Technologies', icon: Cpu, description: 'Tech stack section heading and text' },
-  { id: 'delivery', label: 'Proof of Delivery', icon: Briefcase, description: 'Delivery track record section' },
-  { id: 'security', label: 'Security & Compliance', icon: Shield, description: 'Security trust section' },
-  { id: 'finalCta', label: 'Final CTA', icon: Target, description: 'Strategic partnership CTA section' }
+// ── All content sections with comprehensive fields ───────────
+const contentSections = [
+  { id: 'hero', name: 'Hero Section', icon: '🎯', fields: [
+    { key: 'mainHeadline', label: 'Main Headline', type: 'text' },
+    { key: 'subtitle', label: 'Subtitle', type: 'textarea' },
+    { key: 'statLine', label: 'Stat Line (small badge text)', type: 'text' },
+    { key: 'primaryCTA', label: 'Primary CTA Text', type: 'text' },
+    { key: 'primaryLink', label: 'Primary CTA Link', type: 'text' },
+    { key: 'secondaryCTA', label: 'Secondary CTA Text', type: 'text' },
+    { key: 'secondaryLink', label: 'Secondary CTA Link', type: 'text' },
+    { key: 'videoUrl', label: 'Background Video URL', type: 'text' },
+  ]},
+  { id: 'trustLogos', name: 'Trust Logos Bar', icon: '🤝', fields: [
+    { key: 'heading', label: 'Section Heading', type: 'text' },
+    { key: 'subtitle', label: 'Subtitle', type: 'text' },
+  ]},
+  { id: 'whyNexyovi', name: 'Why Nexyovi (Home)', icon: '💡', fields: [
+    { key: 'badge', label: 'Badge Text', type: 'text' },
+    { key: 'title', label: 'Section Title', type: 'text' },
+    { key: 'subtitle', label: 'Subtitle', type: 'textarea' },
+    { key: 'card1Title', label: 'Card 1 Title', type: 'text' },
+    { key: 'card1Desc', label: 'Card 1 Description', type: 'textarea' },
+    { key: 'card1Link', label: 'Card 1 Link', type: 'text' },
+    { key: 'card2Title', label: 'Card 2 Title', type: 'text' },
+    { key: 'card2Desc', label: 'Card 2 Description', type: 'textarea' },
+    { key: 'card2Link', label: 'Card 2 Link', type: 'text' },
+    { key: 'card3Title', label: 'Card 3 Title', type: 'text' },
+    { key: 'card3Desc', label: 'Card 3 Description', type: 'textarea' },
+    { key: 'card3Link', label: 'Card 3 Link', type: 'text' },
+    { key: 'card4Title', label: 'Card 4 Title', type: 'text' },
+    { key: 'card4Desc', label: 'Card 4 Description', type: 'textarea' },
+    { key: 'card4Link', label: 'Card 4 Link', type: 'text' },
+  ]},
+  { id: 'servicesHome', name: 'Services (Home)', icon: '⚡', fields: [
+    { key: 'heading', label: 'Section Heading', type: 'text' },
+    { key: 'description', label: 'Description', type: 'textarea' },
+    { key: 'ctaText', label: 'CTA Button Text', type: 'text' },
+    { key: 'ctaLink', label: 'CTA Button Link', type: 'text' },
+  ]},
+  { id: 'technologies', name: 'Technologies', icon: '🛠️', fields: [
+    { key: 'badge', label: 'Badge Text', type: 'text' },
+    { key: 'title', label: 'Section Title', type: 'text' },
+    { key: 'subtitle', label: 'Description', type: 'textarea' },
+  ]},
+  { id: 'industriesHome', name: 'Industries (Home)', icon: '🏭', fields: [
+    { key: 'heading', label: 'Section Heading', type: 'text' },
+    { key: 'description', label: 'Description', type: 'textarea' },
+    { key: 'ctaText', label: 'CTA Button Text', type: 'text' },
+    { key: 'ctaLink', label: 'CTA Button Link', type: 'text' },
+  ]},
+  { id: 'howWeWork', name: 'How We Work', icon: '📋', fields: [
+    { key: 'heading', label: 'Section Heading', type: 'text' },
+    { key: 'description', label: 'Description', type: 'textarea' },
+    { key: 'step1Title', label: 'Step 1 Title', type: 'text' },
+    { key: 'step1Desc', label: 'Step 1 Description', type: 'textarea' },
+    { key: 'step2Title', label: 'Step 2 Title', type: 'text' },
+    { key: 'step2Desc', label: 'Step 2 Description', type: 'textarea' },
+    { key: 'step3Title', label: 'Step 3 Title', type: 'text' },
+    { key: 'step3Desc', label: 'Step 3 Description', type: 'textarea' },
+    { key: 'step4Title', label: 'Step 4 Title', type: 'text' },
+    { key: 'step4Desc', label: 'Step 4 Description', type: 'textarea' },
+    { key: 'step5Title', label: 'Step 5 Title', type: 'text' },
+    { key: 'step5Desc', label: 'Step 5 Description', type: 'textarea' },
+  ]},
+  { id: 'featuredProjects', name: 'Featured Projects', icon: '📁', fields: [
+    { key: 'badge', label: 'Badge Text', type: 'text' },
+    { key: 'heading', label: 'Section Heading', type: 'text' },
+    { key: 'description', label: 'Description', type: 'textarea' },
+    { key: 'ctaText', label: 'CTA Text', type: 'text' },
+    { key: 'ctaLink', label: 'CTA Link', type: 'text' },
+  ]},
+  { id: 'delivery', name: 'Delivery Section', icon: '🚚', fields: [
+    { key: 'badge', label: 'Badge Text', type: 'text' },
+    { key: 'title', label: 'Section Title', type: 'text' },
+    { key: 'subtitle', label: 'Description', type: 'textarea' },
+  ]},
+  { id: 'engagementModels', name: 'Engagement Models', icon: '🤝', fields: [
+    { key: 'badge', label: 'Badge Text', type: 'text' },
+    { key: 'heading', label: 'Section Heading', type: 'text' },
+    { key: 'description', label: 'Description', type: 'textarea' },
+  ]},
+  { id: 'security', name: 'Security Section', icon: '🔒', fields: [
+    { key: 'badge', label: 'Badge Text', type: 'text' },
+    { key: 'title', label: 'Section Title', type: 'text' },
+    { key: 'subtitle', label: 'Description', type: 'textarea' },
+  ]},
+  { id: 'finalCta', name: 'Bottom CTA', icon: '📢', fields: [
+    { key: 'headline', label: 'Headline', type: 'text' },
+    { key: 'description', label: 'Description', type: 'textarea' },
+    { key: 'primaryLabel', label: 'Primary Button Text', type: 'text' },
+    { key: 'primaryPath', label: 'Primary Button Link', type: 'text' },
+    { key: 'secondaryLabel', label: 'Secondary Button Text', type: 'text' },
+    { key: 'secondaryPath', label: 'Secondary Button Link', type: 'text' },
+    { key: 'trustIndicator1', label: 'Trust Indicator 1', type: 'text' },
+    { key: 'trustIndicator2', label: 'Trust Indicator 2', type: 'text' },
+    { key: 'trustIndicator3', label: 'Trust Indicator 3', type: 'text' },
+    { key: 'trustIndicator4', label: 'Trust Indicator 4', type: 'text' },
+  ]},
+  { id: 'companyHero', name: 'Company Hero', icon: '🏢', fields: [
+    { key: 'headline', label: 'Main Headline', type: 'text' },
+    { key: 'subtitle', label: 'Subtitle', type: 'textarea' },
+    { key: 'primaryCTA', label: 'Primary CTA Text', type: 'text' },
+    { key: 'primaryLink', label: 'Primary CTA Link', type: 'text' },
+    { key: 'secondaryCTA', label: 'Secondary CTA Text', type: 'text' },
+    { key: 'secondaryLink', label: 'Secondary CTA Link', type: 'text' },
+    { key: 'stat1Label', label: 'Stat 1 Label', type: 'text' },
+    { key: 'stat1Value', label: 'Stat 1 Value', type: 'text' },
+    { key: 'stat2Label', label: 'Stat 2 Label', type: 'text' },
+    { key: 'stat2Value', label: 'Stat 2 Value', type: 'text' },
+    { key: 'stat3Label', label: 'Stat 3 Label', type: 'text' },
+    { key: 'stat3Value', label: 'Stat 3 Value', type: 'text' },
+    { key: 'stat4Label', label: 'Stat 4 Label', type: 'text' },
+    { key: 'stat4Value', label: 'Stat 4 Value', type: 'text' },
+  ]},
+  { id: 'companyMission', name: 'Mission & Vision', icon: '🎯', fields: [
+    { key: 'badge', label: 'Badge Text', type: 'text' },
+    { key: 'heading', label: 'Section Heading', type: 'text' },
+    { key: 'missionText', label: 'Mission Text', type: 'textarea' },
+    { key: 'visionText', label: 'Vision Text', type: 'textarea' },
+  ]},
+  { id: 'companyPrinciples', name: 'Core Principles', icon: '⭐', fields: [
+    { key: 'badge', label: 'Badge Text', type: 'text' },
+    { key: 'title', label: 'Section Title', type: 'text' },
+    { key: 'subtitle', label: 'Description', type: 'textarea' },
+    { key: 'principle1Title', label: 'Principle 1 Title', type: 'text' },
+    { key: 'principle1Desc', label: 'Principle 1 Description', type: 'textarea' },
+    { key: 'principle2Title', label: 'Principle 2 Title', type: 'text' },
+    { key: 'principle2Desc', label: 'Principle 2 Description', type: 'textarea' },
+    { key: 'principle3Title', label: 'Principle 3 Title', type: 'text' },
+    { key: 'principle3Desc', label: 'Principle 3 Description', type: 'textarea' },
+    { key: 'principle4Title', label: 'Principle 4 Title', type: 'text' },
+    { key: 'principle4Desc', label: 'Principle 4 Description', type: 'textarea' },
+    { key: 'principle5Title', label: 'Principle 5 Title', type: 'text' },
+    { key: 'principle5Desc', label: 'Principle 5 Description', type: 'textarea' },
+    { key: 'principle6Title', label: 'Principle 6 Title', type: 'text' },
+    { key: 'principle6Desc', label: 'Principle 6 Description', type: 'textarea' },
+  ]},
+  { id: 'companyCapabilities', name: 'Company Capabilities', icon: '🔧', fields: [
+    { key: 'badge', label: 'Badge Text', type: 'text' },
+    { key: 'title', label: 'Section Title', type: 'text' },
+    { key: 'subtitle', label: 'Description', type: 'textarea' },
+    { key: 'cap1Title', label: 'Capability 1 Title', type: 'text' },
+    { key: 'cap1Desc', label: 'Capability 1 Desc', type: 'textarea' },
+    { key: 'cap2Title', label: 'Capability 2 Title', type: 'text' },
+    { key: 'cap2Desc', label: 'Capability 2 Desc', type: 'textarea' },
+    { key: 'cap3Title', label: 'Capability 3 Title', type: 'text' },
+    { key: 'cap3Desc', label: 'Capability 3 Desc', type: 'textarea' },
+    { key: 'cap4Title', label: 'Capability 4 Title', type: 'text' },
+    { key: 'cap4Desc', label: 'Capability 4 Desc', type: 'textarea' },
+  ]},
+  { id: 'companyWhyNexyovi', name: 'Why Nexyovi (Company)', icon: '💪', fields: [
+    { key: 'badge', label: 'Badge Text', type: 'text' },
+    { key: 'title', label: 'Section Title', type: 'text' },
+    { key: 'subtitle', label: 'Description', type: 'textarea' },
+    { key: 'pillar1Title', label: 'Pillar 1 Title', type: 'text' },
+    { key: 'pillar1Desc', label: 'Pillar 1 Description', type: 'textarea' },
+    { key: 'pillar2Title', label: 'Pillar 2 Title', type: 'text' },
+    { key: 'pillar2Desc', label: 'Pillar 2 Description', type: 'textarea' },
+    { key: 'pillar3Title', label: 'Pillar 3 Title', type: 'text' },
+    { key: 'pillar3Desc', label: 'Pillar 3 Description', type: 'textarea' },
+    { key: 'pillar4Title', label: 'Pillar 4 Title', type: 'text' },
+    { key: 'pillar4Desc', label: 'Pillar 4 Description', type: 'textarea' },
+  ]},
+  { id: 'servicesHero', name: 'Services Hero', icon: '🚀', fields: [
+    { key: 'headline1', label: 'Headline Line 1', type: 'text' },
+    { key: 'headline2', label: 'Headline Line 2 (gold)', type: 'text' },
+    { key: 'description', label: 'Description', type: 'textarea' },
+    { key: 'primaryCTA', label: 'Primary CTA Text', type: 'text' },
+    { key: 'primaryLink', label: 'Primary CTA Link', type: 'text' },
+    { key: 'secondaryCTA', label: 'Secondary CTA Text', type: 'text' },
+    { key: 'secondaryLink', label: 'Secondary CTA Link', type: 'text' },
+  ]},
+  { id: 'byTheNumbers', name: 'By the Numbers', icon: '📊', fields: [
+    { key: 'badge', label: 'Badge Text', type: 'text' },
+    { key: 'title', label: 'Section Title', type: 'text' },
+    { key: 'description', label: 'Description', type: 'textarea' },
+    { key: 'metric1Label', label: 'Metric 1 Label', type: 'text' },
+    { key: 'metric1Value', label: 'Metric 1 Value', type: 'number' },
+    { key: 'metric1Suffix', label: 'Metric 1 Suffix', type: 'text' },
+    { key: 'metric2Label', label: 'Metric 2 Label', type: 'text' },
+    { key: 'metric2Value', label: 'Metric 2 Value', type: 'number' },
+    { key: 'metric2Suffix', label: 'Metric 2 Suffix', type: 'text' },
+    { key: 'metric3Label', label: 'Metric 3 Label', type: 'text' },
+    { key: 'metric3Value', label: 'Metric 3 Value', type: 'number' },
+    { key: 'metric3Suffix', label: 'Metric 3 Suffix', type: 'text' },
+    { key: 'metric4Label', label: 'Metric 4 Label', type: 'text' },
+    { key: 'metric4Value', label: 'Metric 4 Value', type: 'number' },
+    { key: 'metric4Suffix', label: 'Metric 4 Suffix', type: 'text' },
+  ]},
+  { id: 'servicesDifferentiators', name: 'Service Diff\'s', icon: '🏆', fields: [
+    { key: 'badge', label: 'Badge Text', type: 'text' },
+    { key: 'title', label: 'Section Title', type: 'text' },
+    { key: 'subtitle', label: 'Description', type: 'textarea' },
+    { key: 'diff1Title', label: 'Differentiator 1 Title', type: 'text' },
+    { key: 'diff1Desc', label: 'Differentiator 1 Desc', type: 'textarea' },
+    { key: 'diff2Title', label: 'Differentiator 2 Title', type: 'text' },
+    { key: 'diff2Desc', label: 'Differentiator 2 Desc', type: 'textarea' },
+    { key: 'diff3Title', label: 'Differentiator 3 Title', type: 'text' },
+    { key: 'diff3Desc', label: 'Differentiator 3 Desc', type: 'textarea' },
+  ]},
+  { id: 'industriesHero', name: 'Industries Hero', icon: '🏗️', fields: [
+    { key: 'headline', label: 'Main Headline', type: 'text' },
+    { key: 'description', label: 'Description', type: 'textarea' },
+    { key: 'primaryCTA', label: 'Primary CTA Text', type: 'text' },
+    { key: 'primaryLink', label: 'Primary CTA Link', type: 'text' },
+  ]},
+  { id: 'projectsHero', name: 'Projects Hero', icon: '📂', fields: [
+    { key: 'headline', label: 'Main Headline', type: 'text' },
+    { key: 'description', label: 'Description', type: 'textarea' },
+    { key: 'primaryCTA', label: 'Primary CTA Text', type: 'text' },
+    { key: 'primaryLink', label: 'Primary CTA Link', type: 'text' },
+  ]},
+  { id: 'projectsStats', name: 'Projects Stats', icon: '📈', fields: [
+    { key: 'stat1Label', label: 'Stat 1 Label', type: 'text' },
+    { key: 'stat1Value', label: 'Stat 1 Value', type: 'number' },
+    { key: 'stat1Suffix', label: 'Stat 1 Suffix', type: 'text' },
+    { key: 'stat2Label', label: 'Stat 2 Label', type: 'text' },
+    { key: 'stat2Value', label: 'Stat 2 Value', type: 'number' },
+    { key: 'stat2Suffix', label: 'Stat 2 Suffix', type: 'text' },
+    { key: 'stat3Label', label: 'Stat 3 Label', type: 'text' },
+    { key: 'stat3Value', label: 'Stat 3 Value', type: 'number' },
+    { key: 'stat3Suffix', label: 'Stat 3 Suffix', type: 'text' },
+    { key: 'stat4Label', label: 'Stat 4 Label', type: 'text' },
+    { key: 'stat4Value', label: 'Stat 4 Value', type: 'number' },
+    { key: 'stat4Suffix', label: 'Stat 4 Suffix', type: 'text' },
+  ]},
+  { id: 'contactHero', name: 'Contact Hero', icon: '✉️', fields: [
+    { key: 'headline', label: 'Main Headline', type: 'text' },
+    { key: 'description', label: 'Description', type: 'textarea' },
+    { key: 'primaryCTA', label: 'Primary CTA Text', type: 'text' },
+  ]},
+  { id: 'navigation', name: 'Navigation', icon: '🧭', fields: [
+    { key: 'linkLabels', label: 'Nav Link Labels (comma separated)', type: 'textarea' },
+    { key: 'linkPaths', label: 'Nav Link Paths (comma separated)', type: 'textarea' },
+    { key: 'ctaText', label: 'Primary Nav CTA Text', type: 'text' },
+    { key: 'ctaLink', label: 'Primary Nav CTA Link', type: 'text' },
+  ]},
+  { id: 'seo', name: 'SEO & Metadata', icon: '🔍', fields: [
+    { key: 'metaTitle', label: 'Default Meta Title', type: 'text' },
+    { key: 'metaDescription', label: 'Default Meta Description', type: 'textarea' },
+    { key: 'ogImage', label: 'OG Image URL', type: 'text' },
+    { key: 'keywords', label: 'Keywords (comma separated)', type: 'textarea' },
+    { key: 'faviconUrl', label: 'Favicon URL', type: 'text' },
+  ]},
+  { id: 'footer', name: 'Footer', icon: '📌', fields: [
+    { key: 'tagline', label: 'Tagline', type: 'text' },
+    { key: 'copyright', label: 'Copyright Text', type: 'text' },
+    { key: 'description', label: 'Description', type: 'textarea' },
+    { key: 'serviceLink1Label', label: 'Service Link 1 Label', type: 'text' },
+    { key: 'serviceLink1Path', label: 'Service Link 1 Path', type: 'text' },
+    { key: 'serviceLink2Label', label: 'Service Link 2 Label', type: 'text' },
+    { key: 'serviceLink2Path', label: 'Service Link 2 Path', type: 'text' },
+    { key: 'serviceLink3Label', label: 'Service Link 3 Label', type: 'text' },
+    { key: 'serviceLink3Path', label: 'Service Link 3 Path', type: 'text' },
+    { key: 'serviceLink4Label', label: 'Service Link 4 Label', type: 'text' },
+    { key: 'serviceLink4Path', label: 'Service Link 4 Path', type: 'text' },
+    { key: 'serviceLink5Label', label: 'Service Link 5 Label', type: 'text' },
+    { key: 'serviceLink5Path', label: 'Service Link 5 Path', type: 'text' },
+    { key: 'companyLink1Label', label: 'Company Link 1 Label', type: 'text' },
+    { key: 'companyLink1Path', label: 'Company Link 1 Path', type: 'text' },
+    { key: 'companyLink2Label', label: 'Company Link 2 Label', type: 'text' },
+    { key: 'companyLink2Path', label: 'Company Link 2 Path', type: 'text' },
+    { key: 'companyLink3Label', label: 'Company Link 3 Label', type: 'text' },
+    { key: 'companyLink3Path', label: 'Company Link 3 Path', type: 'text' },
+    { key: 'companyLink4Label', label: 'Company Link 4 Label', type: 'text' },
+    { key: 'companyLink4Path', label: 'Company Link 4 Path', type: 'text' },
+  ]},
 ];
 
-const AdminContent = () => {
-  const [activeTab, setActiveTab] = useState('hero');
-  const active = tabs.find(t => t.id === activeTab)!;
+// ── File upload helper ───────────────────────────────────────
+const uploadFile = async (file: File, folder: string): Promise<string> => {
+  const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+  const { error } = await supabase.storage.from('nexyovi_assets').upload(`${folder}/${fileName}`, file);
+  if (error) throw error;
+  const { data } = supabase.storage.from('nexyovi_assets').getPublicUrl(`${folder}/${fileName}`);
+  return data.publicUrl;
+};
 
-  const renderEditor = () => {
-    switch (activeTab) {
-      case 'hero': return <HeroEditor />;
-      case 'metrics': return <MetricsEditor />;
-      case 'navigation': return <NavigationEditor />;
-      case 'seo': return <SEOEditor />;
-      case 'mediaLibrary': return <MediaLibraryEditor />;
-      case 'trustLogos': return <TrustLogosEditor />;
-      case 'testimonialsSection': return <HomepageTestimonialsEditor />;
-      case 'byTheNumbers': return <ByTheNumbersEditor />;
-      case 'homeFounder': return <HomeFounderEditor />;
-      case 'companyTeam': return <CompanyTeamEditor />;
-      case 'about': return <AboutEditor />;
-      case 'services': return <ServicesEditor />;
-      case 'portfolio': return <PortfolioEditor />;
-      case 'ctas': return <CTAEditor />;
-      case 'footer': return <FooterEditor />;
-      case 'technologies': return <TechnologiesEditor />;
-      case 'delivery': return <DeliveryEditor />;
-      case 'security': return <SecurityEditor />;
-      case 'finalCta': return <FinalCtaEditor />;
-      default: return null;
+const AdminContent = () => {
+  const { siteContent, updateSiteContent } = useSite();
+  const [activeSection, setActiveSection] = useState('hero');
+  const [formData, setFormData] = useState<any>({});
+  const [saveStatus, setSaveStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [uploadingField, setUploadingField] = useState<string | null>(null);
+
+  const section = contentSections.find(s => s.id === activeSection);
+  const defaults = SECTION_DEFAULTS[activeSection] || {};
+  // Merge saved data with defaults — saved overrides, defaults fill the rest
+  const sectionData = { ...defaults, ...(formData[activeSection] || {}) };
+
+  // Load from siteContent when switching sections
+  useEffect(() => {
+    const merged = { ...defaults, ...(siteContent[activeSection] || {}) };
+    setFormData(prev => ({
+      ...prev,
+      [activeSection]: merged
+    }));
+  }, [activeSection]);
+
+  const handleSave = async () => {
+    try {
+      const dataToSave = formData[activeSection] || {};
+      await updateSiteContent(activeSection, dataToSave);
+      setSaveStatus({ type: 'success', message: `${section?.name} saved!` });
+      setTimeout(() => setSaveStatus(null), 3000);
+    } catch {
+      setSaveStatus({ type: 'error', message: 'Error saving changes' });
+      setTimeout(() => setSaveStatus(null), 3000);
     }
   };
 
+  const handleFieldChange = (key: string, value: any) => {
+    setFormData(prev => ({
+      ...prev,
+      [activeSection]: { ...(prev[activeSection] || {}), [key]: value }
+    }));
+  };
+
+  const handleImageUpload = async (fieldName: string, e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || !e.target.files[0]) return;
+    setUploadingField(fieldName);
+    try {
+      const url = await uploadFile(e.target.files[0], `content/${activeSection}`);
+      handleFieldChange(fieldName, url);
+    } catch (err: any) {
+      alert(`Upload failed: ${err.message}`);
+    } finally {
+      setUploadingField(null);
+    }
+  };
+
+  const filteredSections = contentSections.filter(s =>
+    s.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const savedData = siteContent[activeSection] || {};
+  const hasChanges = JSON.stringify(formData[activeSection] || {}) !== JSON.stringify({ ...defaults, ...savedData });
+
   return (
-    <div className="space-y-8 pb-10">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-black text-white tracking-tight">Site Content Editor</h1>
-        <p className="text-sm text-white/40 mt-2">Customize the text and content across the entire website in real-time.</p>
+    <div className="h-full flex flex-col">
+      <div className="bg-[#0D1220] border border-white/[0.08] rounded-xl p-5 mb-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <LayoutTemplate size={20} className="text-[#F5A800]" />
+            <div>
+              <h1 className="text-xl font-bold text-white">Site Content</h1>
+              <p className="text-xs text-white/40 mt-0.5">Manage every section across all pages · Pre-filled with current site values</p>
+            </div>
+          </div>
+          {saveStatus && (
+            <div className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold border ${
+              saveStatus.type === 'success'
+                ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+                : 'bg-red-500/10 border-red-500/30 text-red-400'
+            }`}>
+              <Check size={14} /> {saveStatus.message}
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-8">
-        {/* Sidebar Nav */}
-        <div className="lg:w-72 shrink-0 space-y-2">
-          {tabs.map(tab => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`w-full flex items-center gap-4 px-5 py-4.5 rounded-2xl text-left transition-all duration-300 group ${activeTab === tab.id
-                ? 'bg-gradient-to-r from-[#F5A800] to-[#ffb700] text-white shadow-xl shadow-[#F5A800]/20'
-                : 'bg-white/[0.03] border border-white/[0.06] text-white/60 hover:bg-white/[0.06] hover:text-white hover:border-white/[0.12]'
-                }`}
-            >
-              <tab.icon size={20} className="shrink-0" />
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold truncate">{tab.label}</p>
-                <p className={`text-xs truncate mt-1 ${activeTab === tab.id ? 'text-white/70' : 'text-white/35'}`}>{tab.description}</p>
-              </div>
-              {activeTab === tab.id && <ChevronRight size={16} className="shrink-0" />}
-            </button>
-          ))}
-
-          {/* Tip box */}
-          <div className="mt-6 p-6 bg-[#F5A800]/5 border border-[#F5A800]/20 rounded-3xl">
-            <div className="flex items-center gap-3 mb-3">
-              <MessageSquare size={18} className="text-[#F5A800]" />
-              <span className="text-xs font-black text-[#F5A800] uppercase tracking-[0.25em]">Live Preview</span>
-            </div>
-            <p className="text-sm text-white/40 leading-relaxed">
-              Changes are applied instantly across the main website when you save. Open the site in another tab to preview.
-            </p>
+      <div className="flex-1 flex gap-4 min-h-0">
+        <div className="w-[220px] shrink-0 flex flex-col gap-3">
+          <div className="relative">
+            <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+            <input value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
+              placeholder="Filter sections..."
+              className="w-full h-9 pl-9 pr-3 text-xs bg-white/[0.04] border border-white/[0.08] rounded-lg text-white/60 placeholder:text-white/25 focus:outline-none focus:border-[#F5A800]/50 transition-colors" />
           </div>
+          <nav className="flex-1 overflow-y-auto space-y-0.5 bg-[#0D1220] border border-white/[0.08] rounded-xl p-1.5">
+            {filteredSections.map(s => (
+              <button key={s.id} onClick={() => setActiveSection(s.id)}
+                className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-left transition-all duration-150 ${
+                  activeSection === s.id
+                    ? 'bg-gradient-to-r from-[#F5A800] to-[#ffb700] text-black shadow-sm'
+                    : 'text-white/50 hover:bg-white/[0.05] hover:text-white'
+                }`}>
+                <span className="text-sm">{s.icon}</span>
+                <span className="text-xs font-semibold truncate">{s.name}</span>
+              </button>
+            ))}
+          </nav>
         </div>
 
-        {/* Editor Panel */}
-        <div className="flex-1">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="bg-gradient-to-br from-[#050816]/90 to-[#02040a]/90 backdrop-blur-xl border border-white/[0.08] rounded-3xl overflow-hidden shadow-2xl"
-          >
-            {/* Panel Header */}
-            <div className="flex items-center gap-4 px-8 py-6 border-b border-white/[0.06] bg-white/[0.01]">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#F5A800] to-[#ffb700] flex items-center justify-center text-white shadow-lg shadow-[#F5A800]/20">
-                <active.icon size={22} />
+        <div className="flex-1 min-w-0 overflow-y-auto">
+          {section && (
+            <div className="bg-[#0D1220] border border-white/[0.08] rounded-xl p-6">
+              <div className="flex items-center justify-between pb-5 mb-5 border-b border-white/[0.06]">
+                <div>
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-xl">{section.icon}</span>
+                    <h2 className="text-lg font-bold text-white">{section.name}</h2>
+                  </div>
+                  <p className="text-xs text-white/40 mt-1">{section.fields.length} fields · Pre-filled with current site defaults</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button onClick={handleSave} disabled={!hasChanges}
+                    className={`flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-lg transition-all ${
+                      hasChanges
+                        ? 'bg-gradient-to-r from-[#F5A800] to-[#ffb700] text-black hover:shadow-lg hover:shadow-[#F5A800]/20'
+                        : 'bg-white/[0.05] text-white/30 cursor-not-allowed'
+                    }`}>
+                    <Save size={14} /> Save Changes
+                  </button>
+                  <button onClick={() => {
+                    setFormData(prev => ({ ...prev, [activeSection]: { ...defaults } }));
+                  }}
+                    className="flex items-center gap-2 px-3 py-2 border border-white/[0.1] text-white/40 text-xs font-medium rounded-lg hover:bg-white/[0.05] hover:text-white transition-all">
+                    <X size={13} /> Reset to Defaults
+                  </button>
+                </div>
               </div>
-              <div>
-                <h3 className="text-lg font-black text-white">{active.label}</h3>
-                <p className="text-xs text-white/40 mt-1">{active.description}</p>
-              </div>
-            </div>
 
-            {/* Editor Content */}
-            <div className="p-8">
-              {renderEditor()}
+              <div className="space-y-5">
+                {section.fields.map(field => (
+                  <div key={field.key}>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="block text-xs font-semibold text-white/50 ml-0.5">{field.label}</label>
+                      {(field.key.toLowerCase().includes('url') || field.key.toLowerCase().includes('image') || field.key.toLowerCase().includes('logo') || field.key.toLowerCase().includes('video')) && (
+                        <label className="flex items-center gap-1 px-2 py-1 rounded bg-white/[0.04] border border-white/[0.08] text-[10px] font-medium text-white/40 hover:text-white/70 cursor-pointer transition-all hover:bg-white/[0.06]">
+                          <UploadCloud size={11} />
+                          {uploadingField === field.key ? 'Uploading...' : 'Upload File'}
+                          <input type="file" accept="image/*,video/mp4" className="hidden"
+                            onChange={e => handleImageUpload(field.key, e)} disabled={uploadingField === field.key} />
+                        </label>
+                      )}
+                    </div>
+
+                    {field.type === 'text' && (
+                      <>
+                        <input type="text" value={sectionData[field.key] || ''}
+                          onChange={e => handleFieldChange(field.key, e.target.value)}
+                          className="w-full h-10 px-4 bg-white/[0.03] border border-white/[0.08] rounded-lg text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20 transition-colors"
+                          placeholder={`Enter ${field.label.toLowerCase()}`} />
+                        {sectionData[field.key] && (field.key.toLowerCase().includes('url') || field.key.toLowerCase().includes('image') || field.key.toLowerCase().includes('logo') || field.key.toLowerCase().includes('video')) && (
+                          <div className="mt-1.5 flex gap-2 items-center">
+                            {field.key.toLowerCase().includes('video') ? (
+                              <span className="text-xs text-white/30 truncate max-w-[300px]">{sectionData[field.key]}</span>
+                            ) : (
+                              <img src={sectionData[field.key]} alt=""
+                                className="h-10 w-auto rounded border border-white/10 object-contain bg-white/5"
+                                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+                            )}
+                            <a href={sectionData[field.key]} target="_blank" rel="noreferrer"
+                              className="text-[10px] text-[#F5A800] hover:underline">Open</a>
+                          </div>
+                        )}
+                      </>
+                    )}
+                    {field.type === 'textarea' && (
+                      <textarea value={sectionData[field.key] || ''}
+                        onChange={e => handleFieldChange(field.key, e.target.value)} rows={3}
+                        className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-lg text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20 transition-colors resize-none"
+                        placeholder={`Enter ${field.label.toLowerCase()}`} />
+                    )}
+                    {field.type === 'number' && (
+                      <input type="number" value={sectionData[field.key] || ''}
+                        onChange={e => handleFieldChange(field.key, e.target.value)}
+                        className="w-full h-10 px-4 bg-white/[0.03] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20 transition-colors" />
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-6 mt-6 border-t border-white/[0.06]">
+                <span className="text-xs text-white/30">{hasChanges ? '⚠️ Unsaved changes' : '✓ Up to date with site'}</span>
+                <button onClick={handleSave} disabled={!hasChanges}
+                  className={`flex items-center gap-2 px-5 py-2.5 text-xs font-bold rounded-lg transition-all ${
+                    hasChanges
+                      ? 'bg-gradient-to-r from-[#F5A800] to-[#ffb700] text-black hover:shadow-lg hover:shadow-[#F5A800]/20'
+                      : 'bg-white/[0.05] text-white/30 cursor-not-allowed'
+                  }`}>
+                  <Save size={14} />
+                  Save {section.name}
+                </button>
+              </div>
             </div>
-          </motion.div>
+          )}
         </div>
       </div>
     </div>

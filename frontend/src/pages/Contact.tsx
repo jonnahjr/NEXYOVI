@@ -4,37 +4,155 @@ import React from "react";
 import WorldMap from "../components/WorldMap";
 import { useSite } from "../context/SiteContext";
 import { EASE_EXPO, revealUp, staggerContainer } from "../lib/animations";
+import { sanitizeText, sanitizeEmail, sanitizeFormData, validateFormData, containsXssPattern } from "../lib/sanitize";
 
 export default function Contact() {
-  const { settings, addMessage } = useSite();
+  const { settings, siteContent, addMessage } = useSite();
+
+  // ── Hero content from admin siteContent with fallback defaults ───
+  const contactHero = siteContent?.contactHero || {};
+  const heroHeadline = contactHero.headline || "Let's Build Something Exceptional.";
+  const heroDescription = contactHero.description || 'Engage our elite engineering team to build, secure, or scale your mission-critical enterprise systems.';
+  const heroPrimaryCTA = contactHero.primaryCTA || 'Submit Project Brief';
+
+  // Split headline into first part + last word for gold gradient accent
+  const headlineParts = heroHeadline.trim().split(/\s+/);
+  const lastWord = headlineParts.pop() || '';
+  const headlineStart = headlineParts.join(' ');
 
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [copiedContact, setCopiedContact] = React.useState<string | null>(null);
+  const [formErrors, setFormErrors] = React.useState<Record<string, string>>({});
   const formSectionRef = React.useRef<HTMLDivElement | null>(null);
   const nameInputRef = React.useRef<HTMLInputElement | null>(null);
+  const honeypotRef = React.useRef<HTMLInputElement | null>(null);
+  const [submissionCount, setSubmissionCount] = React.useState(0);
+  const [isSpam, setIsSpam] = React.useState(false);
+  const turnstileRef = React.useRef<HTMLDivElement | null>(null);
+  const turnstileWidgetId = React.useRef<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = React.useState<string>('');
   const [formData, setFormData] = React.useState({
     name: '',
     email: '',
     company: '',
     service: '',
-    message: ''
+    message: '',
+    honeypot: '' // Hidden field for bot detection
   });
+
+  // 🔒 Input sanitization handlers
+  const handleInputChange = (field: string, value: string) => {
+    // Sanitize in real-time as user types
+    let sanitized: string;
+    switch (field) {
+      case 'email':
+        sanitized = sanitizeEmail(value);
+        break;
+      case 'name':
+      case 'company':
+        sanitized = sanitizeText(value, 100);
+        break;
+      case 'message':
+        sanitized = sanitizeText(value, 5000);
+        break;
+      default:
+        sanitized = sanitizeText(value, 200);
+    }
+    setFormData(prev => ({ ...prev, [field]: sanitized }));
+    // Clear field error when user starts typing
+    if (formErrors[field]) {
+      setFormErrors(prev => {
+        const { [field]: _, ...rest } = prev;
+        return rest;
+      });
+    }
+  };
+
+  // 🔒 Spam detection: honeypot + submission rate + XSS patterns
+  const detectSpam = (data: Record<string, any>): boolean => {
+    // Honeypot: if the hidden field is filled, it's a bot
+    if (data.honeypot) return true;
+
+    // Rate limiting: max 3 submissions per session
+    if (submissionCount >= 3) return true;
+
+    // Check for XSS patterns in ALL text fields
+    for (const value of Object.values(data)) {
+      if (typeof value === 'string' && containsXssPattern(value)) {
+        return true;
+      }
+    }
+
+    // Check for common spam patterns
+    const message = data.message || '';
+    const spamPatterns = [
+      /\b(viagra|cialis|casino|cryptocurrency|free money|work from home|earn \$|click here|act now|limited time)\b/i,
+      /\b(https?:\/\/[^\s]+){3,}/i, // More than 3 URLs
+      /[A-Z]{10,}/, // All caps words (10+ chars)
+      /(.)\1{20,}/, // Repeated characters (20+)
+    ];
+
+    return spamPatterns.some(pattern => pattern.test(message));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // 🔒 Validate and sanitize all form data before submission
+    const sanitized = sanitizeFormData(formData);
+
+    // 🔒 Spam detection
+    if (detectSpam(sanitized)) {
+      console.warn('[SPAM_DETECTED] Form submission blocked');
+      setIsSpam(true);
+      setIsSubmitting(false);
+      setTimeout(() => setIsSpam(false), 5000);
+      return;
+    }
+
+    // 🔒 Validate form fields with server-side rules
+    const errors = validateFormData(sanitized, {
+      name: { required: true, maxLength: 100 },
+      email: { required: true, email: true, maxLength: 320 },
+      company: { maxLength: 200 },
+      message: { required: true, maxLength: 5000 },
+    });
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Remove honeypot field before submission
+    const { honeypot, ...cleanData } = sanitized;
+
+    // Validate Turnstile token if Turnstile is active
+    const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
+    if (siteKey && !turnstileToken) {
+      setFormErrors({ ...errors, turnstile: 'Please complete the security check' });
+      setIsSubmitting(false);
+      return;
+    }
+
     const report = {
-      ...formData,
-      status: 'unread'
+      ...cleanData,
+      status: 'unread',
+      cf_turnstile_token: turnstileToken || undefined,
+      turnstile_passed: !!turnstileToken
     };
 
+    // Simulate API call for demo - in production, this goes through CSRF-protected API
     setTimeout(() => {
       addMessage(report);
+      setSubmissionCount(prev => prev + 1);
+      setTurnstileToken('');
       setIsSubmitting(false);
       setIsSuccess(true);
-      setFormData({ name: '', email: '', company: '', service: '', message: '' });
+      setFormData({ name: '', email: '', company: '', service: '', message: '', honeypot: '' });
+      setFormErrors({});
       setTimeout(() => setIsSuccess(false), 5000);
     }, 1500);
   };
@@ -48,6 +166,50 @@ export default function Contact() {
       setCopiedContact(null);
     }
   };
+
+  // 🔒 Load Turnstile widget dynamically
+  React.useEffect(() => {
+    const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
+    if (!siteKey || !turnstileRef.current) return;
+
+    // Load Turnstile script if not already loaded
+    if (!document.querySelector('script[src*="turnstile/v0/api.js"]')) {
+      const script = document.createElement('script');
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
+        renderTurnstile(siteKey);
+      };
+      document.head.appendChild(script);
+    } else if (typeof window.turnstile !== 'undefined') {
+      renderTurnstile(siteKey);
+    }
+
+    function renderTurnstile(key: string) {
+      if (turnstileWidgetId.current) {
+        window.turnstile.remove(turnstileWidgetId.current);
+      }
+      if (turnstileRef.current) {
+        turnstileWidgetId.current = window.turnstile.render(turnstileRef.current, {
+          sitekey: key,
+          theme: 'light',
+          callback: (token: string) => {
+            setTurnstileToken(token);
+          },
+          'expired-callback': () => {
+            setTurnstileToken('');
+          },
+        });
+      }
+    }
+
+    return () => {
+      if (turnstileWidgetId.current && typeof window.turnstile !== 'undefined') {
+        window.turnstile.remove(turnstileWidgetId.current);
+      }
+    };
+  }, []);
 
   // Auto-scroll to form if URL has #inquiry hash
   React.useEffect(() => {
@@ -87,12 +249,12 @@ export default function Contact() {
             className="flex flex-col items-center text-center"
           >
             <motion.h1 variants={revealUp} className="text-5xl md:text-7xl lg:text-[80px] font-black leading-[0.95] tracking-[-0.03em] mb-8 text-white">
-              Let's Build Something <br />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">Exceptional.</span>
+              {headlineStart && <>{headlineStart} <br /></>}
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">{lastWord}</span>
             </motion.h1>
 
             <motion.p variants={revealUp} className="text-white/60 text-lg md:text-xl max-w-2xl font-medium leading-relaxed mb-12">
-              Engage our elite engineering team to build, secure, or scale your mission-critical enterprise systems.
+              {heroDescription}
             </motion.p>
 
             <motion.div variants={revealUp} className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
@@ -102,7 +264,7 @@ export default function Contact() {
                 className="group btn-gold w-full sm:w-auto text-[15px] font-bold px-10 py-5"
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
-                  Submit Project Brief
+                  {heroPrimaryCTA}
                   <ArrowRight size={16} className="group-hover:translate-x-1.5 transition-transform duration-300" />
                 </span>
               </button>
@@ -123,7 +285,7 @@ export default function Contact() {
       <section className="relative z-10 -mt-12 container max-w-4xl mx-auto mb-24 px-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
           {[
-            { icon: Mail, title: "Email", text: "info@nexyovi.com", href: "mailto:info@nexyovi.com", action: "Email" },
+            { icon: Mail, title: "Email", text: settings.email || 'info@nexyovi.com', href: `mailto:${settings.email || 'info@nexyovi.com'}`, action: "Email" },
             { icon: Phone, title: "Phone", text: settings.phone, href: `tel:${settings.phone}`, action: "Call" },
             { icon: MapPin, title: "Headquarters", text: settings.address, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.address || "Addis Ababa, Ethiopia")}`, action: "Map" }
           ].map((item, i) => (
@@ -179,7 +341,30 @@ export default function Contact() {
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Spam alert */}
+            {isSpam && (
+              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-2xl text-red-600 text-sm font-medium text-center">
+                Your submission was flagged as spam. If you believe this is an error, please email us directly at{' '}
+                <a href="mailto:info@nexyovi.com" className="underline font-bold">info@nexyovi.com</a>.
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+              {/* 🔒 Honeypot field - hidden from users, visible to bots */}
+              <div className="absolute opacity-0 pointer-events-none" aria-hidden="true" tabIndex={-1}>
+                <label htmlFor="honeypot">Leave this empty</label>
+                <input
+                  ref={honeypotRef}
+                  id="honeypot"
+                  name="honeypot"
+                  type="text"
+                  value={formData.honeypot}
+                  onChange={(e) => handleInputChange('honeypot', e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Full Name *</label>
@@ -188,11 +373,17 @@ export default function Contact() {
                     <input
                       ref={nameInputRef}
                       required
+                      maxLength={100}
                       value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-2xl py-4 pl-14 pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400"
+                      onChange={(e) => handleInputChange('name', e.target.value)}
+                      className={`w-full bg-slate-50 border text-slate-900 rounded-2xl py-4 pl-14 pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400 ${
+                        formErrors.name ? 'border-red-400 bg-red-50' : 'border-slate-200'
+                      }`}
                       placeholder="Solomon Dereje"
                     />
+                    {formErrors.name && (
+                      <p className="text-red-500 text-xs mt-1 ml-2 font-medium">{formErrors.name}</p>
+                    )}
                   </div>
                 </div>
 
@@ -203,11 +394,17 @@ export default function Contact() {
                     <input
                       required
                       type="email"
+                      maxLength={320}
                       value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-2xl py-4 pl-14 pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400"
+                      onChange={(e) => handleInputChange('email', e.target.value)}
+                      className={`w-full bg-slate-50 border text-slate-900 rounded-2xl py-4 pl-14 pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400 ${
+                        formErrors.email ? 'border-red-400 bg-red-50' : 'border-slate-200'
+                      }`}
                       placeholder="nexyovi@company.com"
                     />
+                    {formErrors.email && (
+                      <p className="text-red-500 text-xs mt-1 ml-2 font-medium">{formErrors.email}</p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -218,11 +415,17 @@ export default function Contact() {
                   <div className="relative">
                     <Building2 size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300" />
                     <input
+                      maxLength={200}
                       value={formData.company}
-                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-2xl py-4 pl-14 pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400"
+                      onChange={(e) => handleInputChange('company', e.target.value)}
+                      className={`w-full bg-slate-50 border text-slate-900 rounded-2xl py-4 pl-14 pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400 ${
+                        formErrors.company ? 'border-red-400 bg-red-50' : 'border-slate-200'
+                      }`}
                       placeholder="Company Name"
                     />
+                    {formErrors.company && (
+                      <p className="text-red-500 text-xs mt-1 ml-2 font-medium">{formErrors.company}</p>
+                    )}
                   </div>
                 </div>
 
@@ -232,7 +435,7 @@ export default function Contact() {
                     <Briefcase size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none" />
                     <select
                       value={formData.service}
-                      onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                      onChange={(e) => handleInputChange('service', e.target.value)}
                       className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-2xl py-4 pl-14 pr-10 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium appearance-none cursor-pointer"
                       style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 20px center' }}
                     >
@@ -247,19 +450,38 @@ export default function Contact() {
                     </select>
                   </div>
                 </div>
-              </div>
+              </div>              {/* 🔒 Cloudflare Turnstile (CAPTCHA alternative) - only rendered when API key is set */}
+              {import.meta.env.VITE_TURNSTILE_SITE_KEY && (
+                <div
+                  ref={turnstileRef}
+                  className="cf-turnstile flex justify-center my-4"
+                />
+              )}
+              {import.meta.env.VITE_TURNSTILE_SITE_KEY && !turnstileToken && isSubmitting && (
+                <p className="text-red-500 text-xs text-center font-medium">Please complete the security check</p>
+              )}
 
               <div className="space-y-2">
-                <label className="text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Project Details</label>
+                  <label className="text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Project Details</label>
                 <div className="relative">
                   <MessageSquare size={18} className="absolute left-5 top-5 text-slate-300" />
                   <textarea
                     required
+                    maxLength={5000}
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-2xl py-5 pl-14 pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400 h-40 resize-none"
+                    onChange={(e) => handleInputChange('message', e.target.value)}
+                    className={`w-full bg-slate-50 border text-slate-900 rounded-2xl py-5 pl-14 pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400 h-40 resize-none ${
+                      formErrors.message ? 'border-red-400 bg-red-50' : 'border-slate-200'
+                    }`}
                     placeholder="Describe your technical requirements, goals, and constraints."
                   />
+                  {formErrors.message && (
+                    <p className="text-red-500 text-xs mt-1 ml-2 font-medium">{formErrors.message}</p>
+                  )}
+                  {/* Character count for transparency */}
+                  <p className="text-slate-400 text-xs mt-1 ml-2 text-right">
+                    {formData.message.length}/5000
+                  </p>
                 </div>
               </div>
 
@@ -332,7 +554,7 @@ export default function Contact() {
                 Addis Ababa.
               </h3>
               <p className="text-white/50 text-[13px] font-medium leading-relaxed mb-6">
-                The core center of company leadership, engineering operations, and technical innovation.
+                {settings.address || 'Bole Road, near Edna Mall area, Bole Sub-city, Addis Ababa, Ethiopia'}
               </p>
               <div className="pt-5 border-t border-white/[0.06]">
                 <div className="flex items-center gap-2.5">

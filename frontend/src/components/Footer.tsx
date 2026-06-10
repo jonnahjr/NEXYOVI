@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUpRight, Facebook, Github, Instagram, Linkedin, Mail, MapPin, MessageCircle, Music2, Phone, Send, Slack, Youtube, X } from 'lucide-react';
+import { Facebook, Github, Instagram, Linkedin, MessageCircle, Send, Slack, X, Youtube } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import myLogo from '../assets/logo 1.png';
@@ -9,8 +9,8 @@ const Footer = () => {
   const { settings, siteContent } = useSite();
   const [activePolicy, setActivePolicy] = useState<'Terms' | 'Privacy' | 'Legal' | null>(null);
   const companyName = settings.siteName || 'Nexyovi';
-  const footerTagline = siteContent?.footer?.tagline || 'Enterprise software, AI systems, and cloud infrastructure for organizations that need secure, scalable technology.';
-  const footerCopyright = siteContent?.footer?.copyright || `© ${new Date().getFullYear()} ${companyName}. All rights reserved.`;
+  const footerTagline = 'Nexyovi — Senior engineering, rooted in Addis Ababa, deployed globally.';
+  const footerCopyright = '© 2025 Nexyovi Technologies. All rights reserved.';
   const socialIcons: Record<string, React.ElementType> = {
     twitter: X,
     linkedin: Linkedin,
@@ -20,7 +20,6 @@ const Footer = () => {
     facebook: Facebook,
     telegram: Send,
     whatsapp: MessageCircle,
-    tiktok: Music2,
     discord: MessageCircle,
     slack: Slack,
   };
@@ -73,7 +72,7 @@ const Footer = () => {
   }, [activePolicy]);
 
   return (
-    <footer className="relative bg-[#000000] pt-20 pb-8 overflow-hidden border-t border-white/[0.06]">
+    <footer className="relative bg-[#000000] pt-16 pb-6 overflow-hidden border-t border-white/[0.06]">
       {/* Watermark Background Content */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none pointer-events-none z-0">
         <h2 className="text-[18vw] font-bold text-white/[0.02] tracking-tighter leading-none uppercase">
@@ -85,16 +84,16 @@ const Footer = () => {
       <div className="container max-w-6xl mx-auto px-6 relative z-10">
 
         {/* Top Section: Logo + Links Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_0.8fr_0.8fr] gap-12 lg:gap-16 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.2fr_0.9fr_0.9fr_0.9fr] gap-10 lg:gap-12 mb-10">
 
-          {/* Brand Column */}
+          {/* Brand Block */}
           <div>
             <Link to="/" className="inline-block mb-6">
               {settings?.logo_url ? (
-                <img src={settings.logo_url} alt="Logo" className="h-[100px] w-auto object-contain" />
+                <img src={settings.logo_url} alt="Logo" className="h-[130px] w-auto object-contain" />
               ) : (
                 <div
-                  className="h-[100px] w-[300px]"
+                  className="h-[130px] w-[390px]"
                   style={{
                     WebkitMask: `url('${myLogo}') left center / contain no-repeat`,
                     mask: `url('${myLogo}') left center / contain no-repeat`,
@@ -103,34 +102,27 @@ const Footer = () => {
                 />
               )}
             </Link>
-            <p className="text-white/40 text-[14px] leading-relaxed mb-8 max-w-xs">
-              {footerTagline}
-            </p>
-
-            {/* Contact Info */}
-            <div className="space-y-3">
-              <a href={`mailto:${settings.email || 'contact@nexyovi.com'}`} className="flex items-center gap-3 text-white/50 text-[13px] hover:text-[#F5A800] transition-colors">
-                <Mail size={14} className="shrink-0" />
-                {settings.email || 'contact@nexyovi.com'}
-              </a>
-              {settings.phone && (
-                <>
-                  <a href={`tel:${settings.phone}`} className="flex items-center gap-3 text-white/50 text-[13px] hover:text-[#F5A800] transition-colors">
-                    <Phone size={14} className="shrink-0" />
-                    {settings.phone.replace(/(\+\d{3})(\d{2})(\d{3})(\d{4})/, '$1 $2 $3 $4')}
+            <h2 className="text-lg md:text-xl font-semibold leading-tight mb-4 max-w-lg">
+              <span className="text-white">Nexyovi — Senior engineering, </span>
+              <span className="bg-gradient-to-r from-[#F5A800] to-[#FFD166] bg-clip-text text-transparent">rooted in Addis Ababa, deployed globally.</span>
+            </h2>
+            <div className="flex items-center gap-4 mb-10">
+              {settings?.socials && Object.entries(settings.socials).map(([key, url]: any) => {
+                const Icon = socialIcons[key];
+                if (!Icon || !url) return null;
+                return (
+                  <a
+                    key={key}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/60 hover:text-[#F5A800] transition-colors"
+                    aria-label={key}
+                  >
+                    <Icon size={20} />
                   </a>
-                  <a href={`https://wa.me/${(settings.socials?.whatsapp || settings.phone || '').replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/50 text-[13px] hover:text-[#25D366] transition-colors">
-                    <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
-                      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                    </svg>
-                    WhatsApp
-                  </a>
-                </>
-              )}
-              <div className="flex items-center gap-3 text-white/50 text-[13px]">
-                <MapPin size={14} className="shrink-0" />
-                {settings.address || 'Addis Ababa, Ethiopia'}
-              </div>
+                );
+              })}
             </div>
           </div>
 
@@ -157,7 +149,7 @@ const Footer = () => {
             <h4 className="text-white font-bold text-[12px] uppercase tracking-[0.2em] mb-6">Company</h4>
             <ul className="space-y-3">
               {(siteContent?.footer?.companyLinks || [
-                { label: 'About Us', path: '/company' },
+                { label: 'Company', path: '/company' },
                 { label: 'Industries', path: '/industries' },
                 { label: 'Projects', path: '/projects' },
                 { label: 'Contact', path: '/contact' },
@@ -169,42 +161,34 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Connect Column */}
+          {/* Contact Column */}
           <div>
-            <h4 className="text-white font-bold text-[12px] uppercase tracking-[0.2em] mb-6">Connect</h4>
-            <div className="flex flex-wrap items-center gap-3 mb-6">
-              {Object.entries(settings.socials || {}).map(([key, href]) => {
-                if (!href || href === '#') return null;
-                const Icon = socialIcons[key];
-                if (!Icon) return null;
-                return (
-                  <a
-                    key={key}
-                    href={String(href)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-[#F5A800] hover:border-[#F5A800]/30 bg-white/[0.03] transition-all duration-300"
-                    aria-label={key}
-                  >
-                    <Icon size={16} />
-                  </a>
-                );
-              })}
+            <h4 className="text-white font-bold text-[12px] uppercase tracking-[0.2em] mb-6">Contact</h4>
+            <div className="space-y-4">
+              <a href={`mailto:${settings.email || 'contact@nexyovi.com'}`} className="block text-white hover:text-[#F5A800] transition-colors text-[14px] font-medium">
+                contact@nexyovi.com
+              </a>
+              <a href={`tel:${settings.phone || '+251938617252'}`} className="block text-white/70 hover:text-white transition-colors text-[14px] font-medium">
+                {settings.phone ? settings.phone.replace(/(\+\d{3})(\d{2})(\d{3})(\d{4})/, '$1 $2 $3 $4') : '+251 93 861 7252'}
+              </a>
+              <a
+                href="https://wa.me/251945628075"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-full bg-[#25D366] px-4 py-2 text-sm font-semibold text-slate-950 transition-colors hover:bg-[#1eb85b]"
+              >
+                <MessageCircle size={18} className="mr-2" />
+                Chat on WhatsApp
+              </a>
+              <div className="text-white/70 text-[14px] font-medium">
+                {settings.address || 'Addis Ababa, Ethiopia'}
+              </div>
             </div>
-
-            {/* CTA */}
-            <Link
-              to={siteContent?.footer?.cta?.path || '/contact#inquiry'}
-              className="group inline-flex items-center gap-2 text-[13px] font-bold text-[#F5A800] hover:text-[#FFD166] transition-colors"
-            >
-              {siteContent?.footer?.cta?.label || 'Book a strategy session'}
-              <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </Link>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-[12px] text-white/30">
             {footerCopyright}
           </p>

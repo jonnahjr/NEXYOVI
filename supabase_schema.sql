@@ -25,6 +25,7 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.messages;
 ALTER PUBLICATION supabase_realtime ADD TABLE public.jobs;
 ALTER PUBLICATION supabase_realtime ADD TABLE public.testimonials;
 ALTER PUBLICATION supabase_realtime ADD TABLE public.team;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.partners;
 -- ─────────────────────────────────────────────────────────────
 
 -- ============================================================
@@ -192,6 +193,29 @@ VALUES (
     "slack":     "#"
   }'::jsonb
 ) ON CONFLICT (id) DO NOTHING;
+
+
+-- ── PARTNERS TABLE ────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS public.partners (
+  id         uuid  DEFAULT gen_random_uuid() PRIMARY KEY,
+  name       text  NOT NULL,
+  logo_url   text,
+  created_at timestamptz DEFAULT timezone('utc', now()) NOT NULL
+);
+
+ALTER TABLE public.partners ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Public read partners"   ON public.partners;
+DROP POLICY IF EXISTS "Public manage partners" ON public.partners;
+CREATE POLICY "Public read partners"   ON public.partners FOR SELECT USING (true);
+CREATE POLICY "Public manage partners" ON public.partners FOR ALL    USING (true);
+
+INSERT INTO public.partners (name, logo_url) VALUES
+('Ethio Telecom', 'https://upload.wikimedia.org/wikipedia/en/5/5e/Commercial_Bank_of_Ethiopia_logo.svg'),
+('Commercial Bank of Ethiopia', 'https://upload.wikimedia.org/wikipedia/en/5/5e/Commercial_Bank_of_Ethiopia_logo.svg'),
+('Zemen Bank', 'https://upload.wikimedia.org/wikipedia/commons/6/68/Zemen_Bank_logo.svg'),
+('INSA', 'https://upload.wikimedia.org/wikipedia/en/7/70/INSA_Ethiopia_logo.svg'),
+('Addis Ababa University', 'https://upload.wikimedia.org/wikipedia/en/6/60/Addis_Ababa_University_logo.svg')
+ON CONFLICT DO NOTHING;
 
 
 -- ── SITE CONTENT TABLE ───────────────────────────────────────

@@ -1,90 +1,119 @@
 import React, { useState } from 'react';
-import { 
-  LayoutDashboard, Briefcase, Users, Settings, 
+import {
+  LayoutDashboard, Briefcase, Users, Settings,
   LogOut, ChevronLeft, ChevronRight, Bell,
-  MessageSquare, ShieldAlert,
-  X, Clock, LayoutTemplate, Menu
+  MessageSquare, Shield, Menu, X, Clock,
+  Star, Globe, ExternalLink,
+  ChevronDown, Search, Home, Building2, Zap
 } from 'lucide-react';
 import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { useSite } from '../../context/SiteContext';
-import { supabase } from '../../lib/supabase';
-import myLogo from '../../assets/logo 1.png';
+
+const navItems = [
+  { icon: LayoutDashboard, label: 'Dashboard', path: '/admin', exact: true },
+  { icon: Home, label: 'Home Content', path: '/admin/content/home' },
+  { icon: Building2, label: 'Company Content', path: '/admin/content/company' },
+  { icon: Zap, label: 'Services Content', path: '/admin/content/services' },
+  { icon: Globe, label: 'Global Content', path: '/admin/content/global' },
+  { icon: Briefcase, label: 'Jobs', path: '/admin/jobs' },
+  { icon: Users, label: 'Team', path: '/admin/team' },
+  { icon: Star, label: 'Testimonials', path: '/admin/testimonials' },
+  { icon: MessageSquare, label: 'Messages', path: '/admin/messages', badgeKey: 'unread' as const },
+  { icon: Globe, label: 'Partners & Logos', path: '/admin/partners' },
+  { icon: Shield, label: 'User Access', path: '/admin/users' },
+  { icon: Settings, label: 'Settings', path: '/admin/settings' },
+];
 
 const AdminLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [notifOpen, setNotifOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { messages, settings, session } = useSite();
+  const { messages, settings, session, jobs, logout } = useSite();
 
-  const unreadMessages = messages.filter(m => m.status === 'unread');
+  const unreadCount = messages.filter((m: any) => m.status === 'unread' || m.status === 'new').length;
+  const activeJobs = jobs.filter((j: any) => j.status !== 'closed' && j.status !== 'filled').length;
 
-  const userName = session?.user?.user_metadata?.full_name || session?.user?.email?.split('@')[0] || 'Admin';
+  const isActive = (item: typeof navItems[0]) => {
+    if (item.exact) return location.pathname === item.path;
+    return location.pathname.startsWith(item.path);
+  };
+
+  const pageTitle = navItems.find(n => isActive(n))?.label || 'Dashboard';
+
+  const userName = session?.user?.user_metadata?.full_name
+    || session?.user?.email?.split('@')[0]
+    || 'Administrator';
+  const userEmail = session?.user?.email || 'admin@nexyovi.com';
   const userInitials = userName.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2) || 'A';
 
-  const nav = [
-    { icon: LayoutDashboard, label: 'Dashboard', path: '/admin' },
-    { icon: LayoutTemplate, label: 'Site Content', path: '/admin/content' },
-    { icon: Briefcase, label: 'Jobs', path: '/admin/jobs' },
-    { icon: Users, label: 'Team', path: '/admin/team' },
-    { icon: MessageSquare, label: 'Messages', path: '/admin/messages', badge: unreadMessages.length > 0 ? unreadMessages.length : null },
-    { icon: ShieldAlert, label: 'Users', path: '/admin/users' },
-    { icon: Settings, label: 'Settings', path: '/admin/settings' }
-  ];
-
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await logout();
     navigate('/admin/login');
   };
 
-  const currentPage = nav.find(n => location.pathname === n.path)?.label 
-    || nav.find(n => location.pathname.startsWith(n.path) && n.path !== '/admin')?.label 
-    || 'Dashboard';
-
-  const SidebarContent = () => (
-    <>
+  const Sidebar = ({ mobile }: { mobile?: boolean }) => (
+    <div className="h-full flex flex-col">
       {/* Logo */}
-      <div className={`h-20 flex items-center border-b border-white/[0.08] shrink-0 transition-all duration-300 ${collapsed ? 'px-5 justify-center' : 'px-6'}`}>
-        {settings?.logo_url ? (
-          <img src={settings.logo_url} alt="Logo" className="h-10 object-contain" />
-        ) : (
-          <div
-            className={`bg-gradient-to-r from-[#F5A800] to-[#ffb700] transition-all duration-300 ${collapsed ? 'h-9 w-9 rounded-lg' : 'h-10 w-[150px] rounded-lg'}`}
-            style={{
-              WebkitMask: `url('${myLogo}') ${collapsed ? 'center' : 'left'} center / contain no-repeat`,
-              mask: `url('${myLogo}') ${collapsed ? 'center' : 'left'} center / contain no-repeat`
-            }}
-          />
-        )}
+      <div className={`h-16 flex items-center border-b border-white/[0.06] shrink-0 ${collapsed && !mobile ? 'justify-center px-4' : 'px-5'}`}>
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#F5A800] to-[#ffb700] flex items-center justify-center shrink-0 shadow-lg shadow-[#F5A800]/20">
+            <span className="text-white text-xs font-black">N</span>
+          </div>
+          {(!collapsed || mobile) && (
+            <div>
+              <div className="text-sm font-bold text-white leading-tight">Nexyovi</div>
+              <div className="text-[10px] font-medium text-white/30 uppercase tracking-wider">Admin Panel</div>
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* Nav */}
-      <nav className="flex-1 py-6 px-3 space-y-2 overflow-y-auto">
-        {nav.map((item) => {
-          const active = location.pathname === item.path;
+      {/* Search */}
+      {(!collapsed || mobile) && (
+        <div className="px-3 pt-4 pb-2">
+          <div className="relative">
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+            <input
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              placeholder="Quick search..."
+              className="w-full h-9 pl-9 pr-3 text-xs bg-white/[0.04] border border-white/[0.08] rounded-lg text-white/70 placeholder:text-white/25 focus:outline-none focus:border-[#F5A800]/50 focus:ring-1 focus:ring-[#F5A800]/20 transition-colors"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Navigation */}
+      <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
+        {navItems.map((item) => {
+          const active = isActive(item);
           return (
-            <Link 
+            <Link
               key={item.path}
-              to={item.path} 
-              onClick={() => setMobileOpen(false)}
-              className={`relative flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 group ${
+              to={item.path}
+              onClick={() => mobile && setMobileOpen(false)}
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-150 group ${
                 active
-                  ? 'bg-gradient-to-r from-[#F5A800] to-[#ffb700] text-white shadow-lg shadow-[#F5A800]/20'
-                  : 'text-white/50 hover:bg-white/[0.08] hover:text-white'
-              }`}
+                  ? 'bg-gradient-to-r from-[#F5A800] to-[#ffb700] text-black shadow-md shadow-[#F5A800]/20'
+                  : 'text-white/50 hover:bg-white/[0.06] hover:text-white'
+              } ${collapsed && !mobile ? 'justify-center px-2' : ''}`}
+              title={collapsed && !mobile ? item.label : undefined}
             >
-              <item.icon size={19} className="shrink-0" />
-              {!collapsed && (
+              <item.icon size={18} className="shrink-0" />
+              {(!collapsed || mobile) && (
                 <span className="text-sm font-semibold flex-1 truncate">{item.label}</span>
               )}
-              {!collapsed && item.badge && (
-                <span className="text-[11px] bg-red-500 text-white font-black px-2 py-0.5 rounded-full min-w-[22px] text-center shadow-sm">
-                  {item.badge}
+              {(!collapsed || mobile) && item.badgeKey === 'unread' && unreadCount > 0 && (
+                <span className="text-[10px] font-bold bg-red-500 text-white px-1.5 py-0.5 rounded-full min-w-[18px] text-center">
+                  {unreadCount > 99 ? '99+' : unreadCount}
                 </span>
               )}
-              {collapsed && item.badge && (
-                <span className="absolute top-2 right-2 w-2.5 h-2.5 rounded-full bg-red-500 shadow-sm" />
+              {collapsed && !mobile && item.badgeKey === 'unread' && unreadCount > 0 && (
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
               )}
             </Link>
           );
@@ -92,148 +121,155 @@ const AdminLayout = () => {
       </nav>
 
       {/* Bottom */}
-      <div className="px-3 pb-6 space-y-2 border-t border-white/[0.08] pt-4">
-        <button 
-          onClick={() => setCollapsed(!collapsed)}
-          className="hidden lg:flex items-center gap-3 px-4 py-3 rounded-2xl text-white/40 hover:bg-white/[0.08] hover:text-white transition-all w-full"
-        >
-          {collapsed ? <ChevronRight size={19} /> : <ChevronLeft size={19} />}
-          {!collapsed && <span className="text-sm font-semibold">Collapse</span>}
+      <div className="px-3 pb-4 border-t border-white/[0.06] pt-3 space-y-0.5">
+        <button onClick={() => setCollapsed(!collapsed)}
+          className={`hidden lg:flex items-center gap-3 px-3 py-2.5 rounded-lg text-white/30 hover:bg-white/[0.06] hover:text-white transition-all w-full text-sm ${collapsed ? 'justify-center' : ''}`}>
+          <ChevronLeft size={16} className={`shrink-0 transition-transform ${collapsed ? 'rotate-180' : ''}`} />
+          {!collapsed && <span className="font-medium">Collapse</span>}
         </button>
-        <button 
-          onClick={handleLogout}
-          className="flex items-center gap-3 px-4 py-3 rounded-2xl text-white/40 hover:bg-red-500/10 hover:text-red-400 transition-all w-full"
-        >
-          <LogOut size={19} className="shrink-0" />
-          {!collapsed && <span className="text-sm font-semibold">Sign Out</span>}
+        <button onClick={handleLogout}
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-white/30 hover:bg-red-500/10 hover:text-red-400 transition-all w-full text-sm ${collapsed ? 'justify-center' : ''}`}>
+          <LogOut size={16} className="shrink-0" />
+          {!collapsed && <span className="font-medium">Sign Out</span>}
         </button>
       </div>
-    </>
+    </div>
   );
 
   return (
-    <div className="h-screen w-screen bg-gradient-to-br from-[#02040a] via-[#050816] to-[#02040a] text-white flex overflow-hidden">
-      {/* ── MOBILE OVERLAY ── */}
+    <div className="h-screen w-screen bg-gradient-to-br from-[#02040a] via-[#050816] to-[#02040a] flex overflow-hidden">
+      {/* Mobile Overlay */}
       {mobileOpen && (
         <>
           <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 lg:hidden" onClick={() => setMobileOpen(false)} />
-          <aside className="fixed left-0 top-0 h-full w-[260px] bg-gradient-to-b from-[#050816] to-[#02040a] border-r border-white/[0.08] flex flex-col z-50 lg:hidden shadow-2xl transition-transform duration-300">
-            <SidebarContent />
+          <aside className="fixed left-0 top-0 h-full w-[280px] bg-[#050816] border-r border-white/[0.08] flex flex-col z-50 lg:hidden shadow-2xl">
+            <Sidebar mobile />
           </aside>
         </>
       )}
 
-      {/* ── DESKTOP SIDEBAR ── */}
-      <aside
-        className={`h-full bg-gradient-to-b from-[#050816]/95 via-[#070B18]/95 to-[#02040a]/95 backdrop-blur-xl border-r border-white/[0.08] flex-col shrink-0 overflow-hidden hidden lg:flex shadow-2xl transition-all duration-300 ease-out ${
-          collapsed ? 'w-[76px]' : 'w-[260px]'
-        }`}
-      >
-        <SidebarContent />
+      {/* Desktop Sidebar */}
+      <aside className={`h-full bg-[#050816]/95 backdrop-blur-xl border-r border-white/[0.08] flex-col shrink-0 overflow-hidden hidden lg:flex shadow-2xl transition-all duration-300 ${collapsed ? 'w-[64px]' : 'w-[260px]'}`}>
+        <Sidebar />
       </aside>
 
-      {/* ── MAIN ── */}
+      {/* Main */}
       <div className="flex-1 flex flex-col h-full overflow-hidden min-w-0">
         {/* Topbar */}
-        <header className="h-20 bg-gradient-to-r from-[#050816]/95 via-[#02040a]/90 to-[#050816]/95 backdrop-blur-xl border-b border-white/[0.08] px-6 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-4">
-            {/* Mobile menu button */}
-            <button 
-              onClick={() => setMobileOpen(true)} 
-              className="lg:hidden w-11 h-11 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/[0.1] transition-all"
-            >
-              <Menu size={20} />
+        <header className="h-16 bg-[#050816]/80 backdrop-blur-xl border-b border-white/[0.06] px-4 lg:px-6 flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-3">
+            <button onClick={() => setMobileOpen(true)}
+              className="lg:hidden w-9 h-9 rounded-lg border border-white/[0.1] flex items-center justify-center text-white/50 hover:bg-white/[0.08] transition-all">
+              <Menu size={18} />
             </button>
             <div>
-              <div className="text-xl font-black text-white leading-none">
-                {currentPage}
-              </div>
-              <div className="text-xs text-white/35 mt-1">Nexyovi Admin Panel</div>
+              <h1 className="text-lg font-bold text-white leading-tight">{pageTitle}</h1>
+              <p className="text-xs text-white/35">
+                {activeJobs > 0 && `${activeJobs} active job${activeJobs > 1 ? 's' : ''}`}
+                {activeJobs > 0 && unreadCount > 0 && ' · '}
+                {unreadCount > 0 && `${unreadCount} unread`}
+                {activeJobs === 0 && unreadCount === 0 && 'All systems operational'}
+              </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             {/* Notifications */}
             <div className="relative">
-              <button
-                onClick={() => setShowNotifications(!showNotifications)}
-                className={`relative w-11 h-11 rounded-xl border flex items-center justify-center transition-all duration-200 ${
-                  showNotifications 
-                    ? 'bg-gradient-to-r from-[#F5A800] to-[#ffb700] border-transparent text-white shadow-lg shadow-[#F5A800]/20' 
-                    : 'bg-white/[0.05] border-white/10 text-white/50 hover:bg-white/[0.1] hover:text-white'
-                }`}
-              >
-                <Bell size={19} />
-                {unreadMessages.length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 border-2 border-[#050816] flex items-center justify-center text-[10px] font-black text-white shadow-sm">
-                    {unreadMessages.length}
+              <button onClick={() => setNotifOpen(!notifOpen)}
+                className="relative w-9 h-9 rounded-lg border border-white/[0.1] flex items-center justify-center text-white/40 hover:bg-white/[0.08] hover:text-white transition-all">
+                <Bell size={17} />
+                {unreadCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4.5 h-4.5 rounded-full bg-red-500 border-2 border-[#050816] flex items-center justify-center text-[9px] font-bold text-white shadow-sm">
+                    {unreadCount > 9 ? '9+' : unreadCount}
                   </span>
                 )}
               </button>
-
-              {showNotifications && (
+              {notifOpen && (
                 <>
-                  <div className="fixed inset-0 z-40" onClick={() => setShowNotifications(false)} />
-                  <div className="absolute right-0 mt-3 w-88 bg-gradient-to-br from-[#050816] to-[#02040a] border border-white/[0.08] rounded-2xl z-50 overflow-hidden shadow-2xl">
-                    <div className="px-5 py-4 border-b border-white/[0.06] flex items-center justify-between bg-white/[0.02]">
+                  <div className="fixed inset-0 z-40" onClick={() => setNotifOpen(false)} />
+                  <div className="absolute right-0 mt-2 w-80 bg-[#0D1220] border border-white/[0.08] rounded-xl z-50 shadow-2xl overflow-hidden">
+                    <div className="px-5 py-3 border-b border-white/[0.06] flex items-center justify-between">
                       <h3 className="text-sm font-bold text-white">Notifications</h3>
-                      <button onClick={() => setShowNotifications(false)} className="text-white/35 hover:text-white transition-colors">
-                        <X size={17} />
-                      </button>
+                      <button onClick={() => setNotifOpen(false)} className="text-white/30 hover:text-white"><X size={14} /></button>
                     </div>
-                    <div className="max-h-[320px] overflow-y-auto">
-                      {messages.length > 0 ? (
-                        messages.slice(0, 5).map((msg, i) => (
-                          <Link key={i} to="/admin/messages" onClick={() => setShowNotifications(false)}
-                            className="block px-5 py-4 hover:bg-white/[0.05] border-b border-white/[0.04] transition-colors"
-                          >
-                            <div className="flex items-start gap-3">
-                              <div className={`w-2 h-2 mt-2 rounded-full shrink-0 ${msg.status === 'unread' ? 'bg-[#F5A800]' : 'bg-white/25'}`} />
-                              <div className="flex-1 min-w-0">
-                                <div className="flex items-center justify-between mb-1">
-                                  <span className="text-sm font-bold text-white truncate">{msg.name}</span>
-                                  <span className="text-xs text-white/35 flex items-center gap-1 shrink-0 ml-2">
-                                    <Clock size={11} />{msg.created_at ? new Date(msg.created_at).toLocaleDateString() : 'Today'}
-                                  </span>
-                                </div>
-                                <p className="text-xs text-white/40 line-clamp-2">{msg.message}</p>
+                    <div className="max-h-[360px] overflow-y-auto">
+                      {messages.length > 0 ? messages.slice(0, 5).map((msg: any, i: number) => (
+                        <Link key={i} to="/admin/messages" onClick={() => setNotifOpen(false)}
+                          className="block px-5 py-3.5 hover:bg-white/[0.03] border-b border-white/[0.04] transition-colors">
+                          <div className="flex items-start gap-3">
+                            <div className={`w-2 h-2 mt-1.5 rounded-full shrink-0 ${msg.status === 'unread' || msg.status === 'new' ? 'bg-[#F5A800]' : 'bg-white/20'}`} />
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center justify-between gap-2">
+                                <span className="text-sm font-semibold text-white truncate">{msg.name}</span>
+                                <span className="text-[10px] text-white/30 shrink-0 flex items-center gap-1">
+                                  <Clock size={10} />
+                                  {msg.created_at ? new Date(msg.created_at).toLocaleDateString() : 'Today'}
+                                </span>
                               </div>
+                              <p className="text-xs text-white/40 line-clamp-2 mt-0.5">{msg.message || msg.content}</p>
                             </div>
-                          </Link>
-                        ))
-                      ) : (
+                          </div>
+                        </Link>
+                      )) : (
                         <div className="px-5 py-12 text-center">
-                          <MessageSquare size={30} className="mx-auto mb-3 text-white/20" />
-                          <p className="text-sm text-white/40">No new messages</p>
+                          <Bell size={24} className="mx-auto mb-2 text-white/20" />
+                          <p className="text-sm text-white/40">No new notifications</p>
                         </div>
                       )}
                     </div>
-                    <Link to="/admin/messages" onClick={() => setShowNotifications(false)}
-                      className="block px-5 py-4 text-center text-xs font-black text-[#F5A800] hover:bg-[#F5A800]/10 transition-colors uppercase tracking-[0.2em]"
-                    >
-                      View all messages
+                    <Link to="/admin/messages" onClick={() => setNotifOpen(false)}
+                      className="block px-5 py-3 text-center text-xs font-bold text-[#F5A800] hover:bg-white/[0.03] transition-colors border-t border-white/[0.06]">
+                      View All Messages
                     </Link>
                   </div>
                 </>
               )}
             </div>
 
-            {/* User */}
-            <div className="flex items-center gap-3 pl-3 border-l border-white/[0.1]">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#F5A800] to-[#ffb700] flex items-center justify-center text-white text-xs font-black shrink-0 shadow-lg shadow-[#F5A800]/20">
-                {userInitials}
-              </div>
-              <div className="hidden sm:block">
-                <div className="text-sm font-bold text-white leading-none">{userName}</div>
-                <div className="text-xs text-white/35 mt-0.5">Administrator</div>
-              </div>
+            {/* User Menu */}
+            <div className="relative">
+              <button onClick={() => setUserMenuOpen(!userMenuOpen)}
+                className="flex items-center gap-2 pl-3 ml-1 border-l border-white/[0.1] py-1 hover:opacity-80 transition-opacity">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#F5A800] to-[#ffb700] flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-sm">
+                  {userInitials}
+                </div>
+                <div className="hidden sm:block text-left">
+                  <div className="text-sm font-semibold text-white leading-tight">{userName}</div>
+                  <div className="text-[10px] text-white/35">Administrator</div>
+                </div>
+                <ChevronDown size={14} className="hidden sm:block text-white/30" />
+              </button>
+              {userMenuOpen && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setUserMenuOpen(false)} />
+                  <div className="absolute right-0 mt-2 w-56 bg-[#0D1220] border border-white/[0.08] rounded-xl z-50 shadow-2xl overflow-hidden">
+                    <div className="px-4 py-3 border-b border-white/[0.06]">
+                      <div className="text-sm font-bold text-white">{userName}</div>
+                      <div className="text-xs text-white/40 mt-0.5">{userEmail}</div>
+                    </div>
+                    <div className="py-1">
+                      <Link to="/" onClick={() => setUserMenuOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-white/70 hover:bg-white/[0.05] transition-colors">
+                        <ExternalLink size={15} /> View Site
+                      </Link>
+                    </div>
+                    <div className="border-t border-white/[0.06] py-1">
+                      <button onClick={handleLogout}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-red-400 hover:bg-red-500/10 transition-colors w-full">
+                        <LogOut size={15} /> Sign Out
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </header>
 
         {/* Page Content */}
         <main className="flex-1 overflow-y-auto">
-          <div className="w-full max-w-7xl mx-auto px-6 py-8">
+          <div className="max-w-7xl mx-auto px-4 lg:px-6 py-6">
             <Outlet />
           </div>
         </main>

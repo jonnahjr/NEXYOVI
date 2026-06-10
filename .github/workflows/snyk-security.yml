@@ -1,0 +1,79 @@
+# ════════════════════════════════════════════════════════════
+# Snyk Security Scan - Dependency Vulnerability Monitoring
+# ════════════════════════════════════════════════════════════
+# Scans npm/Node.js dependencies for known vulnerabilities.
+# Requires: SNYK_TOKEN in GitHub Secrets.
+# ════════════════════════════════════════════════════════════
+
+name: "Snyk Security Scan"
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "frontend/package.json"
+      - "frontend/package-lock.json"
+      - "backend/package.json"
+      - "backend/package-lock.json"
+  pull_request:
+    branches: [main]
+    paths:
+      - "frontend/package.json"
+      - "frontend/package-lock.json"
+      - "backend/package.json"
+      - "backend/package-lock.json"
+  schedule:
+    - cron: "0 6 * * 1" # Every Monday
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  snyk-scan:
+    name: Snyk Dependency Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Snyk on Backend
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: >
+            --file=backend/package.json
+            --severity-threshold=high
+            --json
+          command: test
+
+      - name: Run Snyk on Frontend
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: >
+            --file=frontend/package.json
+            --severity-threshold=high
+            --json
+          command: test
+
+      - name: Run Snyk Code (SAST)
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: >
+            --severity-threshold=high
+          command: code test
+
+      - name: Monitor dependencies (weekly)
+        if: github.event_name == 'schedule'
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: >
+            --all-projects
+          command: monitor

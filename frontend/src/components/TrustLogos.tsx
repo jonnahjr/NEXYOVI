@@ -2,8 +2,12 @@ import { motion } from 'framer-motion';
 import { trustLogosDefaults, useSite } from '../context/SiteContext';
 
 const TrustLogos = () => {
- const { siteContent } = useSite();
- const trustLogos = siteContent?.trustLogos?.items?.length ? siteContent.trustLogos.items : trustLogosDefaults;
+ const { siteContent, partners } = useSite();
+ // Use dynamic partners from SiteContext (includes admin edits via localStorage),
+ // fall back to static trustLogosDefaults if empty
+ const trustLogos = partners && partners.length > 0
+   ? partners.filter(p => p.name && p.logo_url)
+   : (siteContent?.trustLogos?.items?.length ? siteContent.trustLogos.items : trustLogosDefaults);
  const heading = siteContent?.trustLogos?.title || 'Experience Across Enterprise, Government & Technology Sectors';
 
  return (

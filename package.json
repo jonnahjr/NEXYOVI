@@ -1,9 +1,15 @@
 {
-  "name": "nexyovi",
-  "version": "1.0.0",
-  "scripts": {
-    "dev": "cd frontend && npm run dev",
-    "build": "cd frontend && npm run build",
-    "preview": "cd frontend && npm run preview"
-  }
+    "name": "nexyovi",
+    "version": "1.0.0",
+    "scripts": {
+        "dev": "cd frontend && npm run dev",
+        "build": "cd frontend && npm run build",
+        "preview": "cd frontend && npm run preview",
+        "security:audit": "npm audit && cd frontend && npm audit && cd ../backend && npm audit",
+        "security:check": "node SECURITY_CHECKLIST.js",
+        "security:report": "npm audit --audit-level=moderate > security-report.txt && echo 'Report generated'",
+        "backend:dev": "cd backend && npm run dev",
+        "backend:start": "cd backend && npm start",
+        "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install"
+    }
 }

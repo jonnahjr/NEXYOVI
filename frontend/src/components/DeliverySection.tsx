@@ -1,6 +1,32 @@
 import { motion } from 'framer-motion';
-import { Building2, Bot, Smartphone, Cloud, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { Bot, Box, Braces, Building2, Cloud, Code, Database, Server, Smartphone, Zap } from 'lucide-react';
 import { useSite } from '../context/SiteContext';
+
+// Map technology names to icons and colors
+const techIconMap: Record<string, { icon: React.ComponentType<any>; color: string }> = {
+  // Enterprise
+  'React': { icon: Braces, color: 'text-black' },
+  'Next.js': { icon: Box, color: 'text-black' },
+  'TypeScript': { icon: Code, color: 'text-black' },
+  'Node.js': { icon: Server, color: 'text-black' },
+  'Python': { icon: Code, color: 'text-black' },
+  // AI
+  'OpenAI': { icon: Zap, color: 'text-black' },
+  'Anthropic': { icon: Zap, color: 'text-black' },
+  'LangChain': { icon: Code, color: 'text-black' },
+  // Mobile
+  'React Native': { icon: Smartphone, color: 'text-black' },
+  'Flutter': { icon: Smartphone, color: 'text-black' },
+  'Swift': { icon: Code, color: 'text-black' },
+  'Kotlin': { icon: Code, color: 'text-black' },
+  'Firebase': { icon: Database, color: 'text-black' },
+  // Cloud
+  'AWS': { icon: Cloud, color: 'text-black' },
+  'Azure': { icon: Cloud, color: 'text-black' },
+  'GCP': { icon: Cloud, color: 'text-black' },
+  'Terraform': { icon: Code, color: 'text-black' },
+  'Ansible': { icon: Server, color: 'text-black' },
+};
 
 const defaultItems = [
   {
@@ -49,7 +75,7 @@ export default function DeliverySection() {
   const subtitle = siteContent?.delivery?.subtitle || 'Every engagement is measured by business impact, technical rigor, and long-term reliability. Here is how we deliver.';
 
   return (
-    <section className="relative bg-[#FCFBF8] py-28 md:py-36 overflow-hidden section-divider-light">
+    <section className="relative bg-white py-28 md:py-36 overflow-hidden">
       <div className="container max-w-6xl mx-auto px-6 relative z-10">
         {/* Header */}
         <motion.div
@@ -59,9 +85,9 @@ export default function DeliverySection() {
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-300 mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-            <span className="text-[11px] font-bold tracking-[0.2em] text-slate-500 uppercase">{badge}</span>
+            <span className="text-[11px] font-bold tracking-[0.2em] text-slate-600 uppercase">{badge}</span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 tracking-[-0.02em] leading-[1.05] mb-5">
             {title.includes('Critical Industries') ? (
@@ -71,8 +97,8 @@ export default function DeliverySection() {
           <p className="text-slate-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-medium">{subtitle}</p>
         </motion.div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {/* Content Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {items.map((item: any, i: number) => {
             const Icon = item.icon;
             return (
@@ -82,26 +108,26 @@ export default function DeliverySection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.5, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="group relative bg-white border border-slate-200 rounded-3xl p-8 hover:border-slate-300 transition-all duration-500 overflow-hidden shadow-sm hover:shadow-md"
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${item.bgGlow} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
+                <div className="mb-4">
+                  <Icon size={24} className={item.color} />
+                </div>
 
-                <div className="relative z-10">
-                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${item.color} bg-slate-100 border border-slate-200 mb-6`}>
-                    <Icon size={22} />
-                  </div>
+                <h3 className="text-lg font-bold text-slate-900 mb-2">{item.title}</h3>
+                <p className="text-slate-500 text-sm leading-relaxed mb-4">{item.description}</p>
 
-                  <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed mb-6">{item.description}</p>
-
-                  <div className="space-y-2">
-                    {item.capabilities.map((cap: string) => (
+                <div className="space-y-1.5">
+                  {item.capabilities.map((cap: string) => {
+                    const techData = techIconMap[cap];
+                    const TechIcon = techData?.icon || Code;
+                    const techColor = techData?.color || 'text-slate-600';
+                    return (
                       <div key={cap} className="flex items-center gap-2.5">
-                        <CheckCircle2 size={14} className="shrink-0 text-[#F5A800]" />
+                        <TechIcon size={16} className={`shrink-0 ${techColor}`} />
                         <span className="text-sm text-slate-600">{cap}</span>
                       </div>
-                    ))}
-                  </div>
+                    );
+                  })}
                 </div>
               </motion.div>
             );
