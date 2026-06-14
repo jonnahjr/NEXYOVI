@@ -6,6 +6,23 @@ interface FetchOptions {
   auth?: boolean;
 }
 
+let cachedCsrfToken: string | null = null;
+
+async function getCsrfToken() {
+  if (cachedCsrfToken) return cachedCsrfToken;
+  try {
+    const res = await fetch(`${API_BASE}/api/csrf-token`);
+    if (res.ok) {
+      const data = await res.json();
+      cachedCsrfToken = data.token;
+      return cachedCsrfToken;
+    }
+  } catch (err) {
+    console.error('Failed to fetch CSRF token:', err);
+  }
+  return null;
+}
+
 function getToken(): string | null {
   return localStorage.getItem('nexyovi_token');
 }
@@ -18,7 +35,7 @@ function clearToken() {
   localStorage.removeItem('nexyovi_token');
 }
 
-async function request(path: string, options: FetchOptions = {}) {
+async function request(path: string, options: FetchOptions = {}, nocache = false) {
   const { method = 'GET', body, auth = false } = options;
 
   const headers: Record<string, string> = {
@@ -32,9 +49,18 @@ async function request(path: string, options: FetchOptions = {}) {
     }
   }
 
+  // Attach CSRF token for mutating requests
+  if (method !== 'GET' && method !== 'HEAD' && method !== 'OPTIONS') {
+    const csrfToken = await getCsrfToken();
+    if (csrfToken) {
+      headers['X-CSRF-Token'] = csrfToken;
+    }
+  }
+
   const res = await fetch(`${API_BASE}${path}`, {
     method,
     headers,
+    cache: nocache ? 'no-store' : 'default',
     body: body ? JSON.stringify(body) : undefined,
   });
 
@@ -75,7 +101,7 @@ export function isAuthenticated(): boolean {
 // ── Data (CRUD) ────────────────────────────────────────────
 
 export async function listAll(entity: string) {
-  return request(`/api/data/${entity}`);
+  return request(`/api/data/${entity}?t=${Date.now()}`, {}, true);
 }
 
 export async function getById(entity: string, id: string | number) {

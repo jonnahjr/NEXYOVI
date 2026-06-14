@@ -85,21 +85,7 @@ const CompanyStory = () => {
           ))}
         </div>
 
-        {/* ── Vision — just text, no box ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1, ease: EASE_EXPO }}
-        >
-          <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-slate-400 mb-4">Vision</p>
-          <blockquote className="text-2xl md:text-3xl lg:text-4xl font-black tracking-[-0.02em] leading-[1.2] text-slate-800 max-w-3xl">
-            &ldquo;Our vision is to build technology that creates lasting impact{' '}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] to-[#FFD166]">
-              &mdash; starting in Africa, built for the world.
-            </span>&rdquo;
-          </blockquote>
-        </motion.div>
+
 
       </div>
     </section>

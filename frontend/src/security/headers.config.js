@@ -11,7 +11,7 @@ const securityHeaders = {
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
         "font-src 'self' https://fonts.gstatic.com data:",
         "img-src 'self' data: https: blob:",
-        "media-src 'self'",
+        "media-src 'self' data: https://*.cloudfront.net https://*.supabase.co",
         "connect-src 'self' https://kgokqftntqszjnwsaegj.supabase.co",
         "frame-ancestors 'none'",
         "base-uri 'self'",

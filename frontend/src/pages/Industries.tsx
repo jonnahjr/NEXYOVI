@@ -248,12 +248,10 @@ export default function Industries() {
                   className="group relative cursor-pointer"
                 >
                   <div className="relative h-full p-6 rounded-[24px] bg-white border border-slate-200 transition-all duration-500 group-hover:border-[#F5A800]/40 group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)] overflow-hidden">
-                    <div className="relative z-10">
-                      <div className="flex items-center justify-between mb-4">
+                    <div className="relative z-10">                        <div className="flex items-center mb-4">
                         <div className="w-12 h-12 rounded-[16px] bg-slate-100 border border-slate-200 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:border-[#F5A800]/30">
                           <Icon size={20} className="text-slate-600 group-hover:text-[#F5A800] transition-colors duration-300" />
                         </div>
-                        <span className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-300">0{i + 1}</span>
                       </div>
                       <div className="flex items-center gap-2 mb-1">
                         <h3 className="text-xl font-black text-slate-950 tracking-[-0.02em] group-hover:text-[#F5A800] transition-colors duration-300">{ind.name}</h3>

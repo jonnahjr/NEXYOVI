@@ -1,4 +1,4 @@
-import { AnimatePresence, animate, motion, useInView, useMotionValue, useScroll, useTransform } from 'framer-motion';
+import { animate, motion, useInView, useMotionValue, useScroll, useTransform } from 'framer-motion';
 import {
   ArrowUpRight,
   ChevronRight,
@@ -56,7 +56,69 @@ const Counter = ({ value, duration = 2, decimals = 0, suffix = '' }: { value: nu
   return <motion.span ref={ref}>{rounded}</motion.span>;
 };
 
+// ── Project Color Mapping (Light/Dark Theme Support) ──────────
+const projectColorMap: Record<string, { light: { accent: string; bg: string; border: string; icon: string }; dark: { accent: string; bg: string; border: string; icon: string } }> = {
+  'neural-sentinel': {
+    light: { accent: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-200', icon: 'text-amber-600' },
+    dark: { accent: 'dark:text-amber-400', bg: 'dark:bg-amber-950/20', border: 'dark:border-amber-900', icon: 'dark:text-amber-400' }
+  },
+  'quantum-ledger': {
+    light: { accent: 'text-purple-600', bg: 'bg-purple-50', border: 'border-purple-200', icon: 'text-purple-600' },
+    dark: { accent: 'dark:text-purple-400', bg: 'dark:bg-purple-950/20', border: 'dark:border-purple-900', icon: 'dark:text-purple-400' }
+  },
+  'apex-cloud': {
+    light: { accent: 'text-cyan-600', bg: 'bg-cyan-50', border: 'border-cyan-200', icon: 'text-cyan-600' },
+    dark: { accent: 'dark:text-cyan-400', bg: 'dark:bg-cyan-950/20', border: 'dark:border-cyan-900', icon: 'dark:text-cyan-400' }
+  },
+  'ion-network': {
+    light: { accent: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-200', icon: 'text-emerald-600' },
+    dark: { accent: 'dark:text-emerald-400', bg: 'dark:bg-emerald-950/20', border: 'dark:border-emerald-900', icon: 'dark:text-emerald-400' }
+  },
+  'cipher-vault': {
+    light: { accent: 'text-red-600', bg: 'bg-red-50', border: 'border-red-200', icon: 'text-red-600' },
+    dark: { accent: 'dark:text-red-400', bg: 'dark:bg-red-950/20', border: 'dark:border-red-900', icon: 'dark:text-red-400' }
+  },
+  'prism-ai': {
+    light: { accent: 'text-orange-600', bg: 'bg-orange-50', border: 'border-orange-200', icon: 'text-orange-600' },
+    dark: { accent: 'dark:text-orange-400', bg: 'dark:bg-orange-950/20', border: 'dark:border-orange-900', icon: 'dark:text-orange-400' }
+  },
+  'pharmaflow': {
+    light: { accent: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-200', icon: 'text-emerald-600' },
+    dark: { accent: 'dark:text-emerald-400', bg: 'dark:bg-emerald-950/20', border: 'dark:border-emerald-900', icon: 'dark:text-emerald-400' }
+  },
+  'stockvue': {
+    light: { accent: 'text-orange-600', bg: 'bg-orange-50', border: 'border-orange-200', icon: 'text-orange-600' },
+    dark: { accent: 'dark:text-orange-400', bg: 'dark:bg-orange-950/20', border: 'dark:border-orange-900', icon: 'dark:text-orange-400' }
+  },
+  'biteorder': {
+    light: { accent: 'text-teal-600', bg: 'bg-teal-50', border: 'border-teal-200', icon: 'text-teal-600' },
+    dark: { accent: 'dark:text-teal-400', bg: 'dark:bg-teal-950/20', border: 'dark:border-teal-900', icon: 'dark:text-teal-400' }
+  },
+  'tablereserve': {
+    light: { accent: 'text-pink-600', bg: 'bg-pink-50', border: 'border-pink-200', icon: 'text-pink-600' },
+    dark: { accent: 'dark:text-pink-400', bg: 'dark:bg-pink-950/20', border: 'dark:border-pink-900', icon: 'dark:text-pink-400' }
+  },
+};
 
+function getProjectColorClass(projectId: string): string {
+  const colors = projectColorMap[projectId] || projectColorMap['neural-sentinel'];
+  return `${colors.light.bg} ${colors.dark.bg}`;
+}
+
+function getProjectAccentClass(projectId: string): string {
+  const colors = projectColorMap[projectId] || projectColorMap['neural-sentinel'];
+  return `${colors.light.accent} ${colors.dark.accent}`;
+}
+
+function getProjectBorderClass(projectId: string): string {
+  const colors = projectColorMap[projectId] || projectColorMap['neural-sentinel'];
+  return `${colors.light.border} ${colors.dark.border}`;
+}
+
+function getProjectIconClass(projectId: string): string {
+  const colors = projectColorMap[projectId] || projectColorMap['neural-sentinel'];
+  return `${colors.light.icon} ${colors.dark.icon}`;
+}
 
 // ── Types ─────────────────────────────────────────────────────
 type Category = 'All' | 'Software' | 'AI Systems' | 'Infrastructure' | 'Data Systems' | 'Security';
@@ -307,7 +369,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
         hidden: { opacity: 0, y: 40, scale: 0.96 },
         visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: EASE_EXPO, delay: index * 0.06 } },
       }}
-      className="group relative rounded-[28px] overflow-hidden border border-slate-200 bg-white transition-all duration-500 cursor-pointer"
+      className="group relative rounded-[28px] overflow-hidden border bg-white dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 transition-all duration-500 cursor-pointer"
       style={{
         perspective: 1000,
         transformStyle: 'preserve-3d',
@@ -328,29 +390,29 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
         <div className="flex items-start justify-between mb-6">
           <motion.div
             whileHover={{ scale: 1.1 }}
-            className="relative w-11 h-11 rounded-[14px] bg-[#030303] border border-white/10 flex items-center justify-center overflow-hidden shadow-sm group-hover:border-[#F5A800]/40 transition-all duration-300"
+            className={`relative w-11 h-11 rounded-[14px] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden shadow-sm transition-all duration-300 ${getProjectBorderClass(project.id)}`}
           >
             <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
-            <Icon size={18} className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors duration-300" />
+            <Icon size={18} className={`relative z-10 text-slate-400 dark:text-slate-500 group-hover:${getProjectIconClass(project.id)} transition-colors duration-300`} />
           </motion.div>
         </div>
 
         {/* Category + Year */}
         <div className="flex items-center gap-3 mb-3">
-          <span className="text-[10px] font-black uppercase tracking-[0.3em]" style={{ color: project.color }}>
+          <span className={`text-[10px] font-black uppercase tracking-[0.3em] ${getProjectAccentClass(project.id)}`}>
             {project.category}
           </span>
-          <span className="text-[10px] text-slate-400 font-mono">{project.year}</span>
+          <span className="text-[10px] text-slate-400 dark:text-slate-500 font-mono">{project.year}</span>
         </div>
 
         {/* Title */}
-        <h3 className="text-xl md:text-2xl font-black text-slate-950 tracking-tight mb-1 leading-tight">
+        <h3 className="text-xl md:text-2xl font-black text-slate-950 dark:text-white tracking-tight mb-1 leading-tight">
           {project.title}
         </h3>
-        <p className="text-sm text-slate-500 font-medium mb-4">{project.subtitle}</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400 font-medium mb-4">{project.subtitle}</p>
 
         {/* Description */}
-        <p className="text-slate-500 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
+        <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
           {project.description}
         </p>
 
@@ -359,7 +421,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-slate-50 border border-slate-200 text-slate-500"
+              className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400`}
             >
               {tag}
             </span>
@@ -367,25 +429,24 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
         </div>
 
         {/* Metrics strip */}
-        <div className="flex flex-col gap-2 mb-6 p-4 rounded-2xl bg-slate-50 border border-slate-200">
+        <div className={`flex flex-col gap-2 mb-6 p-4 rounded-2xl ${getProjectColorClass(project.id)} border ${getProjectBorderClass(project.id)}`}>
           {project.metrics.map((m) => (
             <div key={m.label} className="flex items-center gap-2">
-              <div className="w-1 h-1 rounded-full bg-[#F5A800] shrink-0" />
-              <span className="text-sm font-semibold text-slate-700">{m.value}</span>
+              <div className={`w-1 h-1 rounded-full ${getProjectAccentClass(project.id)} shrink-0`} />
+              <span className={`text-sm font-semibold text-slate-700 dark:text-slate-300`}>{m.value}</span>
             </div>
           ))}
         </div>
 
         {/* Impact + CTA */}
-        <div className="flex items-center justify-between pt-2 border-t border-slate-200">
+        <div className="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-800">
           <motion.div className="flex items-center gap-2" whileHover={{ x: 3 }}>
-            <TrendingUp size={12} style={{ color: project.color }} />
-            <span className="text-[11px] font-bold text-slate-500">{project.impact}</span>
+            <TrendingUp size={12} className={getProjectAccentClass(project.id)} />
+            <span className={`text-[11px] font-bold ${getProjectAccentClass(project.id)}`}>{project.impact}</span>
           </motion.div>
           <Link
             to={`/projects/${project.id}`}
-            className="group/btn flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest transition-all duration-300"
-            style={{ color: project.color }}
+            className={`group/btn flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest transition-all duration-300 ${getProjectAccentClass(project.id)}`}
           >
             View Project
             <ArrowUpRight size={12} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
@@ -543,7 +604,7 @@ export default function Projects() {
   ];
 
   return (
-    <div className="bg-[#02040a] min-h-screen text-white font-sans selection:bg-[#F5A800]/30 overflow-x-clip">
+    <div className="bg-white dark:bg-[#02040a] min-h-screen text-slate-950 dark:text-white font-sans selection:bg-amber-600/30 dark:selection:bg-amber-400/30 overflow-x-clip transition-colors duration-300">
 
 
       {/* ═══════════════════════════════════════════════════════════
@@ -551,10 +612,10 @@ export default function Projects() {
           ═══════════════════════════════════════════════════════════ */}
       <section
         ref={heroRef}
-        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#02040a]"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-[#02040a] transition-colors duration-300"
       >
         {/* Clean bottom fade */}
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#02040a] to-transparent z-[2] pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-white dark:from-[#02040a] to-transparent z-[2] pointer-events-none" />
 
         {/* ── Main Hero Content ── */}
         <motion.div
@@ -563,16 +624,16 @@ export default function Projects() {
         >
           {/* Headline — TextReveal split into two lines (matching Services) */}
           <TextReveal className="mb-2">
-            <h1 className="text-[48px] md:text-[72px] lg:text-[96px] font-black tracking-[-0.04em] leading-[0.9] text-white">
+            <h1 className="text-[48px] md:text-[72px] lg:text-[96px] font-black tracking-[-0.04em] leading-[0.9] text-slate-950 dark:text-white">
               Engineering the{' '}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-600 dark:from-amber-400 via-amber-500 dark:via-amber-300 to-amber-600 dark:to-amber-400">
                 Future,
               </span>
             </h1>
           </TextReveal>
           <TextReveal delay={0.15}>
             <h1 className="text-[48px] md:text-[72px] lg:text-[96px] font-black tracking-[-0.04em] leading-[0.9] mb-6">
-              <span className="text-white/20">One Reference at a Time.</span>
+              <span className="text-slate-400 dark:text-white/20">One Reference at a Time.</span>
             </h1>
           </TextReveal>
 
@@ -581,7 +642,7 @@ export default function Projects() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35, duration: 0.7, ease: EASE_EXPO }}
-            className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed mb-10"
+            className="text-slate-600 dark:text-white/50 text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed mb-10"
           >
             From AI-powered defense platforms to post-quantum settlement networks — explore our reference architectures and production applications.
           </motion.p>
@@ -603,41 +664,21 @@ export default function Projects() {
             </Link>
           </motion.div>
 
-          {/* ── Floating Stat Pills ── */}
+          {/* ── Stat Text — Company Hero style ── */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.8, ease: EASE_EXPO }}
-            className="flex flex-wrap items-center justify-center gap-3"
+            transition={{ delay: 0.8, duration: 0.6, ease: EASE_EXPO }}
+            className="mt-14 flex flex-wrap items-center justify-center gap-x-10 gap-y-3 border-t border-slate-200 dark:border-white/10 pt-8"
           >
             {[
-              { val: 24, suffix: '/7', label: 'Monitoring & Support', color: '#10b981' },
-              { val: 8, suffix: '', label: 'Industries Served', color: '#F5A800' },
-              { val: 6, suffix: '+', label: 'Service Verticals', color: '#8b5cf6' },
-            ].map((item, i) => (
-              <motion.div
-                key={item.label}
-                animate={{ y: [0, -10, 0] }}
-                transition={{
-                  duration: 4 + i * 0.6,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                  delay: i * 0.5,
-                }}
-                whileHover={{ scale: 1.05, y: -12 }}
-                className="flex items-center gap-3 px-5 py-3 rounded-2xl backdrop-blur-xl transition-all duration-500"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                }}
-              >
-                <div className="flex items-baseline gap-0.5">
-                  <span className="text-lg font-black" style={{ color: item.color }}>
-                    <Counter value={item.val} suffix={item.suffix} duration={2.5} />
-                  </span>
-                </div>
-                <span className="text-[11px] text-white/40 font-bold uppercase tracking-wider">{item.label}</span>
-              </motion.div>
+              { val: 24, suffix: '/7', label: 'Monitoring & Support' },
+              { val: 8, suffix: '', label: 'Industries Served' },
+              { val: 6, suffix: '+', label: 'Service Verticals' },
+            ].map((item) => (
+              <span key={item.label} className="text-[11px] font-bold uppercase tracking-[0.15em] text-slate-600 dark:text-white/60">
+                <Counter value={item.val} suffix={item.suffix} duration={2.5} />{' '}{item.label}
+              </span>
             ))}
           </motion.div>
         </motion.div>
@@ -656,7 +697,7 @@ export default function Projects() {
       {/* ═══════════════════════════════════════════════════════════
           STATS BAR — Animated Counters
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden border-t border-white/[0.05] py-16 bg-[#02040a]">
+      <section className="relative overflow-hidden border-t border-slate-200 dark:border-white/[0.05] py-16 bg-slate-50 dark:bg-[#02040a] transition-colors duration-300">
         <div className="container relative z-10 mx-auto px-6">
           <motion.div
             variants={staggerContainer}
@@ -675,10 +716,10 @@ export default function Projects() {
                   }}
                   className="flex flex-col items-center justify-center text-center"
                 >
-                  <div className="text-2xl md:text-3xl font-black text-white mb-1">
+                  <div className="text-2xl md:text-3xl font-black text-slate-950 dark:text-white mb-1">
                     <Counter value={stat.value} duration={2.5} suffix={stat.suffix} />
                   </div>
-                  <div className="text-[10px] font-bold uppercase tracking-widest text-white/40">{stat.label}</div>
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-white/40">{stat.label}</div>
                 </motion.div>
               );
             })}
@@ -688,140 +729,153 @@ export default function Projects() {
 
 
       {/* ═══════════════════════════════════════════════════════════
-          REFERENCE ARCHITECTURES
+          REFERENCE ARCHITECTURES — Industries style
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-28 bg-[#FCFBF8] border-t border-slate-200">
+      <section className="relative py-32 bg-[#f4f4f5] border-t border-slate-200 overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, rgba(0,0,0,0.06) 0.5px, transparent 0.5px)', backgroundSize: '28px 28px' }} />
         <div className="container relative z-10 mx-auto px-6">
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-60px' }}
-            variants={staggerContainer}
-            className="mb-16"
-          >
-            <motion.div
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_EXPO } },
-              }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-4"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
-              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">Reference Architectures</span>
-            </motion.div>
-            <motion.h2
-              variants={{
-                hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
-                visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: EASE_EXPO } },
-              }}
-              className="text-4xl md:text-5xl font-black text-slate-950 tracking-tight"
-            >
-              Engineering
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] to-[#FFD166]"> Patterns</span>
-              <span className="text-slate-400 text-lg md:text-xl font-medium block mt-2 max-w-2xl">Reference architectures we reuse across client engagements — proven patterns for AI security, post-quantum cryptography, multi-region infrastructure, and more.</span>
-            </motion.h2>
-            <motion.p
-              variants={{
-                hidden: { opacity: 0, y: 10 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_EXPO } },
-              }}
-              className="text-slate-400 text-sm leading-relaxed mt-6 max-w-3xl border-l-2 border-[#F5A800]/30 pl-4"
-            >
-              These reference architectures represent engineering patterns, system designs, and solution blueprints that inform our client engagements. They are included to demonstrate technical capabilities and architectural approaches.
-            </motion.p>
-          </motion.div>
-
-          {/* Filter tabs */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.4, ease: EASE_EXPO }}
-            className="flex flex-wrap gap-2 mb-10"
+            transition={{ duration: 0.6, ease: EASE_EXPO }}
+            className="max-w-2xl mb-16"
           >
-            {filterLabels.map((label) => (
-              <button
-                key={label}
-                onClick={() => setActiveFilter(label)}
-                className={`px-4 py-2 rounded-[10px] text-[11px] font-bold uppercase tracking-wider transition-all duration-300 ${
-                  activeFilter === label
-                    ? 'bg-[#F5A800] text-white shadow-sm'
-                    : 'bg-white border border-slate-200 text-slate-500 hover:border-[#F5A800]/40 hover:text-slate-700'
-                }`}
-              >
-                {label}
-              </button>
-            ))}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 border border-slate-200 mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse" />
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-700">Reference Architectures</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-4">
+              Engineering{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-400">Patterns.</span>
+            </h2>
+            <p className="text-slate-500 text-lg font-medium max-w-xl">
+              Reference architectures we reuse across client engagements — proven patterns for AI security, post-quantum cryptography, multi-region infrastructure, and more.
+            </p>
           </motion.div>
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              animate="visible"
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            >
-              {PROJECTS.filter(p => !['pharmaflow', 'stockvue', 'biteorder', 'tablereserve'].includes(p.id) && (activeFilter === 'All' || categoryMap[p.category] === activeFilter)).map((project, i) => (
-                <ProjectCard key={project.id} project={project} index={i} />
-              ))}
-            </motion.div>
-          </AnimatePresence>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {PROJECTS.filter(p => ['neural-sentinel', 'quantum-ledger', 'apex-cloud', 'ion-network', 'cipher-vault', 'prism-ai'].includes(p.id)).map((project, i) => {
+              return (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.05, duration: 0.6, ease: EASE_EXPO }}
+                  className="group relative cursor-pointer"
+                >
+                  <div className="relative h-full p-8 rounded-[24px] bg-white border border-slate-200 transition-all duration-500 group-hover:border-[#F5A800]/40 group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)] overflow-hidden">
+                    <div className="relative z-10">
+                      <div className="flex items-center gap-3 mb-1">
+                        <span className="text-[10px] font-black uppercase tracking-[0.3em]" style={{color: project.color}}>{project.category}</span>
+                        <span className="text-[10px] text-slate-400 font-mono">{project.year}</span>
+                      </div>
+                      <h3 className="text-xl font-black text-slate-950 tracking-[-0.02em] group-hover:text-[#F5A800] transition-colors duration-300 mb-2">{project.title} — {project.subtitle}</h3>
+                      <p className="text-slate-500 text-sm leading-relaxed font-medium line-clamp-3 mb-3">{project.description}</p>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {project.tags.map(tag => (
+                          <span
+                            key={tag}
+                            className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-50 border border-slate-200 text-slate-500"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <a href="#" className="inline-flex items-center gap-1 text-[#F5A800] hover:text-[#e09a00] font-bold text-sm transition-colors">
+                        View Project
+                        <ArrowUpRight size={12} />
+                      </a>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
-          FEATURED CLIENT SOLUTIONS
+          FEATURED CLIENT SOLUTIONS — Industries style
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-28 bg-[#FCFBF8] border-t border-slate-200">
+      <section className="relative py-32 bg-[#f4f4f5] border-t border-slate-200 overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, rgba(0,0,0,0.06) 0.5px, transparent 0.5px)', backgroundSize: '28px 28px' }} />
         <div className="container relative z-10 mx-auto px-6">
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-60px' }}
-            variants={staggerContainer}
-            className="mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: EASE_EXPO }}
+            className="max-w-2xl mb-16"
           >
-            <motion.div
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_EXPO } },
-              }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-4"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
-              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">Featured Client Solutions</span>
-            </motion.div>
-            <motion.h2
-              variants={{
-                hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
-                visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: EASE_EXPO } },
-              }}
-              className="text-4xl md:text-5xl font-black text-slate-950 tracking-tight"
-            >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 border border-slate-200 mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse" />
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-700">Featured Client Solutions</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-6">
               Products Built by{' '}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Nexyovi</span>
-            </motion.h2>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-400">Nexyovi.</span>
+            </h2>
           </motion.div>
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              animate="visible"
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            >
-              {PROJECTS.filter(p => ['pharmaflow', 'stockvue', 'biteorder', 'tablereserve'].includes(p.id)).map((project, i) => (
-                <ProjectCard key={project.id} project={project} index={i} />
-              ))}
-            </motion.div>
-          </AnimatePresence>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {PROJECTS.filter(p => ['pharmaflow', 'stockvue', 'biteorder', 'tablereserve'].includes(p.id)).map((project, i) => {
+              const Icon = project.icon;
+              return (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.05, duration: 0.6, ease: EASE_EXPO }}
+                  className="group relative cursor-pointer"
+                >
+                  <div className="relative h-full p-6 rounded-[24px] bg-white border border-slate-200 transition-all duration-500 group-hover:border-[#F5A800]/40 group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)] overflow-hidden">
+                    <div className="relative z-10">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="w-12 h-12 rounded-[16px] bg-slate-100 border border-slate-200 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:border-[#F5A800]/30">
+                          <Icon size={20} className="text-slate-600 group-hover:text-[#F5A800] transition-colors duration-300" />
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 mb-1">
+                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">{project.category}</span>
+                        <span className="text-[10px] text-slate-400 font-mono">{project.year}</span>
+                      </div>
+                      <h3 className="text-xl font-black text-slate-950 tracking-[-0.02em] group-hover:text-[#F5A800] transition-colors duration-300 mb-2">{project.title} — {project.subtitle}</h3>
+                      <p className="text-slate-500 text-sm leading-relaxed font-medium line-clamp-3 mb-3">{project.description}</p>
+                      <div className="flex flex-wrap gap-2 mb-3">
+                        {project.tags.map(tag => (
+                          <span
+                            key={tag}
+                            className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-50 border border-slate-200 text-slate-500"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="flex flex-wrap gap-x-4 gap-y-1 text-[13px] mb-4">
+                        {project.metrics.map(m => (
+                          <span key={m.label} className="font-semibold text-slate-700">{m.value}</span>
+                        ))}
+                      </div>
+                      <a href="#" className="inline-flex items-center gap-1 text-[#F5A800] hover:text-[#e09a00] font-bold text-sm transition-colors">
+                        View Project
+                        <ArrowUpRight size={12} />
+                      </a>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
           FEATURED PRODUCT: NEXI MARKETS
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-24 overflow-hidden border-t border-white/10 bg-[#02040a]">
+      <section className="relative py-24 overflow-hidden border-t border-slate-200 dark:border-white/10 bg-white dark:bg-[#02040a] transition-colors duration-300">
         <div className="container relative z-10 mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
@@ -860,22 +914,22 @@ export default function Projects() {
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE_EXPO } },
               }} className="mb-6">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 mb-4">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">Nexyovi</span>
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.08] mb-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse" />
+                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-700 dark:text-white/60">Nexyovi</span>
                 </div>
-                <h2 className="text-5xl md:text-6xl font-black text-white leading-[0.95] tracking-tight">
-                  Nexi <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Markets</span>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 dark:text-white tracking-[-0.04em] leading-[0.95] mb-4">
+                  Nexi <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 dark:from-amber-400 to-amber-400 dark:to-amber-300">Markets</span>
                 </h2>
-                <p className="text-white/40 text-xl font-semibold mt-3 leading-snug">
-                  Everything you need.<br />Delivered to you.
+                <p className="text-slate-500 dark:text-white/50 text-lg font-medium leading-relaxed max-w-xl">
+                  Everything you need. Delivered to you.
                 </p>
               </motion.div>
 
               <motion.p variants={{
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.05, ease: EASE_EXPO } },
-              }} className="text-white/50 text-base leading-relaxed mb-6 max-w-md">
+              }} className="text-slate-600 dark:text-white/50 text-base leading-relaxed mb-6 max-w-md">
                 Nexi Markets is your all-in-one shopping destination offering millions of products across categories with fast delivery, secure payments, and unbeatable deals.
               </motion.p>
 
@@ -892,11 +946,11 @@ export default function Projects() {
                     whileHover={{ y: -4 }}
                     className="flex flex-col items-center gap-1"
                   >
-                    <div className="relative w-10 h-10 rounded-2xl bg-[#030303] border border-white/10 flex items-center justify-center text-lg group-hover:border-[#F5A800]/40 transition-all duration-300 cursor-default overflow-hidden shadow-sm">
+                    <div className="relative w-10 h-10 rounded-2xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex items-center justify-center text-lg group-hover:border-amber-600/40 dark:group-hover:border-amber-400/40 transition-all duration-300 cursor-default overflow-hidden shadow-sm">
                       <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
-                      <span className="relative z-10 text-zinc-400 group-hover:text-[#F5A800] transition-colors">{cat.icon}</span>
+                      <span className="relative z-10 text-slate-600 dark:text-slate-400 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">{cat.icon}</span>
                     </div>
-                    <span className="text-white/40 text-[9px] font-bold">{cat.label}</span>
+                    <span className="text-slate-600 dark:text-white/40 text-[9px] font-bold">{cat.label}</span>
                   </motion.div>
                 ))}
               </motion.div>
@@ -913,12 +967,12 @@ export default function Projects() {
                 ].map((f) => (
                   <motion.div
                     key={f.title}
-                    whileHover={{ y: -4, borderColor: '#F5A800' }}
-                    className="p-3 rounded-2xl bg-white/[0.03] border border-white/10 hover:bg-[#F5A800]/5 transition-all duration-300"
+                    whileHover={{ y: -4, borderColor: 'var(--color-accent)' }}
+                    className="p-3 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 hover:bg-amber-50 dark:hover:bg-amber-400/5 transition-all duration-300"
                   >
                     <span className="text-lg">{f.icon}</span>
-                    <p className="text-white font-bold text-[12px] mt-1 mb-0.5">{f.title}</p>
-                    <p className="text-white/50 text-[10px] leading-snug">{f.desc}</p>
+                    <p className="text-slate-950 dark:text-white font-bold text-[12px] mt-1 mb-0.5">{f.title}</p>
+                    <p className="text-slate-600 dark:text-white/50 text-[10px] leading-snug">{f.desc}</p>
                   </motion.div>
                 ))}
               </motion.div>
@@ -928,7 +982,7 @@ export default function Projects() {
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.18, ease: EASE_EXPO } },
               }} className="flex flex-wrap gap-2 mb-6">
                 {['Next.js', 'Node.js', 'PostgreSQL', 'Redis', 'AWS'].map((tech) => (
-                  <span key={tech} className="px-3 py-1.5 rounded-[8px] bg-white/[0.03] border border-white/10 text-[10px] font-bold uppercase tracking-wider text-white/50">{tech}</span>
+                  <span key={tech} className="px-3 py-1.5 rounded-[8px] bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-white/50">{tech}</span>
                 ))}
               </motion.div>
 
@@ -948,7 +1002,7 @@ export default function Projects() {
       {/* ═══════════════════════════════════════════════════════════
           FEATURED PRODUCT: NEXI LOCATE
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-24 overflow-hidden border-t border-white/10 bg-[#02040a]">
+      <section className="relative py-24 overflow-hidden border-t border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#02040a] transition-colors duration-300">
         <div className="container relative z-10 mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
@@ -987,22 +1041,22 @@ export default function Projects() {
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE_EXPO } },
               }} className="mb-6">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 mb-4">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">Nexyovi</span>
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.08] mb-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse" />
+                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-700 dark:text-white/60">Nexyovi</span>
                 </div>
-                <h2 className="text-5xl md:text-6xl font-black text-white leading-[0.95] tracking-tight">
-                  Nexi <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ea580c] to-[#f59e0b]">Locate</span>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 dark:text-white tracking-[-0.04em] leading-[0.95] mb-4">
+                  Nexi <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 dark:from-amber-400 to-amber-400 dark:to-amber-300">Locate</span>
                 </h2>
-                <p className="text-white/40 text-xl font-semibold mt-3 leading-snug">
-                  Explore. Discover.<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ea580c] to-[#f59e0b]">Experience Addis.</span>
+                <p className="text-slate-500 dark:text-white/50 text-lg font-medium leading-relaxed max-w-xl">
+                  Explore. Discover. Experience Addis.
                 </p>
               </motion.div>
 
               <motion.p variants={{
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.05, ease: EASE_EXPO } },
-              }} className="text-white/50 text-base leading-relaxed mb-6 max-w-md">
+              }} className="text-slate-600 dark:text-white/50 text-base leading-relaxed mb-6 max-w-md">
                 Nexi Locate helps you discover the best places near you in Addis Ababa. Restaurants, cafes, hotels, gyms, clubs, spots and more. Rate, review and share your favorite places.
               </motion.p>
 
@@ -1020,11 +1074,11 @@ export default function Projects() {
                     whileHover={{ y: -4 }}
                     className="flex flex-col items-center gap-1"
                   >
-                    <div className="relative w-10 h-10 rounded-2xl bg-[#030303] border border-white/10 flex items-center justify-center text-lg group-hover:border-[#ea580c]/40 transition-all duration-300 cursor-default overflow-hidden shadow-sm">
+                    <div className="relative w-10 h-10 rounded-2xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex items-center justify-center text-lg group-hover:border-orange-600/40 dark:group-hover:border-orange-400/40 transition-all duration-300 cursor-default overflow-hidden shadow-sm">
                       <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
-                      <span className="relative z-10 text-zinc-400 group-hover:text-[#ea580c] transition-colors">{cat.icon}</span>
+                      <span className="relative z-10 text-slate-600 dark:text-slate-400 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">{cat.icon}</span>
                     </div>
-                    <span className="text-white/40 text-[9px] font-bold">{cat.label}</span>
+                    <span className="text-slate-600 dark:text-white/40 text-[9px] font-bold">{cat.label}</span>
                   </motion.div>
                 ))}
               </motion.div>
@@ -1041,12 +1095,12 @@ export default function Projects() {
                 ].map((f) => (
                   <motion.div
                     key={f.title}
-                    whileHover={{ y: -4, borderColor: '#ea580c' }}
-                    className="p-3 rounded-2xl bg-white/[0.03] border border-white/10 hover:bg-[#ea580c]/5 transition-all duration-300"
+                    whileHover={{ y: -4, borderColor: 'var(--color-accent)' }}
+                    className="p-3 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 hover:bg-orange-50 dark:hover:bg-orange-400/5 transition-all duration-300"
                   >
                     <span className="text-lg">{f.icon}</span>
-                    <p className="text-white font-bold text-[12px] mt-1 mb-0.5">{f.title}</p>
-                    <p className="text-white/50 text-[10px] leading-snug">{f.desc}</p>
+                    <p className="text-slate-950 dark:text-white font-bold text-[12px] mt-1 mb-0.5">{f.title}</p>
+                    <p className="text-slate-600 dark:text-white/50 text-[10px] leading-snug">{f.desc}</p>
                   </motion.div>
                 ))}
               </motion.div>
@@ -1056,7 +1110,7 @@ export default function Projects() {
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.18, ease: EASE_EXPO } },
               }} className="flex flex-wrap gap-2 mb-6">
                 {['React Native', 'Node.js', 'PostGIS', 'Google Maps API'].map((tech) => (
-                  <span key={tech} className="px-3 py-1.5 rounded-[8px] bg-white/[0.03] border border-white/10 text-[10px] font-bold uppercase tracking-wider text-white/50">{tech}</span>
+                  <span key={tech} className="px-3 py-1.5 rounded-[8px] bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-white/50">{tech}</span>
                 ))}
               </motion.div>
 
@@ -1065,7 +1119,7 @@ export default function Projects() {
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.18, ease: EASE_EXPO } },
               }} className="flex flex-wrap gap-2 mb-6">
                 {['React', 'WebRTC', 'FastAPI', 'PostgreSQL'].map((tech) => (
-                  <span key={tech} className="px-3 py-1.5 rounded-[8px] bg-white/[0.03] border border-white/10 text-[10px] font-bold uppercase tracking-wider text-white/50">{tech}</span>
+                  <span key={tech} className="px-3 py-1.5 rounded-[8px] bg-slate-100 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-white/50">{tech}</span>
                 ))}
               </motion.div>
 
@@ -1085,7 +1139,7 @@ export default function Projects() {
       {/* ═══════════════════════════════════════════════════════════
           FEATURED PRODUCT: TELE-PSYCHIATRY
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-24 overflow-hidden border-t border-white/10 bg-[#02040a]">
+      <section className="relative py-24 overflow-hidden border-t border-slate-200 dark:border-white/10 bg-white dark:bg-[#02040a] transition-colors duration-300">
         <div className="container relative z-10 mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
@@ -1124,28 +1178,23 @@ export default function Projects() {
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE_EXPO } },
               }} className="mb-6">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 mb-4">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse" />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">Nexyovi</span>
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.08] mb-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse" />
+                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-700 dark:text-white/60">Tele-Psychiatry</span>
                 </div>
-                <div className="flex items-center gap-3 mb-2">
-                  <motion.div
-                    whileHover={{ scale: 1.1, rotate: -5 }}
-                    className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0d9488] to-[#2dd4bf] flex items-center justify-center text-lg"
-                  >🧠</motion.div>
-                  <h2 className="text-5xl md:text-6xl font-black text-white leading-[0.95] tracking-tight">
-                    Tele-<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0d9488] to-[#2dd4bf]">Psychiatry</span>
-                  </h2>
-                </div>
-                <p className="text-white/40 text-xl font-semibold mt-1 leading-snug">
-                  Your Mental Well-being,<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0d9488] to-[#2dd4bf]">Our Priority.</span>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 dark:text-white tracking-[-0.04em] leading-[0.95] mb-4">
+                  Your Mental Well-being,{' '}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 dark:from-amber-400 to-amber-400 dark:to-amber-300">Our Priority.</span>
+                </h2>
+                <p className="text-slate-500 dark:text-white/50 text-lg font-medium leading-relaxed max-w-xl">
+                  Connect with licensed psychiatrists and therapists through secure online consultations.
                 </p>
               </motion.div>
 
               <motion.p variants={{
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.05, ease: EASE_EXPO } },
-              }} className="text-white/50 text-base leading-relaxed mb-6 max-w-md">
+              }} className="text-slate-600 dark:text-white/50 text-base leading-relaxed mb-6 max-w-md">
                 Connect with licensed psychiatrists and therapists across Ethiopia through secure online consultations.
               </motion.p>
 
@@ -1163,11 +1212,11 @@ export default function Projects() {
                     whileHover={{ y: -4 }}
                     className="flex flex-col items-center gap-1"
                   >
-                    <div className="relative w-10 h-10 rounded-2xl bg-[#030303] border border-white/10 flex items-center justify-center text-lg group-hover:border-[#0d9488]/40 transition-all duration-300 cursor-default overflow-hidden shadow-sm">
+                    <div className="relative w-10 h-10 rounded-2xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex items-center justify-center text-lg group-hover:border-teal-600/40 dark:group-hover:border-teal-400/40 transition-all duration-300 cursor-default overflow-hidden shadow-sm">
                       <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
-                      <span className="relative z-10 text-zinc-400 group-hover:text-[#0d9488] transition-colors">{cat.icon}</span>
+                      <span className="relative z-10 text-slate-600 dark:text-slate-400 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">{cat.icon}</span>
                     </div>
-                    <span className="text-white/40 text-[9px] font-bold">{cat.label}</span>
+                    <span className="text-slate-600 dark:text-white/40 text-[9px] font-bold">{cat.label}</span>
                   </motion.div>
                 ))}
               </motion.div>
@@ -1184,12 +1233,12 @@ export default function Projects() {
                 ].map((f) => (
                   <motion.div
                     key={f.title}
-                    whileHover={{ y: -4, borderColor: '#0d9488' }}
-                    className="p-3 rounded-2xl bg-white/[0.03] border border-white/10 hover:bg-[#0d9488]/5 transition-all duration-300"
+                    whileHover={{ y: -4, borderColor: 'var(--color-accent)' }}
+                    className="p-3 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 hover:bg-teal-50 dark:hover:bg-teal-400/5 transition-all duration-300"
                   >
                     <span className="text-lg">{f.icon}</span>
-                    <p className="text-white font-bold text-[12px] mt-1 mb-0.5">{f.title}</p>
-                    <p className="text-white/50 text-[10px] leading-snug">{f.desc}</p>
+                    <p className="text-slate-950 dark:text-white font-bold text-[12px] mt-1 mb-0.5">{f.title}</p>
+                    <p className="text-slate-600 dark:text-white/50 text-[10px] leading-snug">{f.desc}</p>
                   </motion.div>
                 ))}
               </motion.div>
@@ -1210,9 +1259,9 @@ export default function Projects() {
       {/* ═══════════════════════════════════════════════════════════
           CTA SECTION — Dark
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-32 bg-[#02040a] border-t border-white/5 overflow-hidden section-divider-dark">
+      <section className="relative py-32 bg-white dark:bg-[#02040a] border-t border-slate-200 dark:border-white/5 overflow-hidden section-divider-dark transition-colors duration-300">
         <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-0 left-1/3 w-[600px] h-[600px] bg-[#F5A800]/8 blur-[140px] rounded-full" />
+          <div className="absolute top-0 left-1/3 w-[600px] h-[600px] bg-amber-400/8 dark:bg-amber-400/8 blur-[140px] rounded-full" />
         </div>
 
         <div className="container relative z-10 mx-auto px-6">
@@ -1228,23 +1277,22 @@ export default function Projects() {
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_EXPO } },
               }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-[#F5A800]/20 backdrop-blur-md mb-8"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.08] mb-8"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800] animate-pulse shadow-[0_0_8px_rgba(245,168,0,0.6)]" />
-              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#F5A800]">Let's Build Together</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse" />
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-700 dark:text-white/60">Let's Build Together</span>
             </motion.div>
 
             <TextReveal>
-              <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[0.95] mb-8 text-white">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 dark:text-white tracking-[-0.04em] leading-[0.95] mb-6">
                 Start an{' '}
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Engineering Strategy</span>
-                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 dark:from-amber-400 to-amber-400 dark:to-amber-300">Engineering Strategy</span>
                 Session
               </h2>
             </TextReveal>
 
             <TextReveal delay={0.1}>
-              <p className="text-white/50 text-lg leading-relaxed mb-12 max-w-xl font-medium">
+              <p className="text-slate-500 dark:text-white/50 text-lg font-medium leading-relaxed mb-12 max-w-xl">
                 Meet directly with a senior architect to review requirements, identify risks, and outline the fastest path to production.
               </p>
             </TextReveal>

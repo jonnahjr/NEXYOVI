@@ -1,9 +1,17 @@
 import { motion } from 'framer-motion';
 import {
-  Code2, Globe, Database,
-  Cpu, Network, Workflow,
-  Terminal, GitBranch, Cog,
-  Box, Zap, BrainCircuit
+  Box,
+  BrainCircuit,
+  Code2,
+  Cog,
+  Cpu,
+  Database,
+  GitBranch,
+  Globe,
+  Network,
+  Terminal,
+  Workflow,
+  Zap
 } from 'lucide-react';
 import { useSite } from '../context/SiteContext';
 
@@ -75,29 +83,29 @@ export default function TechnologiesSection() {
 
   return (
     <section className="relative bg-[#02040a] py-16 md:py-20 section-divider-dark overflow-hidden">
-      {/* Grid background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Grid background - only show on larger screens */}
+      <div className="hidden md:block absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:64px_64px]" />
       </div>
 
-      <div className="container max-w-6xl mx-auto px-6 relative z-10">
+      <div className="container max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] mb-5">
+          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] mb-4 sm:mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800]" />
-            <span className="text-[11px] font-bold tracking-[0.2em] text-white/50 uppercase">{badge}</span>
+            <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-white/50 uppercase">{badge}</span>
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-[-0.02em] leading-[1.05] mb-4">
+          <h2 className="text-[clamp(24px,7vw,48px)] font-black text-white tracking-[-0.02em] leading-[1.05] mb-3 sm:mb-4">
             {title.includes('We Build With') ? (
               <>{title.split('We Build With')[0]}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">We Build With</span></>
             ) : title}
           </h2>
-          <p className="text-white/45 text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-medium">{subtitle}</p>
+          <p className="text-white/45 text-xs sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-medium px-2">{subtitle}</p>
         </motion.div>
 
         {/* Tech Constellation Grid */}

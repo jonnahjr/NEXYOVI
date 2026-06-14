@@ -20,7 +20,7 @@ function NavLink({ children, href, isActive, isHovered, onMouseEnter, onClick }:
       <Link
         to={href}
         onClick={onClick}
-        className={`relative flex items-center justify-center px-2 py-1.5 text-[11px] md:text-[12px] font-medium tracking-wide transition-colors duration-300 ${isHovered ? 'text-black' : isActive ? 'text-white' : 'text-white/60 hover:text-white/90'}`}
+        className={`relative flex items-center justify-center px-1.5 sm:px-2 py-1 sm:py-1.5 text-[10px] sm:text-[11px] md:text-[12px] font-medium tracking-wide transition-colors duration-300 ${isHovered ? 'text-black' : isActive ? 'text-white' : 'text-white/60 hover:text-white/90'}`}
       >
         {/* Sliding Background Pill */}
         {isHovered && (
@@ -74,7 +74,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-10 pt-1 md:pt-2 overflow-visible">
+    <header className="fixed top-0 left-0 right-0 z-50 px-2 sm:px-3 md:px-4 lg:px-10 pt-1 sm:pt-1.5 md:pt-2 overflow-visible">
       <motion.div
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -83,7 +83,7 @@ const Navbar = () => {
       >
         <div className="relative z-10 overflow-visible">
           {/* Navbar content */}
-          <div className={`relative flex items-center justify-center gap-0.5 min-h-[24px] md:min-h-[28px] px-1 md:px-1.5 py-0 md:py-0 rounded-full transition-all duration-500 ${scrolled
+          <div className={`relative flex items-center justify-center gap-0.5 min-h-[20px] sm:min-h-[24px] md:min-h-[26px] lg:min-h-[28px] px-0.5 sm:px-1 md:px-1.5 py-0 rounded-full transition-all duration-500 ${scrolled
             ? 'bg-[#0a0a0a]/90 backdrop-blur-2xl border border-white/[0.12] shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
             : 'bg-[#0a0a0a]/75 backdrop-blur-2xl border border-white/[0.08]'
             }`}>
@@ -95,11 +95,15 @@ const Navbar = () => {
               <div
                 role="img"
                 aria-label="Nexyovi"
-                className="relative h-[60px] md:h-[68px] w-[160px] md:w-[182px]"
+                className="relative h-[40px] sm:h-[50px] md:h-[60px] lg:h-[68px] w-[100px] sm:w-[130px] md:w-[160px] lg:w-[182px]"
                 style={{
                   mask: `url(${settings?.logo_url || myLogo}) center/contain no-repeat`,
                   WebkitMask: `url(${settings?.logo_url || myLogo}) center/contain no-repeat`,
-                  background: 'linear-gradient(135deg, #F5A800, #FFD166, #F5A800)',
+                  maskSize: 'contain',
+                  maskPosition: 'center',
+                  WebkitMaskSize: 'contain',
+                  WebkitMaskPosition: 'center',
+                  background: 'linear-gradient(to right, #F5A800, #FFD166)',
                 }}
               />
             </Link>
@@ -131,8 +135,9 @@ const Navbar = () => {
 
             {/* Mobile Toggle */}
             <button
-              className="lg:hidden p-3 relative z-50 text-white flex flex-col justify-center items-center w-8 h-8 flex-shrink-0"
+              className="md:hidden lg:hidden p-2 sm:p-2.5 relative z-50 text-white flex flex-col justify-center items-center w-7 h-7 sm:w-8 sm:h-8 flex-shrink-0"
               onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label="Toggle navigation"
             >
               <motion.span animate={mobileOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: -3 }} className="w-5 h-0.5 bg-white block absolute" />
               <motion.span animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }} className="w-5 h-0.5 bg-white block absolute" />

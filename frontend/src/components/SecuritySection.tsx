@@ -83,7 +83,7 @@ export default function SecuritySection() {
         </motion.div>
 
         {/* Grid */}
-        <div className="flex flex-nowrap gap-6 justify-between w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
           {items.map((item: any, i: number) => {
             const Icon = item.icon;
             return (
@@ -93,13 +93,13 @@ export default function SecuritySection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-30px' }}
                 transition={{ duration: 0.4, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                className="flex-1 min-w-0"
+                className="flex flex-col"
               >
-                <div className="flex items-start gap-2 mb-2">
-                  <Icon size={16} className="text-white shrink-0 mt-0.5" />
-                  <h3 className="text-xs font-bold text-white">{item.title}</h3>
+                <div className="flex items-start gap-2 mb-2 sm:mb-3">
+                  <Icon size={16} className="sm:size-[18px] text-white shrink-0 mt-0.5" />
+                  <h3 className="text-xs sm:text-sm font-bold text-white leading-snug">{item.title}</h3>
                 </div>
-                <p className="text-white/60 text-xs leading-relaxed ml-5">{item.description}</p>
+                <p className="text-white/60 text-xs sm:text-xs leading-relaxed">{item.description}</p>
               </motion.div>
             );
           })}

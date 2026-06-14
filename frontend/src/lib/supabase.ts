@@ -4,16 +4,46 @@
 
 const warn = (msg: string) => console.warn(`[Supabase Legacy] ${msg}`);
 
+const uploadCache = new Map<string, string>();
+
 export const supabase = {
   storage: {
     from: () => ({
-      upload: async () => {
-        warn('File upload is not available. Paste an image URL instead.');
-        return { error: new Error('Upload disabled') };
+      upload: async (path: string, file: File) => {
+        try {
+          const token = localStorage.getItem('token');
+          const formData = new FormData();
+          formData.append('file', file);
+          
+          const API_URL = import.meta.env.VITE_API_URL || (window.location.origin.includes('localhost') ? 'http://localhost:5000/api' : 'https://api.nexyovi.com/api');
+          
+          const response = await fetch(`${API_URL}/upload`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            },
+            body: formData
+          });
+          
+          if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.error || 'Upload failed');
+          }
+          
+          const result = await response.json();
+          // Cache the resulting URL against the requested path so getPublicUrl can retrieve it
+          uploadCache.set(path, result.url);
+          
+          return { error: null };
+        } catch (err: any) {
+          console.error('Upload error:', err);
+          return { error: err };
+        }
       },
-      getPublicUrl: () => ({
-        data: { publicUrl: '' },
-      }),
+      getPublicUrl: (path: string) => {
+        const publicUrl = uploadCache.get(path) || path;
+        return { data: { publicUrl } };
+      },
     }),
   },
   auth: {

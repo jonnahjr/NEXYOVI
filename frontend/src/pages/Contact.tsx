@@ -240,28 +240,28 @@ export default function Contact() {
     <div className="bg-[#02040a] min-h-screen overflow-hidden selection:bg-[#F5A800]/30 text-white">
 
       {/* HERO SECTION */}
-      <section className="relative min-h-[90vh] flex flex-col justify-center pt-32 pb-24 border-b border-white/[0.05]">
-        <div className="container max-w-5xl mx-auto px-6">
+      <section className="relative min-h-[65vh] sm:min-h-[75vh] md:min-h-[90vh] flex flex-col justify-center pt-24 sm:pt-32 pb-16 sm:pb-24 border-b border-white/[0.05]">
+        <div className="container max-w-5xl mx-auto px-4 sm:px-6">
           <motion.div
             variants={staggerContainer}
             initial="hidden"
             animate="visible"
             className="flex flex-col items-center text-center"
           >
-            <motion.h1 variants={revealUp} className="text-5xl md:text-7xl lg:text-[80px] font-black leading-[0.95] tracking-[-0.03em] mb-8 text-white">
+            <motion.h1 variants={revealUp} className="text-[clamp(32px,10vw,80px)] font-black leading-[0.95] tracking-[-0.03em] mb-4 sm:mb-8 text-white">
               {headlineStart && <>{headlineStart} <br /></>}
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">{lastWord}</span>
             </motion.h1>
 
-            <motion.p variants={revealUp} className="text-white/60 text-lg md:text-xl max-w-2xl font-medium leading-relaxed mb-12">
+            <motion.p variants={revealUp} className="text-white/60 text-base sm:text-lg md:text-xl max-w-2xl font-medium leading-relaxed mb-8 sm:mb-12 px-2">
               {heroDescription}
             </motion.p>
 
-            <motion.div variants={revealUp} className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+            <motion.div variants={revealUp} className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center sm:gap-4 w-full sm:w-auto">
               <button
                 type="button"
                 onClick={() => openInquiry("project")}
-                className="group btn-gold w-full sm:w-auto text-[15px] font-bold px-10 py-5"
+                className="group btn-gold text-[13px] sm:text-[15px] font-bold px-6 sm:px-10 py-3 sm:py-5"
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   {heroPrimaryCTA}
@@ -271,10 +271,10 @@ export default function Contact() {
               <button
                 type="button"
                 onClick={() => openInquiry("consultation")}
-                className="group inline-flex items-center justify-center gap-2 px-10 py-5 rounded-full border border-white/20 bg-white/5 text-white text-[15px] font-bold hover:bg-white/10 transition-all duration-300 w-full sm:w-auto"
+                className="group inline-flex items-center justify-center gap-2 px-6 sm:px-10 py-3 sm:py-5 rounded-full border border-white/20 bg-white/5 text-white text-[13px] sm:text-[15px] font-bold hover:bg-white/10 transition-all duration-300"
               >
                 <CalendarCheck size={16} className="text-[#F5A800]" />
-                Book Strategy Call
+                Book Call
               </button>
             </motion.div>
           </motion.div>
@@ -282,8 +282,8 @@ export default function Contact() {
       </section>
 
       {/* CONTACT INFO — Compact, no boxes */}
-      <section className="relative z-10 -mt-12 container max-w-4xl mx-auto mb-24 px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+      <section className="relative z-10 -mt-8 sm:-mt-12 container max-w-4xl mx-auto mb-16 sm:mb-24 px-4 sm:px-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-x-8 md:gap-y-6">
           {[
             { icon: Mail, title: "Email", text: settings.email || 'info@nexyovi.com', href: `mailto:${settings.email || 'info@nexyovi.com'}`, action: "Email" },
             { icon: Phone, title: "Phone", text: settings.phone, href: `tel:${settings.phone}`, action: "Call" },
@@ -325,18 +325,18 @@ export default function Contact() {
       </section>
 
       {/* FORM SECTION — Creamy White */}
-      <section ref={formSectionRef} className="scroll-mt-24 pb-32 bg-[#FCFBF8]">
-        <div className="container max-w-3xl mx-auto px-6">
+      <section ref={formSectionRef} className="scroll-mt-24 pb-16 sm:pb-24 md:pb-32 bg-[#FCFBF8]">
+        <div className="container max-w-3xl mx-auto px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: EASE_EXPO }}
-            className="bg-white border border-slate-200 rounded-[32px] p-8 md:p-14 relative overflow-hidden"
+            className="bg-white border border-slate-200 rounded-[20px] sm:rounded-[28px] md:rounded-[32px] p-6 sm:p-8 md:p-14 relative overflow-hidden"
           >
-            <div className="mb-12 text-center">
-              <h2 className="text-3xl md:text-4xl font-black text-slate-950 tracking-[-0.03em] mb-4">Project Inquiry</h2>
-              <p className="text-slate-500 text-[15px] font-medium leading-relaxed max-w-lg mx-auto">
+            <div className="mb-8 sm:mb-10 md:mb-12 text-center">
+              <h2 className="text-[clamp(24px,6vw,40px)] font-black text-slate-950 tracking-[-0.03em] mb-2 sm:mb-4">Project Inquiry</h2>
+              <p className="text-slate-500 text-[13px] sm:text-[15px] font-medium leading-relaxed max-w-lg mx-auto">
                 Submit your project specifications. Our engineering leadership will evaluate and respond within 24 hours.
               </p>
             </div>
@@ -349,7 +349,7 @@ export default function Contact() {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+            <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6" noValidate>
               {/* 🔒 Honeypot field - hidden from users, visible to bots */}
               <div className="absolute opacity-0 pointer-events-none" aria-hidden="true" tabIndex={-1}>
                 <label htmlFor="honeypot">Leave this empty</label>
@@ -365,9 +365,9 @@ export default function Contact() {
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Full Name *</label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 md:gap-6">
+                <div className="space-y-1.5 sm:space-y-2">
+                  <label className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Full Name *</label>
                   <div className="relative">
                     <User size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300" />
                     <input
@@ -376,7 +376,7 @@ export default function Contact() {
                       maxLength={100}
                       value={formData.name}
                       onChange={(e) => handleInputChange('name', e.target.value)}
-                      className={`w-full bg-slate-50 border text-slate-900 rounded-2xl py-4 pl-14 pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400 ${
+                      className={`w-full bg-slate-50 border text-slate-900 rounded-2xl py-3 sm:py-4 pl-12 sm:pl-14 pr-4 sm:pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400 text-sm sm:text-base ${
                         formErrors.name ? 'border-red-400 bg-red-50' : 'border-slate-200'
                       }`}
                       placeholder="Solomon Dereje"
@@ -387,8 +387,8 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Work Email *</label>
+                <div className="space-y-1.5 sm:space-y-2">
+                  <label className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Work Email *</label>
                   <div className="relative">
                     <Mail size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300" />
                     <input
@@ -397,7 +397,7 @@ export default function Contact() {
                       maxLength={320}
                       value={formData.email}
                       onChange={(e) => handleInputChange('email', e.target.value)}
-                      className={`w-full bg-slate-50 border text-slate-900 rounded-2xl py-4 pl-14 pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400 ${
+                      className={`w-full bg-slate-50 border text-slate-900 rounded-2xl py-3 sm:py-4 pl-12 sm:pl-14 pr-4 sm:pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400 text-sm sm:text-base ${
                         formErrors.email ? 'border-red-400 bg-red-50' : 'border-slate-200'
                       }`}
                       placeholder="nexyovi@company.com"
@@ -409,16 +409,16 @@ export default function Contact() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Organization</label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 md:gap-6">
+                <div className="space-y-1.5 sm:space-y-2">
+                  <label className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Organization</label>
                   <div className="relative">
                     <Building2 size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300" />
                     <input
                       maxLength={200}
                       value={formData.company}
                       onChange={(e) => handleInputChange('company', e.target.value)}
-                      className={`w-full bg-slate-50 border text-slate-900 rounded-2xl py-4 pl-14 pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400 ${
+                      className={`w-full bg-slate-50 border text-slate-900 rounded-2xl py-3 sm:py-4 pl-12 sm:pl-14 pr-4 sm:pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400 text-sm sm:text-base ${
                         formErrors.company ? 'border-red-400 bg-red-50' : 'border-slate-200'
                       }`}
                       placeholder="Company Name"
@@ -429,15 +429,15 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Service Required</label>
+                <div className="space-y-1.5 sm:space-y-2">
+                  <label className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Service Required</label>
                   <div className="relative">
                     <Briefcase size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none" />
                     <select
                       value={formData.service}
                       onChange={(e) => handleInputChange('service', e.target.value)}
-                      className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-2xl py-4 pl-14 pr-10 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium appearance-none cursor-pointer"
-                      style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 20px center' }}
+                      className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-2xl py-3 sm:py-4 pl-12 sm:pl-14 pr-8 sm:pr-10 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium appearance-none cursor-pointer text-sm sm:text-base"
+                      style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}
                     >
                       <option value="" className="bg-white text-slate-400">Select capability</option>
                       <option value="software" className="bg-white text-slate-900">Enterprise Software Engineering</option>
@@ -454,15 +454,15 @@ export default function Contact() {
               {import.meta.env.VITE_TURNSTILE_SITE_KEY && (
                 <div
                   ref={turnstileRef}
-                  className="cf-turnstile flex justify-center my-4"
+                  className="cf-turnstile flex justify-center my-3 sm:my-4"
                 />
               )}
               {import.meta.env.VITE_TURNSTILE_SITE_KEY && !turnstileToken && isSubmitting && (
                 <p className="text-red-500 text-xs text-center font-medium">Please complete the security check</p>
               )}
 
-              <div className="space-y-2">
-                  <label className="text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Project Details</label>
+              <div className="space-y-1.5 sm:space-y-2">
+                  <label className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Project Details</label>
                 <div className="relative">
                   <MessageSquare size={18} className="absolute left-5 top-5 text-slate-300" />
                   <textarea
@@ -470,7 +470,7 @@ export default function Contact() {
                     maxLength={5000}
                     value={formData.message}
                     onChange={(e) => handleInputChange('message', e.target.value)}
-                    className={`w-full bg-slate-50 border text-slate-900 rounded-2xl py-5 pl-14 pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400 h-40 resize-none ${
+                    className={`w-full bg-slate-50 border text-slate-900 rounded-2xl py-4 pl-12 sm:pl-14 pr-4 sm:pr-5 focus:outline-none focus:border-[#F5A800] focus:bg-white transition-all font-medium placeholder:text-slate-400 h-32 sm:h-40 resize-none text-sm sm:text-base ${
                       formErrors.message ? 'border-red-400 bg-red-50' : 'border-slate-200'
                     }`}
                     placeholder="Describe your technical requirements, goals, and constraints."
@@ -490,9 +490,9 @@ export default function Contact() {
                 disabled={isSubmitting}
                 whileHover={{ y: isSubmitting ? 0 : -2 }}
                 whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                className="group btn-gold w-full h-[60px] flex items-center justify-center rounded-2xl mt-4"
+                className="group btn-gold w-full h-12 sm:h-[60px] flex items-center justify-center rounded-2xl mt-3 sm:mt-4"
               >
-                <span className="relative z-10 flex items-center justify-center gap-2 text-[15px] font-bold">
+                <span className="relative z-10 flex items-center justify-center gap-2 text-[13px] sm:text-[15px] font-bold">
                   {isSubmitting ? (
                     <Loader2 size={20} className="animate-spin" />
                   ) : isSuccess ? (
@@ -511,7 +511,7 @@ export default function Contact() {
       </section>
 
       {/* MAP SECTION — Full-bleed map with overlaid HQ info */}
-      <section className="relative min-h-[65vh] bg-[#02040a] border-t border-white/[0.05] overflow-hidden">
+      <section className="relative min-h-[50vh] sm:min-h-[60vh] md:min-h-[65vh] bg-[#02040a] border-t border-white/[0.05] overflow-hidden">
 
         {/* Full-bleed map background */}
         <div className="absolute inset-0 z-[1]">
@@ -523,7 +523,7 @@ export default function Contact() {
         <div className="absolute inset-0 z-[2] bg-gradient-to-t from-[#02040a]/60 via-transparent to-[#02040a]/30 pointer-events-none" />
 
         {/* Content overlay */}
-        <div className="relative z-10 container max-w-[1000px] mx-auto px-6 min-h-[55vh] flex flex-col justify-center">
+        <div className="relative z-10 container max-w-[1000px] mx-auto px-4 sm:px-6 min-h-[40vh] sm:min-h-[50vh] md:min-h-[55vh] flex flex-col justify-center">
 
           {/* Title */}
           <motion.div
@@ -531,9 +531,9 @@ export default function Contact() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: EASE_EXPO }}
-            className="mb-8"
+            className="mb-6 sm:mb-8"
           >
-            <h2 className="text-2xl md:text-4xl lg:text-5xl font-black tracking-[-0.03em] text-white leading-[1.05]">
+            <h2 className="text-[clamp(24px,7vw,56px)] font-black tracking-[-0.03em] text-white leading-[1.05]">
               Global <span className="text-[#F5A800]">Operations.</span>
             </h2>
           </motion.div>
@@ -546,7 +546,7 @@ export default function Contact() {
             transition={{ duration: 0.7, delay: 0.15, ease: EASE_EXPO }}
             className="max-w-sm"
           >
-            <div className="bg-[#0a0a0e]/80 backdrop-blur-xl border border-white/[0.08] p-7 md:p-8 rounded-2xl shadow-2xl">
+            <div className="bg-[#0a0a0e]/80 backdrop-blur-xl border border-white/[0.08] p-5 sm:p-7 md:p-8 rounded-2xl shadow-2xl">
               <div className="inline-block px-2.5 py-0.5 rounded-full bg-[#F5A800]/10 border border-[#F5A800]/20 text-[#F5A800] text-[9px] font-black uppercase tracking-widest mb-4">
                 Headquarters
               </div>

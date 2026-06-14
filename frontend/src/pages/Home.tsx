@@ -14,7 +14,7 @@ import SecuritySection from '../components/SecuritySection';
 
 const Home = () => {
   return (
-    <div className="bg-[#02040a] min-h-screen text-white font-sans selection:bg-[#F5A800]/30">
+    <div className="bg-white dark:bg-[#02040a] min-h-screen text-slate-900 dark:text-white font-sans selection:bg-[#F5A800]/30">
       <Hero />
       <TrustLogos />
       <WhyNexyoviSection />

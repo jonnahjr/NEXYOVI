@@ -91,7 +91,7 @@ export default function EngagementModels() {
     <section
       ref={sectionRef}
       className="relative bg-[#FCFBF8]"
-      style={{ height: `${models.length * 60}vh` }}
+      style={{ height: `${typeof window !== 'undefined' && window.innerWidth < 768 ? models.length * 30 : models.length * 60}vh` }}
     >
       {/* Sticky wrapper */}
       <div className="sticky top-0 h-screen z-10 flex items-center overflow-hidden">
@@ -174,29 +174,31 @@ export default function EngagementModels() {
               })}
             </div>
 
-            {/* MOBILE: Bottom nav */}
-            <div className="lg:hidden flex overflow-x-auto gap-3 pb-6 mb-6">
-              {models.map((model, i) => {
-                const isActive = i === activeIndex;
-                return (
-                  <div
-                    key={model.num}
-                    className="shrink-0 flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300"
-                    style={{
-                      backgroundColor: isActive ? '#e2e8f0' : '#F8F5EB',
-                      borderColor: isActive ? '#94a3b8' : '#e2e8f0',
-                    }}
-                  >
-                    {(() => { const Icon = model.icon; return <Icon size={14} style={{ color: isActive ? '#0f172a' : '#94a3b8' }} />; })()}
-                    <span
-                      className="text-[11px] font-bold"
-                      style={{ color: isActive ? '#0f172a' : '#94a3b8' }}
+            {/* MOBILE: Bottom nav - scrollable with snap */}
+            <div className="lg:hidden -mx-6 px-6">
+              <div className="flex overflow-x-auto gap-3 pb-4 mb-8 snap-x snap-mandatory scrollbar-hide">
+                {models.map((model, i) => {
+                  const isActive = i === activeIndex;
+                  return (
+                    <div
+                      key={model.num}
+                      className="snap-start shrink-0 flex flex-col items-center gap-2 px-3 py-3 rounded-lg border transition-all duration-300 min-w-max"
+                      style={{
+                        backgroundColor: isActive ? '#e2e8f0' : '#F8F5EB',
+                        borderColor: isActive ? '#94a3b8' : '#e2e8f0',
+                      }}
                     >
-                      {model.title}
-                    </span>
-                  </div>
-                );
-              })}
+                      {(() => { const Icon = model.icon; return <Icon size={16} style={{ color: isActive ? '#0f172a' : '#94a3b8' }} />; })()}
+                      <span
+                        className="text-[10px] sm:text-[11px] font-bold text-center leading-tight line-clamp-2"
+                        style={{ color: isActive ? '#0f172a' : '#94a3b8' }}
+                      >
+                        {model.title}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
             {/* RIGHT: Active content panel */}

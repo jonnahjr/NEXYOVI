@@ -170,7 +170,7 @@ const IndustriesSection = () => {
 
                             <Link
                                 to="/industries"
-                                className="inline-flex items-center gap-3 px-10 py-5 rounded-full bg-slate-950 text-white font-bold text-[15px] transition-all hover:scale-105 hover:bg-[#F5A800] hover:text-black"
+                                className="inline-flex items-center gap-3 px-10 py-5 rounded-full bg-[#F5A800] text-black font-bold text-[15px] transition-all hover:scale-105 hover:bg-[#FFD166]"
                             >
                                 Explore All Verticals
                                 <ArrowRight size={16} />
@@ -199,8 +199,8 @@ const IndustriesSection = () => {
 
                                         {/* Row Header (Always visible) */}
                                         <div className="flex items-center justify-between gap-5">
-                                             <div className="flex items-center gap-4 lg:gap-6">
-                                                 <h3 className={`text-xl md:text-2xl lg:text-[28px] font-black tracking-[-0.02em] transition-all duration-500 ${isActive ? 'text-slate-900 translate-x-1.5' : 'text-slate-500 group-hover:text-slate-800'}`}>
+                                            <div className="flex items-center gap-4 lg:gap-6">
+                                                <h3 className={`text-xl md:text-2xl lg:text-[28px] font-black tracking-[-0.02em] transition-all duration-500 ${isActive ? 'text-slate-900 translate-x-1.5' : 'text-slate-500 group-hover:text-slate-800'}`}>
                                                     {ind.title}
                                                 </h3>
                                             </div>

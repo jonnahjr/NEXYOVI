@@ -75,30 +75,30 @@ export default function DeliverySection() {
   const subtitle = siteContent?.delivery?.subtitle || 'Every engagement is measured by business impact, technical rigor, and long-term reliability. Here is how we deliver.';
 
   return (
-    <section className="relative bg-white py-28 md:py-36 overflow-hidden">
-      <div className="container max-w-6xl mx-auto px-6 relative z-10">
+    <section className="relative bg-white py-16 sm:py-20 md:py-28 lg:py-36 overflow-hidden">
+      <div className="container max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-14 md:mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-300 mb-6">
+          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-white border border-slate-300 mb-4 sm:mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-            <span className="text-[11px] font-bold tracking-[0.2em] text-slate-600 uppercase">{badge}</span>
+            <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-slate-600 uppercase">{badge}</span>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 tracking-[-0.02em] leading-[1.05] mb-5">
+          <h2 className="text-[clamp(28px,8vw,60px)] font-black text-slate-900 tracking-[-0.02em] leading-[1.05] mb-3 sm:mb-5">
             {title.includes('Critical Industries') ? (
               <>{title.split('Critical Industries')[0]}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">Critical Industries</span></>
             ) : title}
           </h2>
-          <p className="text-slate-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-medium">{subtitle}</p>
+          <p className="text-slate-500 text-xs sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-medium px-2">{subtitle}</p>
         </motion.div>
 
         {/* Content Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
           {items.map((item: any, i: number) => {
             const Icon = item.icon;
             return (
@@ -108,15 +108,16 @@ export default function DeliverySection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.5, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="flex flex-col"
               >
-                <div className="mb-4">
+                <div className="mb-3 sm:mb-4">
                   <Icon size={24} className={item.color} />
                 </div>
 
-                <h3 className="text-lg font-bold text-slate-900 mb-2">{item.title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed mb-4">{item.description}</p>
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-2">{item.title}</h3>
+                <p className="text-slate-500 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">{item.description}</p>
 
-                <div className="space-y-1.5">
+                <div className="space-y-1.5 sm:space-y-2">
                   {item.capabilities.map((cap: string) => {
                     const techData = techIconMap[cap];
                     const TechIcon = techData?.icon || Code;
@@ -124,7 +125,7 @@ export default function DeliverySection() {
                     return (
                       <div key={cap} className="flex items-center gap-2.5">
                         <TechIcon size={16} className={`shrink-0 ${techColor}`} />
-                        <span className="text-sm text-slate-600">{cap}</span>
+                        <span className="text-xs sm:text-sm text-slate-600">{cap}</span>
                       </div>
                     );
                   })}

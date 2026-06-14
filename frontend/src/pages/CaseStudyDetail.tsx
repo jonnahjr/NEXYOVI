@@ -248,7 +248,7 @@ const CaseStudyDetail = () => {
 
  {/* Execution Results Panel */}
  <div className="card-hud p-8">
- <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 mb-8 border-b border-white/10 pb-4">Execution Results</h3>
+ <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/60 dark:text-white/60 mb-8 border-b border-white/10 pb-4">Execution Results</h3>
  <ul className="space-y-6">
  {study.results.map((result, idx) => (
  <li key={idx} className="flex items-start gap-4">

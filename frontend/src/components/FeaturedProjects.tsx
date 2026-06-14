@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, ExternalLink } from 'lucide-react';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import locate1 from '../assets/location/1.png';
@@ -62,34 +61,34 @@ const cardVariants = {
 
 export default function FeaturedProjects() {
     return (
-        <section className="relative bg-[#02040a] py-36 section-divider-dark overflow-hidden">
+        <section className="relative bg-[#02040a] py-16 sm:py-20 md:py-28 lg:py-36 section-divider-dark overflow-hidden">
             <div className="absolute inset-0 z-0">
-                <div className="absolute left-1/3 top-1/4 w-[500px] h-[500px] rounded-full bg-[#F5A800]/5 blur-[160px]" />
-                <div className="absolute right-1/4 bottom-1/4 w-[400px] h-[400px] rounded-full bg-[#8b5cf6]/5 blur-[140px]" />
+                <div className="absolute left-1/3 top-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] rounded-full bg-[#F5A800]/5 blur-[100px] sm:blur-[160px]" />
+                <div className="absolute right-1/4 bottom-1/4 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] rounded-full bg-[#8b5cf6]/5 blur-[100px] sm:blur-[140px]" />
             </div>
 
-            <div className="container max-w-6xl mx-auto relative z-10 px-6">
+            <div className="container max-w-6xl mx-auto relative z-10 px-4 sm:px-6">
                 {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
-                    className="flex items-end justify-between mb-12"
+                    className="flex flex-col gap-6 sm:gap-8 sm:flex-row sm:items-end sm:justify-between mb-8 sm:mb-12"
                 >
-                    <div>
-                        <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-5">
+                    <div className="flex-1">
+                        <div className="inline-flex items-center gap-3 px-4 sm:px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-4 sm:mb-5">
                             <span className="w-2 h-2 rounded-full bg-[#F5A800] animate-pulse" />
-                            <span className="text-[11px] font-bold text-[#F5A800] uppercase tracking-[0.2em]">Featured Projects</span>
+                            <span className="text-[10px] sm:text-[11px] font-bold text-[#F5A800] uppercase tracking-[0.2em]">Featured Projects</span>
                         </div>
-                        <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-[-0.04em] leading-[0.95]">
+                        <h2 className="text-[clamp(28px,8vw,56px)] font-black text-white tracking-[-0.04em] leading-[0.95]">
                             Products we've <br />
                             <span className="bg-gradient-to-r from-[#F5A800] to-amber-400 bg-clip-text text-transparent">shipped.</span>
                         </h2>
                     </div>
                     <Link
                         to="/projects"
-                        className="hidden md:inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/10 text-white/60 hover:text-white hover:border-white/20 text-[13px] font-bold uppercase tracking-widest transition-all"
+                        className="hidden md:inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-full border border-white/10 text-white/60 hover:text-white hover:border-white/20 text-[12px] sm:text-[13px] font-bold uppercase tracking-widest transition-all"
                     >
                         View All
                         <ArrowRight size={14} />
@@ -102,7 +101,7 @@ export default function FeaturedProjects() {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, margin: '-60px' }}
-                    className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4"
+                    className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4"
                 >
                     {projects.map((project, i) => {
 
@@ -116,16 +115,16 @@ export default function FeaturedProjects() {
 
                                 <div className="relative z-10 flex flex-col h-full">
                                     {/* Screenshot row */}
-                                    <div className="relative h-48 overflow-hidden">
-                                        <div className="absolute inset-0 flex items-center justify-center gap-2 px-3">
+                                    <div className="relative w-full h-40 sm:h-48 md:h-56 overflow-hidden">
+                                        <div className="absolute inset-0 flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-3">
                                             {project.screenshots.map((img, j) => (
                                                 <div
                                                     key={j}
-                                                    className="relative overflow-hidden rounded-lg border border-white/[0.08] bg-white/5 shadow-lg"
+                                                    className="relative overflow-hidden rounded-lg border border-white/[0.08] bg-white/5 shadow-lg flex-shrink-0"
                                                     style={{
-                                                        width: j === 1 ? '55%' : '40%',
+                                                        width: j === 1 ? '45%' : '35%',
                                                         aspectRatio: '9 / 19',
-                                                        marginTop: j === 0 ? '12%' : j === 2 ? '12%' : 0,
+                                                        marginTop: j === 0 ? '10%' : j === 2 ? '10%' : 0,
                                                     }}
                                                 >
                                                     <img
@@ -137,7 +136,7 @@ export default function FeaturedProjects() {
                                             ))}
                                         </div>
                                         {/* Bottom fade */}
-                                        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#02040a] to-transparent pointer-events-none" />
+                                        <div className="absolute inset-x-0 bottom-0 h-12 sm:h-16 bg-gradient-to-t from-[#02040a] to-transparent pointer-events-none" />
                                     </div>
 
                                     {/* Info */}
@@ -163,7 +162,7 @@ export default function FeaturedProjects() {
                                                 </span>
                                             ))}
                                         </div>
-                                        
+
                                         {project.href !== '/projects' && (
                                             <div className="mt-4 pt-4 border-t border-white/[0.04] flex items-center justify-between opacity-60 group-hover:opacity-100 transition-opacity duration-300">
                                                 <span className="text-[11px] font-bold uppercase tracking-widest text-white">Read Case Study</span>

@@ -5,28 +5,28 @@ import { Link } from 'react-router-dom';
 
 const cards = [
   {
-   title: 'Senior Engineers Only',
-   desc: 'No junior staffing. Every project is led by experienced senior engineers who architect, build, and ship production-grade systems.',
-   accent: '#0ea5e9',
-   link: '/services/software',
+    title: 'Senior Engineers Only',
+    desc: 'No junior staffing. Every project is led by experienced senior engineers who architect, build, and ship production-grade systems.',
+    accent: '#0ea5e9',
+    link: '/services/software',
   },
   {
-   title: 'Security by Design',
-   desc: 'Security integrated from day one — not bolted on after. Every layer of every system is built with zero-trust principles and compliance in mind.',
-   accent: '#f97316',
-   link: '/services/security',
+    title: 'Security by Design',
+    desc: 'Security integrated from day one — not bolted on after. Every layer of every system is built with zero-trust principles and compliance in mind.',
+    accent: '#f97316',
+    link: '/services/security',
   },
   {
-   title: 'AI-Native Development',
-   desc: 'Modern AI tooling accelerates delivery across the entire development lifecycle — from code generation to testing, deployment, and monitoring.',
-   accent: '#a855f7',
-   link: '/services/ai',
+    title: 'AI-Native Development',
+    desc: 'Modern AI tooling accelerates delivery across the entire development lifecycle — from code generation to testing, deployment, and monitoring.',
+    accent: '#a855f7',
+    link: '/services/ai',
   },
   {
-   title: 'Long-Term Partnership',
-   desc: 'Support beyond launch. We stay engaged with proactive maintenance, continuous improvements, and strategic guidance as your business evolves.',
-   accent: '#3b82f6',
-   link: '/company',
+    title: 'Long-Term Partnership',
+    desc: 'Support beyond launch. We stay engaged with proactive maintenance, continuous improvements, and strategic guidance as your business evolves.',
+    accent: '#3b82f6',
+    link: '/company',
   },
 ];
 
@@ -137,29 +137,29 @@ export default function WhyNexyoviSection() {
     >
       <div className="absolute inset-0 z-0 bg-[#FCFBF8]" />
 
-      <div className="sticky top-0 z-10 h-[38vh] min-h-[260px] overflow-hidden">
-        <div className="container max-w-7xl mx-auto relative z-10 px-6 h-full flex items-center">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.05fr] gap-4 lg:gap-8 items-center w-full min-h-0">
+      <div className="sticky top-0 z-10 h-[32vh] sm:h-[35vh] md:h-[38vh] min-h-[200px] sm:min-h-[260px] overflow-hidden">
+        <div className="container max-w-7xl mx-auto relative z-10 px-4 sm:px-6 md:px-8 h-full flex items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.05fr] gap-3 sm:gap-4 md:gap-6 lg:gap-8 items-center w-full min-h-0">
 
             {/* Left: Title + subtitle */}
-            <div className="flex flex-col items-center lg:flex-row gap-3">
+            <div className="flex flex-col items-center lg:items-start lg:flex-row gap-2 sm:gap-3">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="relative w-full"
+                className="relative w-full lg:w-auto"
               >
                 <div className="lg:max-w-md">
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 bg-white mb-3">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#F5A800]" />
-                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">Why Nexyovi?</span>
+                  <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-slate-200 bg-white mb-2 sm:mb-3">
+                    <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-[#F5A800]" />
+                    <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">Why Nexyovi?</span>
                   </div>
-                  <h2 className="text-xl md:text-3xl lg:text-4xl font-black text-slate-950 tracking-[-0.04em] leading-[0.94]">
+                  <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-black text-slate-950 tracking-[-0.04em] leading-[0.94]">
                     Real{' '}
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5A800] to-[#FFD166]">differentiation.</span>
                   </h2>
-                  <p className="text-slate-500 text-xs mt-2 max-w-xs font-medium leading-relaxed">
+                  <p className="text-slate-500 text-[11px] sm:text-xs mt-1.5 sm:mt-2 max-w-xs font-medium leading-relaxed">
                     This is what buyers compare. We deliver on every point.
                   </p>
                 </div>
@@ -179,20 +179,20 @@ export default function WhyNexyoviSection() {
                   ease: "easeInOut",
                   delay: 0.2,
                 }}
-                className="hidden lg:block flex-shrink-0"
+                className="hidden lg:flex flex-shrink-0"
               >
                 <ChevronRight
-                  size={48}
+                  size={40}
                   strokeWidth={3}
-                  className="text-[#F5A800] animate-pulse"
+                  className="text-[#F5A800] animate-pulse md:size-[48px]"
                 />
               </motion.div>
             </div>
 
             {/* Right: Cards container — slides up */}
-            <div ref={cardsViewportRef} className="relative h-[170px] md:h-[210px] overflow-hidden px-2 py-2">
-              <div ref={cardsContainerRef} className="absolute inset-x-2 top-2 space-y-2">
-                  {cards.map((card, i) => {
+            <div ref={cardsViewportRef} className="relative h-[120px] sm:h-[150px] md:h-[170px] lg:h-[210px] overflow-hidden px-1 sm:px-2 py-1 sm:py-2">
+              <div ref={cardsContainerRef} className="absolute inset-x-1 sm:inset-x-2 top-1 sm:top-2 space-y-1 sm:space-y-2">
+                {cards.map((card, i) => {
                   return (
                     <Link
                       to={card.link}

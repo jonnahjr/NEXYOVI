@@ -72,41 +72,49 @@ const Footer = () => {
   }, [activePolicy]);
 
   return (
-    <footer className="relative bg-[#000000] pt-16 pb-6 overflow-hidden border-t border-white/[0.06]">
+    <footer className="relative bg-[#000000] pt-8 sm:pt-12 md:pt-16 pb-4 sm:pb-5 md:pb-6 overflow-hidden border-t border-white/[0.06]">
       {/* Watermark Background Content */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none pointer-events-none z-0">
-        <h2 className="text-[18vw] font-bold text-white/[0.02] tracking-tighter leading-none uppercase">
+        <h2 className="text-[12vw] sm:text-[15vw] md:text-[18vw] font-bold text-white/[0.02] tracking-tighter leading-none uppercase">
           {companyName}
         </h2>
       </div>
 
 
-      <div className="container max-w-6xl mx-auto px-6 relative z-10">
+      <div className="container max-w-6xl mx-auto px-4 sm:px-5 md:px-6 relative z-10">
 
         {/* Top Section: Logo + Links Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.2fr_0.9fr_0.9fr_0.9fr] gap-10 lg:gap-12 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.9fr_0.9fr_0.9fr] gap-6 sm:gap-8 md:gap-10 lg:gap-12 mb-6 sm:mb-8 md:mb-10">
 
           {/* Brand Block */}
-          <div>
-            <Link to="/" className="inline-block mb-6">
+          <div className="col-span-1 sm:col-span-2 lg:col-span-1">
+            <Link to="/" className="inline-block mb-4 sm:mb-5 md:mb-6 group">
               {settings?.logo_url ? (
-                <img src={settings.logo_url} alt="Logo" className="h-[130px] w-auto object-contain" />
+                <img 
+                  src={settings.logo_url} 
+                  alt="Logo" 
+                  className="h-24 sm:h-28 md:h-32 lg:h-[130px] w-auto object-contain" 
+                />
               ) : (
                 <div
-                  className="h-[130px] w-[390px]"
+                  className="h-24 sm:h-28 md:h-32 lg:h-[130px] w-32 sm:w-40 md:w-48 lg:w-[390px]"
                   style={{
                     WebkitMask: `url('${myLogo}') left center / contain no-repeat`,
                     mask: `url('${myLogo}') left center / contain no-repeat`,
-                    background: 'linear-gradient(135deg, #F5A800, #FFD166)',
+                    maskSize: 'contain',
+                    maskPosition: 'left center',
+                    WebkitMaskSize: 'contain',
+                    WebkitMaskPosition: 'left center',
+                    background: 'linear-gradient(to right, #F5A800, #FFD166)',
                   }}
                 />
               )}
             </Link>
-            <h2 className="text-lg md:text-xl font-semibold leading-tight mb-4 max-w-lg">
+            <h2 className="text-base sm:text-lg md:text-xl font-semibold leading-tight mb-3 sm:mb-4 max-w-lg">
               <span className="text-white">Nexyovi — Senior engineering, </span>
               <span className="bg-gradient-to-r from-[#F5A800] to-[#FFD166] bg-clip-text text-transparent">rooted in Addis Ababa, deployed globally.</span>
             </h2>
-            <div className="flex items-center gap-4 mb-10">
+            <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8 md:mb-10">
               {settings?.socials && Object.entries(settings.socials).map(([key, url]: any) => {
                 const Icon = socialIcons[key];
                 if (!Icon || !url) return null;
@@ -119,7 +127,7 @@ const Footer = () => {
                     className="text-white/60 hover:text-[#F5A800] transition-colors"
                     aria-label={key}
                   >
-                    <Icon size={20} />
+                    <Icon size={18} className="sm:size-[20px]" />
                   </a>
                 );
               })}
@@ -128,8 +136,8 @@ const Footer = () => {
 
           {/* Services Column */}
           <div>
-            <h4 className="text-white font-bold text-[12px] uppercase tracking-[0.2em] mb-6">Services</h4>
-            <ul className="space-y-3">
+            <h4 className="text-white font-bold text-[11px] sm:text-[12px] uppercase tracking-[0.2em] mb-4 sm:mb-6">Services</h4>
+            <ul className="space-y-2 sm:space-y-3">
               {(siteContent?.footer?.servicesLinks || [
                 { label: 'Software Engineering', path: '/services/software' },
                 { label: 'AI & Automation', path: '/services/ai' },
@@ -138,7 +146,7 @@ const Footer = () => {
                 { label: 'Data & Analytics', path: '/services/data' },
               ]).map((item: any) => (
                 <li key={item.label}>
-                  <Link to={item.path} className="text-white/40 hover:text-white text-[13px] transition-colors">{item.label}</Link>
+                  <Link to={item.path} className="text-white/40 hover:text-white text-[12px] sm:text-[13px] transition-colors">{item.label}</Link>
                 </li>
               ))}
             </ul>
@@ -146,8 +154,8 @@ const Footer = () => {
 
           {/* Company Column */}
           <div>
-            <h4 className="text-white font-bold text-[12px] uppercase tracking-[0.2em] mb-6">Company</h4>
-            <ul className="space-y-3">
+            <h4 className="text-white font-bold text-[11px] sm:text-[12px] uppercase tracking-[0.2em] mb-4 sm:mb-6">Company</h4>
+            <ul className="space-y-2 sm:space-y-3">
               {(siteContent?.footer?.companyLinks || [
                 { label: 'Company', path: '/company' },
                 { label: 'Industries', path: '/industries' },
@@ -155,7 +163,7 @@ const Footer = () => {
                 { label: 'Contact', path: '/contact' },
               ]).map((item: any) => (
                 <li key={item.label}>
-                  <Link to={item.path} className="text-white/40 hover:text-white text-[13px] transition-colors">{item.label}</Link>
+                  <Link to={item.path} className="text-white/40 hover:text-white text-[12px] sm:text-[13px] transition-colors">{item.label}</Link>
                 </li>
               ))}
             </ul>
@@ -163,24 +171,24 @@ const Footer = () => {
 
           {/* Contact Column */}
           <div>
-            <h4 className="text-white font-bold text-[12px] uppercase tracking-[0.2em] mb-6">Contact</h4>
-            <div className="space-y-4">
-              <a href={`mailto:${settings.email || 'contact@nexyovi.com'}`} className="block text-white hover:text-[#F5A800] transition-colors text-[14px] font-medium">
+            <h4 className="text-white font-bold text-[11px] sm:text-[12px] uppercase tracking-[0.2em] mb-4 sm:mb-6">Contact</h4>
+            <div className="space-y-3 sm:space-y-4">
+              <a href={`mailto:${settings.email || 'contact@nexyovi.com'}`} className="block text-white hover:text-[#F5A800] transition-colors text-[13px] sm:text-[14px] font-medium break-all">
                 contact@nexyovi.com
               </a>
-              <a href={`tel:${settings.phone || '+251938617252'}`} className="block text-white/70 hover:text-white transition-colors text-[14px] font-medium">
+              <a href={`tel:${settings.phone || '+251938617252'}`} className="block text-white/70 hover:text-white transition-colors text-[13px] sm:text-[14px] font-medium">
                 {settings.phone ? settings.phone.replace(/(\+\d{3})(\d{2})(\d{3})(\d{4})/, '$1 $2 $3 $4') : '+251 93 861 7252'}
               </a>
               <a
                 href="https://wa.me/251945628075"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-full bg-[#25D366] px-4 py-2 text-sm font-semibold text-slate-950 transition-colors hover:bg-[#1eb85b]"
+                className="inline-flex items-center justify-center rounded-full bg-[#25D366] px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-slate-950 transition-colors hover:bg-[#1eb85b]"
               >
-                <MessageCircle size={18} className="mr-2" />
+                <MessageCircle size={16} className="mr-1.5 sm:mr-2" />
                 Chat on WhatsApp
               </a>
-              <div className="text-white/70 text-[14px] font-medium">
+              <div className="text-white/70 text-[12px] sm:text-[14px] font-medium">
                 {settings.address || 'Addis Ababa, Ethiopia'}
               </div>
             </div>
@@ -188,11 +196,11 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-[12px] text-white/30">
+        <div className="pt-4 sm:pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+          <p className="text-[11px] sm:text-[12px] text-white/30 text-center sm:text-left">
             {footerCopyright}
           </p>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4 sm:gap-6">
             {(['Terms', 'Privacy', 'Legal'] as const).map(item => (
               <button
                 key={item}

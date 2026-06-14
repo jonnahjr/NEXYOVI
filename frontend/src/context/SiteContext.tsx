@@ -13,18 +13,10 @@ import paladinDronesLogo from '../assets/Paladin Drones.webp';
 import yonasImg from '../assets/yonas.jpg';
 
 const initialTeam = [
-    { id: 1, name: 'Yonas Bogale', role: 'Founder & CEO', bio: 'Visionary leader with 12+ years in tech and business strategy across two continents.', initials: 'YB', color: '#F5A800', linkedin: 'https://www.linkedin.com/in/yonas-bogale/' },
-    { id: 2, name: 'Amanuel Tesfaye', role: 'Chief Technology Officer', bio: 'Software architect and engineer with deep expertise in distributed systems, cloud infrastructure, and AI/ML deployment.', initials: 'AT', color: '#8b5cf6', linkedin: 'https://linkedin.com/in/amanuel-tesfaye/' },
-    { id: 3, name: 'Selamawit Hailu', role: 'Chief Product Officer', bio: 'Leads product vision and strategy. Passionate about building scalable systems and ensuring user-centric design.', initials: 'SH', color: '#10b981', linkedin: 'https://linkedin.com/in/selamawit-hailu/' },
-    { id: 16, name: 'Eyerusalem Bogale', role: 'VP of Operations', bio: 'Operations leader with 10+ years driving efficiency and scaling processes across tech startups.', initials: 'EB', color: '#ff7f50', linkedin: 'https://linkedin.com/in/eyerusalem-bogale' },
-    { id: 10, name: 'Mikayel Alemu', role: 'Full Stack Developer', bio: 'Foundation of everything — every project needs this.', initials: 'MK', color: '#ef4444', linkedin: '#' },
-    { id: 11, name: 'Sara Denbel', role: 'Mobile Application Developer', bio: 'High demand, tangible product clients can see and touch.', initials: 'SD', color: '#14b8a6', linkedin: '#' },
-    { id: 6, name: 'Henok Alemu', role: 'DevOps Engineer', bio: 'Keeps everything running — cloud, pipelines, deployments.', initials: 'HA', color: '#06b6d4', linkedin: '#' },
-    { id: 8, name: 'Betelhem Assefa', role: 'AI/ML Engineer', bio: 'Your biggest differentiator right now.', initials: 'BA', color: '#F5A800', linkedin: '#' },
-    { id: 9, name: 'Nahom Girmachew', role: 'Backend Developer', bio: 'Powers APIs, data, and business logic.', initials: 'NG', color: '#a855f7', linkedin: '#' },
-    { id: 13, name: 'Biruk Mamo', role: 'Security Engineer', bio: 'Matches your security-first brand promise.', initials: 'BM', color: '#84cc16', linkedin: '#' },
-    { id: 12, name: 'Liya Wondesen', role: 'Data Engineer', bio: 'Supports your data systems service.', initials: 'LW', color: '#0ea5e9', linkedin: '#' },
-    { id: 7, name: 'Tsion Wondimu', role: 'Project Manager', bio: 'Rounds out the team — shows delivery discipline.', initials: 'TW', color: '#f59e0b', linkedin: '#' },
+    { id: 1, name: 'Yonas Bogale', role: 'Founder & CEO', bio: 'Visionary leader with 12+ years in tech and business strategy across two continents.', initials: 'YB', color: '#F5A800', linkedin: 'https://www.linkedin.com/in/yonas-bogale/', img: 'https://api.nexyovi.com/uploads/1781431549912-777697695.jpg' },
+    { id: 16, name: 'Eyerusalem Bogale', role: 'VP of Operations', bio: 'Operations leader with 10+ years driving efficiency and scaling processes across tech startups.', initials: 'EB', color: '#ff7f50', linkedin: 'https://linkedin.com/in/eyerusalem-bogale', img: 'https://api.nexyovi.com/uploads/1781438075460-994896949.png' },
+    { id: 3, name: 'Alebachew Sitotaw Yimer', role: 'Chief Product Officer', bio: 'Leads product vision and strategy. Passionate about building scalable systems and ensuring user-centric design.', initials: 'SH', color: '#10b981', linkedin: 'https://linkedin.com/in/selamawit-hailu/', img: 'https://api.nexyovi.com/uploads/1781431861888-216643038.png' },
+    { id: 17, name: 'Sarah Tadesse', role: 'Chief Technology Officer (CTO)', bio: 'Innovative engineering leader with 8+ years of experience in building scalable cloud architectures. Passionate about leveraging AI and modern web technologies to solve complex business problems.', initials: 'ST', color: '#8b5cf6', linkedin: 'https://linkedin.com/in/eyerusalem-bogale', img: 'https://api.nexyovi.com/uploads/1781434594201-894064051.png' }
 ];
 
 const initialTestimonials = [

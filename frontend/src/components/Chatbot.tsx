@@ -244,7 +244,7 @@ const Chatbot = () => {
               {/* Security indicator */}
               <div className="flex items-center gap-2">
                 <Shield size={14} className="text-emerald-400/60" />
-                <button onClick={() => setChatOpen(false)} className="text-white/40 hover:text-white transition-colors">
+                <button onClick={() => setChatOpen(false)} className="text-white/60 hover:text-white transition-colors">
                   <X size={20} />
                 </button>
               </div>
@@ -305,13 +305,13 @@ const Chatbot = () => {
                 onKeyDown={(e) => { if (e.key === 'Enter') handleSend(); }}
                 placeholder="Ask about our services..."
                 maxLength={MAX_MESSAGE_LENGTH}
-                className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 pb-3 pr-10 text-sm text-white focus:outline-none focus:border-[#F5A800] transition-colors placeholder:text-white/30"
+                className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 pb-3 pr-10 text-sm text-white focus:outline-none focus:border-[#F5A800] transition-colors placeholder:text-white/50"
                 disabled={isProcessing}
               />
               <button
                 onClick={handleSend}
                 disabled={isProcessing || !inputValue.trim()}
-                className="absolute right-7 top-1/2 -translate-y-1/2 text-white/40 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                className="absolute right-7 top-1/2 -translate-y-1/2 text-white/60 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
               >
                 <Send size={16} />
               </button>

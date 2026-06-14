@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { BookOpen, Layers, Code2, Rocket, ShieldCheck } from 'lucide-react';
+import { BookOpen, Code2, Layers, Rocket, ShieldCheck } from 'lucide-react';
 import { fadeUp, viewport } from '../lib/animations';
 
 const steps = [
@@ -39,7 +39,7 @@ export default function HowWeWork() {
   return (
     <section className="relative bg-[#FCFBF8] py-32 border-t border-slate-200">
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
-        
+
         {/* Header */}
         <motion.div
           variants={fadeUp}
@@ -57,7 +57,7 @@ export default function HowWeWork() {
         </motion.div>
 
         {/* Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6 md:gap-8">
           {steps.map((step, idx) => {
             const Icon = step.icon;
             return (
@@ -71,22 +71,22 @@ export default function HowWeWork() {
               >
                 {/* Connector Line */}
                 {idx < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-10 left-[60%] w-[80%] h-[1px] bg-slate-200 -z-10" />
+                  <div className="hidden lg:block absolute top-7 sm:top-8 md:top-10 left-[50%] md:left-[60%] w-[0%] md:w-[80%] h-[1px] bg-slate-200 -z-10" />
                 )}
 
                 {/* Number & Icon */}
-                <div className="relative w-14 h-14 md:w-16 md:h-16 bg-[#030303] rounded-2xl flex items-center justify-center border border-white/10 group-hover:border-[#F5A800]/40 transition-all duration-300 mb-6 shadow-lg overflow-hidden">
+                <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-[#030303] rounded-2xl flex items-center justify-center border border-white/10 group-hover:border-[#F5A800]/40 transition-all duration-300 mb-4 sm:mb-6 shadow-lg overflow-hidden">
                   {/* Subtle glassmorphism top glow */}
                   <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
-                  <Icon size={24} className="text-zinc-400 group-hover:text-white transition-colors relative z-10" />
+                  <Icon size={20} className="sm:size-5 md:size-6 text-zinc-400 group-hover:text-white transition-colors relative z-10" />
                 </div>
 
 
-                <h3 className="text-xl font-bold text-slate-950 mb-3 tracking-tight">
+                <h3 className="text-base sm:text-lg md:text-xl font-bold text-slate-950 mb-2 sm:mb-3 tracking-tight">
                   {step.title}
                 </h3>
-                
-                <p className="text-sm text-slate-600 font-medium leading-relaxed px-2">
+
+                <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed px-1 sm:px-2">
                   {step.desc}
                 </p>
               </motion.div>
