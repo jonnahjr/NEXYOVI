@@ -17,7 +17,7 @@ export const stripHtml = (value: string): string => {
 // Trim whitespace and limit length
 export const sanitizeText = (value: string, maxLength: number = 5000): string => {
   if (typeof value !== 'string') return '';
-  return stripHtml(value).trim().substring(0, maxLength);
+  return stripHtml(value).substring(0, maxLength);
 };
 
 // Sanitize email: lowercase, trim, basic format check

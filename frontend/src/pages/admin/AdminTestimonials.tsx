@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Search, Edit2, Trash2, Save, X, Quote, ArrowLeft, UploadCloud } from 'lucide-react';
 import { useSite } from '../../context/SiteContext';
-import { supabase } from '../../lib/supabase';
+import * as api from '../../lib/api';
 
 const AdminTestimonials = () => {
   const { testimonials, addTestimonial, updateTestimonial, deleteTestimonial } = useSite();
@@ -17,11 +17,8 @@ const AdminTestimonials = () => {
     setIsUploading(true);
     try {
       const file = e.target.files[0];
-      const fileName = `${Date.now()}.${file.name.split('.').pop()}`;
-      const { error } = await supabase.storage.from('nexyovi_assets').upload(`testimonials/${fileName}`, file);
-      if (error) throw error;
-      const { data } = supabase.storage.from('nexyovi_assets').getPublicUrl(`testimonials/${fileName}`);
-      setForm({ ...form, image_url: data.publicUrl });
+      const url = await api.uploadFile(file);
+      setForm({ ...form, image_url: url });
     } catch (err) { console.error(err); alert('Upload failed'); }
     finally { setIsUploading(false); }
   };
@@ -42,6 +39,21 @@ const AdminTestimonials = () => {
       await addTestimonial({ ...form });
     }
     setIsEditing(false);
+  };
+
+  const importDefaults = async () => {
+    if (!window.confirm('This will import the 5 default testimonials. Continue?')) return;
+    const defaults = [
+      { content: "They connected us with top-tier Ethiopian engineering talent and built our core platform in parallel. They brought deep technical expertise and a true partnership mindset. Gebeya's collaboration with Nexyovi has been transformative for our pan-African expansion.", role: 'CEO & Co-Founder', author: 'Amadou Daffe', image_url: '', linkedin: 'https://et.linkedin.com/in/amadoudaffe' },
+      { content: "We needed a secure payment gateway that could handle Ethiopia's unique banking landscape. Nexyovi built it — integrating with four banks and processing live transactions on day one. Their focus on security and reliability has been a game-changer for our platform.", role: 'CEO', author: 'Rediet Tsigeberhan', image_url: '', linkedin: 'https://www.linkedin.com/in/rediet-tsigeberhan-97615642' },
+      { content: 'They delivered our health infrastructure platform ahead of schedule, navigating complex compliance requirements seamlessly. The system now serves users across regional hospitals and clinics.', role: 'Chief Technology Officer', author: 'Dawit Mekonnen', image_url: '', linkedin: '' },
+      { content: 'We needed a complete digital transformation — from legacy systems to modern cloud infrastructure. Nexyovi handled the migration with zero downtime and trained our team on the new stack. Their engineering discipline is world-class.', role: 'Head of Digital', author: 'Tigist Hailemariam', image_url: '', linkedin: '' },
+      { content: "The mobile app they built for us had over 50k downloads in the first month. But what impressed me most was how they thought about scalability from day one — we haven't had a single performance issue even as traffic grew.", role: 'VP of Product', author: 'Binyam Alemu', image_url: '', linkedin: '' }
+    ];
+    for (const t of defaults) {
+      await addTestimonial(t);
+    }
+    alert('Imported!');
   };
 
   const filtered = testimonials.filter(t => (t.author || '').toLowerCase().includes(search.toLowerCase()) || (t.content || '').toLowerCase().includes(search.toLowerCase()));
@@ -113,9 +125,16 @@ const AdminTestimonials = () => {
           <h1 className="text-xl font-bold text-white">Testimonials</h1>
           <p className="text-xs text-white/40 mt-1">{testimonials.length} reviews</p>
         </div>
-        <button onClick={() => open()} className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#F5A800] to-[#ffb700] text-black text-sm font-bold rounded-lg hover:shadow-lg hover:shadow-[#F5A800]/20 transition-all">
-          <Plus size={16} /> New Testimony
-        </button>
+        <div className="flex gap-2">
+          {testimonials.length < 5 && (
+            <button onClick={importDefaults} className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 text-white/70 text-sm font-semibold rounded-lg hover:bg-white/10 hover:text-white transition-all">
+              Import Defaults
+            </button>
+          )}
+          <button onClick={() => open()} className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#F5A800] to-[#ffb700] text-black text-sm font-bold rounded-lg hover:shadow-lg hover:shadow-[#F5A800]/20 transition-all">
+            <Plus size={16} /> New Testimony
+          </button>
+        </div>
       </div>
 
       <div className="relative">

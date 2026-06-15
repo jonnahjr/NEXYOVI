@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Save, X, Check, LayoutTemplate, Search, UploadCloud } from 'lucide-react';
 import { useSite } from '../../context/SiteContext';
-import { supabase } from '../../lib/supabase';
+import * as api from '../../lib/api';
 
 // ════════════════════════════════════════════════════════════════
 // ── DEFAULT VALUES — one-to-one with hardcoded site content
@@ -559,11 +559,7 @@ const contentSections = [
 
 // ── File upload helper ───────────────────────────────────────
 const uploadFile = async (file: File, folder: string): Promise<string> => {
-  const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
-  const { error } = await supabase.storage.from('nexyovi_assets').upload(`${folder}/${fileName}`, file);
-  if (error) throw error;
-  const { data } = supabase.storage.from('nexyovi_assets').getPublicUrl(`${folder}/${fileName}`);
-  return data.publicUrl;
+  return await api.uploadFile(file);
 };
 
 const AdminContent = () => {

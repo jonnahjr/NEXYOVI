@@ -103,11 +103,12 @@ export default function WorldMap() {
               key={`dot-${node.name}`}
               cx={node.x}
               cy={node.y}
-              r={3}
+              r="3"
               fill="#F5A800"
               filter="url(#glow)"
-              initial={{ opacity: 0, r: 0 }}
-              animate={{ opacity: [0.4, 0.9, 0.4], r: [3, 4, 3] }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: [0.4, 0.9, 0.4], scale: [1, 1.33, 1] }}
+              style={{ transformOrigin: `${node.x}px ${node.y}px` }}
               transition={{
                 duration: 2.5,
                 ease: "easeInOut",
@@ -121,21 +122,23 @@ export default function WorldMap() {
           <motion.circle
             cx={hq.x}
             cy={hq.y}
-            r={6}
+            r="6"
             fill="none"
             stroke="#F5A800"
             strokeWidth="1"
-            animate={{ r: [6, 20, 26], opacity: [0.7, 0.3, 0] }}
+            animate={{ scale: [1, 3.3, 4.3], opacity: [0.7, 0.3, 0] }}
+            style={{ transformOrigin: `${hq.x}px ${hq.y}px` }}
             transition={{ repeat: Infinity, duration: 3, ease: "easeOut" }}
           />
           <motion.circle
             cx={hq.x}
             cy={hq.y}
-            r={5}
+            r="5"
             fill="none"
             stroke="#FFD166"
             strokeWidth="0.8"
-            animate={{ r: [5, 15], opacity: [0.6, 0] }}
+            animate={{ scale: [1, 3], opacity: [0.6, 0] }}
+            style={{ transformOrigin: `${hq.x}px ${hq.y}px` }}
             transition={{ repeat: Infinity, duration: 2, ease: "easeOut", delay: 0.5 }}
           />
 
@@ -143,12 +146,13 @@ export default function WorldMap() {
           <motion.circle
             cx={hq.x}
             cy={hq.y}
-            r={5}
+            r="5"
             fill="#F5A800"
             stroke="#FFD166"
             strokeWidth="1"
             filter="url(#hq-glow)"
-            animate={{ r: [5, 5.8, 5] }}
+            animate={{ scale: [1, 1.16, 1] }}
+            style={{ transformOrigin: `${hq.x}px ${hq.y}px` }}
             transition={{ duration: 2.5, ease: "easeInOut", repeat: Infinity }}
           />
 

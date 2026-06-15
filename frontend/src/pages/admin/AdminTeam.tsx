@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Edit2, Trash2, Save, X, Linkedin, User, UploadCloud } from 'lucide-react';
 import { useSite } from '../../context/SiteContext';
-import { supabase } from '../../lib/supabase';
+import * as api from '../../lib/api';
 
 const AdminTeam = () => {
   const { team, addTeamMember, updateTeamMember, deleteTeamMember } = useSite();
@@ -28,11 +28,8 @@ const AdminTeam = () => {
     if (!e.target.files || !e.target.files[0]) return;
     try {
       const file = e.target.files[0];
-      const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
-      const { error } = await supabase.storage.from('nexyovi_assets').upload(`team/${fileName}`, file);
-      if (error) throw error;
-      const { data } = supabase.storage.from('nexyovi_assets').getPublicUrl(`team/${fileName}`);
-      setForm(f => ({ ...f, img: data.publicUrl }));
+      const url = await api.uploadFile(file);
+      setForm(f => ({ ...f, img: url }));
       setFormImgError(false);
     } catch (err: any) { alert(`Upload failed: ${err.message}`); }
   };

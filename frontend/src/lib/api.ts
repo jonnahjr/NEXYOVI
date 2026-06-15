@@ -6,22 +6,7 @@ interface FetchOptions {
   auth?: boolean;
 }
 
-let cachedCsrfToken: string | null = null;
-
-async function getCsrfToken() {
-  if (cachedCsrfToken) return cachedCsrfToken;
-  try {
-    const res = await fetch(`${API_BASE}/api/csrf-token`);
-    if (res.ok) {
-      const data = await res.json();
-      cachedCsrfToken = data.token;
-      return cachedCsrfToken;
-    }
-  } catch (err) {
-    console.error('Failed to fetch CSRF token:', err);
-  }
-  return null;
-}
+// CSRF token is not needed when using Bearer token authentication.
 
 function getToken(): string | null {
   return localStorage.getItem('nexyovi_token');
@@ -49,13 +34,7 @@ async function request(path: string, options: FetchOptions = {}, nocache = false
     }
   }
 
-  // Attach CSRF token for mutating requests
-  if (method !== 'GET' && method !== 'HEAD' && method !== 'OPTIONS') {
-    const csrfToken = await getCsrfToken();
-    if (csrfToken) {
-      headers['X-CSRF-Token'] = csrfToken;
-    }
-  }
+  // No CSRF token needed for Bearer auth
 
   const res = await fetch(`${API_BASE}${path}`, {
     method,
@@ -129,4 +108,25 @@ export async function remove(entity: string, id: string | number) {
     method: 'DELETE',
     auth: true,
   });
+}
+
+// ── File Upload ──────────────────────────────────────────────
+
+export async function uploadFile(file: File): Promise<string> {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const token = getToken();
+  const headers: Record<string, string> = {};
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+
+  const res = await fetch(`${API_BASE}/api/upload`, {
+    method: 'POST',
+    headers,
+    body: formData
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Upload failed');
+  return data.url;
 }

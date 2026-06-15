@@ -4,6 +4,8 @@ import React from "react";
 import WorldMap from "../components/WorldMap";
 import { useSite } from "../context/SiteContext";
 import { EASE_EXPO, revealUp, staggerContainer } from "../lib/animations";
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
 import { sanitizeText, sanitizeEmail, sanitizeFormData, validateFormData, containsXssPattern } from "../lib/sanitize";
 
 export default function Contact() {
@@ -35,6 +37,7 @@ export default function Contact() {
   const [formData, setFormData] = React.useState({
     name: '',
     email: '',
+    phone: '',
     company: '',
     service: '',
     message: '',
@@ -52,6 +55,9 @@ export default function Contact() {
       case 'name':
       case 'company':
         sanitized = sanitizeText(value, 100);
+        break;
+      case 'phone':
+        sanitized = sanitizeText(value, 30);
         break;
       case 'message':
         sanitized = sanitizeText(value, 5000);
@@ -144,17 +150,33 @@ export default function Contact() {
       turnstile_passed: !!turnstileToken
     };
 
-    // Simulate API call for demo - in production, this goes through CSRF-protected API
-    setTimeout(() => {
-      addMessage(report);
-      setSubmissionCount(prev => prev + 1);
-      setTurnstileToken('');
-      setIsSubmitting(false);
-      setIsSuccess(true);
-      setFormData({ name: '', email: '', company: '', service: '', message: '', honeypot: '' });
-      setFormErrors({});
-      setTimeout(() => setIsSuccess(false), 5000);
-    }, 1500);
+    // Submit to dedicated /api/contact endpoint (saves message + sends email)
+    const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    fetch(`${API_BASE}/api/contact`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(report),
+    })
+      .then(r => r.json())
+      .then(data => {
+        if (data.emailError) {
+          console.warn('[CONTACT] Message saved but email failed:', data.emailError);
+        } else if (data.emailSent) {
+          console.log('[CONTACT] Message saved and email sent successfully');
+        }
+        setSubmissionCount(prev => prev + 1);
+        setTurnstileToken('');
+        setIsSubmitting(false);
+        setIsSuccess(true);
+        setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '', honeypot: '' });
+        setFormErrors({});
+        setTimeout(() => setIsSuccess(false), 5000);
+      })
+      .catch(err => {
+        console.error('[CONTACT] Submission error:', err);
+        setIsSubmitting(false);
+        setFormErrors({ submit: 'Failed to send message. Please try again.' });
+      });
   };
 
   const copyContact = async (value: string) => {
@@ -404,6 +426,24 @@ export default function Contact() {
                     />
                     {formErrors.email && (
                       <p className="text-red-500 text-xs mt-1 ml-2 font-medium">{formErrors.email}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="space-y-1.5 sm:space-y-2">
+                  <label className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-slate-500 ml-2">Phone Number</label>
+                  <div className={`relative w-full bg-slate-50 border rounded-2xl py-3 sm:py-4 pl-4 sm:pl-5 pr-4 sm:pr-5 transition-all focus-within:bg-white focus-within:border-[#F5A800] ${
+                    formErrors.phone ? 'border-red-400 bg-red-50' : 'border-slate-200'
+                  }`}>
+                    <PhoneInput
+                      international
+                      defaultCountry="ET"
+                      value={formData.phone}
+                      onChange={(value) => handleInputChange('phone', value || '')}
+                      className="phone-input-custom text-slate-900 font-medium text-sm sm:text-base placeholder:text-slate-400"
+                    />
+                    {formErrors.phone && (
+                      <p className="text-red-500 text-xs mt-1 ml-2 font-medium">{formErrors.phone}</p>
                     )}
                   </div>
                 </div>

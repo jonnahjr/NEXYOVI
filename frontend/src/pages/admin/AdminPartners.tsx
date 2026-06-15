@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Plus, Search, Edit2, Trash2, Save, X, Globe, Check, UploadCloud } from 'lucide-react';
 import { useSite } from '../../context/SiteContext';
-import { supabase } from '../../lib/supabase';
+import * as api from '../../lib/api';
 import { motion } from 'framer-motion';
 
 const AdminPartners = () => {
@@ -22,11 +22,8 @@ const AdminPartners = () => {
     setIsUploading(true);
     try {
       const file = e.target.files[0];
-      const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
-      const { error } = await supabase.storage.from('nexyovi_assets').upload(`partners/${fileName}`, file);
-      if (error) throw error;
-      const { data } = supabase.storage.from('nexyovi_assets').getPublicUrl(`partners/${fileName}`);
-      setForm(p => ({ ...p, logo_url: data.publicUrl }));
+      const url = await api.uploadFile(file);
+      setForm(p => ({ ...p, logo_url: url }));
     } catch (err: any) {
       alert(`Upload failed: ${err.message}`);
     } finally { setIsUploading(false); }

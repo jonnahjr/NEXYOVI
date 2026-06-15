@@ -1154,4 +1154,45 @@
             scroll-behavior: auto !important;
         }
     }
+
+    /* ── Phone Input Overrides ── */
+    .phone-input-custom {
+        width: 100%;
+    }
+    .phone-input-custom .PhoneInputInput {
+        background: transparent;
+        border: none;
+        outline: none;
+        width: 100%;
+        color: inherit;
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+    }
+    .phone-input-custom .PhoneInputCountry {
+        margin-right: 12px;
+        display: flex;
+        align-items: center;
+    }
+    .phone-input-custom .PhoneInputCountrySelectArrow {
+        width: 0.4em;
+        height: 0.4em;
+        margin-left: 0.35em;
+        border-style: solid;
+        border-color: inherit;
+        border-width: 0 1px 1px 0;
+        transform: rotate(45deg);
+        opacity: 0.45;
+    }
+    .phone-input-custom .PhoneInputCountrySelect {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 1;
+        border: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
 }

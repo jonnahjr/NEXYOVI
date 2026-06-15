@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Save, Globe, Mail, Phone, MapPin, Image, Settings, UploadCloud } from 'lucide-react';
 import { useSite } from '../../context/SiteContext';
-import { supabase } from '../../lib/supabase';
+import * as api from '../../lib/api';
 
 const AdminSettings = () => {
   const { settings, updateSettings } = useSite();
@@ -78,11 +78,8 @@ const AdminSettings = () => {
                     setUploading(true);
                     try {
                       const file = e.target.files[0];
-                      const fn = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
-                      const { error } = await supabase.storage.from('nexyovi_assets').upload(`logos/${fn}`, file);
-                      if (error) throw error;
-                      const { data } = supabase.storage.from('nexyovi_assets').getPublicUrl(`logos/${fn}`);
-                      setForm(f => ({ ...f, logo_url: data.publicUrl }));
+                      const url = await api.uploadFile(file);
+                      setForm(f => ({ ...f, logo_url: url }));
                     } catch (err: any) { alert(`Upload failed: ${err.message}`); }
                     finally { setUploading(false); }
                   }} />
