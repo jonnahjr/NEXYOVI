@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Mail, Trash2, Check, ArrowLeft, Clock, X } from 'lucide-react';
 import { useSite } from '../../context/SiteContext';
+import { useToast } from '../../context/ToastContext';
 
 const AdminMessages = () => {
   const { messages, updateMessage, deleteMessage } = useSite();
+  const { toast } = useToast();
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<'all' | 'unread' | 'read'>('all');
   const [selected, setSelected] = useState<any>(null);
@@ -17,8 +19,19 @@ const AdminMessages = () => {
 
   const unreadCount = messages.filter((m: any) => m.status === 'unread' || m.status === 'new').length;
 
-  const markAsRead = async (msg: any) => { if (msg.status === 'unread' || msg.status === 'new') await updateMessage(msg.id, { status: 'read' }); };
-  const handleDelete = async (id: string) => { if (window.confirm('Delete this message?')) { await deleteMessage(id); if (selected?.id === id) setSelected(null); } };
+  const markAsRead = async (msg: any) => {
+    if (msg.status === 'unread' || msg.status === 'new') {
+      await updateMessage(msg.id, { status: 'read' });
+      toast(`Marked message from ${msg.name} as read`, 'info', 'Message Read');
+    }
+  };
+  const handleDelete = async (id: string, name?: string) => {
+    if (window.confirm('Delete this message?')) {
+      await deleteMessage(id);
+      toast(`Deleted message${name ? ` from ${name}` : ''}`, 'info', 'Message Deleted');
+      if (selected?.id === id) setSelected(null);
+    }
+  };
 
   const formatDate = (dateStr: string) => {
     if (!dateStr) return 'Unknown';
@@ -49,7 +62,7 @@ const AdminMessages = () => {
               {selected.phone && <span>Phone: {selected.phone}</span>}
               {selected.company && <span className="ml-4">Company: {selected.company}</span>}
             </div>
-            <button onClick={() => handleDelete(selected.id)} className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg hover:bg-red-500/20 transition-all"><Trash2 size={13} /> Delete</button>
+            <button onClick={() => handleDelete(selected.id, selected.name)} className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg hover:bg-red-500/20 transition-all"><Trash2 size={13} /> Delete</button>
           </div>
         </div>
       </div>
@@ -101,9 +114,8 @@ const AdminMessages = () => {
                     {msg.status !== 'read' && (
                       <button onClick={e => { e.stopPropagation(); updateMessage(msg.id, { status: 'read' }); }}
                         className="w-7 h-7 rounded-lg border border-white/10 flex items-center justify-center text-white/30 hover:text-emerald-400 hover:border-emerald-400/30 transition-all"><Check size={13} /></button>
-                    )}
-                    <button onClick={e => { e.stopPropagation(); handleDelete(msg.id); }}
-                      className="w-7 h-7 rounded-lg border border-white/10 flex items-center justify-center text-white/30 hover:text-red-400 hover:border-red-400/30 transition-all"><Trash2 size={13} /></button>
+                    )}                      <button onClick={e => { e.stopPropagation(); handleDelete(msg.id, msg.name); }}
+                          className="w-7 h-7 rounded-lg border border-white/10 flex items-center justify-center text-white/30 hover:text-red-400 hover:border-red-400/30 transition-all"><Trash2 size={13} /></button>
                   </div>
                 </div>
               </div>

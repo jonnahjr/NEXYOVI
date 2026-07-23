@@ -19,10 +19,10 @@ const AdminJobs = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [editing, setEditing] = useState<any>(null);
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ title: '', department: '', location: '', type: 'Full-time', status: 'active', description: '', requirements: '', salary_range: '', application_url: '' });
+  const [form, setForm] = useState({ title: '', department: '', location: '', work_mode: 'Remote', type: 'Full-time', status: 'active', description: '', requirements: '', salary_range: '', application_url: '' });
 
-  const openNew = () => { setEditing(null); setForm({ title: '', department: '', location: '', type: 'Full-time', status: 'active', description: '', requirements: '', salary_range: '', application_url: '' }); setShowForm(true); };
-  const openEdit = (job: any) => { setEditing(job); setForm({ title: job.title || '', department: job.department || '', location: job.location || '', type: job.type || 'Full-time', status: job.status || 'active', description: job.description || '', requirements: job.requirements || '', salary_range: job.salary_range || '', application_url: job.application_url || '' }); setShowForm(true); };
+  const openNew = () => { setEditing(null); setForm({ title: '', department: '', location: '', work_mode: 'Remote', type: 'Full-time', status: 'active', description: '', requirements: '', salary_range: '', application_url: '' }); setShowForm(true); };
+  const openEdit = (job: any) => { setEditing(job); setForm({ title: job.title || '', department: job.department || '', location: job.location || '', work_mode: job.work_mode || 'Remote', type: job.type || 'Full-time', status: job.status || 'active', description: job.description || '', requirements: job.requirements || '', salary_range: job.salary_range || '', application_url: job.application_url || '' }); setShowForm(true); };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,8 +66,8 @@ const AdminJobs = () => {
         <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)}
           className="h-10 px-4 bg-[#0D1220] border border-white/[0.08] rounded-lg text-sm text-white/60 focus:outline-none focus:border-[#F5A800]/50 transition-colors">
           <option value="all" className="bg-[#0D1220]">All Status</option>
-          <option value="active" className="bg-[#0D1220]">Active</option>
-          <option value="closed" className="bg-[#0D1220]">Closed</option>
+          <option value="active" className="bg-[#0D1220]">Visible (Active)</option>
+          <option value="closed" className="bg-[#0D1220]">Hidden (Closed)</option>
           <option value="draft" className="bg-[#0D1220]">Draft</option>
         </select>
       </div>
@@ -106,22 +106,31 @@ const AdminJobs = () => {
                       placeholder="Addis Ababa" />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-white/50 mb-1.5">Type</label>
+                    <label className="block text-xs font-semibold text-white/50 mb-1.5">Employment Type</label>
                     <select value={form.type} onChange={e => setForm({ ...form, type: e.target.value })}
                       className="w-full h-10 px-4 bg-white/[0.03] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-[#F5A800]/50 transition-colors">
                       <option className="bg-[#0D1220]">Full-time</option>
                       <option className="bg-[#0D1220]">Part-time</option>
                       <option className="bg-[#0D1220]">Contract</option>
-                      <option className="bg-[#0D1220]">Remote</option>
+                      <option className="bg-[#0D1220]">Internship</option>
                     </select>
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-white/50 mb-1.5">Status</label>
+                    <label className="block text-xs font-semibold text-white/50 mb-1.5">Work Mode</label>
+                    <select value={form.work_mode} onChange={e => setForm({ ...form, work_mode: e.target.value })}
+                      className="w-full h-10 px-4 bg-white/[0.03] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-[#F5A800]/50 transition-colors">
+                      <option className="bg-[#0D1220]">Remote</option>
+                      <option className="bg-[#0D1220]">Hybrid</option>
+                      <option className="bg-[#0D1220]">On-site</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-white/50 mb-1.5">Visibility</label>
                     <select value={form.status} onChange={e => setForm({ ...form, status: e.target.value })}
                       className="w-full h-10 px-4 bg-white/[0.03] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-[#F5A800]/50 transition-colors">
-                      <option value="active" className="bg-[#0D1220]">Active</option>
-                      <option value="draft" className="bg-[#0D1220]">Draft</option>
-                      <option value="closed" className="bg-[#0D1220]">Closed</option>
+                      <option value="active" className="bg-[#0D1220]">Visible (Active)</option>
+                      <option value="draft" className="bg-[#0D1220]">Draft (Hidden)</option>
+                      <option value="closed" className="bg-[#0D1220]">Closed (Hidden)</option>
                     </select>
                   </div>
                   <div>
@@ -172,8 +181,8 @@ const AdminJobs = () => {
                   <td className="px-5 py-4"><div className="text-sm font-semibold text-white">{job.title}</div>{job.salary_range && <div className="text-xs text-white/30 mt-0.5">{job.salary_range}</div>}</td>
                   <td className="px-5 py-4"><div className="flex items-center gap-1.5 text-sm text-white/60"><Building2 size={13} className="text-white/30" />{job.department}</div></td>
                   <td className="px-5 py-4"><div className="flex items-center gap-1.5 text-sm text-white/60"><MapPin size={13} className="text-white/30" />{job.location || '—'}</div></td>
-                  <td className="px-5 py-4"><span className="text-sm text-white/60">{job.type || 'Full-time'}</span></td>
-                  <td className="px-5 py-4"><span className={`inline-flex items-center gap-1 px-2.5 py-1 text-[10px] font-bold rounded-full border ${statusStyles[job.status] || 'bg-white/5 text-white/30 border-white/10'}`}>{job.status}</span></td>
+                  <td className="px-5 py-4"><span className="text-sm text-white/60">{job.type || 'Full-time'} {job.work_mode ? `• ${job.work_mode}` : ''}</span></td>
+                  <td className="px-5 py-4"><span className={`inline-flex items-center gap-1 px-2.5 py-1 text-[10px] font-bold rounded-full border ${statusStyles[job.status] || 'bg-white/5 text-white/30 border-white/10'}`}>{job.status === 'active' ? 'Visible' : 'Hidden'}</span></td>
                   <td className="px-5 py-4">
                     <div className="flex items-center justify-end gap-1.5">
                       <button onClick={() => toggleStatus(job)} className="w-7 h-7 rounded-lg border border-white/10 flex items-center justify-center text-white/30 hover:text-white hover:border-white/20 transition-all">

@@ -4,7 +4,8 @@ import {
   LogOut, ChevronLeft, ChevronRight, Bell,
   MessageSquare, Shield, Menu, X, Clock,
   Star, Globe, ExternalLink,
-  ChevronDown, Search, Home, Building2, Zap
+  ChevronDown, Search, Home, Building2, Zap,
+  FileText, Inbox, Monitor
 } from 'lucide-react';
 import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { useSite } from '../../context/SiteContext';
@@ -15,11 +16,17 @@ const navItems = [
   { icon: Building2, label: 'Company Content', path: '/admin/content/company' },
   { icon: Zap, label: 'Services Content', path: '/admin/content/services' },
   { icon: Globe, label: 'Global Content', path: '/admin/content/global' },
-  { icon: Briefcase, label: 'Jobs', path: '/admin/jobs' },
+  { icon: Briefcase, label: 'Job Posts', path: '/admin/jobs' },
+  { icon: Monitor, label: 'Demo Requests', path: '/admin/demo-requests' },
+  { icon: Inbox, label: 'All Applications', path: '/admin/applications' },
+  { icon: Briefcase, label: 'Career Applicants', path: '/admin/career-applicants' },
+  { icon: Users, label: 'Internship Applicants', path: '/admin/internship-applicants' },
   { icon: Users, label: 'Team', path: '/admin/team' },
   { icon: Star, label: 'Testimonials', path: '/admin/testimonials' },
   { icon: MessageSquare, label: 'Messages', path: '/admin/messages', badgeKey: 'unread' as const },
   { icon: Globe, label: 'Partners & Logos', path: '/admin/partners' },
+  { icon: FileText, label: 'Careers Page', path: '/admin/careers' },
+  { icon: FileText, label: 'Internship Page', path: '/admin/internship' },
   { icon: Shield, label: 'User Access', path: '/admin/users' },
   { icon: Settings, label: 'Settings', path: '/admin/settings' },
 ];

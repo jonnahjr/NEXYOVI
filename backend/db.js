@@ -7,14 +7,13 @@ const DB_PATH = process.env.DB_PATH || path.join(__dirname, 'nexyovi.json');
 let dbData = null;
 
 function loadDb() {
-  if (dbData) return dbData;
-  if (fs.existsSync(DB_PATH)) {
-    try {
+  try {
+    if (fs.existsSync(DB_PATH)) {
       dbData = JSON.parse(fs.readFileSync(DB_PATH, 'utf8'));
       return dbData;
-    } catch (e) {
-      console.error('Failed to parse DB, recreating...', e);
     }
+  } catch (e) {
+    console.error('Failed to parse DB, recreating...', e);
   }
   
   // Seed initial data
@@ -28,7 +27,8 @@ function loadDb() {
     settings: [
       { id: 'global', siteName: 'NEXYOVI', contactEmail: 'contact@nexyovi.com' }
     ],
-    site_content: []
+    site_content: [],
+    applications: []
   };
   
   // Seed admin
@@ -44,11 +44,11 @@ function loadDb() {
 
   // Seed default testimonials
   const defaultTestimonials = [
-    { id: 1, author: 'Amadou Daffe', role: 'CEO & Co-Founder', content: "They connected us with top-tier Ethiopian engineering talent and built our core platform in parallel. They brought deep technical expertise and a true partnership mindset. Gebeya\u2019s collaboration with Nexyovi has been transformative for our pan-African expansion.", image_url: '', linkedin: 'https://et.linkedin.com/in/amadoudaffe' },
-    { id: 2, author: 'Rediet Tsigeberhan', role: 'CEO', content: "We needed a secure payment gateway that could handle Ethiopia\u2019s unique banking landscape. Nexyovi built it \u2014 integrating with four banks and processing live transactions on day one. Their focus on security and reliability has been a game-changer for our platform.", image_url: '', linkedin: 'https://www.linkedin.com/in/rediet-tsigeberhan-97615642' },
+    { id: 1, author: 'Amadou Daffe', role: 'CEO & Co-Founder', content: "They connected us with top-tier Ethiopian engineering talent and built our core platform in parallel. They brought deep technical expertise and a true partnership mindset. Gebeya’s collaboration with Nexyovi has been transformative for our pan-African expansion.", image_url: '', linkedin: 'https://et.linkedin.com/in/amadoudaffe' },
+    { id: 2, author: 'Rediet Tsigeberhan', role: 'CEO', content: "We needed a secure payment gateway that could handle Ethiopia’s unique banking landscape. Nexyovi built it — integrating with four banks and processing live transactions on day one. Their focus on security and reliability has been a game-changer for our platform.", image_url: '', linkedin: 'https://www.linkedin.com/in/rediet-tsigeberhan-97615642' },
     { id: 3, author: 'Dawit Mekonnen', role: 'Chief Technology Officer', content: 'They delivered our health infrastructure platform ahead of schedule, navigating complex compliance requirements seamlessly. The system now serves users across regional hospitals and clinics.', image_url: '', linkedin: '' },
-    { id: 4, author: 'Tigist Hailemariam', role: 'Head of Digital', content: 'We needed a complete digital transformation \u2014 from legacy systems to modern cloud infrastructure. Nexyovi handled the migration with zero downtime and trained our team on the new stack. Their engineering discipline is world-class.', image_url: '', linkedin: '' },
-    { id: 5, author: 'Binyam Alemu', role: 'VP of Product', content: "The mobile app they built for us had over 50k downloads in the first month. But what impressed me most was how they thought about scalability from day one \u2014 we haven\u2019t had a single performance issue even as traffic grew.", image_url: '', linkedin: '' },
+    { id: 4, author: 'Tigist Hailemariam', role: 'Head of Digital', content: 'We needed a complete digital transformation — from legacy systems to modern cloud infrastructure. Nexyovi handled the migration with zero downtime and trained our team on the new stack. Their engineering discipline is world-class.', image_url: '', linkedin: '' },
+    { id: 5, author: 'Binyam Alemu', role: 'VP of Product', content: "The mobile app they built for us had over 50k downloads in the first month. But what impressed me most was how they thought about scalability from day one — we haven’t had a single performance issue even as traffic grew.", image_url: '', linkedin: '' },
   ];
   defaultTestimonials.forEach(t => {
     dbData.testimonials.push({ ...t, created_at: new Date().toISOString() });
@@ -68,7 +68,7 @@ function saveDb() {
   }
 }
 
-const ALLOWED_TABLES = ['partners', 'team', 'testimonials', 'jobs', 'messages', 'settings', 'site_content', 'users'];
+const ALLOWED_TABLES = ['partners', 'team', 'testimonials', 'jobs', 'messages', 'settings', 'site_content', 'users', 'applications'];
 
 function validateTable(table) {
   if (!ALLOWED_TABLES.includes(table)) throw new Error("Invalid table: " + table);

@@ -160,6 +160,8 @@ const Footer = () => {
                 { label: 'Company', path: '/company' },
                 { label: 'Industries', path: '/industries' },
                 { label: 'Projects', path: '/projects' },
+                { label: 'Careers', path: '/careers' },
+                { label: 'Internship', path: '/internship' },
                 { label: 'Contact', path: '/contact' },
               ]).map((item: any) => (
                 <li key={item.label}>

@@ -1,0 +1,510 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "admin@nexyovi.com",
+      "password": "$2a$10$c8I/rlJG7VMXR7hWRj8g9OvPXWgvfJ7HvqEdBq.blistrtYtmS1LO",
+      "username": "admin",
+      "role": "Super Admin",
+      "created_at": "2026-06-20T20:29:57.218Z"
+    }
+  ],
+  "partners": [
+    {
+      "name": "qqq",
+      "logo_url": "https://api.nexyovi.com/uploads/1781988720059-285853853.png",
+      "id": 1,
+      "created_at": "2026-06-20T20:52:01.280Z"
+    },
+    {
+      "name": "qwqw",
+      "logo_url": "https://api.nexyovi.com/uploads/1781988737739-626236933.webp",
+      "id": 2,
+      "created_at": "2026-06-20T20:52:18.656Z"
+    },
+    {
+      "name": "erew",
+      "logo_url": "https://api.nexyovi.com/uploads/1781988767118-746402781.png",
+      "id": 3,
+      "created_at": "2026-06-20T20:52:47.992Z"
+    },
+    {
+      "name": "i[",
+      "logo_url": "https://api.nexyovi.com/uploads/1781988780756-569511957.png",
+      "id": 4,
+      "created_at": "2026-06-20T20:53:01.728Z"
+    },
+    {
+      "name": "ki",
+      "logo_url": "https://api.nexyovi.com/uploads/1781988840922-569007160.png",
+      "id": 5,
+      "created_at": "2026-06-20T20:54:01.796Z"
+    },
+    {
+      "name": "tytr",
+      "logo_url": "https://api.nexyovi.com/uploads/1781988890218-522413360.png",
+      "id": 6,
+      "created_at": "2026-06-20T20:54:51.468Z"
+    },
+    {
+      "name": "uyi",
+      "logo_url": "https://api.nexyovi.com/uploads/1781988908464-371486937.png",
+      "id": 7,
+      "created_at": "2026-06-20T20:55:09.209Z"
+    },
+    {
+      "name": "ty",
+      "logo_url": "https://api.nexyovi.com/uploads/1781988915917-416731559.webp",
+      "id": 8,
+      "created_at": "2026-06-20T20:55:16.944Z"
+    },
+    {
+      "name": "ij",
+      "logo_url": "https://api.nexyovi.com/uploads/1781988928515-985349511.webp",
+      "id": 9,
+      "created_at": "2026-06-20T20:55:29.626Z"
+    },
+    {
+      "name": "j9o",
+      "logo_url": "https://api.nexyovi.com/uploads/1781988939678-953581617.jpg",
+      "id": 10,
+      "created_at": "2026-06-20T20:55:40.663Z"
+    },
+    {
+      "name": "trhtgf",
+      "logo_url": "https://api.nexyovi.com/uploads/1781988955609-785590143.jpg",
+      "id": 11,
+      "created_at": "2026-06-20T20:55:56.535Z"
+    },
+    {
+      "name": "ytn",
+      "logo_url": "https://api.nexyovi.com/uploads/1781988964811-370073723.avif",
+      "id": 12,
+      "created_at": "2026-06-20T20:56:05.783Z"
+    },
+    {
+      "name": "gfdhgfh",
+      "logo_url": "https://api.nexyovi.com/uploads/1781988974178-104559368.png",
+      "id": 13,
+      "created_at": "2026-06-20T20:56:15.096Z"
+    },
+    {
+      "name": "gfhnbv",
+      "logo_url": "https://api.nexyovi.com/uploads/1781988986464-395943180.webp",
+      "id": 14,
+      "created_at": "2026-06-20T20:56:27.535Z"
+    },
+    {
+      "name": "gfdgdfg",
+      "logo_url": "https://api.nexyovi.com/uploads/1781988997907-78623583.png",
+      "id": 15,
+      "created_at": "2026-06-20T20:56:38.687Z"
+    },
+    {
+      "name": "gdfsgdfg",
+      "logo_url": "https://api.nexyovi.com/uploads/1781989008218-574902878.png",
+      "id": 16,
+      "created_at": "2026-06-20T20:56:49.550Z"
+    },
+    {
+      "name": "dfgdfbvc",
+      "logo_url": "https://api.nexyovi.com/uploads/1781989017141-480659125.webp",
+      "id": 17,
+      "created_at": "2026-06-20T20:56:58.087Z"
+    },
+    {
+      "name": "dfgsdfgdfbg",
+      "logo_url": "https://api.nexyovi.com/uploads/1781989037100-494752000.png",
+      "id": 18,
+      "created_at": "2026-06-20T20:57:17.870Z"
+    },
+    {
+      "name": "gfdsgfbvc",
+      "logo_url": "https://api.nexyovi.com/uploads/1781989051075-132780330.png",
+      "id": 19,
+      "created_at": "2026-06-20T20:57:32.447Z"
+    },
+    {
+      "name": "gfdatryhrnbu",
+      "logo_url": "https://api.nexyovi.com/uploads/1781989063807-225667048.png",
+      "id": 20,
+      "created_at": "2026-06-20T20:57:44.886Z"
+    },
+    {
+      "name": "gdfgfdg vfgn",
+      "logo_url": "https://api.nexyovi.com/uploads/1781989071732-522486879.png",
+      "id": 21,
+      "created_at": "2026-06-20T20:57:52.908Z"
+    },
+    {
+      "name": "fdghsrtutui",
+      "logo_url": "https://api.nexyovi.com/uploads/1781989081514-38509334.png",
+      "id": 22,
+      "created_at": "2026-06-20T20:58:02.373Z"
+    },
+    {
+      "name": "fghgfnhfg",
+      "logo_url": "https://api.nexyovi.com/uploads/1781989091793-249319279.webp",
+      "id": 23,
+      "created_at": "2026-06-20T20:58:12.947Z"
+    },
+    {
+      "name": "gdfgfdgbdf",
+      "logo_url": "https://api.nexyovi.com/uploads/1781989106506-717449249.png",
+      "id": 24,
+      "created_at": "2026-06-20T20:58:27.495Z"
+    },
+    {
+      "name": "jhgjduyti",
+      "logo_url": "https://api.nexyovi.com/uploads/1781989114673-521141774.png",
+      "id": 25,
+      "created_at": "2026-06-20T20:58:35.535Z"
+    },
+    {
+      "name": "ngfj",
+      "logo_url": "https://api.nexyovi.com/uploads/1782144322750-886733812.png",
+      "id": 27,
+      "created_at": "2026-06-22T16:05:25.972Z"
+    },
+    {
+      "name": "hgh",
+      "logo_url": "https://api.nexyovi.com/uploads/1782144386368-237563701.png",
+      "id": 28,
+      "created_at": "2026-06-22T16:06:29.604Z"
+    },
+    {
+      "name": "ttttttttttt",
+      "logo_url": "https://api.nexyovi.com/uploads/1782206891828-248620841.svg",
+      "id": 29,
+      "created_at": "2026-06-23T09:28:14.443Z"
+    },
+    {
+      "name": "uuuuuuuuuuuuuuuuuuuu",
+      "logo_url": "https://api.nexyovi.com/uploads/1782206902382-383270497.svg",
+      "id": 30,
+      "created_at": "2026-06-23T09:28:23.776Z"
+    },
+    {
+      "name": "hjhh",
+      "logo_url": "https://api.nexyovi.com/uploads/1782206913519-267631185.svg",
+      "id": 31,
+      "created_at": "2026-06-23T09:28:34.787Z"
+    },
+    {
+      "name": "hjj",
+      "logo_url": "https://api.nexyovi.com/uploads/1782206925590-448189655.svg",
+      "id": 32,
+      "created_at": "2026-06-23T09:28:46.681Z"
+    }
+  ],
+  "team": [
+    {
+      "name": "Yonas Bogale",
+      "role": "Founder & CEO",
+      "bio": "Experienced technology entrepreneur with 12+ years of expertise in software development, digital transformation, and strategic business growth.",
+      "img": "https://api.nexyovi.com/uploads/1781988034942-330931094.jpg",
+      "linkedin": "www.linkedin.com/in/yonas-bogale",
+      "created_at": "2026-06-20T20:40:42.682Z",
+      "id": 1,
+      "updated_at": "2026-06-20T20:41:27.540Z"
+    },
+    {
+      "name": "Eyerusalem Bogale",
+      "role": "VP of Operations",
+      "bio": "Operations leader with 10+ years of experience driving efficiency and scaling processes across technology startups.",
+      "img": "https://api.nexyovi.com/uploads/1781988149736-932027897.jpg",
+      "linkedin": "www.linkedin.com/in/yonas-bogalegtgght",
+      "created_at": "2026-06-20T20:42:31.028Z",
+      "id": 2,
+      "updated_at": "2026-06-20T20:46:14.233Z"
+    },
+    {
+      "name": "Alebachew Sitotaw Yimer",
+      "role": "Chief Product Officer",
+      "bio": "Leads product vision and strategy with a passion for building scalable products and delivering exceptional user-centered experiences.",
+      "img": "https://api.nexyovi.com/uploads/1781988566270-411093767.png",
+      "linkedin": "www.linkedin.com/in/yonas-bogalegghghg",
+      "created_at": "2026-06-20T20:49:27.494Z",
+      "id": 3
+    },
+    {
+      "name": "Sarah Tadeesse",
+      "role": "Chief Technology Officer (CTO)",
+      "bio": "Visionary technology executive passionate about building scalable platforms, advancing innovation, and delivering secure, high-performance digital solutions.",
+      "img": "https://api.nexyovi.com/uploads/1781988639322-797034386.jpg",
+      "linkedin": "www.linkedin.com/in/yonas-bogalegfhgfh",
+      "created_at": "2026-06-20T20:50:07.061Z",
+      "id": 4,
+      "updated_at": "2026-06-20T20:51:08.838Z"
+    }
+  ],
+  "testimonials": [
+    {
+      "id": 1,
+      "author": "Amadou Daffe",
+      "role": "CEO & Co-Founder",
+      "content": "They connected us with top-tier Ethiopian engineering talent and built our core platform in parallel. They brought deep technical expertise and a true partnership mindset. Gebeya's collaboration with Nexyovi has been transformative for our pan-African expansion.",
+      "image_url": "",
+      "linkedin": "https://et.linkedin.com/in/amadoudaffe",
+      "created_at": "2026-06-20T20:29:57.219Z"
+    },
+    {
+      "id": 2,
+      "author": "Rediet Tsigeberhan",
+      "role": "CEO",
+      "content": "We needed a secure payment gateway that could handle Ethiopia's unique banking landscape. Nexyovi built it — integrating with four banks and processing live transactions on day one. Their focus on security and reliability has been a game-changer for our platform.",
+      "image_url": "",
+      "linkedin": "https://www.linkedin.com/in/rediet-tsigeberhan-97615642",
+      "created_at": "2026-06-20T20:29:57.219Z"
+    },
+    {
+      "id": 3,
+      "author": "Dawit Mekonnen",
+      "role": "Chief Technology Officer",
+      "content": "They delivered our health infrastructure platform ahead of schedule, navigating complex compliance requirements seamlessly. The system now serves users across regional hospitals and clinics.",
+      "image_url": "",
+      "linkedin": "",
+      "created_at": "2026-06-20T20:29:57.219Z"
+    },
+    {
+      "id": 4,
+      "author": "Tigist Hailemariam",
+      "role": "Head of Digital",
+      "content": "We needed a complete digital transformation — from legacy systems to modern cloud infrastructure. Nexyovi handled the migration with zero downtime and trained our team on the new stack. Their engineering discipline is world-class.",
+      "image_url": "",
+      "linkedin": "",
+      "created_at": "2026-06-20T20:29:57.219Z"
+    },
+    {
+      "id": 5,
+      "author": "Binyam Alemu",
+      "role": "VP of Product",
+      "content": "The mobile app they built for us had over 50k downloads in the first month. But what impressed me most was how they thought about scalability from day one — we haven't had a single performance issue even as traffic grew.",
+      "image_url": "",
+      "linkedin": "",
+      "created_at": "2026-06-20T20:29:57.219Z"
+    }
+  ],
+  "jobs": [
+    {
+      "title": "Senior React & Node.js Developer",
+      "department": "Engineering",
+      "location": "Addis Ababa, Ethiopia",
+      "work_mode": "On-site",
+      "type": "Full-time",
+      "status": "active",
+      "description": "Nexyovi Technologies is looking for an experienced Senior AI & Full Stack Software Engineer to join our team. This role involves designing, developing, and deploying scalable web applications, AI-powered solutions, enterprise platforms, and cloud-based systems.\n\nThe ideal candidate will have a strong background in modern software development, system architecture, and emerging technologies. You will collaborate with a talented team to build innovative solutions that drive digital transformation for businesses across various industries.\n\nAs part of our engineering team, you will design, develop, and maintain scalable applications while collaborating with cross-functional teams to deliver high-quality products for clients worldwide.",
+      "requirements": "6+ years of professional software development experience.\nStrong expertise in JavaScript, TypeScript, React, and Node.js.\nExperience building and maintaining large-scale web applications.\nStrong knowledge of REST APIs, microservices, and system architecture.\nExperience with databases such as PostgreSQL, MySQL, or MongoDB.\nExperience deploying applications on cloud platforms (AWS, Azure, Google Cloud, or similar).\nUnderstanding of AI technologies, LLMs, AI integrations, or machine learning workflows.\nExperience with Git, CI/CD pipelines, and DevOps best practices.\nStrong analytical and problem-solving skills.\nExcellent communication and teamwork abilities.\nAbility to work independently in a remote environment.\nBachelor's degree in Computer Science, Software Engineering, or a related field is preferred.\n\nPreferred Qualifications\n\nExperience leading development teams or mentoring junior developers.\nExperience with Docker, Kubernetes, and cloud-native architectures.\nKnowledge of cybersecurity best practices.\nExperience working in fast-paced startup or technology environments.\n\nBenefits\n\nCompetitive salary package.\nFully remote work environment.\nOpportunity to work on cutting-edge AI and enterprise technology projects.\nProfessional growth and leadership opportunities.\nCollaborative and innovation-driven culture.",
+      "salary_range": "",
+      "application_url": "",
+      "created_at": "2026-06-22T12:14:02.908Z",
+      "id": 1,
+      "updated_at": "2026-07-20T11:32:24.113Z"
+    },
+    {
+      "title": "Senior Digital Marketing & Growth Specialist",
+      "department": "Marketing",
+      "location": "Addis Ababa, Ethiopia",
+      "work_mode": "On-site",
+      "type": "Full-time",
+      "status": "active",
+      "description": "Nexyovi Technologies is seeking a highly motivated and results-driven Senior Digital Marketing & Growth Specialist to lead our marketing initiatives and accelerate business growth. The successful candidate will develop and execute marketing strategies, generate qualified leads, strengthen brand awareness, and support the promotion of our AI, software development, cloud, and digital transformation services.\n\nYou will work closely with leadership, sales, and engineering teams to position Nexyovi Technologies as a leading technology company in local and international markets.",
+      "requirements": "Requirements\n\n• 6+ years of experience in digital marketing, growth marketing, or business development.\n\n• Proven track record of generating leads and driving business growth.\n\n• Strong experience with SEO, SEM, Google Ads, and social media advertising.\n\n• Experience managing LinkedIn, Facebook, Instagram, and other digital channels.\n\n• Strong content marketing and copywriting skills.\n\n• Experience with email marketing campaigns and marketing automation tools.\n\n• Knowledge of Google Analytics and Search Console.\n\n• Ability to create and execute B2B and B2C marketing strategies.\n\n• Excellent communication, presentation, and negotiation skills.\n\n• Strong analytical and reporting capabilities.\n\n• Ability to work independently in a remote environment.\n\nKey Responsibilities\n\n• Develop and execute digital marketing campaigns.\n\n• Generate qualified leads and business opportunities.\n\n• Manage social media presence and brand reputation.\n\n• Improve website traffic, SEO rankings, and conversion rates.\n\n• Create marketing content, case studies, and promotional materials.\n\n• Monitor campaign performance and provide actionable insights.\n\n• Support sales and business development efforts.\n\nBenefits\n\n• Competitive compensation package.\n\n• Remote work flexibility.\n\n• Career growth opportunities.\n\n• Opportunity to work with innovative technology and AI-driven projects.\n\n• Dynamic and collaborative work environment.\n",
+      "salary_range": "",
+      "application_url": "",
+      "created_at": "2026-06-22T12:18:57.052Z",
+      "id": 2,
+      "updated_at": "2026-07-20T11:32:10.234Z"
+    },
+    {
+      "title": "Senior Business Development Manager",
+      "department": "Business Development",
+      "location": "Addis Ababa, Ethiopia",
+      "work_mode": "On-site",
+      "type": "Full-time",
+      "status": "active",
+      "description": "Nexyovi Technologies is seeking an experienced Senior Business Development Manager to identify new business opportunities, build strategic partnerships, and drive revenue growth. The ideal candidate will have a strong background in B2B sales, technology solutions, client acquisition, and relationship management.\n\nYou will play a key role in expanding Nexyovi's presence across AI, software development, cloud solutions, cybersecurity, and digital transformation services.",
+      "requirements": "• 6+ years of experience in Business Development, Sales, or Account Management.\n\n• Proven track record of generating new business and closing deals.\n\n• Experience selling software, technology, SaaS, or IT services.\n\n• Strong communication, negotiation, and presentation skills.\n\n• Experience developing strategic partnerships and client relationships.\n\n• Ability to identify market opportunities and create growth strategies.\n\n• Strong understanding of technology and digital transformation trends.\n\n• Experience preparing proposals, contracts, and project quotations.\n\n• Self-motivated with the ability to work independently.\n\n• Excellent English communication skills.\n\nResponsibilities\n\n• Generate qualified leads and new business opportunities.\n\n• Build and maintain relationships with clients and partners.\n\n• Develop and execute business growth strategies.\n\n• Prepare proposals, presentations, and sales documentation.\n\n• Represent Nexyovi Technologies in meetings and industry events.\n\n• Collaborate with marketing and engineering teams to deliver client solutions.\n\n• Meet and exceed revenue and growth targets.\n\nPreferred Qualifications\n\n• Experience working with international clients.\n\n• Existing professional network in technology or enterprise sectors.\n\n• Experience with CRM platforms and sales automation tools.\n\n• Knowledge of AI, cloud computing, cybersecurity, or enterprise software solutions.\n\nBenefits\n\n• Competitive compensation package.\n\n• Performance-based incentives and bonuses.\n\n• Remote work flexibility.\n\n• Career growth and leadership opportunities.\n\n• Opportunity to help scale a fast-growing technology company.",
+      "salary_range": "",
+      "application_url": "",
+      "created_at": "2026-06-22T12:21:03.869Z",
+      "id": 3,
+      "updated_at": "2026-07-20T11:32:12.978Z"
+    },
+    {
+      "title": "Enterprise Sales Manager",
+      "department": "Sales & Business Development",
+      "location": "Addis Ababa, Ethiopia",
+      "work_mode": "On-site",
+      "type": "Full-time",
+      "status": "active",
+      "description": "Nexyovi Technologies is seeking an experienced Enterprise Sales Manager to drive business growth and expand our client portfolio. The ideal candidate will be responsible for identifying opportunities, building relationships with enterprise clients, negotiating contracts, and closing high-value technology deals.\n\nYou will work closely with leadership and technical teams to promote Nexyovi's AI solutions, software development services, cloud infrastructure, cybersecurity solutions, and digital transformation offerings.",
+      "requirements": "• 6+ years of experience in Enterprise Sales, B2B Sales, Business Development, or Account Management.\n\n• Proven track record of meeting or exceeding sales targets.\n\n• Experience selling technology solutions, software services, SaaS products, cloud services, or IT consulting.\n\n• Strong negotiation, presentation, and communication skills.\n\n• Experience managing enterprise accounts and long-term client relationships.\n\n• Ability to identify new market opportunities and generate qualified leads.\n\n• Strong understanding of digital transformation, AI, cloud computing, and enterprise technology solutions.\n\n• Experience preparing proposals, quotations, and contracts.\n\n• Excellent relationship-building and stakeholder management skills.\n\n• Ability to work independently and manage a sales pipeline effectively.\n\nResponsibilities\n\n• Identify and pursue new enterprise business opportunities.\n\n• Develop and maintain strong relationships with clients and strategic partners.\n\n• Generate qualified leads and convert opportunities into long-term clients.\n\n• Conduct product and service presentations to decision-makers and executives.\n\n• Prepare proposals, quotations, and sales contracts.\n\n• Collaborate with technical teams to develop client solutions.\n\n• Track sales performance and maintain accurate CRM records.\n\n• Meet and exceed monthly and annual sales targets.\n\nPreferred Qualifications\n\n• Experience working with enterprise clients, government institutions, or large organizations.\n\n• Existing professional network within technology, finance, healthcare, education, or public sectors.\n\n• Experience using CRM platforms and sales automation tools.\n\n• Knowledge of AI, cybersecurity, cloud infrastructure, and software development services.\n\nBenefits\n\n• Competitive base salary.\n\n• Attractive commission structure.\n\n• Performance-based bonuses.\n\n• Remote work flexibility.\n\n• Career growth and leadership opportunities.\n\n• Opportunity to work with innovative technology and enterprise clients.\n\nAbout Nexyovi Technologies\n\nNexyovi Technologies is a technology company focused on AI solutions, enterprise software, cloud infrastructure, cybersecurity, and digital transformation. We help organizations leverage innovative technology to solve complex business challenges and accelerate growth.",
+      "salary_range": "",
+      "application_url": "",
+      "created_at": "2026-06-22T12:24:44.040Z",
+      "id": 4,
+      "updated_at": "2026-07-20T11:32:15.653Z"
+    },
+    {
+      "title": "Senior AI & Full Stack Software Engineer",
+      "department": "Engineering",
+      "location": "Addis Ababa, Ethiopia",
+      "work_mode": "On-site",
+      "type": "Full-time",
+      "status": "active",
+      "description": "Nexyovi Technologies is looking for a highly skilled Senior AI & Full Stack Software Engineer to join our engineering team. You will be responsible for designing, developing, and deploying scalable web applications, AI-powered systems, and enterprise-grade software solutions.\n\nYou will work on modern technologies including artificial intelligence, cloud computing, APIs, and full-stack web development to build innovative products that serve real-world business needs.",
+      "requirements": "• 6+ years of professional experience in software development.\n\n• Strong experience with JavaScript, TypeScript, React, and Node.js.\n\n• Experience building scalable full-stack applications.\n\n• Strong knowledge of REST APIs and microservices architecture.\n\n• Experience with databases such as PostgreSQL, MySQL, or MongoDB.\n\n• Experience working with cloud platforms (AWS, Azure, or Google Cloud).\n\n• Understanding of AI/ML concepts or experience integrating AI models (LLMs, APIs, etc.).\n\n• Strong knowledge of Git, CI/CD pipelines, and deployment workflows.\n\n• Experience in system design and architecture.\n\n• Strong problem-solving and analytical skills.\n\n• Ability to work independently in a remote environment.\n\nPreferred Qualifications\n\n• Experience with Docker and Kubernetes.\n\n• Experience building SaaS or enterprise-level platforms.\n\n• Experience with AI tools, LLM integration, or automation systems.\n\n• Experience mentoring junior developers or leading small teams.\n\n• Strong UI/UX awareness for building user-friendly applications.\n\nResponsibilities\n\n• Design, develop, and maintain full-stack web applications.\n\n• Build and integrate AI-powered features and services.\n\n• Develop scalable backend APIs and frontend interfaces.\n\n• Collaborate with designers, marketers, and business teams.\n\n• Optimize application performance and scalability.\n\n• Write clean, maintainable, and well-documented code.\n\n• Participate in system architecture and technical decision-making.\n\n• Ensure security, reliability, and performance of applications.\n\nBenefits\n\n• Competitive salary package.\n\n• Performance-based bonuses.\n\n• Remote work flexibility.\n\n• Opportunity to work on advanced AI and enterprise systems.\n\n• Career growth and leadership opportunities.\n\n• Work with cutting-edge technologies in a fast-growing company.\n\nAbout Nexyovi Technologies\n\nNexyovi Technologies is a modern technology company focused on AI solutions, software development, cloud infrastructure, cybersecurity, and digital transformation. We build intelligent systems that help businesses scale and innovate globally.",
+      "salary_range": "",
+      "application_url": "",
+      "created_at": "2026-06-22T12:26:28.273Z",
+      "id": 5,
+      "updated_at": "2026-07-20T11:32:17.985Z"
+    },
+    {
+      "title": "AI Solutions Architect",
+      "department": "Engineering / AI & Architecture",
+      "location": "Addis Ababa, Ethiopia",
+      "work_mode": "Hybrid",
+      "type": "Full-time",
+      "status": "active",
+      "description": "Nexyovi Technologies is seeking an experienced AI Solutions Architect to design and lead the development of scalable, intelligent systems powered by artificial intelligence. You will be responsible for defining AI architecture, integrating machine learning models, and building enterprise-grade AI-driven platforms.\n\nThis role requires deep technical expertise in AI systems, software architecture, and cloud technologies. You will work closely with engineering, product, and business teams to turn complex business problems into scalable AI-powered solutions.",
+      "requirements": "• 8+ years of experience in software engineering, AI/ML, or system architecture.\n\n• Strong experience designing scalable software architectures.\n\n• Deep understanding of Artificial Intelligence, Machine Learning, and LLM integration.\n\n• Experience with AI frameworks and APIs (OpenAI, TensorFlow, PyTorch, or similar).\n\n• Strong knowledge of cloud platforms (AWS, Azure, or Google Cloud).\n\n• Experience with microservices architecture and distributed systems.\n\n• Strong backend development experience (Node.js, Python, or Java).\n\n• Experience with databases (SQL and NoSQL).\n\n• Strong understanding of data pipelines and system design.\n\n• Experience with DevOps tools, CI/CD, and containerization (Docker/Kubernetes).\n\n• Excellent problem-solving and technical leadership skills.\n\n• Ability to translate business requirements into technical architecture.\n\nResponsibilities\n\n• Design and oversee AI system architecture for enterprise applications.\n\n• Lead the integration of AI models into production systems.\n\n• Define technical standards, architecture patterns, and best practices.\n\n• Collaborate with engineering teams to ensure scalable implementation.\n\n• Evaluate and select AI tools, frameworks, and technologies.\n\n• Optimize performance, scalability, and security of AI systems.\n\n• Guide teams on AI strategy and system design decisions.\n\n• Work with stakeholders to define AI-driven product solutions.\n\nPreferred Qualifications\n\n• Experience leading AI or software architecture teams.\n\n• Experience building large-scale AI-powered SaaS platforms.\n\n• Strong background in data engineering and analytics systems.\n\n• Knowledge of LLM fine-tuning, prompt engineering, or AI orchestration.\n\n• Experience in startup or high-growth tech environments.\n\nBenefits\n\n• Highly competitive salary package.\n\n• Performance-based bonuses.\n\n• Remote work flexibility.\n\n• Leadership role in cutting-edge AI projects.\n\n• Opportunity to shape AI strategy for a growing technology company.\n\nAbout Nexyovi Technologies\n\nNexyovi Technologies is a forward-thinking technology company focused on AI solutions, enterprise software, cloud infrastructure, cybersecurity, and digital transformation. We build intelligent systems that help organizations innovate, automate, and scale globally.",
+      "salary_range": "",
+      "application_url": "",
+      "created_at": "2026-06-22T12:35:53.046Z",
+      "id": 6,
+      "updated_at": "2026-07-20T11:32:20.665Z"
+    }
+  ],
+  "messages": [
+    {
+      "name": "vcvbxcvb",
+      "email": "jonasjjonas14@gmail.com",
+      "phone": "+251938617252",
+      "company": "private",
+      "service": "ai",
+      "message": "vvcbvcb",
+      "status": "read",
+      "turnstile_passed": false,
+      "created_at": "2026-07-08T17:33:57.020Z",
+      "id": 1,
+      "updated_at": "2026-07-08T17:34:09.490Z"
+    }
+  ],
+  "settings": [
+    {
+      "id": "global",
+      "siteName": "NEXYOVI",
+      "contactEmail": "contact@nexyovi.com"
+    }
+  ],
+  "site_content": [],
+  "applications": [
+    {
+      "name": "yonas sitotaw bogale",
+      "email": "jonasjjonas14@gmail.com",
+      "phone": "+251938617252",
+      "portfolio_url": "https://www.nexyovi.com/internship/apply",
+      "resume_url": "https://www.nexyovi.com/internship/apply",
+      "cover_letter": "Bsksndkd dkxokdms slaoab",
+      "type": "internship",
+      "role": "Internship Program",
+      "status": "Pending",
+      "created_at": "2026-06-24T15:19:18.794Z",
+      "id": 1
+    },
+    {
+      "name": "yonas sitotaw bogale",
+      "email": "jonasjjonas14@gmail.com",
+      "phone": "+251938617252",
+      "portfolio_url": "https://www.nexyovi.com/internship/apply",
+      "resume_url": "https://www.nexyovi.com/internship/apply",
+      "cover_letter": "Bsksns so snsksms ",
+      "type": "job",
+      "role": "Senior AI & Full Stack Software Engineer",
+      "status": "Pending",
+      "created_at": "2026-06-24T15:19:54.102Z",
+      "id": 2
+    },
+    {
+      "name": "Yoftahe Ayiso",
+      "email": "yoftijephthah@gmail.com",
+      "phone": "+251901529469",
+      "portfolio_url": "https://yoftahe-ayiso.vercel.app/",
+      "resume_url": "https://drive.google.com/file/d/1THMYy45MOTn9fu_4lLXcUFjCrVe7qXoG/view?usp=drivesdk",
+      "cover_letter": "hello I'm yoftahe completed 3rd year IT student  in diredawa university and I have to be on internship this summer to know real world expirence and to develop skills & communication.I choose your company because I see ur works and fullfills my needs. thankyou! ",
+      "type": "internship",
+      "role": "Internship Program",
+      "status": "Pending",
+      "created_at": "2026-06-30T11:17:13.223Z",
+      "id": 3
+    },
+    {
+      "name": "Elbethel Ambachew Amare",
+      "email": "elbethelambachew2@gmail.com",
+      "phone": "+251965075087",
+      "portfolio_url": "https://elbethel-portfolio.netlify.app/",
+      "resume_url": "https://drive.google.com/file/d/1vaN98mBuM6gqBOF1rRhiYIW-WbQptoZR/view?usp=sharing",
+      "cover_letter": "I am a Computer Science student at Addis Ababa University passionate about full-stack web development. I have built projects such as Campus Trade, a market place for students and MoodBuddy, a journaling platform using React, Node.js, Express, and MongoDB and a Restaurant Management System using php, css, html and MySql.\nI want to join Nexyovi to gain real world experience, improve my development skills, and exprience the work culture. I want contribute and grow in a practical software development environment.",
+      "type": "internship",
+      "role": "Internship Program",
+      "status": "Reviewed",
+      "created_at": "2026-07-01T20:45:19.456Z",
+      "id": 4,
+      "updated_at": "2026-07-02T13:20:43.836Z"
+    },
+    {
+      "name": "Keraj Tujuba",
+      "email": "kerajtujuba87@gmail.com",
+      "phone": "+251935878119",
+      "portfolio_url": "https://kerajtujuba-portfolio.vercel.app/",
+      "resume_url": "C:\\Users\\Core X\\Desktop\\kj",
+      "cover_letter": "Application for summer internship opportunity\n\nDear\nMy name is keraj Tujuba, and i am currently a third year Information Technology student at Dire Dawa University, Institute of technology , school of computing.\n\ni am writing to express my interest in a 2 month summer internship at your company. i am passionate about software development and eager to gain practical industry experience while contributing to your team\n\ni have experience in \nweb development (HTML, CSS, Javascript, React)\nMobile Application Development \nDatabase management (MySQL)\nGit and Github\n\ni enjoy learning new technologies and working on real-word projects i believe that an internship at your company would be an excellent opportunity to improve my technical skills, collaborate with experienced professionals, and contribute to meaningful projects. \nyou can also view my portfolio and Github projects using the links below :\nportfolio: https://kerajtujuba-portfolio.vercel.app/\nGithub: https://github.com/Keraj-tech\n\ni would greatly appreciate the opportunity to discuss how i can contribute to you team. thankyou for your time and consideration. i look forward to hearing from you\n\nkind regards\n\nKeraj Tujuba\n\nEmail: kerajtujuba87@gmail.com\nPhone: +251935878119\nLinkedIn: https://www.linkedin.com/in/keraj-tujuba-55178839b",
+      "type": "internship",
+      "role": "Internship Program",
+      "status": "Pending",
+      "created_at": "2026-07-06T14:02:35.948Z",
+      "id": 5
+    },
+    {
+      "name": "semere herruy",
+      "email": "semereherruy27@gmail.com",
+      "phone": "+251914722740",
+      "portfolio_url": "https://semere.vercel.app/",
+      "resume_url": "https://drive.google.com/file/d/1wWI9Qn93gC_hmV4dYTrttmcelhObhsQM/view?usp=sharing",
+      "cover_letter": "I recently graduated in Software Engineering and am looking for an opportunity to grow as a software engineer while contributing to meaningful products. Throughout university, internships, and personal projects, I have learned how to turn ideas into working software, collaborate with others, and continuously improve through feedback. \n\nWhat I believe I bring is curiosity, adaptability, and a strong willingness to learn. I enjoy understanding how systems work, solving problems step by step, and writing software that is practical and maintainable. Building AI-powered and backend projects introduced me to concepts such as APIs, machine learning, and Retrieval-Augmented Generation (RAG), but I see these as foundations that I want to deepen through real engineering experience.\n\nNexyovi appeals to me because it values engineering quality, continuous learning, and building solutions with global impact. I am looking for a team where I can be challenged, receive mentorship, contribute consistently, and grow into a well-rounded software engineer over the long term.",
+      "type": "job",
+      "role": "Open Application",
+      "status": "Pending",
+      "created_at": "2026-07-08T22:52:51.000Z",
+      "id": 6
+    },
+    {
+      "name": "Didiskiya Mulugeta",
+      "email": "didutheman@gmail.com",
+      "phone": "+251942748965",
+      "portfolio_url": "https://diduportfolio.base44.app",
+      "resume_url": "https://didiskiyacv.base44.app",
+      "cover_letter": "Absolutely. I know your background well enough now that I can write this in your voice—professional, ambitious, and genuine without sounding like AI or exaggerating your experience.\n\nHere's a polished version you can copy and paste directly into the application.\n\nI'm Didiskiya Mulugeta Andarge, a Grade 12 student from Addis Ababa, Ethiopia, with a strong passion for technology, business, and solving real-world problems through digital solutions. Alongside my studies, I have spent the past year building practical skills in graphic design, branding, web development, AI automation, and digital product design. Rather than only learning through courses, I've focused on applying my skills by working on real client projects and continuously improving through hands-on experience.\n\nI am the co-founder and CEO of Novyra Labs, a creative technology agency that I started with two friends. Through Novyra Labs, we help businesses strengthen their digital presence by building websites, digital menus with integrated payment systems, brand identities, AI-powered workflows, and automation solutions. Leading the agency has taught me valuable lessons in teamwork, communication, project management, client relationships, and delivering solutions that create real value.\n\nSome of the projects I've worked on include creating a complete brand identity for Belle Noir Beauty Salon in the United States, designing a logo for Haile's Barbershop in Liverpool, UK, developing digital menu systems for SOMA Restaurant & Café and Dukamo Coffee, and collaborating on a website project for my school, KB Academy. Every project has challenged me to think creatively, communicate effectively with clients, and build solutions that solve practical business problems.\n\nI'm applying to Nexyovi because I want to learn from professionals who are building innovative technology solutions at a high standard. I'm especially interested in AI, software development, automation, and digital transformation, and I believe Nexyovi is an environment where I can grow both technically and professionally. While I understand that I still have a lot to learn, I'm confident in my ability to adapt quickly, take initiative, accept feedback, and contribute positively to a team.\n\nMy long-term goal is to build a world-class AI and software company based in Ethiopia that serves clients globally. I know that achieving that vision requires learning from experienced professionals, understanding how successful technology companies operate, and continuously improving my skills. That is exactly why I'm seeking this opportunity at Nexyovi.\n\nThank you for considering my application. I would be grateful for the opportunity to learn, contribute, and grow as part of your team.",
+      "type": "internship",
+      "role": "Internship Program",
+      "status": "Pending",
+      "created_at": "2026-07-16T11:40:57.472Z",
+      "id": 7
+    },
+    {
+      "name": "Eldana Esknder",
+      "email": "eldanaesknder40@gmail.com",
+      "phone": "+251940107100",
+      "portfolio_url": "https://github.com/ellabellaaa",
+      "resume_url": "https://docs.google.com/document/d/1iuaycCuPn7G1BkKdG4t7134n-UjWSyEK/edit?usp=drivesdk&ouid=111286779984168820197&rtpof=true&sd=true",
+      "cover_letter": "I'm a 3rd-year Computer Science student at the American College of Technology (ACT), moving into my 4th year next semester. I'm looking for an internship where I can apply what I've learned to real, production-level work.\n\nI've built several projescts but i want you to highlight on this two projects. The first one is a resource finder for my campus. it's a frontend web project that helps students find information about ACT's programs and facilities. The second is a fullstack e-commerce web application built with Node.js, Express.js, and PostgreSQL, where users can browse products, add items to a cart, and place orders. It includes JWT-based authentication and role-based access control for admins. Both projects are on my GitHub.\n\nI was drawn to Nexyovi because of the mentorship structure and the opportunity to ship real features to production from day one. I learn best by doing, and I'm excited about growing my skills while contributing meaningfully to the team.",
+      "type": "internship",
+      "role": "Internship Program",
+      "status": "Pending",
+      "created_at": "2026-07-21T12:14:05.169Z",
+      "id": 8
+    }
+  ]
+}

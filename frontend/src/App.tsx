@@ -19,11 +19,17 @@ import ProjectsPage from './pages/Projects';
 import CaseStudyDetail from './pages/CaseStudyDetail';
 import CRMSystem from './pages/systems/CRMSystem';
 import AdminLogin from './pages/admin/AdminLogin';
+import Careers from './pages/Careers';
+import Internship from './pages/Internship';
+import InternshipApply from './pages/InternshipApply';
+import CareersApply from './pages/CareersApply';
+import RequestDemo from './pages/RequestDemo';
 
 // ── Lazy-loaded admin pages (rarely visited, fine to lazy load) ─
 const AdminLayout = lazy(() => import('./pages/admin/AdminLayout'));
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
 const AdminJobs = lazy(() => import('./pages/admin/AdminJobs'));
+const AdminApplications = lazy(() => import('./pages/admin/AdminApplications'));
 const AdminTeam = lazy(() => import('./pages/admin/AdminTeam'));
 const AdminSettings = lazy(() => import('./pages/admin/AdminSettings'));
 const AdminTestimonials = lazy(() => import('./pages/admin/AdminTestimonials'));
@@ -31,7 +37,12 @@ const AdminMessages = lazy(() => import('./pages/admin/AdminMessages'));
 const AdminUsers = lazy(() => import('./pages/admin/AdminUsers'));
 const AdminHomeContent = lazy(() => import('./pages/admin/AdminHomeContent'));
 const AdminCompanyContent = lazy(() => import('./pages/admin/AdminCompanyContent'));
+const AdminCareersContent = lazy(() => import('./pages/admin/AdminCareersContent'));
+const AdminInternshipContent = lazy(() => import('./pages/admin/AdminInternshipContent'));
+const AdminCareerApplicants = lazy(() => import('./pages/admin/AdminCareerApplicants'));
+const AdminInternshipApplicants = lazy(() => import('./pages/admin/AdminInternshipApplicants'));
 const AdminServicesContent = lazy(() => import('./pages/admin/AdminServicesContent'));
+const AdminDemoRequests = lazy(() => import('./pages/admin/AdminDemoRequests'));
 const AdminGlobalContent = lazy(() => import('./pages/admin/AdminGlobalContent'));
 const AdminPartners = lazy(() => import('./pages/admin/AdminPartners'));
 const MapCalibrate = lazy(() => import('./pages/MapCalibrate'));
@@ -59,19 +70,24 @@ function ScrollToTop() {
 function App() {
   const location = useLocation();
   const pathname = location.pathname;
-  const isStandalone = pathname.startsWith('/admin') || pathname.startsWith('/systems');
 
-  useLenis(!isStandalone);
+  // isAdmin: determines which route block to render (admin vs public)
+  const isAdmin = pathname.startsWith('/admin') || pathname.startsWith('/systems');
+
+  // hideNav: hides Navbar, Footer, Chatbot (apply pages are full-screen standalone)
+  const hideNav = isAdmin || pathname === '/internship/apply' || pathname === '/careers/apply';
+
+  useLenis(!hideNav);
 
   return (
     <ToastProvider>
       <div className="min-h-screen bg-[#050816]">
         <ScrollToTop />
-        {!isStandalone && <Navbar />}
+        {!hideNav && <Navbar />}
 
-        <main className={isStandalone ? 'h-screen overflow-hidden' : ''}>
+        <main className={isAdmin ? 'h-screen overflow-hidden' : ''}>
           {/* Public routes render instantly — no Suspense, no spinner, no animation */}
-          {!isStandalone ? (
+          {!isAdmin ? (
             <Routes location={location}>
               <Route path="/" element={<Home />} />
               <Route path="/services" element={<Services />} />
@@ -108,6 +124,11 @@ function App() {
               <Route path="/projects" element={<ProjectsPage />} />
               <Route path="/projects/:id" element={<CaseStudyDetail />} />
               <Route path="/portfolio" element={<Navigate to="/projects" replace />} />
+              <Route path="/careers" element={<Careers />} />
+              <Route path="/careers/apply" element={<CareersApply />} />
+              <Route path="/internship" element={<Internship />} />
+              <Route path="/internship/apply" element={<InternshipApply />} />
+              <Route path="/request-demo" element={<RequestDemo />} />
               <Route path="*" element={<Home />} />
             </Routes>
           ) : (
@@ -118,12 +139,18 @@ function App() {
                 <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
                   <Route index element={<AdminDashboard />} />
                   <Route path="jobs" element={<AdminJobs />} />
+                  <Route path="applications" element={<AdminApplications />} />
+                  <Route path="demo-requests" element={<AdminDemoRequests />} />
+                  <Route path="career-applicants" element={<AdminCareerApplicants />} />
+                  <Route path="internship-applicants" element={<AdminInternshipApplicants />} />
                   <Route path="team" element={<AdminTeam />} />
                   <Route path="testimonials" element={<AdminTestimonials />} />
                   <Route path="messages" element={<AdminMessages />} />
                   <Route path="users" element={<AdminUsers />} />
                   <Route path="content/home" element={<AdminHomeContent />} />
                   <Route path="content/company" element={<AdminCompanyContent />} />
+                  <Route path="careers" element={<AdminCareersContent />} />
+                  <Route path="internship" element={<AdminInternshipContent />} />
                   <Route path="content/services" element={<AdminServicesContent />} />
                   <Route path="content/global" element={<AdminGlobalContent />} />
                   <Route path="partners" element={<AdminPartners />} />
@@ -136,8 +163,8 @@ function App() {
           )}
         </main>
 
-        {!isStandalone && <Footer />}
-        {!isStandalone && <Chatbot />}
+        {!hideNav && <Footer />}
+        {!hideNav && <Chatbot />}
       </div>
     </ToastProvider>
   );

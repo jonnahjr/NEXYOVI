@@ -134,6 +134,7 @@ interface SiteContextType {
     partners: any[];
     admins: any[];
     messages: any[];
+    applications: any[];
     settings: any;
     addJob: (job: any) => void;
     updateJob: (job: any) => void;
@@ -153,6 +154,9 @@ interface SiteContextType {
     addMessage: (msg: any) => void;
     updateMessage: (id: string | number, updates: any) => void;
     deleteMessage: (id: string | number) => void;
+    addApplication: (app: any) => void;
+    updateApplication: (id: string | number, updates: any) => void;
+    deleteApplication: (id: string | number) => void;
     updateSettings: (settings: any) => void;
     session: any;
     loadingAuth: boolean;
@@ -196,6 +200,7 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
         { id: 2, username: 'subadmin', role: 'Content Manager', status: 'Active' }
     ]);
     const [messages, setMessages] = useState<any[]>([]);
+    const [applications, setApplications] = useState<any[]>([]);
     const [settings, setSettings] = useState<any>(initialSettings);
     const [siteContent, setSiteContent] = useState<any>({});
 
@@ -203,12 +208,13 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [jobsData, testData, teamData, partnersData, msgData, contentData] = await Promise.all([
+                const [jobsData, testData, teamData, partnersData, msgData, applicationsData, contentData] = await Promise.all([
                     api.listAll('jobs').catch(() => []),
                     api.listAll('testimonials').catch(() => []),
                     api.listAll('team').catch(() => []),
                     api.listAll('partners').catch(() => []),
                     api.listAll('messages').catch(() => []),
+                    api.listAll('applications').catch(() => []),
                     api.listAll('site_content').catch(() => []),
                 ]);
 
@@ -217,6 +223,7 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 if (teamData.length > 0) setTeam(teamData);
                 if (partnersData.length > 0) setPartners(partnersData);
                 if (msgData.length > 0) setMessages(msgData);
+                if (applicationsData.length > 0) setApplications(applicationsData);
 
                 // Settings
                 const settingsData = await api.getById('settings', 'global').catch(() => null);
@@ -369,6 +376,22 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setMessages(prev => prev.filter(m => m.id !== id));
     };
 
+    // ── Applications ───────────────────────────────────────────
+
+    const addApplication = async (app: any) => {
+        const { id, ...appData } = app;
+        const data = await api.create('applications', appData);
+        setApplications(prev => [data, ...prev]);
+    };
+    const updateApplication = async (id: string | number, updates: any) => {
+        const data = await api.update('applications', id, updates);
+        if (data) setApplications(prev => prev.map(m => m.id === id ? data : m));
+    };
+    const deleteApplication = async (id: string | number) => {
+        await api.remove('applications', id);
+        setApplications(prev => prev.filter(m => m.id !== id));
+    };
+
     // ── Settings ───────────────────────────────────────────────
 
     const updateSettings = async (newSettings: any) => {
@@ -402,13 +425,14 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     return (
         <SiteContext.Provider value={{
-            jobs, team, testimonials, partners, admins, messages, settings, siteContent,
+            jobs, team, testimonials, partners, admins, messages, settings, siteContent, applications,
             addJob, updateJob, deleteJob,
             addTeamMember, updateTeamMember, deleteTeamMember,
             addTestimonial, updateTestimonial, deleteTestimonial, setTestimonials,
             addPartner, updatePartner, deletePartner,
             addAdmin, updateAdmin, deleteAdmin,
             addMessage, updateMessage, deleteMessage,
+            addApplication, updateApplication, deleteApplication,
             updateSettings, updateSiteContent,
             session, loadingAuth, login, logout
         }}>

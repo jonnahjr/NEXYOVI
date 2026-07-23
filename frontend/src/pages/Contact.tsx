@@ -3,6 +3,7 @@ import { ArrowRight, ArrowUpRight, Briefcase, Building2, CalendarCheck, Check, C
 import React from "react";
 import WorldMap from "../components/WorldMap";
 import { useSite } from "../context/SiteContext";
+import { useToast } from "../context/ToastContext";
 import { EASE_EXPO, revealUp, staggerContainer } from "../lib/animations";
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
@@ -10,6 +11,7 @@ import { sanitizeText, sanitizeEmail, sanitizeFormData, validateFormData, contai
 
 export default function Contact() {
   const { settings, siteContent, addMessage } = useSite();
+  const { toast } = useToast();
 
   // ── Hero content from admin siteContent with fallback defaults ───
   const contactHero = siteContent?.contactHero || {};
@@ -170,6 +172,7 @@ export default function Contact() {
         setIsSuccess(true);
         setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '', honeypot: '' });
         setFormErrors({});
+        toast('Your project inquiry has been received. Our team will respond within 24 hours.', 'success', 'Inquiry Sent');
         setTimeout(() => setIsSuccess(false), 5000);
       })
       .catch(err => {

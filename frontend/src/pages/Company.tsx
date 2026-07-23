@@ -100,10 +100,10 @@ export default function Company() {
          ═══════════════════════════════════════ */}
       <section
         ref={heroRef}
-        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-[#02040a] transition-colors duration-300"
+        className="dark relative min-h-screen flex items-center justify-center overflow-hidden bg-[#02040a] transition-colors duration-300"
       >
         {/* Clean bottom fade */}
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-white dark:from-[#02040a] to-transparent z-[2] pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#02040a] to-transparent z-[2] pointer-events-none" />
 
         <motion.div
           style={{ opacity: heroOpacity, scale: heroScale }}
@@ -237,7 +237,7 @@ export default function Company() {
       {/* ═══════════════════════════════════════
            5. CORE PRINCIPLES — Dark
           ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-white dark:bg-[#02040a] section-divider-dark overflow-hidden transition-colors duration-300">
+      <section className="dark relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden transition-colors duration-300">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-amber-400/5 dark:bg-amber-400/5 rounded-full blur-[140px]" />
         </div>
@@ -343,7 +343,7 @@ export default function Company() {
       {/* ═══════════════════════════════════════
            7. WHY NEXYOVI — Dark Section
           ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-white dark:bg-[#02040a] section-divider-dark overflow-hidden transition-colors duration-300">
+      <section className="dark relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden transition-colors duration-300">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] bg-amber-400/6 dark:bg-amber-400/6 rounded-full blur-[120px]" />
         </div>
@@ -358,7 +358,7 @@ export default function Company() {
             <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 dark:text-white tracking-[-0.04em] leading-[0.95] mb-4">
               Different by{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 dark:from-amber-400 to-amber-400 dark:to-amber-300">Design.</span>
             </motion.h2>
-            <motion.p variants={fadeUp} className="text-white/50 text-lg font-medium max-w-xl mx-auto">We don't just write code — we take full ownership of outcomes.</motion.p>
+            <motion.p variants={fadeUp} className="text-slate-600 dark:text-white/50 text-lg font-medium max-w-xl mx-auto">We don't just write code — we take full ownership of outcomes.</motion.p>
           </motion.div>
 
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid md:grid-cols-2 gap-6">
@@ -371,10 +371,10 @@ export default function Company() {
               <motion.div
                 key={item.title}
                 variants={fadeUp}
-                className="group rounded-[24px] border border-white/[0.06] bg-white/[0.02] p-8 transition-all duration-500 hover:border-[#F5A800]/30 hover:bg-white/[0.04]"
+                className="group rounded-[24px] border border-slate-200 dark:border-white/[0.06] bg-slate-50 dark:bg-white/[0.02] p-8 transition-all duration-500 hover:border-[#F5A800]/30 dark:hover:border-[#F5A800]/30 hover:bg-slate-100 dark:hover:bg-white/[0.04]"
               >
-                <h3 className="text-lg font-black text-white mb-3 tracking-tight group-hover:text-[#F5A800] transition-colors">{item.title}</h3>
-                <p className="text-white/45 text-sm leading-relaxed font-medium">{item.desc}</p>
+                <h3 className="text-lg font-black text-slate-950 dark:text-white mb-3 tracking-tight group-hover:text-[#F5A800] dark:group-hover:text-[#F5A800] transition-colors">{item.title}</h3>
+                <p className="text-slate-600 dark:text-white/45 text-sm leading-relaxed font-medium">{item.desc}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -384,7 +384,7 @@ export default function Company() {
       {/* ═══════════════════════════════════════
            8. LEADERSHIP / TEAM — Enterprise Structure
          ═══════════════════════════════════════ */}
-      <section className="relative py-16 md:py-24 bg-white dark:bg-[#02040a] section-divider-dark overflow-hidden transition-colors duration-300">
+      <section className="dark relative py-16 md:py-24 bg-[#02040a] section-divider-dark overflow-hidden transition-colors duration-300">
         {/* Subtle grid texture */}
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.012]"
@@ -524,7 +524,7 @@ export default function Company() {
       {/* ═══════════════════════════════════════
            9. FINAL CTA — Dark Section
           ═══════════════════════════════════════ */}
-      <section className="relative py-28 md:py-36 bg-white dark:bg-[#02040a] section-divider-dark overflow-hidden transition-colors duration-300">
+      <section className="dark relative py-28 md:py-36 bg-[#02040a] section-divider-dark overflow-hidden transition-colors duration-300">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-amber-400/6 dark:bg-amber-400/6 rounded-full blur-[140px]" />
         </div>

@@ -1,16 +1,24 @@
 import { animate, motion, useInView, useMotionValue, useScroll, useTransform } from 'framer-motion';
 import {
   ArrowUpRight,
+  Briefcase,
+  Building2,
   ChevronRight,
   Clock,
   Cloud,
   Cpu,
   Database,
   Globe,
+  GraduationCap,
+  HeartPulse,
   Layers,
   Lock,
   ShieldCheck,
+  ShoppingCart,
+  Sprout,
+  Stethoscope,
   TrendingUp,
+  Truck,
   Users,
   Wifi,
 } from 'lucide-react';
@@ -612,10 +620,10 @@ export default function Projects() {
           ═══════════════════════════════════════════════════════════ */}
       <section
         ref={heroRef}
-        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-[#02040a] transition-colors duration-300"
+        className="dark relative min-h-screen flex items-center justify-center overflow-hidden bg-[#02040a] transition-colors duration-300"
       >
         {/* Clean bottom fade */}
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-white dark:from-[#02040a] to-transparent z-[2] pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#02040a] to-transparent z-[2] pointer-events-none" />
 
         {/* ── Main Hero Content ── */}
         <motion.div
@@ -727,9 +735,8 @@ export default function Projects() {
         </div>
       </section>
 
-
       {/* ═══════════════════════════════════════════════════════════
-          REFERENCE ARCHITECTURES — Industries style
+          SOLUTION PORTFOLIO — Products & Platforms Grid
           ═══════════════════════════════════════════════════════════ */}
       <section className="relative py-32 bg-[#f4f4f5] border-t border-slate-200 overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, rgba(0,0,0,0.06) 0.5px, transparent 0.5px)', backgroundSize: '28px 28px' }} />
@@ -743,13 +750,135 @@ export default function Projects() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 border border-slate-200 mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse" />
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-700">Reference Architectures</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-700">Solution Portfolio</span>
             </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-4">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-[-0.04em] leading-[0.95] mb-6">
+              Products & Platforms{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-400">Built by Nexyovi.</span>
+            </h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {[
+              { name: 'AI Business OS (ERP + CRM + POS)', icon: Briefcase, desc: 'Unified business operating system combining ERP, CRM, and POS into a single AI-powered platform for end-to-end operational management.', tags: ['ERP', 'CRM', 'POS'] },
+              { name: 'AI Healthcare Platform', icon: HeartPulse, desc: 'Intelligent healthcare platform integrating clinical workflows, diagnostics, patient records, and telehealth with AI-driven decision support.', tags: ['AI Diagnostics', 'Clinical', 'Telehealth'] },
+              { name: 'Government Digital Platform', icon: Building2, desc: 'Sovereign digital infrastructure for citizen services, identity management, e-governance, and secure public sector operations.', tags: ['E-Gov', 'Digital ID', 'Citizen Services'] },
+              { name: 'AI Accounting Platform', icon: TrendingUp, desc: 'Automated accounting and financial management platform with AI-powered reconciliation, reporting, and compliance monitoring.', tags: ['Automation', 'Reconciliation', 'Compliance'] },
+              { name: 'Construction ERP', icon: Building2, desc: 'Enterprise resource planning tailored for construction — project costing, subcontractor management, materials tracking, and compliance.', tags: ['Project Costing', 'Subcontractor', 'Compliance'] },
+              { name: 'Manufacturing ERP', icon: Cpu, desc: 'Full-featured ERP for manufacturing operations including MRP, shop floor control, quality management, and supply chain integration.', tags: ['MRP', 'Shop Floor', 'Quality Mgmt'] },
+              { name: 'Logistics Platform', icon: Truck, desc: 'End-to-end logistics management platform with real-time tracking, route optimization, carrier management, and delivery analytics.', tags: ['Tracking', 'Route Optimization', 'Carrier Mgmt'] },
+              { name: 'Agriculture AI Platform', icon: Sprout, desc: 'AI-powered precision agriculture platform for crop monitoring, yield prediction, resource optimization, and supply chain traceability.', tags: ['Precision Ag', 'Yield Prediction', 'Traceability'] },
+              { name: 'B2B Marketplace', icon: Globe, desc: 'Multi-vendor B2B marketplace platform with catalog management, procurement workflows, payment processing, and seller analytics.', tags: ['Multi-Vendor', 'Procurement', 'Payments'] },
+              { name: 'Hospital Information System (HIS)', icon: Stethoscope, desc: 'Comprehensive HIS covering patient management, EHR, billing, pharmacy, lab, radiology, and clinical decision support.', tags: ['EHR', 'Patient Mgmt', 'Clinical'] },
+              { name: 'Digital Pharmacy', icon: HeartPulse, desc: 'End-to-end digital pharmacy platform with prescription management, inventory tracking, refill automation, and patient engagement.', tags: ['Prescriptions', 'Inventory', 'Refill Auto'] },
+              { name: 'School ERP', icon: GraduationCap, desc: 'Complete school management system with student info, attendance, grading, timetable, fee management, and parent communication.', tags: ['Student Info', 'Grading', 'Parent Portal'] },
+              { name: 'Telepsychiatry Platform', icon: Globe, desc: 'HIPAA-compliant telepsychiatry platform with video consultations, e-prescribing, scheduling, and integrated patient records.', tags: ['Telehealth', 'E-Prescribing', 'Scheduling'] },
+              { name: 'Fleet Management System', icon: Truck, desc: 'Real-time fleet tracking, maintenance scheduling, fuel management, driver performance monitoring, and compliance reporting.', tags: ['GPS Tracking', 'Maintenance', 'Fuel Mgmt'] },
+              { name: 'Warehouse Management System (WMS)', icon: Layers, desc: 'Advanced WMS with inventory control, pick/pack/ship workflows, barcode scanning, and real-time warehouse analytics.', tags: ['Inventory', 'Pick/Pack', 'Barcode'] },
+              { name: 'Property Management System (PMS)', icon: Building2, desc: 'Property management platform with tenant management, lease tracking, maintenance requests, rent collection, and financial reporting.', tags: ['Tenant Mgmt', 'Lease Tracking', 'Rent'] },
+              { name: 'Restaurant POS', icon: ShoppingCart, desc: 'Modern restaurant POS with table management, online ordering, kitchen display, payment processing, and sales analytics.', tags: ['Table Mgmt', 'Online Ordering', 'Payments'] },
+              { name: 'Hotel Management System (HMS)', icon: Building2, desc: 'Complete HMS with booking engine, front desk operations, housekeeping, channel management, and guest experience tools.', tags: ['Booking', 'Front Desk', 'Channel Mgmt'] },
+              { name: 'AI Recruitment Platform', icon: Users, desc: 'AI-driven recruitment platform with candidate sourcing, resume parsing, skill matching, interview scheduling, and analytics.', tags: ['Sourcing', 'Resume Parsing', 'Skill Match'] },
+              { name: 'AI Legal Platform', icon: ShieldCheck, desc: 'Legal practice management with AI-powered document review, contract analysis, case management, and compliance tracking.', tags: ['Document Review', 'Contract Analysis', 'Case Mgmt'] },
+              { name: 'E-Commerce Platform', icon: ShoppingCart, desc: 'Full-featured e-commerce platform with product catalog, cart, checkout, payment processing, and order management.', tags: ['Catalog', 'Checkout', 'Order Mgmt'] },
+              { name: 'Customer Relationship Management (CRM)', icon: Users, desc: 'Enterprise CRM with lead tracking, deal pipeline, customer analytics, and integrated communication tools.', tags: ['Leads', 'Pipeline', 'Analytics'] },
+              { name: 'Learning Management System (LMS)', icon: GraduationCap, desc: 'Scalable LMS with course creation, virtual classrooms, assessments, certifications, and student analytics.', tags: ['Courses', 'Assessments', 'Certifications'] },
+              { name: 'Supply Chain Management System', icon: Truck, desc: 'End-to-end supply chain platform with demand forecasting, sourcing, procurement, and supplier collaboration.', tags: ['Forecasting', 'Sourcing', 'Procurement'] },
+              { name: 'Document Management System (DMS)', icon: Layers, desc: 'Enterprise DMS with document capture, indexing, version control, workflow automation, and secure archiving.', tags: ['Version Control', 'Workflow', 'Archiving'] },
+              { name: 'Asset Management Platform', icon: Briefcase, desc: 'Comprehensive asset lifecycle management with tracking, maintenance scheduling, depreciation, and audit reporting.', tags: ['Lifecycle', 'Maintenance', 'Audit'] },
+              { name: 'Project Management Software', icon: TrendingUp, desc: 'Full-featured project management platform with task tracking, Gantt charts, resource management, and team collaboration.', tags: ['Tasks', 'Gantt', 'Collaboration'] },
+              { name: 'Help Desk & Ticketing System', icon: Users, desc: 'ITIL-compliant help desk platform with ticket management, SLA tracking, knowledge base, and self-service portal.', tags: ['Tickets', 'SLA', 'Knowledge Base'] },
+              { name: 'Business Intelligence Dashboard', icon: TrendingUp, desc: 'Interactive BI platform with drag-and-drop dashboards, real-time data visualization, and embedded analytics.', tags: ['Dashboards', 'Visualization', 'Analytics'] },
+              { name: 'Payment Gateway Platform', icon: ShieldCheck, desc: 'Secure payment gateway with multi-currency support, fraud detection, recurring billing, and PCI-DSS compliance.', tags: ['Payments', 'Fraud Detection', 'PCI-DSS'] },
+              { name: 'Insurance Management System', icon: Building2, desc: 'Core insurance platform with policy management, claims processing, underwriting, and agent/broker portals.', tags: ['Policies', 'Claims', 'Underwriting'] },
+              { name: 'Microfinance Banking System', icon: Building2, desc: 'Digital microfinance platform with loan origination, savings, group lending, mobile money, and regulatory reporting.', tags: ['Loans', 'Savings', 'Mobile Money'] },
+              { name: 'HR & Payroll Management', icon: Users, desc: 'Complete HR platform with employee records, payroll processing, benefits administration, time tracking, and performance reviews.', tags: ['Payroll', 'Benefits', 'Performance'] },
+              { name: 'E-Procurement Platform', icon: Globe, desc: 'Digital procurement platform with supplier management, RFQ/RFP workflows, contract management, and spend analytics.', tags: ['Suppliers', 'RFQ', 'Contracts'] },
+              { name: 'Content Management System (CMS)', icon: Layers, desc: 'Enterprise CMS with drag-and-drop page builder, multi-site management, SEO tools, and content personalization.', tags: ['Page Builder', 'Multi-Site', 'SEO'] },
+              { name: 'Telehealth Platform', icon: HeartPulse, desc: 'HIPAA-compliant telehealth platform with video consultations, remote monitoring, e-prescriptions, and patient portal.', tags: ['Telehealth', 'Remote Monitoring', 'E-Rx'] },
+              { name: 'Energy Management System', icon: Cpu, desc: 'Smart energy management system with real-time monitoring, consumption analytics, demand forecasting, and grid optimization.', tags: ['Monitoring', 'Analytics', 'Grid Opt'] },
+              { name: 'Smart City Platform', icon: Globe, desc: 'Integrated smart city platform for traffic management, public safety, utilities monitoring, and citizen engagement.', tags: ['Traffic', 'Public Safety', 'Utilities'] },
+              { name: 'Marketing Automation Platform', icon: TrendingUp, desc: 'AI-powered marketing automation with campaign management, lead scoring, email marketing, and customer journey mapping.', tags: ['Campaigns', 'Lead Scoring', 'Email'] },
+              { name: 'Customer Data Platform (CDP)', icon: Database, desc: 'Unified customer data platform with identity resolution, audience segmentation, real-time profiles, and analytics.', tags: ['Identity', 'Segmentation', 'Profiles'] },
+              { name: 'Compliance & Audit Management', icon: ShieldCheck, desc: 'Enterprise compliance platform with policy management, risk assessment, audit trails, and regulatory reporting.', tags: ['Policy', 'Risk', 'Audit'] },
+              { name: 'IoT Device Management Platform', icon: Wifi, desc: 'Scalable IoT platform with device provisioning, telemetry ingestion, edge computing, and real-time monitoring.', tags: ['Devices', 'Telemetry', 'Edge'] },
+              { name: 'E-Library Management System', icon: GraduationCap, desc: 'Digital library platform with catalog management, patron services, digital lending, and inter-library integration.', tags: ['Catalog', 'Lending', 'Patron'] },
+              { name: 'Field Service Management', icon: Truck, desc: 'Field service platform with dispatch scheduling, mobile workforce management, GPS tracking, and work order management.', tags: ['Dispatch', 'Workforce', 'Work Orders'] },
+              { name: 'PharmaFlow — Pharmacy & Prescription Management', icon: Layers, desc: 'A comprehensive pharmacy management system handling inventory tracking, prescription fulfillment, regulatory compliance, and patient records. Built with HIPAA-compliant architecture and real-time stock alerts for operational efficiency.', tags: ['Inventory', 'HIPAA', 'Analytics'] },
+              { name: 'StockVue — Real-Time Inventory Management', icon: Clock, desc: 'A real-time inventory and stock management platform for retail and warehouse operations. Provides multi-warehouse tracking, automated reordering based on demand forecasting, and comprehensive analytics dashboards.', tags: ['Real-Time', 'Analytics', 'Automation'] },
+              { name: 'BiteOrder — Restaurant Website & Online Ordering', icon: TrendingUp, desc: 'A complete restaurant digital platform featuring custom websites, online ordering, table reservations, and POS integration. Includes real-time order tracking, menu management, and customer analytics for hospitality businesses.', tags: ['Online Ordering', 'Reservations', 'POS'] },
+              { name: 'TableReserve — Smart Reservation & Booking System', icon: Users, desc: 'An intelligent reservation and booking management system for restaurants, hotels, and event venues. Features real-time availability, automated reminders, waitlist management, and comprehensive customer relationship tools.', tags: ['Booking', 'CRM', 'Calendar'] },
+            ].map((ind, i) => {
+              const Icon = ind.icon;
+              return (
+                <motion.div
+                  key={ind.name}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.04, duration: 0.6, ease: EASE_EXPO }}
+                  className="group relative cursor-pointer"
+                >
+                  <div className="relative h-full p-6 rounded-[24px] bg-white border border-slate-200 transition-all duration-500 group-hover:border-[#F5A800]/40 group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)] overflow-hidden">
+                    <div className="relative z-10">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="w-12 h-12 rounded-[16px] bg-slate-100 border border-slate-200 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:border-[#F5A800]/30">
+                          <Icon size={20} className="text-slate-950 group-hover:text-[#F5A800] transition-colors duration-300" />
+                        </div>
+                      </div>
+                      <h3 className="text-xl font-black text-slate-950 tracking-[-0.02em] group-hover:text-[#F5A800] transition-colors duration-300 mb-2">{ind.name}</h3>
+                      <p className="text-slate-500 text-sm leading-relaxed font-medium line-clamp-3 mb-3">{ind.desc}</p>
+                      <div className="flex flex-wrap gap-2 mb-3">
+                        {ind.tags.map(tag => (
+                          <span
+                            key={tag}
+                            className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-50 border border-slate-200 text-slate-500"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <Link
+                        to={`/request-demo?product=${encodeURIComponent(ind.name)}`}
+                        className="inline-flex items-center gap-1 text-[#F5A800] hover:text-[#e09a00] font-bold text-sm transition-colors"
+                      >
+                        Request Demo
+                        <ArrowUpRight size={12} />
+                      </Link>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+
+
+
+      {/* ═══════════════════════════════════════════════════════════
+          REFERENCE ARCHITECTURES — Industries style
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="dark relative py-32 bg-[#02040a] border-t border-white/5 overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+        <div className="container relative z-10 mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: EASE_EXPO }}
+            className="max-w-2xl mb-16"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse" />
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/60">Reference Architectures</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-4">
               Engineering{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-400">Patterns.</span>
             </h2>
-            <p className="text-slate-500 text-lg font-medium max-w-xl">
+            <p className="text-white/50 text-lg font-medium max-w-xl">
               Reference architectures we reuse across client engagements — proven patterns for AI security, post-quantum cryptography, multi-region infrastructure, and more.
             </p>
           </motion.div>
@@ -765,28 +894,28 @@ export default function Projects() {
                   transition={{ delay: i * 0.05, duration: 0.6, ease: EASE_EXPO }}
                   className="group relative cursor-pointer"
                 >
-                  <div className="relative h-full p-8 rounded-[24px] bg-white border border-slate-200 transition-all duration-500 group-hover:border-[#F5A800]/40 group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)] overflow-hidden">
+                  <div className="relative h-full p-8 rounded-[24px] bg-white/[0.02] border border-white/10 transition-all duration-500 group-hover:border-[#F5A800]/40 group-hover:bg-white/[0.04] overflow-hidden">
                     <div className="relative z-10">
                       <div className="flex items-center gap-3 mb-1">
                         <span className="text-[10px] font-black uppercase tracking-[0.3em]" style={{color: project.color}}>{project.category}</span>
-                        <span className="text-[10px] text-slate-400 font-mono">{project.year}</span>
+                        <span className="text-[10px] text-white/40 font-mono">{project.year}</span>
                       </div>
-                      <h3 className="text-xl font-black text-slate-950 tracking-[-0.02em] group-hover:text-[#F5A800] transition-colors duration-300 mb-2">{project.title} — {project.subtitle}</h3>
-                      <p className="text-slate-500 text-sm leading-relaxed font-medium line-clamp-3 mb-3">{project.description}</p>
+                      <h3 className="text-xl font-black text-white tracking-[-0.02em] group-hover:text-[#F5A800] transition-colors duration-300 mb-2">{project.title} — {project.subtitle}</h3>
+                      <p className="text-white/50 text-sm leading-relaxed font-medium line-clamp-3 mb-3">{project.description}</p>
                       <div className="flex flex-wrap gap-2 mb-4">
                         {project.tags.map(tag => (
                           <span
                             key={tag}
-                            className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-50 border border-slate-200 text-slate-500"
+                            className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-white/50"
                           >
                             {tag}
                           </span>
                         ))}
                       </div>
-                      <a href="#" className="inline-flex items-center gap-1 text-[#F5A800] hover:text-[#e09a00] font-bold text-sm transition-colors">
-                        View Project
+                      <Link to={`/request-demo?product=${encodeURIComponent(project.title + ' — ' + project.subtitle)}`} className="inline-flex items-center gap-1 text-[#F5A800] hover:text-[#e09a00] font-bold text-sm transition-colors">
+                        Request Demo
                         <ArrowUpRight size={12} />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </motion.div>
@@ -859,10 +988,10 @@ export default function Projects() {
                           <span key={m.label} className="font-semibold text-slate-700">{m.value}</span>
                         ))}
                       </div>
-                      <a href="#" className="inline-flex items-center gap-1 text-[#F5A800] hover:text-[#e09a00] font-bold text-sm transition-colors">
-                        View Project
+                      <Link to={`/request-demo?product=${encodeURIComponent(project.title + ' — ' + project.subtitle)}`} className="inline-flex items-center gap-1 text-[#F5A800] hover:text-[#e09a00] font-bold text-sm transition-colors">
+                        Request Demo
                         <ArrowUpRight size={12} />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </motion.div>
@@ -875,7 +1004,7 @@ export default function Projects() {
       {/* ═══════════════════════════════════════════════════════════
           FEATURED PRODUCT: NEXI MARKETS
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-24 overflow-hidden border-t border-slate-200 dark:border-white/10 bg-white dark:bg-[#02040a] transition-colors duration-300">
+      <section className="dark relative py-24 overflow-hidden border-t border-slate-200 dark:border-white/10 bg-[#02040a] transition-colors duration-300">
         <div className="container relative z-10 mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
@@ -963,7 +1092,7 @@ export default function Projects() {
                   { icon: '🛒', title: 'Millions of Products', desc: 'Shop across dozens of categories.' },
                   { icon: '🚚', title: 'Fast Delivery', desc: 'Reliable shipping right to your door.' },
                   { icon: '🔒', title: 'Secure Payments', desc: 'Protected transactions every time.' },
-                  { icon: '🇪🇹', title: 'Built for Ethiopia', desc: 'Tailored for local needs.' },
+                  { icon: '🌍', title: 'Built for Ethiopia', desc: 'Tailored for local needs.' },
                 ].map((f) => (
                   <motion.div
                     key={f.title}
@@ -1002,7 +1131,7 @@ export default function Projects() {
       {/* ═══════════════════════════════════════════════════════════
           FEATURED PRODUCT: NEXI LOCATE
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-24 overflow-hidden border-t border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#02040a] transition-colors duration-300">
+      <section className="dark relative py-24 overflow-hidden border-t border-slate-200 dark:border-white/10 bg-[#02040a] transition-colors duration-300">
         <div className="container relative z-10 mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
@@ -1091,7 +1220,7 @@ export default function Projects() {
                   { icon: '📍', title: 'Discover Nearby', desc: 'Find the best places around you.' },
                   { icon: '➕', title: 'Add Your Places', desc: 'Add favorites for others to discover.' },
                   { icon: '⭐', title: 'Rate & Review', desc: 'Share your experience.' },
-                  { icon: '🇪🇹', title: 'Built for Ethiopia', desc: 'Made for Addis Ababa.' },
+                  { icon: '🌍', title: 'Built for Ethiopia', desc: 'Made for Addis Ababa.' },
                 ].map((f) => (
                   <motion.div
                     key={f.title}
@@ -1139,7 +1268,7 @@ export default function Projects() {
       {/* ═══════════════════════════════════════════════════════════
           FEATURED PRODUCT: TELE-PSYCHIATRY
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-24 overflow-hidden border-t border-slate-200 dark:border-white/10 bg-white dark:bg-[#02040a] transition-colors duration-300">
+      <section className="dark relative py-24 overflow-hidden border-t border-slate-200 dark:border-white/10 bg-[#02040a] transition-colors duration-300">
         <div className="container relative z-10 mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
@@ -1226,7 +1355,7 @@ export default function Projects() {
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 0.15, ease: EASE_EXPO } },
               }} className="grid grid-cols-2 gap-3 mb-6">
                 {[
-                  { icon: '🇪🇹', title: 'Built for Ethiopia', desc: 'Made for Ethiopian patients and providers.' },
+                  { icon: '🌍', title: 'Built for Ethiopia', desc: 'Made for Ethiopian patients and providers.' },
                   { icon: '🛡️', title: '100% Confidential', desc: 'Your privacy is protected by design.' },
                   { icon: '📹', title: 'Video Consultations', desc: 'Face-to-face care from anywhere.' },
                   { icon: '📅', title: 'Flexible Scheduling', desc: 'Book appointments that work for you.' },
@@ -1259,7 +1388,10 @@ export default function Projects() {
       {/* ═══════════════════════════════════════════════════════════
           CTA SECTION — Dark
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative py-32 bg-white dark:bg-[#02040a] border-t border-slate-200 dark:border-white/5 overflow-hidden section-divider-dark transition-colors duration-300">
+      {/* ═══════════════════════════════════════════════════════════
+          CTA SECTION — Dark
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="dark relative py-32 bg-[#02040a] border-t border-slate-200 dark:border-white/5 overflow-hidden section-divider-dark transition-colors duration-300">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute top-0 left-1/3 w-[600px] h-[600px] bg-amber-400/8 dark:bg-amber-400/8 blur-[140px] rounded-full" />
         </div>
