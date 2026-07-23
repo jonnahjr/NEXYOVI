@@ -3,24 +3,24 @@ import { ArrowRight, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-reac
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-import locate1 from '../assets/location/1.png';
-import locate2 from '../assets/location/2.png';
-import locate3 from '../assets/location/3.png';
-import market1 from '../assets/market/1.png';
-import market2 from '../assets/market/2.png';
-import market3 from '../assets/market/3.png';
-import tele1 from '../assets/tele/1.png';
-import tele2 from '../assets/tele/2.png';
-import tele3 from '../assets/tele/3.png';
-import pharmaFlowImg from '../assets/ChatGPT Image Jul 23, 2026, 02_17_41 PM.png';
-import stockVueImg from '../assets/ChatGPT Image Jul 23, 2026, 02_22_47 PM.png';
-import biteOrderImg from '../assets/ChatGPT Image Jul 23, 2026, 02_22_49 PM.png';
-import aiBusinessImg from '../assets/ChatGPT Image Jul 23, 2026, 02_31_23 PM.png';
-import tableReserveImg from '../assets/ChatGPT Image Jul 23, 2026, 02_43_02 PM.png';
-import hmsImg from '../assets/ChatGPT Image Jul 23, 2026, 03_08_50 PM.png';
-import schoolErpImg from '../assets/ChatGPT Image Jul 23, 2026, 03_06_57 PM.png';
-import hisImg from '../assets/ChatGPT Image Jul 23, 2026, 03_05_14 PM.png';
-import projectMgmtImg from '../assets/ChatGPT Image Jul 23, 2026, 03_11_23 PM.png';
+import locate1 from '../assets/location/1.webp';
+import locate2 from '../assets/location/2.webp';
+import locate3 from '../assets/location/3.webp';
+import market1 from '../assets/market/1.webp';
+import market2 from '../assets/market/2.webp';
+import market3 from '../assets/market/3.webp';
+import tele1 from '../assets/tele/1.webp';
+import tele2 from '../assets/tele/2.webp';
+import tele3 from '../assets/tele/3.webp';
+import pharmaFlowImg from '../assets/ChatGPT Image Jul 23, 2026, 02_17_41 PM.webp';
+import stockVueImg from '../assets/ChatGPT Image Jul 23, 2026, 02_22_47 PM.webp';
+import biteOrderImg from '../assets/ChatGPT Image Jul 23, 2026, 02_22_49 PM.webp';
+import aiBusinessImg from '../assets/ChatGPT Image Jul 23, 2026, 02_31_23 PM.webp';
+import tableReserveImg from '../assets/ChatGPT Image Jul 23, 2026, 02_43_02 PM.webp';
+import hmsImg from '../assets/ChatGPT Image Jul 23, 2026, 03_08_50 PM.webp';
+import schoolErpImg from '../assets/ChatGPT Image Jul 23, 2026, 03_06_57 PM.webp';
+import hisImg from '../assets/ChatGPT Image Jul 23, 2026, 03_05_14 PM.webp';
+import projectMgmtImg from '../assets/ChatGPT Image Jul 23, 2026, 03_11_23 PM.webp';
 
 interface Project {
   name: string;

@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import myLogo from '../assets/logo 1.png';
+import myLogo from '../assets/logo 1.webp';
 import { useSite } from '../context/SiteContext';
 
 const defaultNavLinks = [

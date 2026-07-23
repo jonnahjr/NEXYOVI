@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { fadeUp, viewport } from '../lib/animations';
 
 import cbe from '../assets/cbe_transparent.png';
-import ethio from '../assets/ethio_transparent.png';
-import insa from '../assets/Insa-09_transparent.png';
+import ethio from '../assets/ethio_transparent.webp';
+import insa from '../assets/Insa-09_transparent.webp';
 import zemen from '../assets/zemen-bank-logo_transparent.png';
 
 const logos = [

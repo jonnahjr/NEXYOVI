@@ -28,25 +28,25 @@ import { EASE_EXPO, EASE_CINEMA, staggerContainer, viewport } from '../lib/anima
 import TextReveal from '../components/TextReveal';
 import { useToast } from '../context/ToastContext';
 
-import market1 from '../assets/market/1.png';
-import market2 from '../assets/market/2.png';
-import market3 from '../assets/market/3.png';
-import market4 from '../assets/market/4.png';
-import market5 from '../assets/market/5.png';
-import market6 from '../assets/market/6.png';
+import market1 from '../assets/market/1.webp';
+import market2 from '../assets/market/2.webp';
+import market3 from '../assets/market/3.webp';
+import market4 from '../assets/market/4.webp';
+import market5 from '../assets/market/5.webp';
+import market6 from '../assets/market/6.webp';
 
-import locate1 from '../assets/location/1.png';
-import locate2 from '../assets/location/2.png';
-import locate3 from '../assets/location/3.png';
-import locate4 from '../assets/location/4.png';
-import locate5 from '../assets/location/5.png';
-import locate6 from '../assets/location/6.png';
-import locate7 from '../assets/location/7.png';
+import locate1 from '../assets/location/1.webp';
+import locate2 from '../assets/location/2.webp';
+import locate3 from '../assets/location/3.webp';
+import locate4 from '../assets/location/4.webp';
+import locate5 from '../assets/location/5.webp';
+import locate6 from '../assets/location/6.webp';
+import locate7 from '../assets/location/7.webp';
 
-import tele1 from '../assets/tele/1.png';
-import tele2 from '../assets/tele/2.png';
-import tele3 from '../assets/tele/3.png';
-import tele4 from '../assets/tele/4.png';
+import tele1 from '../assets/tele/1.webp';
+import tele2 from '../assets/tele/2.webp';
+import tele3 from '../assets/tele/3.webp';
+import tele4 from '../assets/tele/4.webp';
 
 // ── Animated Counter ─────────────────────────────────────────
 const Counter = ({ value, duration = 2, decimals = 0, suffix = '' }: { value: number; duration?: number; decimals?: number; suffix?: string }) => {

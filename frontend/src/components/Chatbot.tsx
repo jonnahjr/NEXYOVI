@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { AlertTriangle, Send, Shield, X } from 'lucide-react';
 import { useCallback, useRef, useState } from 'react';
-import chatbotLogo from '../assets/ChatGPT Image May 18, 2026, 10_08_54 AM.png';
+import chatbotLogo from '../assets/ChatGPT Image May 18, 2026, 10_08_54 AM.webp';
 import { useToast } from '../context/ToastContext';
 import { containsXssPattern, sanitizeText, stripHtml } from '../lib/sanitize';
 

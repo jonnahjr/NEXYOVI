@@ -2,21 +2,21 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import * as api from '../lib/api';
 
 // Initial Team Data
-import c1Img from '../assets/c1.jpg';
-import c2Img from '../assets/c2.jpg';
-import c3Img from '../assets/c3.jpg';
+import c1Img from '../assets/c1.webp';
+import c2Img from '../assets/c2.webp';
+import c3Img from '../assets/c3.webp';
 import completeFarmerLogo from '../assets/Complete Farmer.webp';
 import contrailsAiLogo from '../assets/Contrails AI.webp';
-import ethioLogo from '../assets/ethio_transparent.png';
+import ethioLogo from '../assets/ethio_transparent.webp';
 import harveyAiLogo from '../assets/Harvey AI.avif';
 import paladinDronesLogo from '../assets/Paladin Drones.webp';
-import yonasImg from '../assets/yonas.jpg';
+import yonasImg from '../assets/yonas.webp';
 
 const initialTeam = [
     { id: 1, name: 'Yonas Bogale', role: 'Founder & CEO', bio: 'Visionary leader with 12+ years in tech and business strategy across two continents.', initials: 'YB', color: '#F5A800', linkedin: 'https://www.linkedin.com/in/yonas-bogale/', img: 'https://api.nexyovi.com/uploads/1781431549912-777697695.jpg' },
     { id: 16, name: 'Eyerusalem Bogale', role: 'VP of Operations', bio: 'Operations leader with 10+ years driving efficiency and scaling processes across tech startups.', initials: 'EB', color: '#ff7f50', linkedin: 'https://linkedin.com/in/eyerusalem-bogale', img: 'https://api.nexyovi.com/uploads/1781438075460-994896949.png' },
     { id: 3, name: 'Alebachew Sitotaw Yimer', role: 'Chief Product Officer', bio: 'Leads product vision and strategy. Passionate about building scalable systems and ensuring user-centric design.', initials: 'SH', color: '#10b981', linkedin: 'https://linkedin.com/in/selamawit-hailu/', img: 'https://api.nexyovi.com/uploads/1781431861888-216643038.png' },
-    { id: 17, name: 'Sarah Tadesse', role: 'Chief Technology Officer (CTO)', bio: 'Innovative engineering leader with 8+ years of experience in building scalable cloud architectures. Passionate about leveraging AI and modern web technologies to solve complex business problems.', initials: 'ST', color: '#8b5cf6', linkedin: 'https://linkedin.com/in/eyerusalem-bogale', img: 'https://api.nexyovi.com/uploads/1781434594201-894064051.png' }
+    { id: 17, name: 'Sarah Tadesse', role: 'Chief Technology Officer (CTO)', bio: 'Innovative engineering leader with 8+ years of experience in building scalable cloud architectures. Passionate about leveraging AI and modern web technologies to solve complex business problems.', initials: 'ST', color: '#8b5cf6', linkedin: 'https://linkedin.com/in/eyerusalem-bogale', img: 'https://api.nexyovi.com/uploads/1781434594201-894064051.webp' }
 ];
 
 const initialTestimonials = [

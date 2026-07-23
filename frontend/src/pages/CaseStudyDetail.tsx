@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2, Terminal, ShieldAlert, Cpu, Activity, Clock, Zap } from 'lucide-react';
 import FinalCTA from '../components/FinalCTA';
-import futureCity from '../assets/future_city.png';
+import futureCity from '../assets/future_city.webp';
 
 
 const caseStudies = {
