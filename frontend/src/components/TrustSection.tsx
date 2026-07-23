@@ -3,16 +3,18 @@ import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { fadeUp, viewport } from '../lib/animations';
 
-import cbe from '../assets/cbe_transparent.png';
 import ethio from '../assets/ethio_transparent.webp';
 import insa from '../assets/Insa-09_transparent.webp';
-import zemen from '../assets/zemen-bank-logo_transparent.png';
+
+const CBE_LOGO = 'https://upload.wikimedia.org/wikipedia/en/5/5e/Commercial_Bank_of_Ethiopia_logo.svg';
+const ZEMEN_LOGO = 'https://upload.wikimedia.org/wikipedia/commons/6/68/Zemen_Bank_logo.svg';
 
 const logos = [
     { src: ethio, alt: 'Ethio Telecom' },
-    { src: cbe, alt: 'Commercial Bank of Ethiopia' },
-    { src: zemen, alt: 'Zemen Bank' },
+    { src: CBE_LOGO, alt: 'Commercial Bank of Ethiopia' },
+    { src: ZEMEN_LOGO, alt: 'Zemen Bank' },
     { src: insa, alt: 'INSA Ethiopia' }];
+
 
 const duplicated = [...logos, ...logos, ...logos, ...logos, ...logos, ...logos];
 
