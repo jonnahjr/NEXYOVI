@@ -12,15 +12,15 @@ import market3 from '../assets/market/3.webp';
 import tele1 from '../assets/tele/1.webp';
 import tele2 from '../assets/tele/2.webp';
 import tele3 from '../assets/tele/3.webp';
-import pharmaFlowImg from '../assets/ChatGPT Image Jul 23, 2026, 02_17_41 PM.webp';
-import stockVueImg from '../assets/ChatGPT Image Jul 23, 2026, 02_22_47 PM.webp';
-import biteOrderImg from '../assets/ChatGPT Image Jul 23, 2026, 02_22_49 PM.webp';
-import aiBusinessImg from '../assets/ChatGPT Image Jul 23, 2026, 02_31_23 PM.webp';
-import tableReserveImg from '../assets/ChatGPT Image Jul 23, 2026, 02_43_02 PM.webp';
-import hmsImg from '../assets/ChatGPT Image Jul 23, 2026, 03_08_50 PM.webp';
-import schoolErpImg from '../assets/ChatGPT Image Jul 23, 2026, 03_06_57 PM.webp';
-import hisImg from '../assets/ChatGPT Image Jul 23, 2026, 03_05_14 PM.webp';
-import projectMgmtImg from '../assets/ChatGPT Image Jul 23, 2026, 03_11_23 PM.webp';
+import pharmaFlowImg from '../assets/ChatGPT_Image_Jul_23_2026_02_17_41_PM.webp';
+import stockVueImg from '../assets/ChatGPT_Image_Jul_23_2026_02_22_47_PM.webp';
+import biteOrderImg from '../assets/ChatGPT_Image_Jul_23_2026_02_22_49_PM.webp';
+import aiBusinessImg from '../assets/ChatGPT_Image_Jul_23_2026_02_31_23_PM.webp';
+import tableReserveImg from '../assets/ChatGPT_Image_Jul_23_2026_02_43_02_PM.webp';
+import hmsImg from '../assets/ChatGPT_Image_Jul_23_2026_03_08_50_PM.webp';
+import schoolErpImg from '../assets/ChatGPT_Image_Jul_23_2026_03_06_57_PM.webp';
+import hisImg from '../assets/ChatGPT_Image_Jul_23_2026_03_05_14_PM.webp';
+import projectMgmtImg from '../assets/ChatGPT_Image_Jul_23_2026_03_11_23_PM.webp';
 
 interface Project {
   name: string;

@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import myLogo from '../assets/logo 1.webp';
+import myLogo from '../assets/logo_1.webp';
 import { useSite } from '../context/SiteContext';
 
 const defaultNavLinks = [
@@ -97,8 +97,8 @@ const Navbar = () => {
                 aria-label="Nexyovi"
                 className="relative h-[40px] sm:h-[50px] md:h-[60px] lg:h-[68px] w-[100px] sm:w-[130px] md:w-[160px] lg:w-[182px]"
                 style={{
-                  mask: `url(${settings?.logo_url || myLogo}) center/contain no-repeat`,
-                  WebkitMask: `url(${settings?.logo_url || myLogo}) center/contain no-repeat`,
+                  mask: `url('${settings?.logo_url || myLogo}') center/contain no-repeat`,
+                  WebkitMask: `url('${settings?.logo_url || myLogo}') center/contain no-repeat`,
                   maskSize: 'contain',
                   maskPosition: 'center',
                   WebkitMaskSize: 'contain',

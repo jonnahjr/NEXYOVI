@@ -5,11 +5,11 @@ import * as api from '../lib/api';
 import c1Img from '../assets/c1.webp';
 import c2Img from '../assets/c2.webp';
 import c3Img from '../assets/c3.webp';
-import completeFarmerLogo from '../assets/Complete Farmer.webp';
-import contrailsAiLogo from '../assets/Contrails AI.webp';
+import completeFarmerLogo from '../assets/Complete_Farmer.webp';
+import contrailsAiLogo from '../assets/Contrails_AI.webp';
 import ethioLogo from '../assets/ethio_transparent.webp';
-import harveyAiLogo from '../assets/Harvey AI.avif';
-import paladinDronesLogo from '../assets/Paladin Drones.webp';
+import harveyAiLogo from '../assets/Harvey_AI.avif';
+import paladinDronesLogo from '../assets/Paladin_Drones.webp';
 import yonasImg from '../assets/yonas.webp';
 
 const initialTeam = [

@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Facebook, Github, Instagram, Linkedin, MessageCircle, Send, Slack, X, Youtube } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import myLogo from '../assets/logo 1.webp';
+import myLogo from '../assets/logo_1.webp';
 import { useSite } from '../context/SiteContext';
 
 const Footer = () => {
