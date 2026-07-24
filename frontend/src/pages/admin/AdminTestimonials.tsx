@@ -10,7 +10,7 @@ const AdminTestimonials = () => {
   const [editing, setEditing] = useState<any>(null);
   const [search, setSearch] = useState('');
   const [isUploading, setIsUploading] = useState(false);
-  const [form, setForm] = useState({ content: '', author: '', role: '', linkedin: '', image_url: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200' });
+  const [form, setForm] = useState({ content: '', author: '', role: '', company: '', highlight: '', linkedin: '', image_url: '' });
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || !e.target.files[0]) return;
@@ -24,16 +24,36 @@ const AdminTestimonials = () => {
   };
 
   const open = (t: any = null) => {
-    if (t) { setEditing(t); setForm({ content: t.content, author: t.author, role: t.role, linkedin: t.linkedin || '', image_url: t.image_url || t.img || '' }); }
-    else { setEditing(null); setForm({ content: '', author: '', role: '', linkedin: '', image_url: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200' }); }
+    if (t) {
+      setEditing(t);
+      setForm({
+        content: t.content || t.quote || '',
+        author: t.author || '',
+        role: t.role || '',
+        company: t.company || '',
+        highlight: t.highlight || '',
+        linkedin: t.linkedin || '',
+        image_url: t.image_url || t.avatar_url || t.img || t.avatar || ''
+      });
+    } else {
+      setEditing(null);
+      setForm({
+        content: '',
+        author: '',
+        role: '',
+        company: '',
+        highlight: '',
+        linkedin: '',
+        image_url: ''
+      });
+    }
     setIsEditing(true);
   };
 
   const save = async (e: React.FormEvent) => {
     e.preventDefault();
     if (editing) {
-      // Strip `img` — it's from the initial data merge, DB column is `image_url`
-      const { img, ...cleanEditing } = editing;
+      const { img, avatar_url, quote, ...cleanEditing } = editing;
       await updateTestimonial({ ...cleanEditing, ...form });
     } else {
       await addTestimonial({ ...form });
@@ -82,8 +102,18 @@ const AdminTestimonials = () => {
                   className="w-full h-10 px-4 bg-white/[0.03] border border-white/[0.08] rounded-lg text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#F5A800]/50 transition-colors" />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-white/50 mb-1.5">Role</label>
+                <label className="block text-xs font-semibold text-white/50 mb-1.5">Role *</label>
                 <input required value={form.role} onChange={e => setForm({ ...form, role: e.target.value })}
+                  className="w-full h-10 px-4 bg-white/[0.03] border border-white/[0.08] rounded-lg text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#F5A800]/50 transition-colors" />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-white/50 mb-1.5">Company</label>
+                <input value={form.company} onChange={e => setForm({ ...form, company: e.target.value })}
+                  className="w-full h-10 px-4 bg-white/[0.03] border border-white/[0.08] rounded-lg text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#F5A800]/50 transition-colors" />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-white/50 mb-1.5">Highlight Word (colors it gold)</label>
+                <input value={form.highlight} onChange={e => setForm({ ...form, highlight: e.target.value })}
                   className="w-full h-10 px-4 bg-white/[0.03] border border-white/[0.08] rounded-lg text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#F5A800]/50 transition-colors" />
               </div>
               <div className="md:col-span-2">
@@ -95,14 +125,27 @@ const AdminTestimonials = () => {
             <div>
               <label className="block text-xs font-semibold text-white/50 mb-1.5">Avatar Image URL</label>
               <div className="flex flex-col sm:flex-row gap-4 items-start">
-                <div className="w-16 h-16 rounded-xl border border-white/10 overflow-hidden shrink-0 bg-white/[0.03]"><img src={form.image_url} alt="" className="w-full h-full object-cover" /></div>
+                <div className="w-16 h-16 rounded-xl border border-white/10 overflow-hidden shrink-0 bg-white/[0.03]">
+                  {form.image_url ? (
+                    <img src={form.image_url} alt="" className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-xs text-white/20 bg-white/[0.02]">No Image</div>
+                  )}
+                </div>
                 <div className="flex-1 w-full space-y-2">
                   <input value={form.image_url} onChange={e => setForm({ ...form, image_url: e.target.value })}
                     className="w-full h-10 px-4 bg-white/[0.03] border border-white/[0.08] rounded-lg text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#F5A800]/50 transition-colors" />
-                  <label className={`inline-flex items-center gap-2 h-9 px-4 rounded-lg border border-white/10 text-xs font-semibold transition-all cursor-pointer ${isUploading ? 'bg-white/5 text-white/40' : 'bg-white/[0.03] text-white/60 hover:bg-white/[0.06]'}`}>
-                    <UploadCloud size={14} />{isUploading ? 'Uploading...' : 'Upload'}
-                    <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={isUploading} />
-                  </label>
+                  <div className="flex gap-2">
+                    <label className={`inline-flex items-center gap-2 h-9 px-4 rounded-lg border border-white/10 text-xs font-semibold transition-all cursor-pointer ${isUploading ? 'bg-white/5 text-white/40' : 'bg-white/[0.03] text-white/60 hover:bg-white/[0.06]'}`}>
+                      <UploadCloud size={14} />{isUploading ? 'Uploading...' : 'Upload'}
+                      <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={isUploading} />
+                    </label>
+                    {form.image_url && (
+                      <button type="button" onClick={() => setForm({ ...form, image_url: '' })} className="inline-flex items-center gap-2 h-9 px-4 rounded-lg border border-red-500/20 bg-red-500/5 text-xs font-semibold text-red-400 hover:bg-red-500/10 transition-all">
+                        <X size={14} /> Remove Image
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -151,11 +194,19 @@ const AdminTestimonials = () => {
             <div className="flex items-center justify-between mt-auto relative z-10">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-lg border border-white/10 overflow-hidden shrink-0 bg-white/[0.03]">
-                  <img src={t.image_url || t.img} alt={t.author} className="w-full h-full object-cover" />
+                  {t.image_url || t.avatar_url || t.img || t.avatar ? (
+                    <img src={t.image_url || t.avatar_url || t.img || t.avatar} alt={t.author} className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-xs font-bold text-white/50 bg-white/5">
+                      {(t.author || "User").split(' ').map((n: string) => n[0]).join('').slice(0, 2)}
+                    </div>
+                  )}
                 </div>
                 <div>
                   <div className="text-sm font-bold text-white">{t.author}</div>
-                  <div className="text-xs text-[#F5A800] font-semibold mt-0.5">{t.role}</div>
+                  <div className="text-xs text-[#F5A800] font-semibold mt-0.5">
+                    {t.role} {t.company && `at ${t.company}`}
+                  </div>
                 </div>
               </div>
               <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">

@@ -5,10 +5,27 @@ import { Link } from 'react-router-dom';
 import { homepageTestimonialsDefaults, useSite } from '../context/SiteContext';
 
 export default function TestimonialSection() {
-    const { siteContent } = useSite();
-    const testimonials = siteContent?.testimonialsSection?.items?.length
-        ? siteContent.testimonialsSection.items
-        : homepageTestimonialsDefaults;
+    const { siteContent, testimonials: dbTestimonials } = useSite();
+    
+    // Fallback: database testimonials -> site content -> static defaults
+    const rawTestimonials = dbTestimonials && dbTestimonials.length > 0
+        ? dbTestimonials
+        : siteContent?.testimonialsSection?.items?.length
+            ? siteContent.testimonialsSection.items
+            : homepageTestimonialsDefaults;
+
+    // Standardize all fields to avoid property mismatch between DB columns and static structures
+    const testimonials = rawTestimonials.map((t: any) => ({
+        id: t.id,
+        quote: t.quote || t.content || "",
+        role: t.role || "",
+        company: t.company || "",
+        author: t.author || "",
+        avatar_url: t.avatar_url || t.image_url || t.img || t.avatar || "",
+        linkedin: t.linkedin || "",
+        highlight: t.highlight || "",
+        caseStudy: t.caseStudy || t.case_study || ""
+    }));
 
     return (
         <section className="relative bg-[#02040a] py-12 sm:py-14 md:py-16 section-divider-dark overflow-hidden">
