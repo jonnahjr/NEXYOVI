@@ -488,9 +488,10 @@ export default function Services() {
             </h1>
           </TextReveal>
           <TextReveal delay={0.15}>
-            <h1 className="text-[48px] md:text-[72px] lg:text-[96px] font-black tracking-[-0.04em] leading-[0.9] mb-6">
+            {/* SEO: single H1 per page — second headline rendered as <p> with identical styling */}
+            <p className="text-[48px] md:text-[72px] lg:text-[96px] font-black tracking-[-0.04em] leading-[0.9] mb-6">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F5A800] via-[#FFD166] to-[#F5A800]">Production-ready systems. Built for scale.</span>
-            </h1>
+            </p>
           </TextReveal>
 
           <motion.p

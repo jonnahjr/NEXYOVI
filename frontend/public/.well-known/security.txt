@@ -1,0 +1,29 @@
+# ════════════════════════════════════════════════════════════
+# Security.txt - Vulnerability Disclosure Policy
+# ════════════════════════════════════════════════════════════
+# This file defines the security vulnerability disclosure
+# program for Nexyovi Technologies.
+# Location: https://nexyovi.com/.well-known/security.txt
+# ════════════════════════════════════════════════════════════
+
+# Contact Information
+Contact: mailto:security@nexyovi.com
+Contact: https://nexyovi.com/contact
+Contact: tel:+251938617252
+
+# Encryption (if available, link to PGP key)
+Encryption: https://nexyovi.com/.well-known/pgp-key.txt
+
+# Disclosure Policy
+Policy: https://nexyovi.com/security-policy
+Hiring: https://nexyovi.com/careers
+
+# Permissions
+Canonical: https://nexyovi.com/.well-known/security.txt
+Preferred-Languages: en, am
+
+# Validity Period
+Expires: 2027-01-01T00:00:00.000Z
+
+# Acknowledgements
+Acknowledgments: https://nexyovi.com/.well-known/security-acknowledgements.txt

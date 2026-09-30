@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import myLogo from '../assets/logo_1.webp';
 import { useSite } from '../context/SiteContext';
+import { trackContactClick } from '../lib/seo';
 
 const Footer = () => {
   const { settings, siteContent } = useSite();
@@ -92,7 +93,7 @@ const Footer = () => {
               {settings?.logo_url ? (
                 <img 
                   src={settings.logo_url} 
-                  alt="Logo" 
+                  alt="Nexyovi Technologies logo" 
                   className="h-24 sm:h-28 md:h-32 lg:h-[130px] w-auto object-contain" 
                 />
               ) : (
@@ -118,6 +119,8 @@ const Footer = () => {
               {settings?.socials && Object.entries(settings.socials).map(([key, url]: any) => {
                 const Icon = socialIcons[key];
                 if (!Icon || !url) return null;
+                // SEO/GA4: skip placeholder links (href="#") — they are crawl noise and inflate social metrics
+                if (url === '#') return null;
                 return (
                   <a
                     key={key}
@@ -125,7 +128,7 @@ const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-white/60 hover:text-[#F5A800] transition-colors"
-                    aria-label={key}
+                    aria-label={`Nexyovi on ${key}`}
                   >
                     <Icon size={18} className="sm:size-[20px]" />
                   </a>
@@ -140,10 +143,10 @@ const Footer = () => {
             <ul className="space-y-2 sm:space-y-3">
               {(siteContent?.footer?.servicesLinks || [
                 { label: 'Software Engineering', path: '/services/software' },
-                { label: 'AI & Automation', path: '/services/ai' },
-                { label: 'Cloud & Infrastructure', path: '/services/infrastructure' },
-                { label: 'Mobile Applications', path: '/services/apps' },
-                { label: 'Data & Analytics', path: '/services/data' },
+                { label: 'Artificial Intelligence', path: '/services/ai' },
+                { label: 'Cloud & Infrastructure', path: '/services/cloud' },
+                { label: 'Cybersecurity', path: '/services/security' },
+                { label: 'Data Systems', path: '/services/data' },
               ]).map((item: any) => (
                 <li key={item.label}>
                   <Link to={item.path} className="text-white/40 hover:text-white text-[12px] sm:text-[13px] transition-colors">{item.label}</Link>
@@ -158,8 +161,10 @@ const Footer = () => {
             <ul className="space-y-2 sm:space-y-3">
               {(siteContent?.footer?.companyLinks || [
                 { label: 'Company', path: '/company' },
+                { label: 'Yonas Bogale Sitotaw — Founder & CEO', path: '/about/yonas-bogale-sitotaw' },
                 { label: 'Industries', path: '/industries' },
                 { label: 'Projects', path: '/projects' },
+                { label: 'Blog', path: '/blog' },
                 { label: 'Careers', path: '/careers' },
                 { label: 'Internship', path: '/internship' },
                 { label: 'Contact', path: '/contact' },
@@ -175,16 +180,25 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-bold text-[11px] sm:text-[12px] uppercase tracking-[0.2em] mb-4 sm:mb-6">Contact</h4>
             <div className="space-y-3 sm:space-y-4">
-              <a href={`mailto:${settings.email || 'contact@nexyovi.com'}`} className="block text-white hover:text-[#F5A800] transition-colors text-[13px] sm:text-[14px] font-medium break-all">
+              <a
+                href={`mailto:${settings.email || 'contact@nexyovi.com'}`}
+                onClick={() => trackContactClick('email', 'footer')}
+                className="block text-white hover:text-[#F5A800] transition-colors text-[13px] sm:text-[14px] font-medium break-all"
+              >
                 contact@nexyovi.com
               </a>
-              <a href={`tel:${settings.phone || '+251938617252'}`} className="block text-white/70 hover:text-white transition-colors text-[13px] sm:text-[14px] font-medium">
+              <a
+                href={`tel:${settings.phone || '+251938617252'}`}
+                onClick={() => trackContactClick('phone', 'footer')}
+                className="block text-white/70 hover:text-white transition-colors text-[13px] sm:text-[14px] font-medium"
+              >
                 {settings.phone ? settings.phone.replace(/(\+\d{3})(\d{2})(\d{3})(\d{4})/, '$1 $2 $3 $4') : '+251 93 861 7252'}
               </a>
               <a
                 href="https://wa.me/251945628075"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackContactClick('whatsapp', 'footer')}
                 className="inline-flex items-center justify-center rounded-full bg-[#25D366] px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-slate-950 transition-colors hover:bg-[#1eb85b]"
               >
                 <MessageCircle size={16} className="mr-1.5 sm:mr-2" />

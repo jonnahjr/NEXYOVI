@@ -5,7 +5,7 @@ import {
   MessageSquare, Shield, Menu, X, Clock,
   Star, Globe, ExternalLink,
   ChevronDown, Search, Home, Building2, Zap,
-  FileText, Inbox, Monitor
+  FileText, Inbox, Monitor, UserCog
 } from 'lucide-react';
 import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { useSite } from '../../context/SiteContext';
@@ -22,6 +22,7 @@ const navItems = [
   { icon: Briefcase, label: 'Career Applicants', path: '/admin/career-applicants' },
   { icon: Users, label: 'Internship Applicants', path: '/admin/internship-applicants' },
   { icon: Users, label: 'Team', path: '/admin/team' },
+  { icon: UserCog, label: 'CEO Profile', path: '/admin/ceo-profile' },
   { icon: Star, label: 'Testimonials', path: '/admin/testimonials' },
   { icon: MessageSquare, label: 'Messages', path: '/admin/messages', badgeKey: 'unread' as const },
   { icon: Globe, label: 'Partners & Logos', path: '/admin/partners' },

@@ -8,6 +8,7 @@ import { EASE_EXPO, revealUp, staggerContainer } from "../lib/animations";
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import { sanitizeText, sanitizeEmail, sanitizeFormData, validateFormData, containsXssPattern } from "../lib/sanitize";
+import { CONTACT_FAQS, trackContactClick, trackFormStart, trackFormSubmit, trackFormError } from "../lib/seo";
 
 export default function Contact() {
   const { settings, siteContent, addMessage } = useSite();
@@ -33,6 +34,7 @@ export default function Contact() {
   const honeypotRef = React.useRef<HTMLInputElement | null>(null);
   const [submissionCount, setSubmissionCount] = React.useState(0);
   const [isSpam, setIsSpam] = React.useState(false);
+  const formStartTracked = React.useRef(false);
   const turnstileRef = React.useRef<HTMLDivElement | null>(null);
   const turnstileWidgetId = React.useRef<string | null>(null);
   const [turnstileToken, setTurnstileToken] = React.useState<string>('');
@@ -68,6 +70,11 @@ export default function Contact() {
         sanitized = sanitizeText(value, 200);
     }
     setFormData(prev => ({ ...prev, [field]: sanitized }));
+    // GA4: track form start once, when the visitor first types into the form
+    if (!formStartTracked.current && field !== 'honeypot' && sanitized) {
+      formStartTracked.current = true;
+      trackFormStart('contact');
+    }
     // Clear field error when user starts typing
     if (formErrors[field]) {
       setFormErrors(prev => {
@@ -131,6 +138,7 @@ export default function Contact() {
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
       setIsSubmitting(false);
+      trackFormError('contact');
       return;
     }
 
@@ -142,6 +150,7 @@ export default function Contact() {
     if (siteKey && !turnstileToken) {
       setFormErrors({ ...errors, turnstile: 'Please complete the security check' });
       setIsSubmitting(false);
+      trackFormError('contact');
       return;
     }
 
@@ -170,6 +179,8 @@ export default function Contact() {
         setTurnstileToken('');
         setIsSubmitting(false);
         setIsSuccess(true);
+        // GA4: primary conversion — contact form submitted
+        trackFormSubmit('contact');
         setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '', honeypot: '' });
         setFormErrors({});
         toast('Your project inquiry has been received. Our team will respond within 24 hours.', 'success', 'Inquiry Sent');
@@ -179,6 +190,7 @@ export default function Contact() {
         console.error('[CONTACT] Submission error:', err);
         setIsSubmitting(false);
         setFormErrors({ submit: 'Failed to send message. Please try again.' });
+        trackFormError('contact');
       });
   };
 
@@ -330,6 +342,10 @@ export default function Contact() {
                   href={item.href}
                   target={item.title === "Headquarters" ? "_blank" : undefined}
                   rel={item.title === "Headquarters" ? "noreferrer" : undefined}
+                  onClick={() => trackContactClick(
+                    item.title === "Email" ? "email" : item.title === "Phone" ? "phone" : "map",
+                    "contact-page"
+                  )}
                   className="inline-flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-widest text-white/50 hover:text-[#F5A800] transition-colors"
                 >
                   {item.action}
@@ -550,6 +566,41 @@ export default function Contact() {
               </motion.button>
             </form>
           </motion.div>
+        </div>
+      </section>
+
+      {/* FAQ SECTION — genuine customer questions (GEO/AI answer targeting) */}
+      <section className="py-16 sm:py-20 md:py-24 bg-[#FCFBF8]">
+        <div className="container max-w-3xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-14">
+            <h2 className="text-[clamp(24px,6vw,40px)] font-black text-slate-950 tracking-[-0.03em] mb-3">
+              Frequently Asked <span className="text-[#F5A800]">Questions</span>
+            </h2>
+            <p className="text-slate-500 text-[13px] sm:text-[15px] font-medium leading-relaxed max-w-lg mx-auto">
+              Common questions about working with Nexyovi — process, location, services, and response times.
+            </p>
+          </div>
+          <div className="space-y-3">
+            {CONTACT_FAQS.map((faq, i) => (
+              <details
+                key={i}
+                className="group bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-[#F5A800]/40 transition-colors"
+              >
+                <summary className="flex items-center justify-between gap-4 px-5 sm:px-7 py-4 sm:py-5 cursor-pointer list-none">
+                  <h3 className="text-slate-900 text-[14px] sm:text-[16px] font-bold leading-snug">{faq.question}</h3>
+                  <span
+                    className="shrink-0 w-7 h-7 rounded-full bg-[#F5A800]/10 border border-[#F5A800]/20 flex items-center justify-center text-[#F5A800] text-lg leading-none group-open:rotate-45 transition-transform duration-300"
+                    aria-hidden="true"
+                  >
+                    +
+                  </span>
+                </summary>
+                <div className="px-5 sm:px-7 pb-5 sm:pb-6">
+                  <p className="text-slate-500 text-[13px] sm:text-[15px] leading-relaxed">{faq.answer}</p>
+                </div>
+              </details>
+            ))}
+          </div>
         </div>
       </section>
 

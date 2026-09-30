@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import { useSite } from './context/SiteContext';
 import { useLenis } from './lib/lenis';
 import { ToastProvider } from './context/ToastContext';
+import SeoManager from './components/SeoManager';
 
 // ── Eager-loaded public pages (instant navigation, no spinner) ─
 import Home from './pages/Home';
@@ -17,20 +18,26 @@ import TrustCenter from './pages/TrustCenter';
 import ServiceDetail from './pages/ServiceDetail';
 import ProjectsPage from './pages/Projects';
 import CaseStudyDetail from './pages/CaseStudyDetail';
-import CRMSystem from './pages/systems/CRMSystem';
+import Blog from './pages/Blog';
+import ArticleDetail from './pages/ArticleDetail';
 import AdminLogin from './pages/admin/AdminLogin';
 import Careers from './pages/Careers';
 import Internship from './pages/Internship';
 import InternshipApply from './pages/InternshipApply';
 import CareersApply from './pages/CareersApply';
 import RequestDemo from './pages/RequestDemo';
+import FounderProfile from './pages/FounderProfile';
 
 // ── Lazy-loaded admin pages (rarely visited, fine to lazy load) ─
+// CRMSystem is a large standalone demo app (~1800 lines, unreachable from
+// public nav) — lazy-load so it never blocks the public bundle.
+const CRMSystem = lazy(() => import('./pages/systems/CRMSystem'));
 const AdminLayout = lazy(() => import('./pages/admin/AdminLayout'));
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
 const AdminJobs = lazy(() => import('./pages/admin/AdminJobs'));
 const AdminApplications = lazy(() => import('./pages/admin/AdminApplications'));
 const AdminTeam = lazy(() => import('./pages/admin/AdminTeam'));
+const AdminCeoProfile = lazy(() => import('./pages/admin/AdminCeoProfile'));
 const AdminSettings = lazy(() => import('./pages/admin/AdminSettings'));
 const AdminTestimonials = lazy(() => import('./pages/admin/AdminTestimonials'));
 const AdminMessages = lazy(() => import('./pages/admin/AdminMessages'));
@@ -82,6 +89,7 @@ function App() {
   return (
     <ToastProvider>
       <div className="min-h-screen bg-[#050816]">
+        <SeoManager />
         <ScrollToTop />
         {!hideNav && <Navbar />}
 
@@ -92,7 +100,11 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/services" element={<Services />} />
               <Route path="/services/:serviceId" element={<ServiceDetail />} />
-              <Route path="/systems/crm" element={<CRMSystem />} />
+              <Route path="/systems/crm" element={
+                <Suspense fallback={null}>
+                  <CRMSystem />
+                </Suspense>
+              } />
               <Route path="/security" element={<Navigate to="/services/security" replace />} />
               <Route path="/software" element={<Navigate to="/services/software" replace />} />
               <Route path="/networking" element={<Navigate to="/services/networking" replace />} />
@@ -111,6 +123,10 @@ function App() {
               <Route path="/offices" element={<Navigate to="/#offices" replace />} />
               <Route path="/sustainability" element={<Navigate to="/#impact" replace />} />
               <Route path="/about" element={<Navigate to="/company" replace />} />
+              {/* Founder entity profile — canonical identity page for the Person @id */}
+              <Route path="/about/yonas-bogale-sitotaw" element={<FounderProfile />} />
+              {/* Friendly redirect for the alternate spelling of his name */}
+              <Route path="/about/yonas-bogle-sitotaw" element={<Navigate to="/about/yonas-bogale-sitotaw" replace />} />
               <Route path="/company" element={<Company />} />
               <Route path="/company/story" element={<Navigate to="/company#story" replace />} />
               <Route path="/company/mission-vision" element={<Navigate to="/company#vision" replace />} />
@@ -121,6 +137,8 @@ function App() {
               <Route path="/company/culture" element={<Navigate to="/company#culture" replace />} />
               <Route path="/legal" element={<TrustCenter />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<ArticleDetail />} />
               <Route path="/projects" element={<ProjectsPage />} />
               <Route path="/projects/:id" element={<CaseStudyDetail />} />
               <Route path="/portfolio" element={<Navigate to="/projects" replace />} />
@@ -144,6 +162,7 @@ function App() {
                   <Route path="career-applicants" element={<AdminCareerApplicants />} />
                   <Route path="internship-applicants" element={<AdminInternshipApplicants />} />
                   <Route path="team" element={<AdminTeam />} />
+                  <Route path="ceo-profile" element={<AdminCeoProfile />} />
                   <Route path="testimonials" element={<AdminTestimonials />} />
                   <Route path="messages" element={<AdminMessages />} />
                   <Route path="users" element={<AdminUsers />} />

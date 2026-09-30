@@ -343,6 +343,10 @@ function generateResponse(input: string): string {
     return "Hello! 👋 I'm the Nexyovi assistant. I can help you with information about our software engineering, AI solutions, cybersecurity, cloud infrastructure, and enterprise networking services. What are you interested in?";
   }
   
+  if (lower.includes('founder') || lower.includes('ceo') || lower.includes('yonas') || lower.includes('who is')) {
+    return "**Yonas Bogale Sitotaw** (also known as Yonas Bogale or Yons) is the founder and CEO of Nexyovi. His work spans software development, software engineering, security engineering, cybersecurity, and artificial intelligence.\n\nRead his full profile: https://www.nexyovi.com/about/yonas-bogale-sitotaw";
+  }
+  
   if (lower.includes('service') || lower.includes('offer') || lower.includes('capability')) {
     return "Nexyovi offers four core capabilities:\n\n**1. Software Engineering** — Custom platforms, SaaS products, and enterprise applications.\n**2. AI & Automation** — Predictive models, intelligent agents, and custom LLM integrations.\n**3. Cloud & Infrastructure** — Zero-trust networks, cloud architecture, and reliability engineering.\n**4. Cybersecurity** — Security audits, hardening, compliance, and threat monitoring.\n\nWhich area interests you most?";
   }

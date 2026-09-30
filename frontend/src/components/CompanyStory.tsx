@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { EASE_EXPO } from '../lib/animations';
 
 const paragraphs = [
-  `Founded in Addis Ababa in 2024 by Yonas Bogale, Nexyovi was built with a simple mission: help organizations leverage technology to solve complex challenges, operate more efficiently, and grow with confidence.`,
+  `Founded in Addis Ababa in 2024 by Yonas Bogale Sitotaw (also known as Yonas Bogale), Nexyovi was built with a simple mission: help organizations leverage technology to solve complex challenges, operate more efficiently, and grow with confidence.`,
   `What began as a focused software studio quickly evolved into a multidisciplinary engineering company specializing in custom software, artificial intelligence, cloud infrastructure, cybersecurity, and digital transformation.`,
   `Today, Nexyovi partners with startups, enterprises, government organizations, and mission-driven businesses across Africa and beyond — designing, building, and maintaining production-ready digital systems that deliver measurable outcomes.`,
   `From enterprise applications and AI-powered platforms to cloud-native infrastructure and mission-critical systems, we combine deep engineering expertise with a long-term commitment to client success.`,

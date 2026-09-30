@@ -135,7 +135,7 @@ ALTER TABLE public.testimonials ADD COLUMN IF NOT EXISTS linkedin text;
 
 INSERT INTO public.testimonials (author, role, content, linkedin) VALUES
 (
-  'Yonas Bogale',
+  'Yonas Bogale Sitotaw',
   'Founder & CEO, Nexyovi',
   'At Nexyovi, we don''t just build software — we build the infrastructure that powers organizations across Africa and beyond. Every project we take on is a commitment to excellence, security, and real impact.',
   'https://www.linkedin.com/in/yonas-bogale'
@@ -204,7 +204,7 @@ ALTER TABLE public.team ADD COLUMN IF NOT EXISTS initials  text;
 ALTER TABLE public.team ADD COLUMN IF NOT EXISTS color     text;
 
 INSERT INTO public.team (name, role, bio, linkedin, initials, color) VALUES
-('Yonas Bogale', 'Founder & CEO', 'Visionary leader with 12+ years in tech and business strategy across two continents. Drives Nexyovi''s mission to become Africa''s leading technology firm.', 'https://www.linkedin.com/in/yonas-bogale/', 'YB', '#F5A800'),
+('Yonas Bogale Sitotaw', 'Founder & CEO', 'Visionary leader with 12+ years in tech and business strategy across two continents. Drives Nexyovi''s mission to become Africa''s leading technology firm.', 'https://www.linkedin.com/in/yonas-bogale/', 'YB', '#F5A800'),
 ('Amanuel Tesfaye', 'Chief Technology Officer', 'Software architect and engineer with deep expertise in distributed systems, cloud infrastructure, and AI/ML deployment at scale.', 'https://linkedin.com/in/amanuel-tesfaye/', 'AT', '#8b5cf6'),
 ('Selamawit Hailu', 'Chief Product Officer', 'Leads product vision and strategy. Passionate about building scalable systems and ensuring user-centric design across all client engagements.', 'https://linkedin.com/in/selamawit-hailu/', 'SH', '#10b981'),
 ('Eyerusalem Bogale', 'VP of Operations', 'Operations leader with 10+ years driving efficiency and scaling processes across tech startups. Keeps delivery running like clockwork.', 'https://linkedin.com/in/eyerusalem-bogale', 'EB', '#ff7f50'),

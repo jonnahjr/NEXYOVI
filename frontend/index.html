@@ -5,7 +5,7 @@
 
     <!-- ── Security Meta Tags ────────────────────────────── -->
     <!-- Content Security Policy (meta tag fallback) -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; media-src 'self' data: https://*.cloudfront.net https://*.supabase.co; connect-src 'self' https://kgokqftntqszjnwsaegj.supabase.co https://api.nexyovi.com ws://localhost:* http://localhost:*; base-uri 'self'; form-action 'self'; object-src 'none'" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; media-src 'self' data: https://*.cloudfront.net https://*.supabase.co; connect-src 'self' https://kgokqftntqszjnwsaegj.supabase.co https://api.nexyovi.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com ws://localhost:* http://localhost:*; base-uri 'self'; form-action 'self'; object-src 'none'" />
     <!-- Referrer Policy -->
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <!-- Prevent automatic detection of phone numbers, emails, addresses -->
@@ -16,25 +16,160 @@
     <link rel="icon" type="image/png" href="/favicon.webp" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Nexyovi Technologies</title>
-    <meta name="description" content="Enterprise Software, AI Solutions, Cloud Infrastructure, and Digital Transformation." />
-    
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Nexyovi Technologies" />
-    <meta property="og:description" content="Enterprise Software, AI Solutions, Cloud Infrastructure, and Digital Transformation." />
-    <meta property="og:image" content="https://www.nexyovi.com/og-image.jpg" />
-    <meta property="og:url" content="https://www.nexyovi.com" />
-    <meta property="og:type" content="website" />
+    <!-- ── Primary SEO ───────────────────────────────────── -->
+    <title>Software Development & AI Company in Ethiopia | Nexyovi</title>
+    <meta name="description" content="Nexyovi is a software development and AI company in Addis Ababa, Ethiopia — building enterprise software, AI systems, cloud infrastructure, and secure data platforms for Africa and beyond." />
+    <meta name="author" content="Nexyovi Technologies" />
+    <link rel="canonical" href="https://www.nexyovi.com/" />
 
-    <!-- Twitter Card Meta Tags -->
+    <!-- Geographic / local business signals -->
+    <meta name="geo.region" content="ET" />
+    <meta name="geo.placename" content="Addis Ababa" />
+    <meta name="geo.position" content="9.005401;38.763611" />
+    <meta name="ICBM" content="9.005401, 38.763611" />
+
+    <!-- ── Open Graph ────────────────────────────────────── -->
+    <meta property="og:title" content="Software Development & AI Company in Ethiopia | Nexyovi" />
+    <meta property="og:description" content="Nexyovi is a software development and AI company in Addis Ababa, Ethiopia — enterprise software, AI systems, cloud infrastructure, and secure data platforms." />
+    <meta property="og:image" content="https://www.nexyovi.com/og-image.jpg" />
+    <meta property="og:image:alt" content="Nexyovi Technologies — software development and AI company in Addis Ababa, Ethiopia" />
+    <meta property="og:url" content="https://www.nexyovi.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Nexyovi" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- ── Twitter Card ──────────────────────────────────── -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Nexyovi Technologies" />
-    <meta name="twitter:description" content="Enterprise Software & AI Solutions" />
+    <meta name="twitter:title" content="Software Development & AI Company in Ethiopia | Nexyovi" />
+    <meta name="twitter:description" content="Nexyovi — enterprise software, AI systems, cloud infrastructure, and cybersecurity, engineered in Addis Ababa, Ethiopia." />
     <meta name="twitter:image" content="https://www.nexyovi.com/og-image.jpg" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Google Fonts - crossorigin required for SRI-compatible CDN; integrity omitted because Google Fonts CSS is dynamic per UA -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" crossorigin="anonymous" />
+
+    <!-- ── Structured Data: Organization + WebSite + LocalBusiness ──
+         Static JSON-LD so crawlers and AI systems can read verified
+         entity information without executing JavaScript. Dynamic
+         per-page schema (Service, Breadcrumb, FAQ) is injected by
+         SeoManager. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://www.nexyovi.com/#organization",
+          "name": "Nexyovi",
+          "legalName": "Nexyovi Technologies",
+          "url": "https://www.nexyovi.com/",
+          "logo": "https://www.nexyovi.com/og-image.jpg",
+          "description": "Nexyovi is a software development and AI company based in Addis Ababa, Ethiopia, delivering enterprise software, artificial intelligence, cloud & infrastructure, cybersecurity, and data platforms for organizations across Africa and beyond.",
+          "foundingDate": "2024",
+          "founder": { "@id": "https://www.nexyovi.com/#person-yonas-bogale-sitotaw" },
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Bole Road, near Edna Mall area, Bole Sub-city",
+            "addressLocality": "Addis Ababa",
+            "addressCountry": "ET"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+251938617252",
+            "email": "info@nexyovi.com",
+            "contactType": "sales",
+            "availableLanguage": ["English", "Amharic"]
+          },
+          "knowsAbout": [
+            "Software development",
+            "Artificial intelligence",
+            "Machine learning",
+            "Cybersecurity",
+            "Cloud computing",
+            "Data engineering",
+            "Digital transformation",
+            "Enterprise networking"
+          ]
+        },
+        {
+          "@type": "Person",
+          "@id": "https://www.nexyovi.com/#person-yonas-bogale-sitotaw",
+          "name": "Yonas Bogale Sitotaw",
+          "alternateName": ["Yonas Bogale", "Yons"],
+          "jobTitle": "Founder & CEO",
+          "description": "Yonas Bogale Sitotaw is the founder and CEO of Nexyovi, a software development and AI company in Addis Ababa, Ethiopia. He works across software development, software engineering, security engineering, cybersecurity, and artificial intelligence.",
+          "url": "https://www.nexyovi.com/about/yonas-bogale-sitotaw",
+          "image": "https://api.nexyovi.com/uploads/1781431549912-777697695.jpg",
+          "worksFor": { "@id": "https://www.nexyovi.com/#organization" },
+          "knowsAbout": [
+            "Software development",
+            "Software engineering",
+            "Security engineering",
+            "Cybersecurity",
+            "Artificial intelligence",
+            "AI engineering",
+            "Technology entrepreneurship"
+          ],
+          "sameAs": [
+            "https://www.linkedin.com/in/yonas-bogale/",
+            "https://github.com/jonnahjr",
+            "https://www.instagram.com/yonasb.jr",
+            "https://web.facebook.com/Yonasb.jr/"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://www.nexyovi.com/#website",
+          "url": "https://www.nexyovi.com/",
+          "name": "Nexyovi",
+          "description": "Software development and AI company in Addis Ababa, Ethiopia.",
+          "publisher": { "@id": "https://www.nexyovi.com/#organization" },
+          "inLanguage": "en"
+        },
+        {
+          "@type": "ProfessionalService",
+          "@id": "https://www.nexyovi.com/#localbusiness",
+          "name": "Nexyovi",
+          "url": "https://www.nexyovi.com/",
+          "image": "https://www.nexyovi.com/og-image.jpg",
+          "description": "Software development, AI solutions, cloud infrastructure, and cybersecurity services headquartered in Addis Ababa, Ethiopia, serving clients across Africa and internationally.",
+          "foundingDate": "2024",
+          "parentOrganization": { "@id": "https://www.nexyovi.com/#organization" },
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Bole Road, near Edna Mall area, Bole Sub-city",
+            "addressLocality": "Addis Ababa",
+            "addressCountry": "ET"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 9.005401,
+            "longitude": 38.763611
+          },
+          "telephone": "+251938617252",
+          "email": "info@nexyovi.com",
+          "areaServed": [
+            { "@type": "Country", "name": "Ethiopia" },
+            { "@type": "Place", "name": "Africa" }
+          ],
+          "knowsAbout": [
+            "Software development",
+            "Artificial intelligence",
+            "Cybersecurity",
+            "Cloud computing",
+            "Digital transformation"
+          ],
+          "sameAs": [
+            "https://www.linkedin.com/in/yonas-bogale/",
+            "https://www.instagram.com/yonasb.jr",
+            "https://web.facebook.com/Yonasb.jr/",
+            "https://github.com/nexyovi"
+          ]
+        }
+      ]
+    }
+    </script>
 
     <!-- CSP Nonce: The Vite dev server and production build use nonce-based CSP.
          The backend generates a nonce per request via res.locals.nonce.
@@ -44,5 +179,48 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <!-- ── SEO noscript fallback for crawlers that do not execute JS ── -->
+    <noscript>
+      <div style="max-width: 720px; margin: 40px auto; font-family: sans-serif; color: #111;">
+        <h1>Nexyovi — Software Development &amp; AI Company in Ethiopia</h1>
+        <p>
+          Nexyovi is a software development and AI company based in Addis Ababa, Ethiopia.
+          We design, build, and operate enterprise software, artificial intelligence systems,
+          cloud infrastructure, cybersecurity, and data platforms for organizations across
+          Africa and beyond.
+        </p>
+        <h2>Leadership</h2>
+        <p>
+          Nexyovi was founded in 2024 by Yonas Bogale Sitotaw (also known as Yonas Bogale),
+          who serves as Founder &amp; CEO. His work spans software engineering, security
+          engineering, cybersecurity, and artificial intelligence.
+        </p>
+        <p>
+          <a href="https://www.nexyovi.com/about/yonas-bogale-sitotaw">About Yonas Bogale Sitotaw</a>
+        </p>
+        <h2>Services</h2>
+        <ul>
+          <li>Software Engineering — custom platforms, SaaS products, APIs, legacy modernization</li>
+          <li>Artificial Intelligence — ML pipelines, AI agents, LLM integrations, RAG systems</li>
+          <li>Cloud &amp; Infrastructure — multi-cloud architecture, Kubernetes, DevOps</li>
+          <li>Cybersecurity — zero-trust architecture, penetration testing, compliance</li>
+          <li>Data Systems — streaming pipelines, data warehousing, BI dashboards</li>
+          <li>Infrastructure &amp; Networking — SD-WAN, edge computing, core routing</li>
+          <li>Managed Technology — 24/7 monitoring, incident response, technical advisory</li>
+        </ul>
+        <h2>Industries</h2>
+        <p>FinTech, HealthTech, GovTech, Logistics, Retail, Education, Manufacturing, Energy.</p>
+        <h2>Contact</h2>
+        <p>
+          Bole Road, near Edna Mall area, Bole Sub-city, Addis Ababa, Ethiopia<br />
+          Email: info@nexyovi.com · Phone: +251 93 861 7252<br />
+          <a href="https://www.nexyovi.com/services">Services</a> ·
+          <a href="https://www.nexyovi.com/industries">Industries</a> ·
+          <a href="https://www.nexyovi.com/projects">Projects</a> ·
+          <a href="https://www.nexyovi.com/company">Company</a> ·
+          <a href="https://www.nexyovi.com/contact">Contact</a>
+        </p>
+      </div>
+    </noscript>
   </body>
 </html>

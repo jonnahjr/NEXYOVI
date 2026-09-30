@@ -202,7 +202,7 @@ export default function EngagementModels() {
             </div>
 
             {/* RIGHT: Active content panel */}
-            <div ref={contentRef} className="relative min-h-[340px] flex items-center z-10">
+            <div ref={contentRef} className="relative min-h-[340px] lg:min-h-[420px] flex items-center z-10">
               {models.map((model, i) => {
                 const isActive = i === activeIndex;
                 return (
@@ -258,12 +258,16 @@ export default function EngagementModels() {
                       ))}
                     </div>
 
-                    {/* Divider line */}
+                    {/* Divider line — black, draws in from the left on every model */}
                     <motion.div
-                      animate={{ scaleX: isActive ? 1 : 0, opacity: isActive ? 1 : 0 }}
-                      transition={{ duration: 0.5, delay: 0.2 }}
+                      initial={false}
+                      animate={{
+                        scaleX: isActive ? 1 : 0,
+                        opacity: isActive ? 1 : 0,
+                      }}
+                      transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
                       style={{ transformOrigin: 'left', backgroundColor: '#0f172a' }}
-                      className="h-[1.5px] w-full max-w-xl mb-7 rounded-full"
+                      className="h-px w-full max-w-xl mb-7 rounded-full"
                     />
 
                     {/* CTA */}

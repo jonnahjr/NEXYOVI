@@ -26,7 +26,7 @@ const CompanyLeadership = () => {
   const title = companyTeam.title || 'Meet the Team.';
   const highlight = companyTeam.highlight || 'Team.';
   const description = companyTeam.description || 'Leadership team overseeing software engineering, AI innovation, and cloud infrastructure delivery across global markets.';
-  const founderName = companyTeam.founder_name || founder?.name || 'Yonas Bogale';
+  const founderName = companyTeam.founder_name || founder?.name || 'Yonas Bogale Sitotaw';
   const founderRole = companyTeam.founder_role || founder?.role || 'Founder & CEO';
   const founderBio = companyTeam.founder_bio || founder?.bio || "Leading Nexyovi's mission to build practical software, AI solutions, and digital infrastructure for modern businesses.";
   const founderButton = companyTeam.founder_button || 'LinkedIn Profile';

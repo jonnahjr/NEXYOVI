@@ -5,6 +5,7 @@ import { useSearchParams, Link } from "react-router-dom";
 import { useToast } from "../context/ToastContext";
 import { EASE_EXPO, revealUp, staggerContainer } from "../lib/animations";
 import { sanitizeText, sanitizeEmail, sanitizeFormData, validateFormData, containsXssPattern } from "../lib/sanitize";
+import { trackFormStart, trackFormSubmit, trackFormError } from "../lib/seo";
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 
@@ -70,6 +71,7 @@ export default function RequestDemo() {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [submissionCount, setSubmissionCount] = useState(0);
   const [isSpam, setIsSpam] = useState(false);
+  const formStartTracked = useRef(false);
   const formSectionRef = useRef<HTMLDivElement | null>(null);
   const nameInputRef = useRef<HTMLInputElement | null>(null);
   const honeypotRef = useRef<HTMLInputElement | null>(null);
@@ -124,6 +126,11 @@ export default function RequestDemo() {
         sanitized = sanitizeText(value, 200);
     }
     setFormData(prev => ({ ...prev, [field]: sanitized }));
+    // GA4: track demo form start once
+    if (!formStartTracked.current && field !== 'honeypot' && sanitized) {
+      formStartTracked.current = true;
+      trackFormStart('request-demo');
+    }
     if (formErrors[field]) {
       setFormErrors(prev => {
         const { [field]: _, ...rest } = prev;
@@ -174,6 +181,7 @@ export default function RequestDemo() {
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
       setIsSubmitting(false);
+      trackFormError('request-demo');
       return;
     }
 
@@ -207,6 +215,8 @@ export default function RequestDemo() {
         setSubmissionCount(prev => prev + 1);
         setIsSubmitting(false);
         setIsSuccess(true);
+        // GA4: primary conversion — demo request submitted
+        trackFormSubmit('request-demo');
         setFormData({ name: "", email: "", phone: "", company: "", product: "", message: "", type: "demo", honeypot: "" });
         setFormErrors({});
         toast('Your demo request has been received. Our team will contact you within 24 hours to schedule your walkthrough.', 'success', 'Demo Scheduled');
@@ -216,6 +226,7 @@ export default function RequestDemo() {
         console.error("[DEMO] Submission error:", err);
         setIsSubmitting(false);
         setFormErrors({ submit: "Failed to send request. Please try again." });
+        trackFormError('request-demo');
       });
   };
 

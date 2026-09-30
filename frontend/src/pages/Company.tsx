@@ -79,7 +79,7 @@ export default function Company() {
     ? companyTeamTitle.replace(companyTeamHighlight, '').trim()
     : companyTeamTitle.trim();
   const companyTeamDescription = companyTeam.description || 'Leadership team overseeing software engineering, AI innovation, and cloud infrastructure delivery across global markets.';
-  const founderName = companyTeam.founder_name || founder?.name || 'Yonas Bogale';
+  const founderName = companyTeam.founder_name || founder?.name || 'Yonas Bogale Sitotaw';
   const founderRole = companyTeam.founder_role || founder?.role || 'Founder & CEO';
   const founderBio = companyTeam.founder_bio || founder?.bio || "Leading Nexyovi's mission to build practical software, AI solutions, and digital infrastructure for modern businesses.";
   const founderButton = companyTeam.founder_button || 'LinkedIn Profile';
@@ -450,15 +450,23 @@ export default function Company() {
                 Visionary leader with 12+ years in tech and business strategy.
               </p>
               {founderLinkedin && (
-                <a
-                  href={founderLinkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-blue-100 dark:bg-blue-950/30 px-6 py-3 text-sm font-semibold text-blue-700 dark:text-blue-300 transition-all duration-300 hover:bg-blue-200 dark:hover:bg-blue-950/50"
-                >
-                  <Linkedin size={16} />
-                  LinkedIn Profile
-                </a>
+                <div className="flex flex-wrap items-center justify-center gap-3">
+                  <a
+                    href={founderLinkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-blue-100 dark:bg-blue-950/30 px-6 py-3 text-sm font-semibold text-blue-700 dark:text-blue-300 transition-all duration-300 hover:bg-blue-200 dark:hover:bg-blue-950/50"
+                  >
+                    <Linkedin size={16} />
+                    LinkedIn Profile
+                  </a>
+                  <Link
+                    to="/about/yonas-bogale-sitotaw"
+                    className="inline-flex items-center gap-2 rounded-full bg-slate-100 dark:bg-white/[0.06] px-6 py-3 text-sm font-semibold text-slate-700 dark:text-white/80 transition-all duration-300 hover:bg-slate-200 dark:hover:bg-white/[0.1]"
+                  >
+                    Full Profile
+                  </Link>
+                </div>
               )}
             </motion.div>
           )}

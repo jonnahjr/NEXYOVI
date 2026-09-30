@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
+  base: './',
   plugins: [react()],
 
   // ── Security: Disable source maps in production ──────────────
@@ -27,6 +28,15 @@ export default defineConfig(({ mode }) => ({
         entryFileNames: 'assets/[name]-[hash].js',
         chunkFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash][extname]',
+        // ── Core Web Vitals: split heavyweight vendors out of the
+        // entry chunk so app code parses first and vendor chunks
+        // cache independently across releases.
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom', 'scheduler'],
+          'vendor-motion': ['framer-motion'],
+          'vendor-ui': ['lucide-react', 'react-icons'],
+          'vendor-forms': ['react-phone-number-input'],
+        },
       },
     },
     // Prevent embedding source maps in production

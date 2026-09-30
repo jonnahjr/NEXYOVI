@@ -8,12 +8,12 @@ export default function FounderStory() {
   const founder = team.find((member: any) => member.id === '1');
   const homeFounder = siteContent?.homeFounder || {};
   const badge = homeFounder.badge || 'Leadership';
-  const founderName = homeFounder.name || founder?.name || 'Yonas Bogale';
+  const founderName = homeFounder.name || founder?.name || 'Yonas Bogale Sitotaw';
   const founderRole = homeFounder.role || founder?.role || 'Founder & CEO';
   const founderBio =
     homeFounder.bio ||
     founder?.bio ||
-    "With 12+ years of building enterprise systems across two continents, Yonas has led engineering teams at global tech companies and built platforms that power millions of users. Prior to Nexyovi, he architected cloud infrastructure for high-growth startups and led digital transformation initiatives for government and enterprise clients. His focus on security-first design and zero-downtime deployments defines Nexyovi's approach.";
+    "Yonas Bogale Sitotaw (also known as Yonas Bogale) founded Nexyovi in 2024 in Addis Ababa and leads the company as CEO. His work spans software development, software engineering, security engineering, cybersecurity, and artificial intelligence — the practice areas that define Nexyovi's delivery.";
   const storyButton = homeFounder.story_button || 'Read our full story ->';
   const linkedinButton = homeFounder.linkedin_button || 'Connect on LinkedIn';
   const founderLinkedin = founder?.linkedin || 'https://www.linkedin.com/in/yonas-bogale/';
@@ -105,15 +105,23 @@ export default function FounderStory() {
               </Link>
             </div>
 
-            <a
-              href={founderLinkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-[#0a66c2]/10 border border-[#0a66c2]/20 text-white font-bold hover:bg-[#0a66c2]/20 transition-all"
-            >
-              <Linkedin size={20} className="text-[#0a66c2]" />
-              {linkedinButton}
-            </a>
+            <div className="flex flex-wrap items-center gap-3">
+              <a
+                href={founderLinkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-[#0a66c2]/10 border border-[#0a66c2]/20 text-white font-bold hover:bg-[#0a66c2]/20 transition-all"
+              >
+                <Linkedin size={20} className="text-[#0a66c2]" />
+                {linkedinButton}
+              </a>
+              <Link
+                to="/about/yonas-bogale-sitotaw"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.06] border border-white/10 text-white font-bold hover:bg-white/[0.1] transition-all"
+              >
+                Full Profile
+              </Link>
+            </div>
 
             {/* Key Engineers */}
             {keyEngineers.length > 0 && (

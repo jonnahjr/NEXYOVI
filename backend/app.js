@@ -85,6 +85,8 @@ app.use(helmet({
         ...(NODE_ENV === 'development' ? ["'unsafe-inline'", "'unsafe-eval'"] : []),
         // Allow trusted CDNs if needed
         'https://cdn.jsdelivr.net',
+        // Google Analytics 4 (loaded by SeoManager when VITE_GA4_ID is set)
+        'https://www.googletagmanager.com',
       ],
       styleSrc: [
         "'self'",
@@ -98,6 +100,10 @@ app.use(helmet({
         "'self'",
         FRONTEND_URL.replace(/\/$/, ''),
         'https://kgokqftntqszjnwsaegj.supabase.co',
+        // Google Analytics 4 endpoints
+        'https://*.google-analytics.com',
+        'https://*.analytics.google.com',
+        'https://www.googletagmanager.com',
         ...(NODE_ENV === 'development' ? ['ws://localhost:5173', 'http://localhost:5173'] : []),
       ],
       frameSrc: ["'none'"],
